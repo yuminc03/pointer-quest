@@ -27,6 +27,7 @@ final class MemoryGridVM: ObservableObject {
     }
     
     slots[index].type = .pointer
+    slots[index].value = nil // 값이 있으면 포인터 주소가 안 보이므로 초기화
     slots[index].pointingTo = targetAddr
     
     // 하이라이트 효과
@@ -48,6 +49,7 @@ final class MemoryGridVM: ObservableObject {
     // 2. 드래그한 슬롯을 pointer 타입으로 변경하고, 대상의 주소를 저장
     // C 언어의 `source = &destination;`과 같은 논리
     slots[sourceIndex].type = .pointer
+    slots[sourceIndex].value = nil // 기존 값이 남아있으면 UI에서 포인터 주소가 가려짐
     slots[sourceIndex].pointingTo = destinationAddress
     
     // 타겟 슬롯 인덱스 찾기
@@ -66,7 +68,7 @@ final class MemoryGridVM: ObservableObject {
             // 시각적 혼란을 줄이기 위해 타겟에도 하이라이트 효과
             highlightSlot(for: targetIndex)
         } else {
-    codeLog = "int *p = \(destinationAddress);"
+            codeLog = "int *p = \(destinationAddress);"
         }
     } else {
         codeLog = "int *p = \(destinationAddress);"
