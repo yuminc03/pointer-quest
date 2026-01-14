@@ -29,6 +29,11 @@ struct MemoryGridView: View {
       }
       .navigationTitle("Pointer Visualizer")
       .background(Color(.systemGroupedBackground))
+      .safeAreaInset(edge: .bottom) {
+        CodeFeedbackView(code: vm.codeLog)
+          .padding()
+          .background(.thinMaterial)
+      }
     }
   }
 }

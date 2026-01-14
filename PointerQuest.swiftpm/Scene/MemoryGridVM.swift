@@ -5,6 +5,9 @@ final class MemoryGridVM: ObservableObject {
   /// 메모리 Cells
   @Published private(set) var slots = [MemorySlot]()
   
+  /// 현재 실행된 동작을 C 코드로 보여주는 로그
+  @Published var codeLog = "// The executed operation is represented as C language code."
+  
   init() {
     initializeMemory()
   }
@@ -47,6 +50,9 @@ final class MemoryGridVM: ObservableObject {
     slots[sourceIndex].type = .pointer
     slots[sourceIndex].pointingTo = destinationAddress
     
+    // 로그 업데이트
+    codeLog = "int *p = \(destinationAddress);"
+    
     // 3. 시각적 피드백: 포인터가 성공적으로 연결되었음을 알리기 위해 하이라이트 효과를 줍니다.
     highlightSlot(for: sourceIndex)
     
@@ -67,7 +73,15 @@ final class MemoryGridVM: ObservableObject {
     else {
       // 포인터가 아니거나 가리키는 대상이 없는 경우 (추후 에러 피드백 추가 가능)
       print("역참조 실패: 유효한 포인터가 아닙니다.")
+      codeLog = "// Error: 유효하지 않은 포인터입니다."
       return
+    }
+
+    // 로그 업데이트
+    if let value = slots[targetIndex].value {
+        codeLog = "printf(\"%d\", *p); // 값: \(value)"
+    } else {
+        codeLog = "// 역참조 성공! (값 없음)"
     }
 
     // 3. 대상 슬롯 하이라이트 (포인터를 따라간 효과)
@@ -94,8 +108,6 @@ final class MemoryGridVM: ObservableObject {
         type: .empty
       )
     }
-    
-    print(slots)
     
     // 초기 더미데이터 설정
     
