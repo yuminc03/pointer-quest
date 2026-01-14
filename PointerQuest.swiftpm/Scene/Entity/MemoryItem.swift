@@ -42,7 +42,8 @@ struct MemoryItem: View {
       RoundedRectangle(cornerRadius: 15)
         .fill(Color(.secondarySystemGroupedBackground))
         .overlay(
-          slot.isHighlighted ? .yellow.opacity(0.2) : .clear
+          slot.isHighlighted ? .yellow.opacity(0.2) : .clear,
+          in: RoundedRectangle(cornerRadius: 15)
         )
     )
     .overlay(
