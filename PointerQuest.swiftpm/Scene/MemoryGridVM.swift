@@ -50,10 +50,29 @@ final class MemoryGridVM: ObservableObject {
     slots[sourceIndex].type = .pointer
     slots[sourceIndex].pointingTo = destinationAddress
     
-    // 로그 업데이트
+    // 타겟 슬롯 인덱스 찾기
+    if let targetIndex = slots.firstIndex(
+      where: { $0.address == destinationAddress }
+    ) {
+        // 타겟이 비어있다면 값 초기화 (Auto-Initialization)
+        if slots[targetIndex].type == .empty {
+            let randomValue = Int.random(in: 1...99)
+            slots[targetIndex].type = .value
+            slots[targetIndex].value = randomValue
+            
+            // 초기화된 사실을 로그에 자연스럽게 표현
+            codeLog = "int target = \(randomValue); // (자동 초기화)\nint *p = &target;"
+            
+            // 시각적 혼란을 줄이기 위해 타겟에도 하이라이트 효과
+            highlightSlot(for: targetIndex)
+        } else {
     codeLog = "int *p = \(destinationAddress);"
+        }
+    } else {
+        codeLog = "int *p = \(destinationAddress);"
+    }
     
-    // 3. 시각적 피드백: 포인터가 성공적으로 연결되었음을 알리기 위해 하이라이트 효과를 줍니다.
+    // 3. 시각적 피드백: 포인터 슬롯 강조
     highlightSlot(for: sourceIndex)
     
     print("연결 완료: \(sourceAddress) -> \(destinationAddress)")
