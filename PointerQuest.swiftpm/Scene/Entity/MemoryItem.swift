@@ -3,6 +3,7 @@ import SwiftUI
 /// 메모리 Grid Item
 struct MemoryItem: View {
   let slot: MemorySlot
+  @ObservedObject var vm: MemoryGridVM
   
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
@@ -13,12 +14,18 @@ struct MemoryItem: View {
       Spacer()
       
       HStack {
+        Spacer()
         if let value = slot.value {
           Text("\(value)")
             .font(
               .system(.title2, design: .rounded)
               .bold()
             )
+        } else if let target = slot.pointingTo {
+          Text(target)
+            .font(.system(.caption, design: .monospaced))
+            .foregroundStyle(.blue)
+            .fontWeight(.bold)
         } else {
           Text("-")
             .foregroundStyle(.secondary.opacity(0.3))
@@ -46,6 +53,22 @@ struct MemoryItem: View {
           lineWidth: 2
         )
     )
+    .draggable(slot.address)
+    .dropDestination(for: String.self) { droppedAddresses, location in
+      guard let draggedAddress = droppedAddresses.first
+      else { return false }
+      
+      if draggedAddress != slot.address {
+        vm.handleDrop(
+          sourceAddress: draggedAddress,
+          destinationAddress: slot.address
+        )
+        
+        return true
+      }
+      
+      return false
+    }
     .shadow(
       color: .black.opacity(0.05),
       radius: 5,
@@ -56,5 +79,12 @@ struct MemoryItem: View {
 }
 
 #Preview {
-  MemoryItem(slot: .init(address: "0x7000", value: 2, type: .pointer, pointingTo: "0x7008", isHighlighted: true))
+  MemoryItem(
+    slot: .init(
+      address: "0x7000",
+      type: .pointer,
+      pointingTo: "0x7008",
+      isHighlighted: true),
+    vm: .init()
+  )
 }

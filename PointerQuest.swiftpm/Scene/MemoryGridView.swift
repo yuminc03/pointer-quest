@@ -13,7 +13,7 @@ struct MemoryGridView: View {
       ScrollView {
         LazyVGrid(columns: columns, spacing: 16) {
           ForEach(vm.slots) { slot in
-            MemoryItem(slot: slot)
+            MemoryItem(slot: slot, vm: vm)
               .onTapGesture {
                 print("클릭된 메모리 주소: \(slot.address)")
               }

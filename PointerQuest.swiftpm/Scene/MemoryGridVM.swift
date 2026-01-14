@@ -27,11 +27,34 @@ final class MemoryGridVM: ObservableObject {
     slots[index].pointingTo = targetAddr
     
     // 하이라이트 효과
-    highlightSlot(index: index)
+    highlightSlot(for: index)
+  }
+  
+  /// 드래그 앤 드롭 작업이 완료되었을 때 호출
+  /// - Parameters:
+  ///   - sourceAddress: 드래그를 시작한 슬롯(포인터가 될 슬롯)의 주소
+  ///   - destinationAddress: 드롭된 위치의 슬롯(가리킴을 당할 대상)의 주소
+  func handleDrop(sourceAddress: String, destinationAddress: String) {
+    // 1. 드래그한 슬롯(Source)의 인덱스를 찾기
+    guard let sourceIndex = slots.firstIndex(
+      where: { $0.address == sourceAddress }
+    ) else {
+      return
+    }
+    
+    // 2. 드래그한 슬롯을 pointer 타입으로 변경하고, 대상의 주소를 저장
+    // C 언어의 `source = &destination;`과 같은 논리
+    slots[sourceIndex].type = .pointer
+    slots[sourceIndex].pointingTo = destinationAddress
+    
+    // 3. 시각적 피드백: 포인터가 성공적으로 연결되었음을 알리기 위해 하이라이트 효과를 줍니다.
+    highlightSlot(for: sourceIndex)
+    
+    print("연결 완료: \(sourceAddress) -> \(destinationAddress)")
   }
   
   /// slot 변경 시 일시적인 하이라이트 효과로 사용자에게 알림
-  private func highlightSlot(index: Int) {
+  private func highlightSlot(for index: Int) {
     slots[index].isHighlighted = true
     
     // 1초 후에 하이라이트 해제
