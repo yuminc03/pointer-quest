@@ -5,7 +5,7 @@ struct MemoryGridView: View {
   @StateObject private var vm = MemoryGridVM()
   
   private let columns: [GridItem] = [
-    .init(.adaptive(minimum: 100, maximum: 16))
+    .init(.adaptive(minimum: 100), spacing: 16)
   ]
   
   var body: some View {
