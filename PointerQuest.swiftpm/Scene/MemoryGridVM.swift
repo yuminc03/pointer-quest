@@ -52,6 +52,28 @@ final class MemoryGridVM: ObservableObject {
     
     print("연결 완료: \(sourceAddress) -> \(destinationAddress)")
   }
+
+  /// 포인터를 역참조(Dereference)하여 대상 슬롯을 찾고 시각적 피드백 제공
+  /// - Parameter pointerAddr: 역참조할 포인터 슬롯의 주소
+  func dereference(pointerAddr: String) {
+    // 1. 역참조를 시도하는 슬롯 검색
+    guard let pointerIndex = slots.firstIndex(where: { $0.address == pointerAddr }) else { return }
+    let pointerSlot = slots[pointerIndex]
+
+    // 2. 해당 슬롯이 포인터 타입인지 확인
+    guard pointerSlot.type == .pointer,
+          let targetAddr = pointerSlot.pointingTo,
+          let targetIndex = slots.firstIndex(where: { $0.address == targetAddr })
+    else {
+      // 포인터가 아니거나 가리키는 대상이 없는 경우 (추후 에러 피드백 추가 가능)
+      print("역참조 실패: 유효한 포인터가 아닙니다.")
+      return
+    }
+
+    // 3. 대상 슬롯 하이라이트 (포인터를 따라간 효과)
+    print("역참조 성공! \(pointerAddr) -> \(targetAddr) (Value: \(slots[targetIndex].value ?? 0))")
+    highlightSlot(for: targetIndex)
+  }
   
   /// slot 변경 시 일시적인 하이라이트 효과로 사용자에게 알림
   private func highlightSlot(for index: Int) {

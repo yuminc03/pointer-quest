@@ -17,6 +17,12 @@ struct MemoryGridView: View {
               .onTapGesture {
                 print("클릭된 메모리 주소: \(slot.address)")
               }
+              // 더블 탭 시 역참조(Dereference) 실행
+              .simultaneousGesture(
+                TapGesture(count: 2).onEnded {
+                  vm.dereference(pointerAddr: slot.address)
+                }
+              )
           }
         }
         .padding()
