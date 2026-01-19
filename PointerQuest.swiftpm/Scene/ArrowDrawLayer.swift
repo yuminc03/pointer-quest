@@ -26,8 +26,15 @@ struct ArrowDrawLayer: View {
         path.move(to: startPoint)
         
         // 곡선(Bezier Curve)으로 부드럽게 연결
-        let control1 = CGPoint(x: startPoint.x, y: (startPoint.y + endPoint.y) / 2)
-        let control2 = CGPoint(x: endPoint.x, y: (startPoint.y + endPoint.y) / 2)
+        let control1 = CGPoint(
+          x: startPoint.x,
+          y: (startPoint.y + endPoint.y) / 2
+        )
+        
+        let control2 = CGPoint(
+          x: endPoint.x,
+          y: (startPoint.y + endPoint.y) / 2
+        )
         
         path.addCurve(to: endPoint, control1: control1, control2: control2)
         

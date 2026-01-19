@@ -3,7 +3,6 @@ import SwiftUI
 /// 메모리 Grid 화면
 struct MemoryGridView: View {
   @StateObject private var vm = MemoryGridVM()
-  @State private var slotFrames: [UUID: CGRect] = [:] // 각 셀의 위치 정보 저장
   
   private let columns: [GridItem] = [
     .init(.adaptive(minimum: 100), spacing: 16)
@@ -12,37 +11,31 @@ struct MemoryGridView: View {
   var body: some View {
     NavigationStack {
       ScrollView {
-        ZStack { // 화살표를 그리기 위해 ZStack 사용
-          LazyVGrid(columns: columns, spacing: 16) {
-            ForEach(vm.slots) { slot in
-              MemoryItem(slot: slot, vm: vm)
-                .background(
-                  GeometryReader { geo in
-                    Color.clear
-                      .preference(
-                        key: BoundsPreferenceKey.self,
-                        value: [slot.id: geo.frame(in: .named("gridSpace"))] // 좌표공간 통일
-                      )
-                  }
-                )
-                .onTapGesture {
-                  print("클릭된 메모리 주소: \(slot.address)")
+        LazyVGrid(columns: columns, spacing: 16) {
+          ForEach(vm.slots) { slot in
+            MemoryItem(slot: slot, vm: vm)
+              .anchorPreference(key: BoundsPreferenceKey.self, value: .bounds) { anchor in
+                [slot.id: anchor]
+              }
+              .onTapGesture {
+                print("클릭된 메모리 주소: \(slot.address)")
+              }
+              .simultaneousGesture(
+                // 더블 탭 시 역참조(Dereference) 실행
+                TapGesture(count: 2).onEnded {
+                  vm.dereference(pointerAddr: slot.address)
                 }
-              // 더블 탭 시 역참조(Dereference) 실행
-                .simultaneousGesture(
-                  TapGesture(count: 2).onEnded {
-                    vm.dereference(pointerAddr: slot.address)
-                  }
-                )
-            }
+              )
           }
-          .coordinateSpace(name: "gridSpace") // 좌표계 이름 설정
-          .onPreferenceChange(BoundsPreferenceKey.self) { preferences in
-            self.slotFrames = preferences // 하위 뷰들의 위치 정보 수집 완료
+        }
+        // overlayPreferenceValue를 사용하면 GeometryProxy를 통해 Anchor를 좌표로 변환 가능
+        .overlayPreferenceValue(BoundsPreferenceKey.self) { preferences in
+          GeometryReader { proxy in
+            ArrowDrawLayer(
+              vm: vm,
+              slotFrames: resolveFrames(from: preferences, proxy: proxy)
+            )
           }
-          
-          // 화살표 그리기 레이어
-          ArrowDrawLayer(vm: vm, slotFrames: slotFrames)
         }
         .padding()
       }
@@ -54,6 +47,18 @@ struct MemoryGridView: View {
           .background(.thinMaterial)
       }
     }
+  }
+  
+  // Anchor를 CGRect로 변환하는 헬퍼 함수
+  private func resolveFrames(
+    from preferences: [UUID: Anchor<CGRect>],
+    proxy: GeometryProxy
+  ) -> [UUID: CGRect] {
+    var frames: [UUID: CGRect] = [:]
+    for (id, anchor) in preferences {
+      frames[id] = proxy[anchor]
+    }
+    return frames
   }
 }
 
