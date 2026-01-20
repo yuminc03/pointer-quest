@@ -16,113 +16,22 @@ final class MemoryGridVM: ObservableObject {
     self.setupLevel(level: level)
   }
   
-  // ... (updatePointer, handleDrop, dereference 등 기존 함수들은 그대로 유지하되, checkSuccess 호출을 추가해야 함) ...
-  
-  // 하지만 updatePointer와 handleDrop 내부에서 checkSuccess()를 호출해야 하므로
-  // 여기서는 구조를 전체적으로 수정하는 것이 안전함.
-  // 기존 코드에 덮어쓰기 위해 범위 전체를 재작성하는 것은 비효율적이므로,
-  // initializeMemory를 setupLevel로 변경하고 init 수정, 그리고 기존 로직 유지를 위해 아래와 같이 진행.
-  
-  /// 4 X 4 그리드 형태 가상 메모리 주소를 생성 및 레벨별 초기화
-  private func setupLevel(level: Level) {
-    // 1. 기본 빈 슬롯 16개 생성
-    slots = (0 ..< 16).map {
-      MemorySlot(
-        address: String(format: "0x%04X", 0x7000 + ($0 * 4)),
-        value: nil,
-        type: .empty
-      )
-    }
+  /// 슬롯 탭 처리 (Level 1 판정 포함)
+  func handleTap(_ slot: MemorySlot) {
+    print("클릭된 메모리 주소: \(slot.address)")
     
-    // 2. 레벨별 배치 (Level Design)
-    switch level.id {
-    case 1: // 주소 찾기: 값 10이 들어있는 곳 찾기
-      let targetIndex = Int.random(in: 0..<16)
-      slots[targetIndex].type = .value
-      slots[targetIndex].value = 10
-      codeLog = "// Level 1: 값이 10인 메모리 공간을 찾으세요!"
-      
-    case 2: // 포인터 연결: 변수 p(pointer)가 99(value)를 가리키게 하기
-      slots[0].type = .value
-      slots[0].value = 99
-      
-      slots[4].type = .pointer // p 변수 역할 (초기엔 비어있음)
-      slots[4].pointingTo = nil
-      codeLog = "// Level 2: 포인터 변수(Pointer)를 드래그하여 99를 가리키게 만드세요."
-      
-    case 3: // 이중 포인터: pp -> p -> value
-      slots[0].type = .value
-      slots[0].value = 777
-      
-      slots[1].type = .pointer
-      slots[1].pointingTo = slots[0].address // p -> 777 (이미 연결됨)
-      
-      slots[5].type = .pointer // pp (비어있음)
-      codeLog = "// Level 3: 포인터가 포인터를 가리키게 해보세요."
-      
-    default:
-      codeLog = "// Sandbox Mode"
-    }
-    
-    isSuccess = false
-  }
-  
-  /// 현재 상태가 레벨 클리어 조건을 만족하는지 검사
-  private func checkSuccess() {
-    switch currentLevel.id {
-    case 1:
-      // Level 1: 숫자 찾기 (숨바꼭질)
-      // Level 1 성공 판정은 탭 제스처에서 수행하는 것이 자연스러움 (View에서 처리하거나 별도 함수)
-      // 여기서는 구조상 일단 비워둠.
-      break
-      
-    case 2:
-      // Level 2: 포인터 연결하기 (드래그)
-      // 조건: 값이 99인 슬롯을 가리키는 포인터가 존재하는가?
-      // slots[0]이 99라고 가정 (초기화 로직 기준)
-      let targetAddr = slots[0].address
-      let hasPointer = slots.contains { slot in
-        slot.type == .pointer && slot.pointingTo == targetAddr
-      }
-      if hasPointer { finishLevel() }
-      
-    case 3:
-      // Level 3: 이중 포인터 만들기
-      // 조건: 다른 포인터를 가리키는 포인터(이중 포인터)가 존재하는가?
-      let doublePointer = slots.first { slot in
-        guard slot.type == .pointer, let targetAddr = slot.pointingTo else { return false }
-        // 가리키는 대상(target)도 포인터여야 함
-        if let targetSlot = slots.first(where: { $0.address == targetAddr }) {
-          return targetSlot.type == .pointer
+    // Level 1: 탭한 슬롯이 정답인지 검사
+    if currentLevel.id == 1 {
+      if slot.value == 10 {
+        finishLevel()
+      } else {
+        // 오답 피드백
+        codeLog = "// 거기는 정답이 아닙니다. 값이 10인 곳을 찾아보세요!"
+        if let index = slots.firstIndex(where: { $0.id == slot.id }) {
+          highlightSlot(for: index) // 틀린 곳도 살짝 흔들어주거나 색 표시
         }
-        return false
-      }
-      if doublePointer != nil { finishLevel() }
-      
-    default:
-      break
-    }
-  }
-  
-  /// Level 1: 사용자가 슬롯을 탭했을 때 정답인지 확인
-  func checkLevel1Tap(slot: MemorySlot) {
-    guard currentLevel.id == 1 else { return }
-    
-    // 정답 조건: 값이 10이어야 함
-    if slot.value == 10 {
-      finishLevel()
-    } else {
-      // 오답 피드백
-      codeLog = "// 거기는 정답이 아닙니다. 값이 10인 곳을 찾아보세요!"
-      if let index = slots.firstIndex(where: { $0.id == slot.id }) {
-        highlightSlot(for: index) // 틀린 곳도 살짝 흔들어주거나 색 표시 (일단은 하이라이트만)
       }
     }
-  }
-  
-  private func finishLevel() {
-    isSuccess = true
-    codeLog = "// 축하합니다! Level Clear! 🎉"
   }
   
   /// 드래그 앤 드롭 작업이 완료되었을 때 호출
@@ -212,6 +121,92 @@ final class MemoryGridVM: ObservableObject {
     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
       self.slots[index].isHighlighted = false
     }
+  }
+  
+  /// 4 X 4 그리드 형태 가상 메모리 주소를 생성 및 레벨별 초기화
+  private func setupLevel(level: Level) {
+    // 1. 기본 빈 슬롯 16개 생성
+    slots = (0 ..< 16).map {
+      MemorySlot(
+        address: String(format: "0x%04X", 0x7000 + ($0 * 4)),
+        value: nil,
+        type: .empty
+      )
+    }
+    
+    // 2. 레벨별 배치 (Level Design)
+    switch level.id {
+    case 1: // 주소 찾기: 값 10이 들어있는 곳 찾기
+      let targetIndex = Int.random(in: 0..<16)
+      slots[targetIndex].type = .value
+      slots[targetIndex].value = 10
+      codeLog = "// Level 1: 값이 10인 메모리 공간을 찾으세요!"
+      
+    case 2: // 포인터 연결: 변수 p(pointer)가 99(value)를 가리키게 하기
+      slots[0].type = .value
+      slots[0].value = 99
+      
+      slots[4].type = .pointer // p 변수 역할 (초기엔 비어있음)
+      slots[4].pointingTo = nil
+      codeLog = "// Level 2: 포인터 변수(Pointer)를 드래그하여 99를 가리키게 만드세요."
+      
+    case 3: // 이중 포인터: pp -> p -> value
+      slots[0].type = .value
+      slots[0].value = 777
+      
+      slots[1].type = .pointer
+      slots[1].pointingTo = slots[0].address // p -> 777 (이미 연결됨)
+      
+      slots[5].type = .pointer // pp (비어있음)
+      codeLog = "// Level 3: 포인터가 포인터를 가리키게 해보세요."
+      
+    default:
+      codeLog = "// Sandbox Mode"
+    }
+    
+    isSuccess = false
+  }
+  
+  /// 현재 상태가 레벨 클리어 조건을 만족하는지 검사
+  private func checkSuccess() {
+    switch currentLevel.id {
+    case 1:
+      // Level 1: 숫자 찾기 (숨바꼭질)
+      // Level 1 성공 판정은 탭 제스처에서 수행하는 것이 자연스러움 (View에서 처리하거나 별도 함수)
+      // 여기서는 구조상 일단 비워둠.
+      break
+      
+    case 2:
+      // Level 2: 포인터 연결하기 (드래그)
+      // 조건: 값이 99인 슬롯을 가리키는 포인터가 존재하는가?
+      // slots[0]이 99라고 가정 (초기화 로직 기준)
+      let targetAddr = slots[0].address
+      let hasPointer = slots.contains { slot in
+        slot.type == .pointer && slot.pointingTo == targetAddr
+      }
+      if hasPointer { finishLevel() }
+      
+    case 3:
+      // Level 3: 이중 포인터 만들기
+      // 조건: 다른 포인터를 가리키는 포인터(이중 포인터)가 존재하는가?
+      let doublePointer = slots.first { slot in
+        guard slot.type == .pointer, let targetAddr = slot.pointingTo else { return false }
+        // 가리키는 대상(target)도 포인터여야 함
+        if let targetSlot = slots.first(where: { $0.address == targetAddr }) {
+          return targetSlot.type == .pointer
+        }
+        return false
+      }
+      if doublePointer != nil { finishLevel() }
+      
+    default:
+      break
+    }
+  }
+  
+  private func finishLevel() {
+    isSuccess = true
+    codeLog = "// 축하합니다! Level Clear! 🎉"
   }
   
   /// 4 X 4 그리드 형태 가상 메모리 주소를 생성

@@ -27,8 +27,7 @@ struct MemoryGridView: View {
                   [slot.id: anchor]
                 }
                 .onTapGesture {
-                  print("클릭된 메모리 주소: \(slot.address)")
-                  vm.checkLevel1Tap(slot: slot)
+                  vm.handleTap(slot)
                 }
                 .simultaneousGesture(
                   // 더블 탭 시 역참조(Dereference) 실행
