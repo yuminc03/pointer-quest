@@ -40,19 +40,30 @@ struct MemoryItem: View {
     .frame(height: 100)
     .background(
       RoundedRectangle(cornerRadius: 15)
-        .fill(Color(.secondarySystemGroupedBackground))
+        .fill(
+          slot.isError ? Color.red.opacity(0.3)
+          : (slot.isHighlighted ?
+             Color.yellow.opacity(0.3) : Color(.secondarySystemGroupedBackground)
+            )
+        )
         .overlay(
-          slot.isHighlighted ? .yellow.opacity(0.2) : .clear,
+          slot.isError ? .red.opacity(0.2) : (slot.isHighlighted ? .yellow.opacity(0.2) : .clear),
           in: RoundedRectangle(cornerRadius: 15)
         )
     )
     .overlay(
       RoundedRectangle(cornerRadius: 15)
         .stroke(
-          slot.type == .pointer ? .blue :
-            (slot.type == .value ? .green : .clear),
+          slot.isError ? .red :
+            (slot.type == .pointer ? .blue :
+              (slot.type == .value ? .green : .clear)),
           lineWidth: 2
         )
+    )
+    .modifier(ShakeEffect(animatableData: slot.isError ? 1 : 0))
+    .animation(
+      .spring(response: 0.3, dampingFraction: 0.2, blendDuration: 0),
+      value: slot.isError
     )
     .draggable(slot.address)
     .dropDestination(for: String.self) { droppedAddresses, location in

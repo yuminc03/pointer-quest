@@ -17,4 +17,6 @@ struct MemorySlot: Identifiable, Hashable {
   /// UI에서 사용자가 해당 칸을 선택하거나
   /// 포인터 추적(Trace) 중일 때 시각적으로 강조하기 위한 상태값
   var isHighlighted = false
+  /// 오류 발생 시 시각적 피드백(흔들림, 빨간색)을 주기 위한 상태값
+  var isError = false
 }

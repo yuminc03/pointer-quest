@@ -28,7 +28,7 @@ final class MemoryGridVM: ObservableObject {
         // 오답 피드백
         codeLog = "// 거기는 정답이 아닙니다. 값이 10인 곳을 찾아보세요!"
         if let index = slots.firstIndex(where: { $0.id == slot.id }) {
-          highlightSlot(for: index) // 틀린 곳도 살짝 흔들어주거나 색 표시
+          triggerError(for: index)
         }
       }
     }
@@ -111,6 +111,16 @@ final class MemoryGridVM: ObservableObject {
     // 3. 대상 슬롯 하이라이트 (포인터를 따라간 효과)
     print("역참조 성공! \(pointerAddr) -> \(targetAddr) (Value: \(slots[targetIndex].value ?? 0))")
     highlightSlot(for: targetIndex)
+  }
+  
+  /// 에러 발생 시 시각적 피드백 (흔들림 + 빨간색)
+  private func triggerError(for index: Int) {
+    slots[index].isError = true
+    
+    // 0.5초(애니메이션 시간) 후 해제
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+      self.slots[index].isError = false
+    }
   }
   
   /// slot 변경 시 일시적인 하이라이트 효과로 사용자에게 알림
