@@ -32,8 +32,7 @@ struct MainMenuView: View {
       }
       .background(Color(.systemGroupedBackground))
       .navigationDestination(for: Level.self) { level in
-        // TODO: MemoryGridView에 레벨 주입 필요
-        MemoryGridView()
+        MemoryGridView(level: level)
           .navigationBarTitleDisplayMode(.inline)
       }
     }
