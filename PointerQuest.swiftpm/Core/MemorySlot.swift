@@ -19,4 +19,14 @@ struct MemorySlot: Identifiable, Hashable {
   var isHighlighted = false
   /// 오류 발생 시 시각적 피드백(흔들림, 빨간색)을 주기 위한 상태값
   var isError = false
+  
+  /// 메모리 슬롯의 역할
+  enum SlotType {
+    /// 일반 변수
+    case value
+    /// 주소값
+    case pointer
+    /// 빈 공간
+    case empty
+  }
 }
