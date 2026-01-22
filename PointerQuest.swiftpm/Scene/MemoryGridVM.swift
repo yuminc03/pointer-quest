@@ -107,6 +107,8 @@ final class MemoryGridVM: ObservableObject {
     // 로그 업데이트
     if let value = slots[targetIndex].value {
       codeLog = "printf(\"%d\", *p); // 값: \(value)"
+    } else if slots[targetIndex].type == .pointer {
+      codeLog = "printf(\"%p\", *p); // 포인터 주소: \(slots[targetIndex].pointingTo ?? "nil")"
     } else {
       codeLog = "// 역참조 성공! (값 없음)"
     }
