@@ -104,7 +104,7 @@ final class MemoryGridVM: ObservableObject {
           let targetAddr = pointerSlot.pointingTo,
           let targetIndex = slots.firstIndex(where: { $0.address == targetAddr })
     else {
-      // 포인터가 아니거나 가리키는 대상이 없는 경우 (추후 에러 피드백 추가 가능)
+      // 포인터가 아니거나 가리키는 대상이 없는 경우
       print("역참조 실패: 유효한 포인터가 아닙니다.")
       codeLog = "// Error: 유효하지 않은 포인터입니다."
       triggerError(for: pointerIndex)
@@ -196,8 +196,7 @@ final class MemoryGridVM: ObservableObject {
     switch currentLevel.id {
     case 1:
       // Level 1: 숫자 찾기 (숨바꼭질)
-      // Level 1 성공 판정은 탭 제스처에서 수행하는 것이 자연스러움 (View에서 처리하거나 별도 함수)
-      // 여기서는 구조상 일단 비워둠.
+      // Level 1 성공 판정은 handleTap()에서 수행됨
       break
       
     case 2:
