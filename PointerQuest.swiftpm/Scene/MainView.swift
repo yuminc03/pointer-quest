@@ -4,16 +4,8 @@ struct MainView: View {
   var body: some View {
     NavigationStack {
       VStack(spacing: 30) {
-        // 타이틀 영역
-        VStack(spacing: 8) {
-          Text("Pointer Quest")
-            .font(.system(size: 36, weight: .bold, design: .monospaced))
-            .foregroundStyle(.primary)
-          Text("The Memory Maze")
-            .font(.title3)
-            .foregroundStyle(.secondary)
-        }
-        .padding(.top, 40)
+        Title
+          .padding(.top, 40)
         
         // 레벨 선택 그리드
         ScrollView {
@@ -35,6 +27,19 @@ struct MainView: View {
         MemoryGridView(level: level)
           .navigationBarTitleDisplayMode(.inline)
       }
+    }
+  }
+}
+
+private extension MainView {
+  var Title: some View {
+    VStack(spacing: 8) {
+      Text("Pointer Quest")
+        .font(.system(size: 36, weight: .bold, design: .monospaced))
+        .foregroundStyle(.primary)
+      Text("The Memory Maze")
+        .font(.title3)
+        .foregroundStyle(.secondary)
     }
   }
 }
