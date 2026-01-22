@@ -107,16 +107,19 @@ final class MemoryGridVM: ObservableObject {
       // 포인터가 아니거나 가리키는 대상이 없는 경우 (추후 에러 피드백 추가 가능)
       print("역참조 실패: 유효한 포인터가 아닙니다.")
       codeLog = "// Error: 유효하지 않은 포인터입니다."
+      triggerError(for: pointerIndex)
       return
     }
     
     // 로그 업데이트
-    if let value = slots[targetIndex].value {
+    let targetSlot = slots[targetIndex]
+    if let value = targetSlot.value {
       codeLog = "printf(\"%d\", *p); // 값: \(value)"
-    } else if slots[targetIndex].type == .pointer {
-      codeLog = "printf(\"%p\", *p); // 포인터 주소: \(slots[targetIndex].pointingTo ?? "nil")"
+    } else if targetSlot.type == .pointer {
+      // 이중 포인터인 경우 더 명확한 로그 제공
+      codeLog = "printf(\"%p\", *p); // 이중 포인터 (가리키는 대상도 포인터)"
     } else {
-      codeLog = "// 역참조 성공! (값 없음)"
+      codeLog = "printf(\"%p\", *p); // 주소: \(targetAddr)"
     }
     
     // 3. 대상 슬롯 하이라이트 (포인터를 따라간 효과)
