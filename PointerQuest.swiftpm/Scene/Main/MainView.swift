@@ -7,20 +7,7 @@ struct MainView: View {
         Title
           .padding(.top, 40)
         
-        // 레벨 선택 그리드
-        ScrollView {
-          LazyVGrid(
-            columns: [GridItem(.adaptive(minimum: 150), spacing: 20)],
-            spacing: 20
-          ) {
-            ForEach(LevelData.levels) { level in
-              NavigationLink(value: level) {
-                LevelCard(level: level)
-              }
-            }
-          }
-          .padding()
-        }
+        Cards
       }
       .background(Color(.systemGroupedBackground))
       .navigationDestination(for: Level.self) { level in
@@ -40,6 +27,22 @@ private extension MainView {
       Text("The Memory Maze")
         .font(.title3)
         .foregroundStyle(.secondary)
+    }
+  }
+  
+  var Cards: some View {
+    ScrollView {
+      LazyVGrid(
+        columns: [GridItem(.adaptive(minimum: 150), spacing: 20)],
+        spacing: 20
+      ) {
+        ForEach(LevelData.levels) { level in
+          NavigationLink(value: level) {
+            LevelCard(level: level)
+          }
+        }
+      }
+      .padding()
     }
   }
 }
