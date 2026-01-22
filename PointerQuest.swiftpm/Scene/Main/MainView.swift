@@ -31,14 +31,11 @@ private extension MainView {
   }
   
   var Cards: some View {
-    ScrollView {
-      LazyVGrid(
-        columns: [GridItem(.adaptive(minimum: 150), spacing: 20)],
-        spacing: 20
-      ) {
+    ScrollView(.horizontal, showsIndicators: false) {
+      LazyHStack(spacing: 20) {
         ForEach(LevelData.levels) { level in
           NavigationLink(value: level) {
-            LevelCard(level: level)
+            LevelCard(level: level, color: .blue)
           }
         }
       }
