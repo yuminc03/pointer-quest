@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct MainMenuView: View {
+struct MainView: View {
   var body: some View {
     NavigationStack {
       VStack(spacing: 30) {
@@ -81,5 +81,5 @@ struct LevelCard: View {
 }
 
 #Preview {
-  MainMenuView()
+  MainView()
 }
