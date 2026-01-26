@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct MainView: View {
+  @State private var pageIndex = 0
+  
   var body: some View {
     NavigationStack {
       VStack(spacing: 30) {
@@ -9,6 +11,9 @@ struct MainView: View {
           .padding(.top, 40)
         
         Cards
+        
+        PageIndicator
+          .padding(.bottom, 40)
       }
       .background(Color(.systemGroupedBackground))
       .navigationDestination(for: Level.self) { level in
@@ -30,6 +35,17 @@ private extension MainView {
         .foregroundStyle(.secondary)
     }
     .frame(maxWidth: .infinity, alignment: .leading)
+  }
+  
+  var PageIndicator: some View {
+    HStack {
+      PageControl(
+        numberOfPages: LevelData.levels.count,
+        currentPage: $pageIndex
+      )
+      .aspectRatio(contentMode: .fit)
+      .frame(width: 90, height: 10)
+    }
   }
   
   var Cards: some View {
