@@ -14,7 +14,8 @@ struct PagingCardsScrollView: View {
   
   /// 카드 너비
   var cardWidth: CGFloat {
-    return screenWidth - 120
+    return screenWidth - 100
+  }
   
   /// 카드 높이
   var cardHieght: CGFloat {
