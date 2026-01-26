@@ -49,16 +49,10 @@ private extension MainView {
   }
   
   var Cards: some View {
-    ScrollView(.horizontal, showsIndicators: false) {
-      LazyHStack(spacing: 20) {
-        ForEach(LevelData.levels) { level in
-          NavigationLink(value: level) {
-            LevelCard(level: level, color: .blue)
-          }
-        }
-      }
-      .padding()
-    }
+    PagingCardsScrollView(
+      currentPageIndex: $pageIndex,
+      cards: LevelData.levels
+    )
   }
 }
 

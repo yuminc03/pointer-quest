@@ -8,7 +8,7 @@ struct PagingCardsScrollView: View {
   
   let cards: [Level]
   private let scrollDampingFactor: CGFloat = 0.6
-    
+  
   /// 최대 index
   var maxIndex: Int {
     return cards.count - 1
@@ -135,7 +135,7 @@ struct PagingCardsScrollView: View {
     // 0보다 작으면 0, 마지막 index(maxIndex)보다 크면 maxIndex로 고정
     return min(max(index, 0), maxIndex)
   }
-    
+  
   /// 현재 보여주어야 할 스크롤 위치 실시간 계산
   private func getCurrentScrollOffset() -> CGFloat {
     return pagingOffset(for: currentPageIndex) + dragOffset
