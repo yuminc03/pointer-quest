@@ -2,7 +2,7 @@ import SwiftUI
 
 /// 카드 스크롤 View
 struct PagingCardsScrollView: View {
-  @State private var currentScrollOffset: CGFloat = 0
+  @State private var currentScrollOffset: CGFloat = 0 // 현재 scroll 위치
   @State private var dragOffset: CGFloat = 0 // 사용자가 drag한 양
   @Binding var currentPageIndex: Int
   
@@ -86,6 +86,10 @@ struct PagingCardsScrollView: View {
         }
     )
     .contentShape(Rectangle())
+    .onChange(of: currentPageIndex) { _ in
+      withAnimation {
+        currentScrollOffset = pagingOffset(for: currentPageIndex)
+      }
     }
   }
   
