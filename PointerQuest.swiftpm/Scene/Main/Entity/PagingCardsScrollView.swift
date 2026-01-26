@@ -38,6 +38,8 @@ struct PagingCardsScrollView: View {
         }
       }
     }
+    .frame(width: screenWidth)
+    .offset(x: currentScrollOffset, y: 0)
     .onAppear {
       currentScrollOffset = pagingOffset(for: currentPage)
     }
