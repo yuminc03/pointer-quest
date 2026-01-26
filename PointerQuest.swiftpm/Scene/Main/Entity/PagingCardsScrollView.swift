@@ -84,6 +84,7 @@ struct PagingCardsScrollView: View {
           }
         }
     )
+    .contentShape(Rectangle())
     }
   }
   
