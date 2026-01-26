@@ -5,6 +5,7 @@ struct MainView: View {
     NavigationStack {
       VStack(spacing: 30) {
         Title
+          .padding(.horizontal, 20)
           .padding(.top, 40)
         
         Cards
