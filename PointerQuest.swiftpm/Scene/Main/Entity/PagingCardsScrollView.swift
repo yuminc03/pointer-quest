@@ -9,6 +9,11 @@ struct PagingCardsScrollView: View {
   let cards: [Level]
   private let scrollDampingFactor: CGFloat = 0.6
     
+  /// 최대 index
+  var maxIndex: Int {
+    return cards.count - 1
+  }
+  
   /// 화면 너비
   var screenWidth: CGFloat {
     return UIScreen.main.bounds.width
@@ -104,13 +109,32 @@ struct PagingCardsScrollView: View {
   }
   
   /// 현재 페이지
+  /// 현재 카드가 화면 중앙에 있을 때 스크롤 좌표 위치
   private func currentPage(for offset: CGFloat) -> Int {
+    guard maxIndex > 0 else { return 0 }
+    
     // 이동한 논리적 거리
     // offset이 작아질수록(왼쪽 이동) 논리적 거리는 커져야 하므로 -1을 곱함
-    let logicalOffset = (offset - initialOffset) * -1.0
+    // 왼쪽으로 스크롤하면 offset은 음수가 커짐
+    let logicalOffset = (offset - initialOffset) * -1
     
     // 대략적인 페이지 번호(실수) = (이동한 거리) / (카드 1개 크기)
-    let index = logicalOffset / (cardWidth + cardPadding)
+    // ex) 이동 거리가 400이고, 아이템 폭이 100이라면 -> 4.0 페이지
+    let floatIndex = logicalOffset / (cardWidth + cardPadding)
+    // 반올림한 index
+    let roundedIndex = Int(round(floatIndex))
+    let index: Int
+    
+    // 계산된 index가 item 개수보다 크지 않게 조정
+    if max(roundedIndex, 0) > maxIndex {
+      index = maxIndex
+    } else {
+      index = roundedIndex
+    }
+    
+    // 0보다 작으면 0, 마지막 index(maxIndex)보다 크면 maxIndex로 고정
+    return min(max(index, 0), maxIndex)
+  }
     
   /// 현재 보여주어야 할 스크롤 위치 실시간 계산
   private func getCurrentScrollOffset() -> CGFloat {
