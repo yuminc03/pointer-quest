@@ -46,6 +46,12 @@ struct PagingCardsScrollView: View {
       LazyHStack(alignment: .center, spacing: cardPadding) {
         ForEach(cards) { card in
           LevelCard(level: card, color: .blue)
+            .rotation3DEffect(
+              .init(
+                degrees: (Double(proxy.frame(in: .global).minX) - 20) / 45
+              ),
+              axis: (x: 0, y: 90, z: 0)
+            )
             .frame(width: cardWidth, height: cardHieght)
         }
       }
