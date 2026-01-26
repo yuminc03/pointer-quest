@@ -52,6 +52,10 @@ struct PagingCardsScrollView: View {
               ),
               axis: (x: 0, y: 90, z: 0)
             )
+            .scaleEffect(
+              currentPageIndex == LevelData.levels.firstIndex(of: card) ?? 0
+              ? 1.05 : 1
+            )
             .frame(width: cardWidth, height: cardHieght)
         }
       }
@@ -77,7 +81,7 @@ struct PagingCardsScrollView: View {
           let currentItemOffset = CGFloat(currentPageIndex) * (cardWidth + cardPadding)
           
           if currentScrollOffset < -currentItemOffset
-             && newPageIndex == currentPageIndex
+              && newPageIndex == currentPageIndex
           {
             newPageIndex += 1
           }
