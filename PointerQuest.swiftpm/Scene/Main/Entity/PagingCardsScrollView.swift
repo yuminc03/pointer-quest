@@ -30,7 +30,7 @@ struct PagingCardsScrollView: View {
   /// 카드가 가운데 오도록 필요
   /// 카드 여백 + ((화면너비 - 카드너비) / 2)
   var initialOffset: CGFloat {
-    return cardPadding + ((screenWidth - cardWidth) / 2)
+    return (screenWidth - cardWidth) / 2
   }
   
   var body: some View {
