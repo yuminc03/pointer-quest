@@ -15,6 +15,10 @@ struct PagingCardsScrollView: View {
   /// 카드 너비
   var cardWidth: CGFloat {
     return screenWidth - 120
+  
+  /// 카드 높이
+  var cardHieght: CGFloat {
+    return (cardWidth / 2.5) * 3.5
   }
   
   /// 카드 여백 (카드 사이 간격)
@@ -34,7 +38,7 @@ struct PagingCardsScrollView: View {
       LazyHStack(alignment: .center, spacing: cardPadding) {
         ForEach(cards) { card in
           LevelCard(level: card, color: .blue)
-            .frame(width: cardWidth)
+            .frame(width: cardWidth, height: cardHieght)
         }
       }
     }

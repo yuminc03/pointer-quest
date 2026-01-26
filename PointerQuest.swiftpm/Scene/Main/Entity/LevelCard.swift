@@ -11,6 +11,8 @@ struct LevelCard: View {
         .padding(.bottom, 30)
       
       Contents
+      
+      Spacer()
     }
     .padding(20)
     .background(
