@@ -21,14 +21,15 @@ struct MainView: View {
 
 private extension MainView {
   var Title: some View {
-    VStack(spacing: 8) {
+    VStack(alignment: .leading, spacing: 8) {
       Text("Pointer Quest")
-        .font(.system(size: 36, weight: .bold, design: .monospaced))
+        .font(.system(size: 36, weight: .bold))
         .foregroundStyle(.primary)
       Text("The Memory Maze")
         .font(.title3)
         .foregroundStyle(.secondary)
     }
+    .frame(maxWidth: .infinity, alignment: .leading)
   }
   
   var Cards: some View {
