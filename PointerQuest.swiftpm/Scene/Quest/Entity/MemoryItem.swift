@@ -52,6 +52,15 @@ struct MemoryItem: View {
         )
     )
     .overlay(
+    Group {
+        if slot.isLocked {
+          Image(systemName: "lock.fill")
+            .font(.largeTitle)
+            .foregroundStyle(.gray.opacity(0.3))
+        }
+      }
+    )
+    .overlay(
       RoundedRectangle(cornerRadius: 15)
         .stroke(
           slot.isError ? .red :
