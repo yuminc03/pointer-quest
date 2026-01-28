@@ -45,18 +45,9 @@ struct PagingCardsScrollView: View {
     GeometryReader { proxy in
       LazyHStack(alignment: .center, spacing: cardPadding) {
         ForEach(cards) { card in
-          LevelCard(level: card, color: .blue)
-            .rotation3DEffect(
-              .init(
-                degrees: (Double(proxy.frame(in: .global).minX) - 20) / 45
-              ),
-              axis: (x: 0, y: 90, z: 0)
-            )
-            .scaleEffect(
-              currentPageIndex == LevelData.levels.firstIndex(of: card) ?? 0
-              ? 1.05 : 1
-            )
-            .frame(width: cardWidth, height: cardHieght)
+          NavigationLink(value: card) {
+            levelCard(level: card, proxy: proxy)
+          }
         }
       }
     }
@@ -149,6 +140,23 @@ struct PagingCardsScrollView: View {
   /// 현재 보여주어야 할 스크롤 위치 실시간 계산
   private func getCurrentScrollOffset() -> CGFloat {
     return pagingOffset(for: currentPageIndex) + dragOffset
+  }
+}
+
+private extension PagingCardsScrollView {
+  private func levelCard(level: Level, proxy: GeometryProxy) -> some View {
+    LevelCard(level: level, color: .blue)
+      .rotation3DEffect(
+        .init(
+          degrees: (Double(proxy.frame(in: .global).minX) - 20) / 45
+        ),
+        axis: (x: 0, y: 90, z: 0)
+      )
+      .scaleEffect(
+        currentPageIndex == LevelData.levels.firstIndex(of: level) ?? 0
+        ? 1.05 : 1
+      )
+      .frame(width: cardWidth, height: cardHieght)
   }
 }
 
