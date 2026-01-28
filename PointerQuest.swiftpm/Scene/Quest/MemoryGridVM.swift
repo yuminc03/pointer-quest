@@ -215,6 +215,29 @@ final class MemoryGridVM: ObservableObject {
       
       slots[5].type = .pointer // pp (비어있음)
       codeLog = "// Level 3: 포인터가 포인터를 가리키게 해보세요."
+    case 3: // 체인 연결: Start -> A -> B -> Treasure
+      // Start (Pointer) -> A (Pointer) -> B (Pointer) -> Treasure (Value)
+      
+      // Treasure
+      let treasureIndex = 15 // 0x703C
+      slots[treasureIndex].type = .value
+      slots[treasureIndex].value = 999
+      
+      // Node B (Pointer)
+      let nodeBIndex = 11 // 0x702C
+      slots[nodeBIndex].type = .pointer
+      // slots[nodeBIndex].pointingTo = slots[treasureIndex].address // 사용자가 연결해야 함.
+      
+      // Node A (Pointer)
+      let nodeAIndex = 5 // 0x7014
+      slots[nodeAIndex].type = .pointer
+      // slots[nodeAIndex].pointingTo = slots[nodeBIndex].address // 사용자가 연결해야 함
+      
+      // Start (Pointer)
+      let startIndex = 0 // 0x7000
+      slots[startIndex].type = .pointer
+       
+      codeLog = "// Level 3: Start(0x7000)부터 보물(0x703C)까지 연결 고리를 만드세요."
       
     default:
       codeLog = "// Sandbox Mode"
@@ -244,17 +267,18 @@ final class MemoryGridVM: ObservableObject {
       if hasConnectionToLink { finishLevel() }
       
     case 3:
-      // Level 3: 이중 포인터 만들기
-      // 조건: 다른 포인터를 가리키는 포인터(이중 포인터)가 존재하는가?
-      let doublePointer = slots.first { slot in
-        guard slot.type == .pointer, let targetAddr = slot.pointingTo else { return false }
-        // 가리키는 대상(target)도 포인터여야 함
-        if let targetSlot = slots.first(where: { $0.address == targetAddr }) {
-          return targetSlot.type == .pointer
-        }
-        return false
-      }
-      if doublePointer != nil { finishLevel() }
+      // Level 3: Chain 연결 확인
+      // Start(0) -> A(5) -> B(11) -> Treasure(15)
+      let startSlot = slots[0]
+      let nodeA = slots[5]
+      let nodeB = slots[11]
+      let treasure = slots[15] // 0x703C
+      
+      let isConnected = (startSlot.pointingTo == nodeA.address) &&
+                        (nodeA.pointingTo == nodeB.address) &&
+                        (nodeB.pointingTo == treasure.address)
+      
+      if isConnected { finishLevel() }
       
     default:
       break

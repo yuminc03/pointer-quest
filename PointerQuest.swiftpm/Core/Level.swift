@@ -17,8 +17,8 @@ struct LevelData {
     ),
     .init(
       id: 3,
-      title: "Level 3: 이중 포인터",
-      description: "포인터도 메모리에 저장됩니다.\n포인터를 가리키는 포인터를 만들어보세요.",
+      title: "Level 3: 체인 연결",
+      description: "데이터에 도달하기 위한 경로를 만드세요.\nStart -> Node A -> Node B -> Treasure 순서로 연결하세요.",
       iconName: "link"
     )
   ]
