@@ -23,11 +23,11 @@ final class MemoryGridVM: ObservableObject {
     // Level 2: 잠긴 슬롯 탭 시 에러 피드백
     if slot.isLocked {
       codeLog = "// Error: 접근 거부! 메모리가 잠겨있습니다. (Access Denied)"
-        if let index = slots.firstIndex(where: { $0.id == slot.id }) {
-          triggerError(for: index)
-        }
-      return
+      if let index = slots.firstIndex(where: { $0.id == slot.id }) {
+        triggerError(for: index)
       }
+      return
+    }
     
     // 기본 동작: 그냥 로그만 출력
     if let value = slot.value {
@@ -62,9 +62,9 @@ final class MemoryGridVM: ObservableObject {
     if let targetIndex = slots.firstIndex(where: { $0.address == destinationAddress }),
        currentLevel.id == 2 && slots[targetIndex].isLocked
     {
-       codeLog = "// Error: 보안 위배! 직접 접근할 수 없는 메모리입니다. (Access Denied)"
-       triggerError(for: targetIndex)
-       return
+      codeLog = "// Error: 보안 위배! 직접 접근할 수 없는 메모리입니다. (Access Denied)"
+      triggerError(for: targetIndex)
+      return
     }
     
     // 2. 드래그한 슬롯을 pointer 타입으로 변경하고, 대상의 주소를 저장
@@ -224,7 +224,7 @@ final class MemoryGridVM: ObservableObject {
       // Start (Pointer)
       let startIndex = 0 // 0x7000
       slots[startIndex].type = .pointer
-       
+      
       codeLog = "// Level 3: Start(0x7000)부터 보물(0x703C)까지 연결 고리를 만드세요."
       
     default:
@@ -263,8 +263,8 @@ final class MemoryGridVM: ObservableObject {
       let treasure = slots[15] // 0x703C
       
       let isConnected = (startSlot.pointingTo == nodeA.address) &&
-                        (nodeA.pointingTo == nodeB.address) &&
-                        (nodeB.pointingTo == treasure.address)
+      (nodeA.pointingTo == nodeB.address) &&
+      (nodeB.pointingTo == treasure.address)
       
       if isConnected { finishLevel() }
       
