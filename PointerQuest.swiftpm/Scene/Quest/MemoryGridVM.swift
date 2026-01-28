@@ -16,6 +16,11 @@ final class MemoryGridVM: ObservableObject {
     self.setupLevel(level: level)
   }
   
+  /// 현재 레벨 상태 초기화
+  func reset() {
+    setupLevel(level: currentLevel)
+  }
+    
   /// 슬롯 탭 처리
   func handleTap(_ slot: MemorySlot) {
     print("클릭된 메모리 주소: \(slot.address)")

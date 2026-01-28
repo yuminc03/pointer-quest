@@ -52,6 +52,15 @@ struct MemoryGridView: View {
     }
     .navigationTitle(vm.currentLevel.title)
     .background(Color(.systemGroupedBackground))
+    .toolbar {
+      ToolbarItem(placement: .topBarTrailing) {
+        Button(action: {
+          vm.reset()
+        }) {
+          Image(systemName: "arrow.counterclockwise")
+        }
+      }
+    }
     .safeAreaInset(edge: .bottom) {
       CodeFeedbackView(code: vm.codeLog)
         .padding()
