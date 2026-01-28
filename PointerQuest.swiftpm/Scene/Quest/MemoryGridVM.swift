@@ -175,11 +175,11 @@ final class MemoryGridVM: ObservableObject {
     
     // 2. 레벨별 배치 (Level Design)
     switch level.id {
-    case 1: // 주소 찾기: 값 10이 들어있는 곳 찾기
-      let targetIndex = Int.random(in: 0..<16)
+    case 1: // 주소의 중요성: 0x700C 찾기
+      // 0x700C = 0x7000 + 12 (index 3)
+      let targetIndex = 3
       slots[targetIndex].type = .value
-      slots[targetIndex].value = 10
-      codeLog = "// Level 1: 값이 10인 메모리 공간을 찾으세요!"
+      slots[targetIndex].value = 100 // 값은 중요하지 않음
       
     case 2: // 포인터 연결: 변수 p(pointer)가 99(value)를 가리키게 하기
       slots[0].type = .value
