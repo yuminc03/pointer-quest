@@ -16,21 +16,24 @@ final class MemoryGridVM: ObservableObject {
     self.setupLevel(level: level)
   }
   
-  /// 슬롯 탭 처리 (Level 1 판정 포함)
+  /// 슬롯 탭 처리
   func handleTap(_ slot: MemorySlot) {
     print("클릭된 메모리 주소: \(slot.address)")
     
-    // Level 1: 탭한 슬롯이 정답인지 검사
-    if currentLevel.id == 1 {
-      if slot.value == 10 {
-        finishLevel()
-      } else {
-        // 오답 피드백
-        codeLog = "// 거기는 정답이 아닙니다. 값이 10인 곳을 찾아보세요!"
+    // Level 2: 잠긴 슬롯 탭 시 에러 피드백
+    if slot.isLocked {
+      codeLog = "// Error: 접근 거부! 메모리가 잠겨있습니다. (Access Denied)"
         if let index = slots.firstIndex(where: { $0.id == slot.id }) {
           triggerError(for: index)
         }
+      return
       }
+    
+    // 기본 동작: 그냥 로그만 출력
+    if let value = slot.value {
+      codeLog = "int val = \(value); // Value at \(slot.address)"
+    } else {
+      codeLog = "// Address: \(slot.address)"
     }
   }
   
@@ -195,9 +198,11 @@ final class MemoryGridVM: ObservableObject {
   private func checkSuccess() {
     switch currentLevel.id {
     case 1:
-      // Level 1: 숫자 찾기 (숨바꼭질)
-      // Level 1 성공 판정은 handleTap()에서 수행됨
-      break
+      // Level 1: 0x700C 주소를 가리키는 포인터가 있는가?
+      let hasCorrectPointer = slots.contains { slot in
+        slot.type == .pointer && slot.pointingTo == "0x700C"
+      }
+      if hasCorrectPointer { finishLevel() }
       
     case 2:
       // Level 2: 포인터 연결하기 (드래그)

@@ -5,8 +5,8 @@ struct LevelData {
   static let levels: [Level] = [
     .init(
       id: 1,
-      title: "Level 1: 주소 찾기",
-      description: "메모리의 기본 개념인 '주소'를 이해하세요.\n값이 들어있는 방번호를 찾아보세요.",
+      title: "Level 1: 주소의 중요성",
+      description: "값이 아니라 '주소'가 중요합니다.\n포인터를 드래그하여 주소 0x700C를 가리키게 하세요.",
       iconName: "map"
     ),
     .init(
