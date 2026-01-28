@@ -181,24 +181,10 @@ final class MemoryGridVM: ObservableObject {
       slots[targetIndex].type = .value
       slots[targetIndex].value = 100 // 값은 중요하지 않음
       
-    case 2: // 포인터 연결: 변수 p(pointer)가 99(value)를 가리키게 하기
-      slots[0].type = .value
-      slots[0].value = 99
+      // 포인터 변수 준비
+      slots[8].type = .pointer
+      codeLog = "// Level 1: 포인터를 드래그하여 주소 0x700C를 가리키게 하세요."
       
-      slots[4].type = .pointer // p 변수 역할 (초기엔 비어있음)
-      slots[4].pointingTo = nil
-      codeLog = "// Level 2: 포인터 변수(Pointer)를 드래그하여 99를 가리키게 만드세요."
-      
-      slots[targetIndex].value = 10
-      codeLog = "// Level 1: 값이 10인 메모리 공간을 찾으세요!"
-      
-    case 2: // 포인터 연결: 변수 p(pointer)가 99(value)를 가리키게 하기
-      slots[0].type = .value
-      slots[0].value = 99
-      
-      slots[4].type = .pointer // p 변수 역할 (초기엔 비어있음)
-      slots[4].pointingTo = nil
-      codeLog = "// Level 2: 포인터 변수(Pointer)를 드래그하여 99를 가리키게 만드세요."
     case 2: // 징검다리 포인터: 직접 접근 금지, 중계 포인터 이용
       // Target Value (Locked)
       let targetIndex = 7 // 0x701C
