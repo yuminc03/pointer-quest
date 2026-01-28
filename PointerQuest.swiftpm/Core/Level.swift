@@ -5,19 +5,19 @@ struct LevelData {
   static let levels: [Level] = [
     .init(
       id: 1,
-      title: "Level 1: 주소의 중요성",
+      title: "주소의 중요성",
       description: "값이 아니라 '주소'가 중요합니다.\n포인터를 드래그하여 주소 0x700C를 가리키게 하세요.",
       iconName: "map"
     ),
     .init(
       id: 2,
-      title: "Level 2: 징검다리 포인터",
+      title: "징검다리 포인터",
       description: "데이터가 보안 시스템(Lock)으로 보호받고 있습니다.\n직접 접근하지 말고, 이미 연결된 '중계 포인터'를 찾아서 연결하세요.",
       iconName: "arrow.triangle.merge"
     ),
     .init(
       id: 3,
-      title: "Level 3: 체인 연결",
+      title: "체인 연결",
       description: "데이터에 도달하기 위한 경로를 만드세요.\nStart -> Node A -> Node B -> Treasure 순서로 연결하세요.",
       iconName: "link"
     )

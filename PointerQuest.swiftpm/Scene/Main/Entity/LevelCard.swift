@@ -42,10 +42,14 @@ private extension LevelCard {
   
   var Contents: some View {
     VStack(alignment: .leading, spacing: 10) {
-      Text(level.title)
-        .font(.title)
-        .fontWeight(.bold)
-        .lineLimit(1)
+      VStack(alignment: .leading, spacing: 0) {
+        Text("Level \(level.id)".uppercased())
+        
+        Text(level.title)
+          .lineLimit(1)
+      }
+      .font(.title)
+      .fontWeight(.bold)
       
       Text(level.description)
         .font(.body)
