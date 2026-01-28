@@ -192,15 +192,17 @@ final class MemoryGridVM: ObservableObject {
       slots[targetIndex].value = 777
       slots[targetIndex].isLocked = true // 직접 연결 불가
       
-    case 3: // 이중 포인터: pp -> p -> value
-      slots[0].type = .value
-      slots[0].value = 777
+      // Link Pointer (Existing Pointer)
+      let linkIndex = 5 // 0x7014
+      slots[linkIndex].type = .pointer
+      slots[linkIndex].pointingTo = slots[targetIndex].address // Link -> Target
       
-      slots[1].type = .pointer
-      slots[1].pointingTo = slots[0].address // p -> 777 (이미 연결됨)
+      // My Pointer
+      let myPointerIndex = 14 // 0x7038
+      slots[myPointerIndex].type = .pointer
       
-      slots[5].type = .pointer // pp (비어있음)
-      codeLog = "// Level 3: 포인터가 포인터를 가리키게 해보세요."
+      codeLog = "// Level 2: 데이터(0x701C)는 잠겨있습니다. 직접 접근하지 말고 '다른 포인터'를 통해 접근하세요."
+      
     case 3: // 체인 연결: Start -> A -> B -> Treasure
       // Start (Pointer) -> A (Pointer) -> B (Pointer) -> Treasure (Value)
       
