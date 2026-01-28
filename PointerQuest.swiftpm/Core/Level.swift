@@ -11,9 +11,9 @@ struct LevelData {
     ),
     .init(
       id: 2,
-      title: "Level 2: 포인터 연결",
-      description: "포인터 변수를 만들고 값(Value)을 가리키게(Reference) 해보세요.",
-      iconName: "arrow.triangle.branch"
+      title: "Level 2: 징검다리 포인터",
+      description: "데이터가 보안 시스템(Lock)으로 보호받고 있습니다.\n직접 접근하지 말고, 이미 연결된 '중계 포인터'를 찾아서 연결하세요.",
+      iconName: "arrow.triangle.merge"
     ),
     .init(
       id: 3,

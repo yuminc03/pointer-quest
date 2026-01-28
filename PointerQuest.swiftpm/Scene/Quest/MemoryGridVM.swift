@@ -58,6 +58,15 @@ final class MemoryGridVM: ObservableObject {
       return
     }
     
+    // Level 2: 잠긴 슬롯 직접 연결 시도 방지 (Security Check)
+    if let targetIndex = slots.firstIndex(where: { $0.address == destinationAddress }),
+       currentLevel.id == 2 && slots[targetIndex].isLocked
+    {
+       codeLog = "// Error: 보안 위배! 직접 접근할 수 없는 메모리입니다. (Access Denied)"
+       triggerError(for: targetIndex)
+       return
+    }
+    
     // 2. 드래그한 슬롯을 pointer 타입으로 변경하고, 대상의 주소를 저장
     // C 언어의 `source = &destination;`과 같은 논리
     slots[sourceIndex].type = .pointer
@@ -128,6 +137,9 @@ final class MemoryGridVM: ObservableObject {
     // 3. 대상 슬롯 하이라이트 (포인터를 따라간 효과)
     print("역참조 성공! \(pointerAddr) -> \(targetAddr) (Value: \(slots[targetIndex].value ?? 0))")
     highlightSlot(for: targetIndex)
+    
+    // Level 2: 잠금 해제 로직 (제거됨 - 징검다리 포인터 미션으로 변경)
+    // if slots[targetIndex].isLocked { ... } -> 삭제
   }
   
   /// 에러 발생 시 시각적 피드백 (흔들림 + 빨간색)
@@ -177,6 +189,23 @@ final class MemoryGridVM: ObservableObject {
       slots[4].pointingTo = nil
       codeLog = "// Level 2: 포인터 변수(Pointer)를 드래그하여 99를 가리키게 만드세요."
       
+      slots[targetIndex].value = 10
+      codeLog = "// Level 1: 값이 10인 메모리 공간을 찾으세요!"
+      
+    case 2: // 포인터 연결: 변수 p(pointer)가 99(value)를 가리키게 하기
+      slots[0].type = .value
+      slots[0].value = 99
+      
+      slots[4].type = .pointer // p 변수 역할 (초기엔 비어있음)
+      slots[4].pointingTo = nil
+      codeLog = "// Level 2: 포인터 변수(Pointer)를 드래그하여 99를 가리키게 만드세요."
+    case 2: // 징검다리 포인터: 직접 접근 금지, 중계 포인터 이용
+      // Target Value (Locked)
+      let targetIndex = 7 // 0x701C
+      slots[targetIndex].type = .value
+      slots[targetIndex].value = 777
+      slots[targetIndex].isLocked = true // 직접 연결 불가
+      
     case 3: // 이중 포인터: pp -> p -> value
       slots[0].type = .value
       slots[0].value = 777
@@ -205,14 +234,14 @@ final class MemoryGridVM: ObservableObject {
       if hasCorrectPointer { finishLevel() }
       
     case 2:
-      // Level 2: 포인터 연결하기 (드래그)
-      // 조건: 값이 99인 슬롯을 가리키는 포인터가 존재하는가?
-      // slots[0]이 99라고 가정 (초기화 로직 기준)
-      let targetAddr = slots[0].address
-      let hasPointer = slots.contains { slot in
-        slot.type == .pointer && slot.pointingTo == targetAddr
+      // Level 2: 내 포인터가 '중계 포인터'를 가리키고 있는가?
+      // Target은 7번, Link는 5번, MyPointer는 14번(사용자가 바꿀 수 있나? 보통 드래그로)
+      // 조건: 어떤 포인터든 '5번 슬롯(Link Pointer)'을 가리키면 성공 (단, 5번이 Target을 가리키고 있어야 함 - 초기값)
+      let linkAddr = slots[5].address
+      let hasConnectionToLink = slots.contains { slot in
+        slot.type == .pointer && slot.pointingTo == linkAddr
       }
-      if hasPointer { finishLevel() }
+      if hasConnectionToLink { finishLevel() }
       
     case 3:
       // Level 3: 이중 포인터 만들기
