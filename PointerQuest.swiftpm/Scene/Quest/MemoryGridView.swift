@@ -67,7 +67,7 @@ struct MemoryGridView: View {
         .background(.thinMaterial)
     }
     .alert("Mission Complete! 🎉", isPresented: $vm.isSuccess) {
-      Button("확인", role: .cancel) { }
+      Button("Confirm", role: .cancel) { }
     }
   }
   
