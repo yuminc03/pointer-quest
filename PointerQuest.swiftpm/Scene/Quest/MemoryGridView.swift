@@ -89,7 +89,7 @@ struct MissionHeaderView: View {
   
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
-      Text("MISSION")
+      Text("Mission".uppercased())
         .font(.caption)
         .fontWeight(.bold)
         .foregroundStyle(.secondary)
