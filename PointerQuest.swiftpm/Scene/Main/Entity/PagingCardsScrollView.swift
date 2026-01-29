@@ -45,9 +45,7 @@ struct PagingCardsScrollView: View {
     GeometryReader { proxy in
       LazyHStack(alignment: .center, spacing: cardPadding) {
         ForEach(cards) { card in
-          NavigationLink(value: card) {
-            levelCard(level: card, proxy: proxy)
-          }
+          levelCard(level: card, proxy: proxy)
         }
       }
     }

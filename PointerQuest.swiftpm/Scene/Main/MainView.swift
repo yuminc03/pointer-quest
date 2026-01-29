@@ -58,15 +58,13 @@ private extension MainView {
   }
   
   var ContinueButton: some View {
-    Button {
-      
-    } label: {
-      HStack(spacing: 10) {
-        Image(systemName: "paperplane.fill")
-          .size(20)
-        
+    NavigationLink(value: LevelData.levels[pageIndex]) {
+      Label {
         Text("Let's Continue")
           .font(.system(size: 16, weight: .semibold))
+      } icon: {
+        Image(systemName: "paperplane.fill")
+          .size(20)
       }
       .foregroundStyle(.white)
       .padding(.horizontal, 20)
