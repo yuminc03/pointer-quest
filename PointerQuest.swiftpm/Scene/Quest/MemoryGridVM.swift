@@ -20,14 +20,14 @@ final class MemoryGridVM: ObservableObject {
   func reset() {
     setupLevel(level: currentLevel)
   }
-    
+  
   /// 슬롯 탭 처리
   func handleTap(_ slot: MemorySlot) {
     print("클릭된 메모리 주소: \(slot.address)")
     
     // Level 2: 잠긴 슬롯 탭 시 에러 피드백
     if slot.isLocked {
-      codeLog = "// Error: 접근 거부! 메모리가 잠겨있습니다. (Access Denied)"
+      codeLog = "// Error: Access Denied! Memory is locked."
       if let index = slots.firstIndex(where: { $0.id == slot.id }) {
         triggerError(for: index)
       }
@@ -50,7 +50,7 @@ final class MemoryGridVM: ObservableObject {
     // 1. 드래그한 슬롯(Source)의 인덱스를 찾기
     // 자기 자신을 가리키는 것은 방지 (Self-reference Prevention)
     if sourceAddress == destinationAddress {
-      codeLog = "// Error: 자기 자신을 가리킬 수 없습니다 (Self-Reference)."
+      codeLog = "// Error: Cannot point to itself (Self-Reference)."
       if let sourceIndex = slots.firstIndex(where: { $0.address == sourceAddress }) {
         triggerError(for: sourceIndex)
       }
@@ -67,7 +67,7 @@ final class MemoryGridVM: ObservableObject {
     if let targetIndex = slots.firstIndex(where: { $0.address == destinationAddress }),
        currentLevel.id == 2 && slots[targetIndex].isLocked
     {
-      codeLog = "// Error: 보안 위배! 직접 접근할 수 없는 메모리입니다. (Access Denied)"
+      codeLog = "// Error: Security Violation! Direct access is not allowed. (Access Denied)"
       triggerError(for: targetIndex)
       return
     }
@@ -89,7 +89,7 @@ final class MemoryGridVM: ObservableObject {
         slots[targetIndex].value = randomValue
         
         // 초기화된 사실을 로그에 자연스럽게 표현
-        codeLog = "int target = \(randomValue); // (자동 초기화)\nint *p = &target;"
+        codeLog = "int target = \(randomValue); // (Auto-initialized)\nint *p = &target;"
         
         // 시각적 혼란을 줄이기 위해 타겟에도 하이라이트 효과
         highlightSlot(for: targetIndex)
@@ -123,7 +123,7 @@ final class MemoryGridVM: ObservableObject {
     else {
       // 포인터가 아니거나 가리키는 대상이 없는 경우
       print("역참조 실패: 유효한 포인터가 아닙니다.")
-      codeLog = "// Error: 유효하지 않은 포인터입니다."
+      codeLog = "// Error: Invalid pointer."
       triggerError(for: pointerIndex)
       return
     }
@@ -131,12 +131,12 @@ final class MemoryGridVM: ObservableObject {
     // 로그 업데이트
     let targetSlot = slots[targetIndex]
     if let value = targetSlot.value {
-      codeLog = "printf(\"%d\", *p); // 값: \(value)"
+      codeLog = "printf(\"%d\", *p); // Value: \(value)"
     } else if targetSlot.type == .pointer {
       // 이중 포인터인 경우 더 명확한 로그 제공
-      codeLog = "printf(\"%p\", *p); // 이중 포인터 (가리키는 대상도 포인터)"
+      codeLog = "printf(\"%p\", *p); // Double Pointer (Target is also a pointer)"
     } else {
-      codeLog = "printf(\"%p\", *p); // 주소: \(targetAddr)"
+      codeLog = "printf(\"%p\", *p); // Address: \(targetAddr)"
     }
     
     // 3. 대상 슬롯 하이라이트 (포인터를 따라간 효과)
@@ -188,7 +188,7 @@ final class MemoryGridVM: ObservableObject {
       
       // 포인터 변수 준비
       slots[8].type = .pointer
-      codeLog = "// Level 1: 포인터를 드래그하여 주소 0x700C를 가리키게 하세요."
+      codeLog = "// Level 1: Drag the pointer to point to address 0x700C."
       
     case 2: // 징검다리 포인터: 직접 접근 금지, 중계 포인터 이용
       // Target Value (Locked)
@@ -206,7 +206,7 @@ final class MemoryGridVM: ObservableObject {
       let myPointerIndex = 14 // 0x7038
       slots[myPointerIndex].type = .pointer
       
-      codeLog = "// Level 2: 데이터(0x701C)는 잠겨있습니다. 직접 접근하지 말고 '다른 포인터'를 통해 접근하세요."
+      codeLog = "// Level 2: Data(0x701C) is locked. Do not access directly, use 'Link Pointer'."
       
     case 3: // 체인 연결: Start -> A -> B -> Treasure
       // Start (Pointer) -> A (Pointer) -> B (Pointer) -> Treasure (Value)
@@ -230,7 +230,7 @@ final class MemoryGridVM: ObservableObject {
       let startIndex = 0 // 0x7000
       slots[startIndex].type = .pointer
       
-      codeLog = "// Level 3: Start(0x7000)부터 보물(0x703C)까지 연결 고리를 만드세요."
+      codeLog = "// Level 3: Create a chain from Start(0x7000) to Treasure(0x703C)."
       
     default:
       codeLog = "// Sandbox Mode"
@@ -280,7 +280,7 @@ final class MemoryGridVM: ObservableObject {
   
   private func finishLevel() {
     isSuccess = true
-    codeLog = "// 축하합니다! Level Clear! 🎉"
+    codeLog = "// Congratulations! Level Clear! 🎉"
   }
   
   /// 4 X 4 그리드 형태 가상 메모리 주소를 생성
