@@ -14,6 +14,8 @@ struct MainView: View {
         
         PageIndicator
           .padding(.bottom, 40)
+        
+        ContinueButton
       }
       .background(Color(.systemGroupedBackground))
       .navigationDestination(for: Level.self) { level in
@@ -53,6 +55,27 @@ private extension MainView {
       currentPageIndex: $pageIndex,
       cards: LevelData.levels
     )
+  }
+  
+  var ContinueButton: some View {
+    Button {
+      
+    } label: {
+      HStack(spacing: 10) {
+        Image(systemName: "paperplane.fill")
+          .size(20)
+        
+        Text("Let's Continue")
+          .font(.system(size: 16, weight: .semibold))
+      }
+      .foregroundStyle(.white)
+      .padding(.horizontal, 20)
+      .padding(.vertical, 16)
+      .background(
+        Capsule()
+          .fill(.blue)
+      )
+    }
   }
 }
 
