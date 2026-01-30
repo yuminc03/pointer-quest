@@ -46,7 +46,6 @@ private extension LevelCard {
         Text("Level \(level.id)".uppercased())
         
         Text(level.title)
-          .lineLimit(1)
       }
       .font(.title)
       .fontWeight(.bold)
