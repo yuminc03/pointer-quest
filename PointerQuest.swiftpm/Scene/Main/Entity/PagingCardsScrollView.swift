@@ -132,7 +132,7 @@ struct PagingCardsScrollView: View {
     }
     
     // 0보다 작으면 0, 마지막 index(maxIndex)보다 크면 maxIndex로 고정
-    return min(max(index, 0), maxIndex)
+    return min(max(index, 0), maxIndex - 1)
   }
   
   /// 현재 보여주어야 할 스크롤 위치 실시간 계산
