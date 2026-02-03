@@ -34,8 +34,7 @@ struct PagingCardsScrollView: View {
     return 20
   }
   
-  /// 처음 scroll view 시작점 위치
-  /// 카드가 가운데 오도록 필요
+  /// 첫 번째 카드가 화면 정중앙에 오도록 하기 위한 초기 위치값
   /// 카드 여백 + ((화면너비 - 카드너비) / 2)
   var initialOffset: CGFloat {
     return (screenWidth - cardWidth) / 2
@@ -69,6 +68,8 @@ struct PagingCardsScrollView: View {
           var newPageIndex = currentPage(for: currentScrollOffset + velocityDiff)
           let currentItemOffset = CGFloat(currentPageIndex) * (cardWidth + cardPadding)
           
+          // 왼쪽으로 스크롤했는데 넘어가지 않으면 pageIndex를 1증가
+          // 현재 스크롤 위치가 마지막 페이지이면 넘어가지 않음
           if currentScrollOffset < -currentItemOffset
              && newPageIndex == currentPageIndex
              && newPageIndex < maxIndex
@@ -99,17 +100,18 @@ struct PagingCardsScrollView: View {
   }
   
   /// 페이지 이동시 움직여야할 양
-  /// index 번째 카드를 중앙에 놓기 위해 이동할 양
+  /// pageIndex 번째 카드를 중앙에 놓기 위해 이동할 양
   private func pagingOffset(for pageIndex: Int) -> CGFloat {
     // 이동해야 할 거리 = index * (카드너비 + 카드 여백)
     let offset = CGFloat(pageIndex) * (cardWidth + cardPadding)
     
     // 카드를 왼쪽으로 밀면서 오른쪽 카드를 봐야해서 offset을 - 해야함
+    // 초기중앙위치 - (페이지번호 * (카드너비 + 간격))
     return initialOffset - offset
   }
   
-  /// 현재 페이지
-  /// 현재 카드가 화면 중앙에 있을 때 스크롤 좌표 위치
+  /// 현재 페이지의 X축 좌표값을 받아, "몇 번째 페이지" 인지 반환
+  /// 현재 페이지가 화면 중앙에 있을 때 스크롤 좌표 위치
   private func currentPage(for offset: CGFloat) -> Int {
     guard maxIndex > 0 else { return 0 }
     
@@ -118,7 +120,7 @@ struct PagingCardsScrollView: View {
     // 왼쪽으로 스크롤하면 offset은 음수가 커짐
     let logicalOffset = (offset - initialOffset) * -1
     
-    // 대략적인 페이지 번호(실수) = (이동한 거리) / (카드 1개 크기)
+    // 대략적인 페이지 index(실수) = (이동한 거리) / (카드 1개 크기)
     // ex) 이동 거리가 400이고, 아이템 폭이 100이라면 -> 4.0 페이지
     let floatIndex = logicalOffset / (cardWidth + cardPadding)
     // 반올림한 index
