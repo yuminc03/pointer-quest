@@ -70,7 +70,8 @@ struct PagingCardsScrollView: View {
           let currentItemOffset = CGFloat(currentPageIndex) * (cardWidth + cardPadding)
           
           if currentScrollOffset < -currentItemOffset
-              && newPageIndex == currentPageIndex
+             && newPageIndex == currentPageIndex
+             && newPageIndex < maxIndex
           {
             newPageIndex += 1
           }
@@ -132,7 +133,7 @@ struct PagingCardsScrollView: View {
     }
     
     // 0보다 작으면 0, 마지막 index(maxIndex)보다 크면 maxIndex로 고정
-    return min(max(index, 0), maxIndex - 1)
+    return min(max(index, 0), maxIndex)
   }
   
   /// 현재 보여주어야 할 스크롤 위치 실시간 계산
