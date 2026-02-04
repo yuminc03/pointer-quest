@@ -77,7 +77,7 @@ private extension MainView {
       .padding(.vertical, 16)
       .background(
         Capsule()
-          .fill(.blue)
+          .fill(Color(.main))
       )
     }
   }
