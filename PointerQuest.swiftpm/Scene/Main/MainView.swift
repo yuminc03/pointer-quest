@@ -6,14 +6,17 @@ struct MainView: View {
   var body: some View {
     NavigationStack {
       VStack(spacing: 0) {
-        Title
-          .padding(.horizontal, 20)
-          .padding(.top, 20)
+        HStack(alignment: .bottom, spacing: 0) {
+          Title
+          
+          Spacer()
+          
+          PageIndicator
+        }
+        .padding(.horizontal, 20)
+        .padding(.top, 20)
         
         Cards
-        
-        PageIndicator
-          .padding(.bottom, 20)
         
         ContinueButton
         
@@ -34,6 +37,7 @@ private extension MainView {
       Text("Pointer Quest")
         .font(.system(size: 36, weight: .bold))
         .foregroundStyle(.primary)
+      
       Text("The Memory Maze")
         .font(.title3)
         .foregroundStyle(.secondary)
@@ -48,7 +52,7 @@ private extension MainView {
         currentPage: $pageIndex
       )
       .aspectRatio(contentMode: .fit)
-      .frame(width: 90, height: 10)
+      .frame(height: 10)
     }
   }
   
