@@ -5,17 +5,19 @@ struct MainView: View {
   
   var body: some View {
     NavigationStack {
-      VStack(spacing: 30) {
+      VStack(spacing: 0) {
         Title
           .padding(.horizontal, 20)
-          .padding(.top, 40)
+          .padding(.top, 20)
         
         Cards
         
         PageIndicator
-          .padding(.bottom, 40)
+          .padding(.bottom, 20)
         
         ContinueButton
+        
+        Spacer()
       }
       .background(Color(.systemGroupedBackground))
       .navigationDestination(for: Level.self) { level in
@@ -55,7 +57,7 @@ private extension MainView {
       currentPageIndex: $pageIndex,
       cards: LevelData.levels
     )
-  }
+}
   
   var ContinueButton: some View {
     NavigationLink(value: LevelData.levels[pageIndex]) {
