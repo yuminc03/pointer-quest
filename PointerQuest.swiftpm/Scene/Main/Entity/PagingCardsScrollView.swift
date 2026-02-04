@@ -8,10 +8,10 @@ struct PagingCardsScrollView: View {
   
   let cards: [Level]
   private let scrollDampingFactor: CGFloat = 0.6
-  private let colors: [Color] = [
-    .init(.main),
-    .init(.yellow),
-    .init(.red)
+  private let colors: [[Color]] = [
+    [.init(.main), .init(.lightBlue)],
+    [.init(.green), .init(.lightGreen)],
+    [.init(.red), .init(.lightRed)],
   ]
   
   /// 최대 index
@@ -49,7 +49,11 @@ struct PagingCardsScrollView: View {
     GeometryReader { proxy in
       LazyHStack(alignment: .center, spacing: cardPadding) {
         ForEach(cards.indices, id: \.self) {
-          levelCard(level: cards[$0], proxy: proxy, color: colors[$0])
+          levelCard(
+            level: cards[$0],
+            proxy: proxy,
+            colors: colors[$0]
+          )
         }
       }
     }
@@ -153,9 +157,9 @@ private extension PagingCardsScrollView {
   private func levelCard(
     level: Level,
     proxy: GeometryProxy,
-    color: Color
+    colors: [Color]
   ) -> some View {
-    LevelCard(level: level, color: color)
+    LevelCard(level: level, colors: colors)
       .rotation3DEffect(
         .init(
           degrees: (Double(proxy.frame(in: .global).minX) - 20) / 45

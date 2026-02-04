@@ -3,7 +3,7 @@ import SwiftUI
 /// 레벨 카드
 struct LevelCard: View {
   let level: Level
-  let color: Color
+  let colors: [Color]
   
   var body: some View {
     VStack(alignment: .leading, spacing: 20) {
@@ -14,10 +14,15 @@ struct LevelCard: View {
       
       Spacer()
     }
+    .foregroundStyle(.white)
     .padding(20)
     .background(
       RoundedRectangle(cornerRadius: 20)
-        .fill(color)
+        .fill(LinearGradient(
+          gradient: .init(colors: colors),
+          startPoint: .bottomLeading,
+          endPoint: .topTrailing
+        ))
         .shadow(
           color: .black.opacity(0.3),
           radius: 15, x: 0, y: 10
@@ -37,7 +42,6 @@ private extension LevelCard {
       Text("Lv. \(level.id)")
         .font(.title2)
     }
-    .foregroundStyle(.white)
   }
   
   var Contents: some View {
@@ -54,10 +58,12 @@ private extension LevelCard {
         .font(.body)
         .multilineTextAlignment(.leading)
     }
-    .foregroundStyle(.white)
   }
 }
 
 #Preview {
-  LevelCard(level: LevelData.levels[0], color: .purple)
+  LevelCard(
+    level: LevelData.levels[0],
+    colors: [Color(.main), Color(.lightBlue)]
+  )
 }
