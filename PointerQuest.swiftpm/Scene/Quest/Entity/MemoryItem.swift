@@ -24,7 +24,7 @@ struct MemoryItem: View {
         } else if let target = slot.pointingTo {
           Text(target)
             .font(.system(.caption, design: .monospaced))
-            .foregroundStyle(.blue)
+            .foregroundStyle(Color(.main))
             .fontWeight(.bold)
         } else {
           Text("-")
@@ -41,14 +41,10 @@ struct MemoryItem: View {
     .background(
       RoundedRectangle(cornerRadius: 15)
         .fill(
-          slot.isError ? Color.red.opacity(0.3)
+          slot.isError ? Color(.red).opacity(0.3)
           : (slot.isHighlighted ?
-             Color.yellow.opacity(0.3) : Color(.secondarySystemGroupedBackground)
+             Color(.yellow).opacity(0.3) : Color(.secondarySystemGroupedBackground)
             )
-        )
-        .overlay(
-          slot.isError ? .red.opacity(0.2) : (slot.isHighlighted ? .yellow.opacity(0.2) : .clear),
-          in: RoundedRectangle(cornerRadius: 15)
         )
     )
     .overlay(
@@ -63,9 +59,9 @@ struct MemoryItem: View {
     .overlay(
       RoundedRectangle(cornerRadius: 15)
         .stroke(
-          slot.isError ? .red :
-            (slot.type == .pointer ? .blue :
-              (slot.type == .value ? .green : .clear)),
+          slot.isError ? Color(.red) :
+            (slot.type == .pointer ? Color(.main) :
+            (slot.type == .value ? Color(.green) : .clear)),
           lineWidth: 2
         )
     )
