@@ -54,9 +54,9 @@ struct MemoryGridView: View {
     .background(Color(.systemGroupedBackground))
     .toolbar {
       ToolbarItem(placement: .topBarTrailing) {
-        Button(action: {
+        Button {
           vm.reset()
-        }) {
+        } label: {
           Image(systemName: "arrow.counterclockwise")
         }
       }
