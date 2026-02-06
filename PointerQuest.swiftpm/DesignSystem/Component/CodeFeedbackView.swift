@@ -9,7 +9,7 @@ struct CodeFeedbackView: View {
       Image(systemName: "chevron.right")
         .font(.body)
         .fontWeight(.bold)
-        .foregroundStyle(.green)
+        .foregroundStyle(Color(.green))
       
       Text(code)
         .font(.system(.body, design: .monospaced))
