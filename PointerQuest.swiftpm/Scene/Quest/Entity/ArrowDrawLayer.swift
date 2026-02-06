@@ -23,13 +23,13 @@ struct ArrowDrawLayer: View {
             // 1. 화살표 선 (곡선)
             ArrowShape(startPoint: startPoint, endPoint: endPoint)
               .stroke(
-                Color.blue.opacity(0.6),
+                Color(.main).opacity(0.6),
                 style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round)
               )
             
             // 2. 화살표 머리 (원형)
             Circle()
-              .fill(Color.blue)
+              .fill(Color(.main))
               .frame(width: 12, height: 12)
               .position(endPoint)
           }
