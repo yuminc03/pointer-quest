@@ -2,7 +2,7 @@ import SwiftUI
 
 struct AppView: View {
   @AppStorage("isOnboardingWatched") var isOnboardingWatched: Bool?
-  @State private var isPresented = false
+  @State private var isWelcomePresented = false
   
   var body: some View {
     TabView {
@@ -18,12 +18,12 @@ struct AppView: View {
           Text("Setting")
         }
     }
-    .popover(isPresented: $isPresented) {
-      WelcomeView(isPresented: $isPresented)
+    .popover(isPresented: $isWelcomePresented) {
+      WelcomeView(isPresented: $isWelcomePresented)
     }
     .onAppear {
       if isOnboardingWatched != true {
-        isPresented = true
+        isWelcomePresented = true
         isOnboardingWatched = true
       }
     }
