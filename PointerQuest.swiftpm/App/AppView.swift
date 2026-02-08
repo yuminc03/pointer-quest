@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct AppView: View {
+  @AppStorage("isOnboardingWatched") var isOnboardingWatched: Bool?
+  @State private var isPresented = false
+  
   var body: some View {
     TabView {
       MainView()
@@ -14,6 +17,15 @@ struct AppView: View {
           Image(systemName: "gearshape.fill")
           Text("Setting")
         }
+    }
+    .popover(isPresented: $isPresented) {
+      WelcomeView(isPresented: $isPresented)
+    }
+    .onAppear {
+      if isOnboardingWatched != true {
+        isPresented = true
+        isOnboardingWatched = true
+      }
     }
   }
 }
