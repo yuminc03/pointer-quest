@@ -75,7 +75,7 @@ private extension WelcomeView {
       }
       
       Button {
-        
+        isPresented = false
       } label: {
         Text("아니요, 괜찮습니다.")
           .font(.body)
