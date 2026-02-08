@@ -21,7 +21,7 @@ struct WelcomeView: View {
       }
       
       CloseButton
-        .padding(.top, 5)
+        .padding(.top, 20)
         .padding(.trailing, 20)
     }
   }
@@ -30,6 +30,7 @@ struct WelcomeView: View {
 private extension WelcomeView {
   var CloseButton: some View {
     Button {
+      isAlertPresented = true
       isPresented = false
     } label: {
       Image(systemName: "xmark")
