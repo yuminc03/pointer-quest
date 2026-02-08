@@ -2,6 +2,8 @@ import SwiftUI
 
 struct WelcomeView: View {
   @Binding var isPresented: Bool
+  @Binding var isOnboardingPresented: Bool
+  @Binding var isAlertPresented: Bool
   
   var body: some View {
     ZStack(alignment: .topTrailing) {
@@ -60,7 +62,8 @@ private extension WelcomeView {
   var ButtonSection: some View {
     VStack(spacing: 20) {
       Button {
-        
+        isOnboardingPresented = true
+        isPresented = false
       } label: {
         Text("네, 사용방법을 볼게요.")
           .foregroundStyle(.white)
@@ -75,6 +78,7 @@ private extension WelcomeView {
       }
       
       Button {
+        isAlertPresented = true
         isPresented = false
       } label: {
         Text("아니요, 괜찮습니다.")
@@ -92,5 +96,9 @@ private extension WelcomeView {
 }
 
 #Preview {
-  WelcomeView(isPresented: .constant(true))
+  WelcomeView(
+    isPresented: .constant(true),
+    isOnboardingPresented: .constant(false),
+    isAlertPresented: .constant(false)
+  )
 }
