@@ -20,10 +20,11 @@ let package = Package(
             teamIdentifier: "GMHUACJXLZ",
             displayVersion: "1.0",
             bundleVersion: "1",
-            appIcon: .placeholder(icon: .star),
+            appIcon: .asset("AppIcon"),
             accentColor: .presetColor(.blue),
             supportedDeviceFamilies: [
-                .phone
+                .phone,
+                .pad
             ],
             supportedInterfaceOrientations: [
                 .portrait
@@ -36,5 +37,5 @@ let package = Package(
             path: "."
         )
     ],
-    swiftLanguageModes: [.version("6")]
+    swiftLanguageVersions: [.version("6")]
 )
