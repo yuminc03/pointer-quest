@@ -10,7 +10,7 @@ struct SettingView: View {
           Button {
             isOnboardingPresented.toggle()
           } label: {
-            Text("앱 사용방법")
+            Text("How to use the app")
           }
         }
       }
