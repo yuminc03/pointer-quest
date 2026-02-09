@@ -31,7 +31,7 @@ struct AppView: View {
       OnboardingView()
     }
     .alert(
-      "앱 사용법은 Setting > 앱 사용방법에서 다시 확인 가능합니다.",
+      "You can check the tutorial again in Setting > How to use the app.",
       isPresented: $isAlertPresented
     ) {
       Button("Confirm", role: .cancel) { }
