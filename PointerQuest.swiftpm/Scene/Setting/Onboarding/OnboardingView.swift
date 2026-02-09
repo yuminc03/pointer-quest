@@ -34,7 +34,7 @@ private extension OnboardingView {
   }
   
   var Title: some View {
-    Text("사용방법")
+    Text("How to use")
       .font(.title)
       .fontWeight(.bold)
       .frame(maxWidth: .infinity, alignment: .leading)
@@ -42,10 +42,10 @@ private extension OnboardingView {
   
   var TopSection: some View {
     VStack(alignment: .leading, spacing: 10) {
-      Text("Level을 선택하고 다음 화면으로 들어간다면 격자 모양으로 블록들이 모인 화면이 나타납니다.")
+      Text("When you select a Level and enter the next screen, you will see a screen with blocks arranged in a grid.")
         .frame(maxWidth: .infinity, alignment: .leading)
       
-      Text("이 화면에서 특정 값이 들어있는 블록을 다른 블록으로 참조할 수 있습니다.")
+      Text("In this screen, you can reference a block containing a specific value with another block.")
       
       Image(.onboarding1)
         .resizable()
@@ -57,21 +57,21 @@ private extension OnboardingView {
   
   var Section1: some View {
     section(
-      text: "1. 블록 하나를 길게 누르면 입체적으로 튀어나오는 효과가 나타납니다.",
+      text: "1. Long press a block to see it pop out in 3D.",
       image: .onboarding2
     )
   }
   
   var Section2: some View {
     section(
-      text: "2. 그대로 드래그해서 다른 블록에게 가까이 옮기세요.",
+      text: "2. Drag it close to another block.",
       image: .onboarding3
     )
   }
   
   var Section3: some View {
     section(
-      text: "3. 그리고 드래그를 멈추고 손을 화면에서 떼면 두 블록은 서로 연결된 것입니다.",
+      text: "3. Release your finger to connect the two blocks.",
       image: .onboarding4
     )
   }
