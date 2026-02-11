@@ -89,7 +89,7 @@ private extension WelcomeView {
           .frame(maxWidth: .infinity)
           .background(
             Capsule()
-              .fill(.white)
+              .fill(.background)
           )
       }
     }
