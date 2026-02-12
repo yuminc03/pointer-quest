@@ -27,7 +27,7 @@ struct ArrowDrawLayer: View {
           
           Group {
             // 1. 화살표 선 (곡선)
-            ArrowShape(startPoint: startPoint, endPoint: endPoint)
+            Arrow(startPoint: startPoint, endPoint: endPoint)
               .stroke(
                 Color(.main).opacity(0.6),
                 style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round)
