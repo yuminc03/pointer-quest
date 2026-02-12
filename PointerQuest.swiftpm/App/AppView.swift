@@ -41,8 +41,6 @@ struct AppView: View {
         isWelcomePresented = true
         isOnboardingWatched = true
       }
-      
-      isOnboardingWatched = false
     }
   }
 }
