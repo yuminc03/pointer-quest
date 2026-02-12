@@ -18,6 +18,7 @@ struct WelcomeView: View {
         
         ButtonSection
           .padding(.horizontal, 20)
+          .padding(.bottom, 20)
       }
       
       CloseButton
