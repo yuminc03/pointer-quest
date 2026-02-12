@@ -26,7 +26,7 @@ struct PagingCardsScrollView: View {
   
   /// 카드 너비
   var cardWidth: CGFloat {
-    return screenWidth - 100
+    return UIDevice.isIOS ? screenWidth - 100 : screenWidth * 0.6
   }
   
   /// 카드 높이
