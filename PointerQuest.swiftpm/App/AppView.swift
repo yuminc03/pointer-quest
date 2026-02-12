@@ -20,7 +20,7 @@ struct AppView: View {
           Text("Setting")
         }
     }
-    .popover(isPresented: $isWelcomePresented) {
+    .sheet(isPresented: $isWelcomePresented) {
       WelcomeView(
         isPresented: $isWelcomePresented,
         isOnboardingPresented: $isOnboardingPresented,
