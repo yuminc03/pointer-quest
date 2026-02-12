@@ -190,23 +190,23 @@ final class MemoryGridVM: ObservableObject {
       slots[8].type = .pointer
       codeLog = "// Level 1: Drag the pointer to point to address 0x700C."
       
-    case 2: // 징검다리 포인터: 직접 접근 금지, 중계 포인터 이용
+    case 2: // 이중 포인터: 직접 접근 금지, Double Pointer 이용
       // Target Value (Locked)
       let targetIndex = 7 // 0x701C
       slots[targetIndex].type = .value
       slots[targetIndex].value = 777
       slots[targetIndex].isLocked = true // 직접 연결 불가
       
-      // Link Pointer (Existing Pointer)
+      // Double Pointer (Existing Pointer)
       let linkIndex = 5 // 0x7014
       slots[linkIndex].type = .pointer
-      slots[linkIndex].pointingTo = slots[targetIndex].address // Link -> Target
+      slots[linkIndex].pointingTo = slots[targetIndex].address // Double Pointer -> Target
       
       // My Pointer
       let myPointerIndex = 14 // 0x7038
       slots[myPointerIndex].type = .pointer
       
-      codeLog = "// Level 2: Data(0x701C) is locked. Do not access directly, use 'Link Pointer'."
+      codeLog = "// Level 2: Data(0x701C) is locked. Do not access directly, use 'Double Pointer'."
       
     case 3: // 체인 연결: Start -> A -> B -> Treasure
       // Start (Pointer) -> A (Pointer) -> B (Pointer) -> Treasure (Value)
@@ -250,13 +250,14 @@ final class MemoryGridVM: ObservableObject {
       if hasCorrectPointer { finishLevel() }
       
     case 2:
-      // Level 2: 내 포인터가 '중계 포인터'를 가리키고 있는가?
-      // Target은 7번, Link는 5번, MyPointer는 14번(사용자가 바꿀 수 있나? 보통 드래그로)
-      // 조건: 어떤 포인터든 '5번 슬롯(Link Pointer)'을 가리키면 성공 (단, 5번이 Target을 가리키고 있어야 함 - 초기값)
+      // Level 2: 내 포인터가 'Double Pointer'를 가리키고 있는가?
+      // Target은 7번, Double Pointer는 5번, MyPointer는 14번(사용자가 바꿀 수 있나? 보통 드래그로)
+      // 조건: 어떤 포인터든 '5번 슬롯(Double Pointer)'을 가리키면 성공 (단, 5번이 Target을 가리키고 있어야 함 - 초기값)
       let linkAddr = slots[5].address
       let hasConnectionToLink = slots.contains { slot in
         slot.type == .pointer && slot.pointingTo == linkAddr
       }
+      
       if hasConnectionToLink { finishLevel() }
       
     case 3:
