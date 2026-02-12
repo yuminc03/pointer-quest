@@ -24,7 +24,6 @@ struct ArrowShape: Shape {
     let control1 = CGPoint(x: startPoint.x, y: (startPoint.y + endPoint.y) / 2)
     let control2 = CGPoint(x: endPoint.x, y: (startPoint.y + endPoint.y) / 2)
     
-    
     path.addCurve(to: endPoint, control1: control1, control2: control2)
     
     return path

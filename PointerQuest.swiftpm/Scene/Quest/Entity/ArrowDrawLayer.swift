@@ -19,6 +19,12 @@ struct ArrowDrawLayer: View {
           let startPoint = CGPoint(x: startRect.midX, y: startRect.midY)
           let endPoint = CGPoint(x: endRect.midX, y: endRect.midY)
           
+          // 화살표 각도 계산 (끝점이 시작점에서 어느 방향에 있는지)
+          let angle = Angle(radians: atan2(
+            endPoint.y - startPoint.y,
+            endPoint.x - startPoint.x
+          ))
+          
           Group {
             // 1. 화살표 선 (곡선)
             ArrowShape(startPoint: startPoint, endPoint: endPoint)
@@ -27,10 +33,11 @@ struct ArrowDrawLayer: View {
                 style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round)
               )
             
-            // 2. 화살표 머리 (원형)
-            Circle()
+            // 2. 화살표 머리 (삼각형)
+            Triangle()
               .fill(Color(.main))
-              .frame(width: 12, height: 12)
+              .frame(width: 16, height: 16) // 적당한 화살표 크기
+              .rotationEffect(angle)        // 선의 방향에 맞춰 회전
               .position(endPoint)
           }
           // 애니메이션 적용: 좌표(startPoint, endPoint)가 바뀔 때 부드럽게 이동
