@@ -35,7 +35,8 @@ private extension MainView {
   var Title: some View {
     VStack(alignment: .leading, spacing: 8) {
       Text("Pointer Quest")
-        .font(.system(size: 36, weight: .bold))
+        .font(.largeTitle)
+        .fontWeight(.bold)
         .foregroundStyle(.primary)
       
       Text("The Memory Maze")
@@ -67,7 +68,8 @@ private extension MainView {
     NavigationLink(value: LevelData.levels[pageIndex]) {
       Label {
         Text("Let's Continue")
-          .font(.system(size: 16, weight: .semibold))
+          .font(.body)
+          .fontWeight(.semibold)
       } icon: {
         Image(systemName: "paperplane.fill")
           .size(20)
