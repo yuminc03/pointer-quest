@@ -89,7 +89,7 @@ final class MemoryGridVM: ObservableObject {
         slots[targetIndex].value = randomValue
         
         // 초기화된 사실을 로그에 자연스럽게 표현
-        codeLog = "int target = \(randomValue); // (Auto-initialized)\nint *p = &target;"
+        codeLog = "int target = \(randomValue);\nint *p = &target;"
         
         // 시각적 혼란을 줄이기 위해 타겟에도 하이라이트 효과
         highlightSlot(for: targetIndex)
