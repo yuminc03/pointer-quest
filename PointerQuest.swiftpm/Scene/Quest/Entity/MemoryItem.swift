@@ -75,6 +75,7 @@ struct MemoryItem: View {
       guard let draggedAddress = droppedAddresses.first
       else { return false }
       
+      // 자기 자신에게 drag한 것이 아닐 때
       if draggedAddress != slot.address {
         vm.handleDrop(
           sourceAddress: draggedAddress,
