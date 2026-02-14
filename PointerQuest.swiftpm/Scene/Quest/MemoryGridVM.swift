@@ -34,10 +34,60 @@ final class MemoryGridVM: ObservableObject {
       return
     }
     
-    // 기본 동작: 그냥 로그만 출력
+    // 1. 포인터인 경우 (어딘가를 가리키고 있음)
+    if let targetAddress = slot.pointingTo,
+       let targetIndex = slots.firstIndex(where: { $0.address == targetAddress })
+    {
+      
+      let targetSlot = slots[targetIndex]
+      
+      // Case A: 가리킨 곳에 값이 있는 경우 (일반 포인터)
+      if let targetValue = targetSlot.value {
+        codeLog = """
+        int target = \(targetValue); // Value at \(targetAddress)
+        int *p = &target; // This slot(\(slot.address)) points to target
+        """
+      }
+      // Case B: 가리킨 곳도 포인터인 경우 (이중 포인터)
+      else if targetSlot.type == .pointer {
+        // ptr1이 가리키는 최종 대상 찾기
+        var explicitLog = ""
+        
+        if let ultimateAddr = targetSlot.pointingTo,
+           let ultimateIndex = slots.firstIndex(where: { $0.address == ultimateAddr }),
+           let ultimateValue = slots[ultimateIndex].value {
+          
+          explicitLog = "int value = \(ultimateValue); // Value at \(ultimateAddr)\n"
+          + "int *ptr1 = &value; // Ptr1 points to value\n"
+        } else {
+          // 최종 대상이 없거나 값이 없는 경우 (단순 주소 표기)
+          explicitLog = "int *ptr1 = \(targetSlot.pointingTo ?? "NULL"); // \(targetAddress)\n"
+        }
+        
+        codeLog = """
+        \(explicitLog)int **ptr2 = &ptr1; // Double Pointer (This slot points to ptr1)
+        """
+      }
+      // Case C: 가리킨 곳이 비어있는 경우
+      else {
+        codeLog = """
+        int unknown; // Variable at \(targetAddress) is uninitialized
+        int *p = &unknown; 
+        // Warning: Dereferencing 'p' yields garbage value.
+        """
+      }
+      
+      // 시각적 효과: 가리키는 대상 깜빡임
+      highlightSlot(for: targetIndex)
+      return
+    }
+    
+    // 2. 값을 가진 변수인 경우
     if let value = slot.value {
       codeLog = "int val = \(value); // Value at \(slot.address)"
-    } else {
+    }
+    // 3. 빈 슬롯인 경우
+    else {
       codeLog = "// Address: \(slot.address)"
     }
   }
