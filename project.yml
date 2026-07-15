@@ -1,0 +1,36 @@
+name: PointerQuest
+options:
+  bundleIdPrefix: com.lonalia
+  deploymentTarget:
+    iOS: "16.0"
+  developmentLanguage: en
+
+settings:
+  base:
+    DEVELOPMENT_TEAM: GMHUACJXLZ
+    SWIFT_VERSION: "6.0"
+    ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+
+targets:
+  PointerQuest:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: PointerQuest
+    info:
+      path: PointerQuest/Info.plist
+      properties:
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+        UIRequiredDeviceCapabilities:
+          - arm64
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.lonalia.PointerQuest
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        TARGETED_DEVICE_FAMILY: "1,2"
