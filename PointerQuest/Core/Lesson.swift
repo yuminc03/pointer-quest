@@ -34,10 +34,3 @@ struct Lesson: Identifiable, Hashable {
   /// 레슨 카드에 표시될 아이콘 또는 이미지 이름 (SF Symbol 등)
   let iconName: String
 }
-
-// TODO: Task 1 마이그레이션이 끝나면(모든 참조가 Lesson/LessonData로 전환되면) 제거
-typealias Level = Lesson
-typealias LevelData = LessonData
-extension LessonData {
-  static var levels: [Lesson] { lessons }
-}
