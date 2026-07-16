@@ -21,10 +21,5 @@ struct MissionHeaderView: View {
 }
 
 #Preview {
-  MissionHeaderView(lesson: .init(
-    id: 0,
-    title: "Title",
-    description: "Description",
-    iconName: "swift"
-  ))
+  MissionHeaderView(lesson: LessonData.lessons[0])
 }
