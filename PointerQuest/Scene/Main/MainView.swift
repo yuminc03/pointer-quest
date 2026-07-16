@@ -23,8 +23,8 @@ struct MainView: View {
         Spacer()
       }
       .background(Color(.systemGroupedBackground))
-      .navigationDestination(for: Level.self) { level in
-        MemoryGridView(lesson: level)
+      .navigationDestination(for: Lesson.self) { lesson in
+        MemoryGridView(lesson: lesson)
           .navigationBarTitleDisplayMode(.inline)
       }
     }
@@ -49,7 +49,7 @@ private extension MainView {
   var PageIndicator: some View {
     HStack {
       PageControl(
-        numberOfPages: LevelData.levels.count,
+        numberOfPages: LessonData.lessons.count,
         currentPage: $pageIndex
       )
       .aspectRatio(contentMode: .fit)
@@ -60,12 +60,12 @@ private extension MainView {
   var Cards: some View {
     PagingCardsScrollView(
       currentPageIndex: $pageIndex,
-      cards: LevelData.levels
+      cards: LessonData.lessons
     )
-}
-  
+  }
+
   var ContinueButton: some View {
-    NavigationLink(value: LevelData.levels[pageIndex]) {
+    NavigationLink(value: LessonData.lessons[pageIndex]) {
       Label {
         Text("Let's Continue")
           .font(.body)

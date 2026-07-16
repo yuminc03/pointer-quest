@@ -6,7 +6,7 @@ struct PagingCardsScrollView: View {
   @State private var dragOffset: CGFloat = 0 // 사용자가 drag한 양
   @Binding var currentPageIndex: Int
   
-  let cards: [Level]
+  let cards: [Lesson]
   private let scrollDampingFactor: CGFloat = 0.6
   private let colors: [[Color]] = [
     [.init(.main), .init(.lightBlue)],
@@ -49,8 +49,8 @@ struct PagingCardsScrollView: View {
     GeometryReader { proxy in
       LazyHStack(alignment: .center, spacing: cardPadding) {
         ForEach(cards.indices, id: \.self) {
-          levelCard(
-            level: cards[$0],
+          lessonCard(
+            lesson: cards[$0],
             proxy: proxy,
             colors: colors[$0]
           )
@@ -154,12 +154,12 @@ struct PagingCardsScrollView: View {
 }
 
 private extension PagingCardsScrollView {
-  private func levelCard(
-    level: Level,
+  private func lessonCard(
+    lesson: Lesson,
     proxy: GeometryProxy,
     colors: [Color]
   ) -> some View {
-    LessonCard(lesson: level, colors: colors)
+    LessonCard(lesson: lesson, colors: colors)
       .rotation3DEffect(
         .init(
           degrees: (Double(proxy.frame(in: .global).minX) - 20) / 45
@@ -167,7 +167,7 @@ private extension PagingCardsScrollView {
         axis: (x: 0, y: 90, z: 0)
       )
       .scaleEffect(
-        currentPageIndex == LevelData.levels.firstIndex(of: level) ?? 0
+        currentPageIndex == LessonData.lessons.firstIndex(of: lesson) ?? 0
         ? 1.05 : 1
       )
       .frame(width: cardWidth, height: cardHieght)
@@ -177,6 +177,6 @@ private extension PagingCardsScrollView {
 #Preview {
   PagingCardsScrollView(
     currentPageIndex: .constant(0),
-    cards: LevelData.levels
+    cards: LessonData.lessons
   )
 }

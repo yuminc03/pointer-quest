@@ -16,7 +16,7 @@ struct MemoryGridView: View {
     ScrollView {
       VStack(spacing: 20) {
         // 미션 헤더
-        MissionHeaderView(level: vm.currentLesson)
+        MissionHeaderView(lesson: vm.currentLesson)
           .padding(.horizontal)
         
         ZStack { // 화살표를 그리기 위해 ZStack 사용 (Overlay로 변경됨)
