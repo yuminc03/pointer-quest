@@ -7,8 +7,8 @@
 `Lesson`/`LessonBlueprint`/`SuccessCondition`/`Chapter` 데이터 모델 정의 (기존 3레벨 데이터를 새 구조로 마이그레이션)
 
 - [x] `Level.swift` → `Lesson.swift` 리네임 및 타입명 변경 (`Level` → `Lesson`, `LevelData` → `LessonData`, `LevelCard` → `LessonCard`)
-- [ ] `LessonBlueprint`/`SlotSeed`/`SuccessCondition` 타입 추가
-- [ ] `Chapter` 타입 추가 및 기존 3레벨을 Chapter 1로 마이그레이션
+- [x] `LessonBlueprint`/`SlotSeed`/`SuccessCondition` 타입 추가
+- [x] `Chapter` 타입 추가 및 기존 3레벨을 Chapter 1로 마이그레이션
 
 ## Task 2 — `feature/blueprint-driven-vm`
 
