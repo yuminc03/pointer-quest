@@ -29,14 +29,13 @@
 		C2A53C2115F6367781415161 /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D5D121A9FD10E8DE27F0586 /* UIDevice+.swift */; };
 		C3087EA24E09CB8BB7D26328 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C88D7489D3DA6FB62DBABB /* MainView.swift */; };
 		C7B8FEAAFF1E13DC88F05FE5 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90A60CA73AFF3DD1D349D28 /* OnboardingView.swift */; };
+		D2A15C3CB04C372D76055F02 /* LessonCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44C75279DD18CB7065371D8 /* LessonCard.swift */; };
 		D33671A654B9E8B1816D95BD /* MemoryGridVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3E75F6C13848BE50363AE /* MemoryGridVM.swift */; };
 		EABA859868C9C1BDB472C087 /* ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7C5BF4CE007621A194246D /* ShakeEffect.swift */; };
-		EB1D29E1AC9B6DE85041B374 /* LevelCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F377955D6E7A0ABE2505B0 /* LevelCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		045BBD546163DB5310EA7B2A /* PointerQuest.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PointerQuest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		06F377955D6E7A0ABE2505B0 /* LevelCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelCard.swift; sourceTree = "<group>"; };
 		0ABD85A090F5D629CEAC8280 /* MemorySlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorySlot.swift; sourceTree = "<group>"; };
 		1AD4647B25894F973B6C4994 /* PageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControl.swift; sourceTree = "<group>"; };
 		283DDC3FB03D740A93C567BB /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
@@ -61,6 +60,7 @@
 		ED3CD1339FCB8E34A21D0BC6 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		F4144E6FC1AC603326D97296 /* CodeFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeFeedbackView.swift; sourceTree = "<group>"; };
 		F44314D254697679309C489F /* MemoryGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGridView.swift; sourceTree = "<group>"; };
+		F44C75279DD18CB7065371D8 /* LessonCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCard.swift; sourceTree = "<group>"; };
 		F8D3E75F6C13848BE50363AE /* MemoryGridVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGridVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -153,7 +153,7 @@
 		AA75BB393C1403C78EC3AC0B /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				06F377955D6E7A0ABE2505B0 /* LevelCard.swift */,
+				F44C75279DD18CB7065371D8 /* LessonCard.swift */,
 				7FCB0754AE4BFA53E9C97FDC /* PagingCardsScrollView.swift */,
 			);
 			path = Entity;
@@ -304,7 +304,7 @@
 				372270F03F67DEA5BABAD2C1 /* CodeFeedbackView.swift in Sources */,
 				5EE9AC49CDD50581CAFAD60D /* Image+.swift in Sources */,
 				604B47BAFDFC0F8B8EB39748 /* Lesson.swift in Sources */,
-				EB1D29E1AC9B6DE85041B374 /* LevelCard.swift in Sources */,
+				D2A15C3CB04C372D76055F02 /* LessonCard.swift in Sources */,
 				C3087EA24E09CB8BB7D26328 /* MainView.swift in Sources */,
 				D33671A654B9E8B1816D95BD /* MemoryGridVM.swift in Sources */,
 				ABC46883E78734F25705CA5D /* MemoryGridView.swift in Sources */,

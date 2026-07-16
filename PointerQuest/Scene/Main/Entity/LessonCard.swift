@@ -1,17 +1,17 @@
 import SwiftUI
 
-/// 레벨 카드
-struct LevelCard: View {
-  let level: Level
+/// 레슨 카드
+struct LessonCard: View {
+  let lesson: Lesson
   let colors: [Color]
-  
+
   var body: some View {
     VStack(alignment: .leading, spacing: 20) {
       TopSection
         .padding(.bottom, 30)
-      
+
       Contents
-      
+
       Spacer()
     }
     .foregroundStyle(.white)
@@ -31,30 +31,30 @@ struct LevelCard: View {
   }
 }
 
-private extension LevelCard {
+private extension LessonCard {
   var TopSection: some View {
     HStack(alignment: .top) {
-      Image(systemName: level.iconName)
+      Image(systemName: lesson.iconName)
         .size(60)
-      
+
       Spacer()
-      
-      Text("Lv. \(level.id)")
+
+      Text("Lv. \(lesson.id)")
         .font(.title2)
     }
   }
-  
+
   var Contents: some View {
     VStack(alignment: .leading, spacing: 10) {
       VStack(alignment: .leading, spacing: 0) {
-        Text("Level \(level.id)".uppercased())
-        
-        Text(level.title)
+        Text("Level \(lesson.id)".uppercased())
+
+        Text(lesson.title)
       }
       .font(.title)
       .fontWeight(.bold)
-      
-      Text(level.description)
+
+      Text(lesson.description)
         .font(.body)
         .multilineTextAlignment(.leading)
     }
@@ -62,8 +62,8 @@ private extension LevelCard {
 }
 
 #Preview {
-  LevelCard(
-    level: LevelData.levels[0],
+  LessonCard(
+    lesson: LessonData.lessons[0],
     colors: [Color(.main), Color(.lightBlue)]
   )
 }

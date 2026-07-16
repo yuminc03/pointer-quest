@@ -159,7 +159,7 @@ private extension PagingCardsScrollView {
     proxy: GeometryProxy,
     colors: [Color]
   ) -> some View {
-    LevelCard(level: level, colors: colors)
+    LessonCard(lesson: level, colors: colors)
       .rotation3DEffect(
         .init(
           degrees: (Double(proxy.frame(in: .global).minX) - 20) / 45
