@@ -1,8 +1,8 @@
 import Foundation
 
-/// 게임 내 레벨 데이터를 관리하는 정적 객체
-struct LevelData {
-  static let levels: [Level] = [
+/// Pointer Quest의 레슨 데이터를 관리하는 정적 객체
+struct LessonData {
+  static let lessons: [Lesson] = [
     .init(
       id: 1,
       title: "The Importance of Address",
@@ -24,13 +24,20 @@ struct LevelData {
   ]
 }
 
-/// Pointer Quest의 각 게임 레벨을 정의하는 데이터 모델
-struct Level: Identifiable, Hashable {
+/// Pointer Quest의 각 학습 레슨을 정의하는 데이터 모델
+struct Lesson: Identifiable, Hashable {
   let id: Int
-  /// Level 제목
+  /// 레슨 제목
   let title: String
-  /// Level 상세설명
+  /// 레슨 상세설명
   let description: String
-  /// 레벨 카드에 표시될 아이콘 또는 이미지 이름 (SF Symbol 등)
+  /// 레슨 카드에 표시될 아이콘 또는 이미지 이름 (SF Symbol 등)
   let iconName: String
+}
+
+// TODO: Task 1 마이그레이션이 끝나면(모든 참조가 Lesson/LessonData로 전환되면) 제거
+typealias Level = Lesson
+typealias LevelData = LessonData
+extension LessonData {
+  static var levels: [Lesson] { lessons }
 }
