@@ -6,19 +6,19 @@ final class MemoryGridVM: ObservableObject {
   @Published private(set) var slots = [MemorySlot]()
   /// 현재 실행된 동작을 C 코드로 보여주는 로그
   @Published var codeLog = "// The executed operation is represented as C language code."
-  /// 현재 진행 중인 레벨
-  @Published private(set) var currentLevel: Level
+  /// 현재 진행 중인 레슨
+  @Published private(set) var currentLesson: Lesson
   /// 미션 성공 여부
   @Published var isSuccess = false
-  
-  init(level: Level = LevelData.levels[0]) {
-    self.currentLevel = level
-    self.setupLevel(level: level)
+
+  init(lesson: Lesson = LessonData.lessons[0]) {
+    self.currentLesson = lesson
+    self.setupLevel(level: lesson)
   }
-  
-  /// 현재 레벨 상태 초기화
+
+  /// 현재 레슨 상태 초기화
   func reset() {
-    setupLevel(level: currentLevel)
+    setupLevel(level: currentLesson)
   }
   
   /// 슬롯 탭 처리
@@ -115,7 +115,7 @@ final class MemoryGridVM: ObservableObject {
     
     // Level 2: 잠긴 슬롯 직접 연결 시도 방지 (Security Check)
     if let targetIndex = slots.firstIndex(where: { $0.address == destinationAddress }),
-       currentLevel.id == 2 && slots[targetIndex].isLocked
+       currentLesson.id == 2 && slots[targetIndex].isLocked
     {
       codeLog = "// Error: Security Violation! Direct access is not allowed. (Access Denied)"
       triggerError(for: targetIndex)
@@ -218,7 +218,7 @@ final class MemoryGridVM: ObservableObject {
   }
   
   /// 4 X 4 그리드 형태 가상 메모리 주소를 생성 및 레벨별 초기화
-  private func setupLevel(level: Level) {
+  private func setupLevel(level: Lesson) {
     // 1. 기본 빈 슬롯 16개 생성
     slots = (0 ..< 16).map {
       MemorySlot(
@@ -291,7 +291,7 @@ final class MemoryGridVM: ObservableObject {
   
   /// 현재 상태가 레벨 클리어 조건을 만족하는지 검사
   private func checkSuccess() {
-    switch currentLevel.id {
+    switch currentLesson.id {
     case 1:
       // Level 1: 0x700C 주소를 가리키는 포인터가 있는가?
       let hasCorrectPointer = slots.contains { slot in

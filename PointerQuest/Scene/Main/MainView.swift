@@ -24,7 +24,7 @@ struct MainView: View {
       }
       .background(Color(.systemGroupedBackground))
       .navigationDestination(for: Level.self) { level in
-        MemoryGridView(level: level)
+        MemoryGridView(lesson: level)
           .navigationBarTitleDisplayMode(.inline)
       }
     }

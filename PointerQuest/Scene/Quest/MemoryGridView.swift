@@ -4,8 +4,8 @@ import SwiftUI
 struct MemoryGridView: View {
   @StateObject private var vm: MemoryGridVM
   
-  init(level: Level = LevelData.levels[0]) {
-    _vm = StateObject(wrappedValue: MemoryGridVM(level: level))
+  init(lesson: Lesson = LessonData.lessons[0]) {
+    _vm = StateObject(wrappedValue: MemoryGridVM(lesson: lesson))
   }
   
   private let columns: [GridItem] = [
@@ -16,7 +16,7 @@ struct MemoryGridView: View {
     ScrollView {
       VStack(spacing: 20) {
         // 미션 헤더
-        MissionHeaderView(level: vm.currentLevel)
+        MissionHeaderView(level: vm.currentLesson)
           .padding(.horizontal)
         
         ZStack { // 화살표를 그리기 위해 ZStack 사용 (Overlay로 변경됨)
@@ -50,7 +50,7 @@ struct MemoryGridView: View {
         .padding()
       }
     }
-    .navigationTitle(vm.currentLevel.title)
+    .navigationTitle(vm.currentLesson.title)
     .background(Color(.systemGroupedBackground))
     .toolbar {
       ToolbarItem(placement: .topBarTrailing) {
