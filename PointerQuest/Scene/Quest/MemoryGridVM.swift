@@ -242,43 +242,23 @@ final class MemoryGridVM: ObservableObject {
     isSuccess = false
   }
   
-  /// 현재 상태가 레벨 클리어 조건을 만족하는지 검사
+  /// 현재 상태가 레슨의 클리어 조건(블루프린트의 `successCondition`)을 만족하는지 검사
   private func checkSuccess() {
-    switch currentLesson.id {
-    case 1:
-      // Level 1: 0x700C 주소를 가리키는 포인터가 있는가?
+    switch currentLesson.blueprint.successCondition {
+    case .anyPointerPointsTo(let index):
+      // 어떤 포인터든 대상 슬롯의 주소를 가리키면 성공
+      let targetAddress = slots[index].address
       let hasCorrectPointer = slots.contains { slot in
-        slot.type == .pointer && slot.pointingTo == "0x700C"
+        slot.type == .pointer && slot.pointingTo == targetAddress
       }
       if hasCorrectPointer { finishLevel() }
-      
-    case 2:
-      // Level 2: 내 포인터가 'Double Pointer'를 가리키고 있는가?
-      // Target은 7번, Double Pointer는 5번, MyPointer는 14번(사용자가 바꿀 수 있나? 보통 드래그로)
-      // 조건: 어떤 포인터든 '5번 슬롯(Double Pointer)'을 가리키면 성공 (단, 5번이 Target을 가리키고 있어야 함 - 초기값)
-      let linkAddr = slots[5].address
-      let hasConnectionToLink = slots.contains { slot in
-        slot.type == .pointer && slot.pointingTo == linkAddr
+
+    case .chain(let indices):
+      // indices가 순서대로 서로를 가리키는 체인이 완성되었는지 확인
+      let isConnected = zip(indices, indices.dropFirst()).allSatisfy { current, next in
+        slots[current].pointingTo == slots[next].address
       }
-      
-      if hasConnectionToLink { finishLevel() }
-      
-    case 3:
-      // Level 3: Chain 연결 확인
-      // Start(0) -> A(5) -> B(11) -> Treasure(15)
-      let startSlot = slots[0]
-      let nodeA = slots[5]
-      let nodeB = slots[11]
-      let treasure = slots[15] // 0x703C
-      
-      let isConnected = (startSlot.pointingTo == nodeA.address) &&
-      (nodeA.pointingTo == nodeB.address) &&
-      (nodeB.pointingTo == treasure.address)
-      
       if isConnected { finishLevel() }
-      
-    default:
-      break
     }
   }
   
