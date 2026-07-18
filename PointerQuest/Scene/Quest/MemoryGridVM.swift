@@ -266,23 +266,4 @@ final class MemoryGridVM: ObservableObject {
     isSuccess = true
     codeLog = "// Congratulations! Level Clear! 🎉"
   }
-  
-  /// 4 X 4 그리드 형태 가상 메모리 주소를 생성
-  private func initializeMemory() {
-    slots = (0 ..< 16).map {
-      MemorySlot(
-        address: String(format: "0x%04X", 0x7000 + ($0 * 4)),
-        value: nil,
-        type: .empty
-      )
-    }
-    
-    // 초기 더미데이터 설정
-    
-    slots[0].value = 42
-    slots[0].type = .value
-    
-    slots[5].type = .pointer
-    slots[5].pointingTo = "0x7000"
-  }
 }
