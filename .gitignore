@@ -9,3 +9,6 @@ xcuserdata/
 
 ## macOS
 .DS_Store
+
+## Claude Code (개인 설정만 무시, settings.json은 팀 공유용으로 추적)
+.claude/settings.local.json
