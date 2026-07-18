@@ -4,17 +4,17 @@
 
 ## 현재 상태
 
-- 브랜치: `feature/lesson-data-model` — Task 1 완료 (develop 병합 대기)
-- `Level` → `Lesson` 타입/파일 리네임 완료 (`LevelData` → `LessonData`, `LevelCard` → `LessonCard` 포함). 커밋마다 빌드 성공을 확인하며 5개 커밋으로 분리:
-  1. Core 데이터 모델 리네임 + 임시 typealias 추가
-  2. `LessonCard` 리네임
-  3. `MemoryGridVM`/`MemoryGridView` 전환
-  4. 남은 View 계층(`MainView`/`MissionHeaderView`/`PagingCardsScrollView`) 전환
-  5. 임시 typealias 제거
-- `SlotSeed`/`SuccessCondition`/`LessonBlueprint` 타입 추가 완료
-- `Chapter` 타입 추가 및 기존 3레슨을 Chapter 1 "주소와 포인터"로 마이그레이션 완료 (`MemoryGridVM`은 아직 이 블루프린트를 소비하지 않고 기존 switch 로직 그대로 사용 — Task 2에서 연결 예정)
+- `feature/lesson-data-model` (Task 1)은 `develop`에 병합 완료
+- 브랜치: `feature/blueprint-driven-vm` — Task 2 작업 중
+- `Level` → `Lesson` 타입/파일 리네임, `SlotSeed`/`SuccessCondition`/`LessonBlueprint`/`Chapter` 타입 추가, 기존 3레슨의 Chapter 1 마이그레이션은 Task 1에서 완료
+- `MemoryGridVM.setupLevel`을 `Lesson.blueprint.seeds` 기반 범용 로직으로 교체 완료 (`switch level.id` 제거, `SlotSeed`를 순회하며 슬롯 배치)
+- `MemoryGridVM.checkSuccess`를 `Lesson.blueprint.successCondition` 기반 범용 로직으로 교체 완료 (`switch currentLesson.id` 제거, `.anyPointerPointsTo`/`.chain` case 처리)
+- `handleDrop`의 잠금 슬롯 체크도 `currentLesson.id == 2` 하드코딩 대신 `slots[targetIndex].isLocked` 범용 체크로 변경
+- 사용하지 않던 `initializeMemory()` 죽은 코드 제거
+- 빌드 성공 확인 (`xcodebuild ... build` → BUILD SUCCEEDED). 기존 3레슨 동작 동일성은 별도 검증 진행 중
 
 ## 다음 작업
 
-- `feature/lesson-data-model`을 `develop`에 병합할지 확인
-- Task 2 (`feature/blueprint-driven-vm`): `MemoryGridVM.setupLevel`/`checkSuccess`를 블루프린트 기반 로직으로 교체
+- Task 2 동작 검증 결과 확인 후 커밋 메시지 제안 및 커밋
+- Task 2 완료 후 `develop` 병합 여부 확인
+- Task 3 (`feature/learning-tone-copy`): 게임 카피 → 학습 도구 카피 전환

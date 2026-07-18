@@ -14,8 +14,8 @@
 
 `MemoryGridVM`을 블루프린트 기반 범용 로직으로 리팩터링 (기존 3레벨 동작 동일성 확인)
 
-- [ ] 블루프린트 기반 `setupLevel` 교체
-- [ ] 블루프린트 기반 `checkSuccess` 교체 및 기존 switch 제거
+- [x] 블루프린트 기반 `setupLevel` 교체
+- [x] 블루프린트 기반 `checkSuccess` 교체 및 기존 switch 제거
 
 ## Task 3 — `feature/learning-tone-copy`
 
