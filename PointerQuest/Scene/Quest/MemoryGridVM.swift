@@ -113,9 +113,9 @@ final class MemoryGridVM: ObservableObject {
       return
     }
     
-    // Level 2: 잠긴 슬롯 직접 연결 시도 방지 (Security Check)
+    // 잠긴 슬롯 직접 연결 시도 방지 (Security Check)
     if let targetIndex = slots.firstIndex(where: { $0.address == destinationAddress }),
-       currentLesson.id == 2 && slots[targetIndex].isLocked
+       slots[targetIndex].isLocked
     {
       codeLog = "// Error: Security Violation! Direct access is not allowed. (Access Denied)"
       triggerError(for: targetIndex)
