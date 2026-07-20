@@ -66,7 +66,7 @@ struct MemoryGridView: View {
         .padding()
         .background(.thinMaterial)
     }
-    .alert("Mission Complete! 🎉", isPresented: $vm.isSuccess) {
+    .alert("Lesson Complete! 🎉", isPresented: $vm.isSuccess) {
       Button("Confirm", role: .cancel) { }
     }
   }
