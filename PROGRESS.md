@@ -26,7 +26,7 @@
 - [x] `MemoryGridVM.swift`의 잠금/에러/완료 `codeLog` 문구를 설명형 학습 톤으로 변경 ("Access Denied"/"Security Violation"/"Level Clear!" 제거)
 - [x] `MissionHeaderView.swift` → `LessonHeaderView.swift` 리네임 (파일명·구조체명·"Mission"→"Lesson" 라벨), `MemoryGridView.swift`의 참조 갱신
 - [x] `MemoryGridView.swift`의 alert 타이틀 "Mission Complete! 🎉" → "Lesson Complete! 🎉"
-- [ ] `LessonCard.swift`의 "Lv. N"/"LEVEL N" → "Lesson N"
+- [x] `LessonCard.swift`의 "Lv. N"/"LEVEL N" → "Lesson N"
 - [ ] `OnboardingView.swift`의 "Level" 잔존 표현 → "Lesson" 통일
 - [ ] `Localizable.xcstrings` String Catalog를 프로젝트에 추가 (`project.pbxproj` 수동 편집 필요 — 파일 참조 + Resources 빌드 페이즈 + `knownRegions`에 `ko` 추가)
 - [ ] `Lesson`/`Chapter`의 `title`/`description`을 `LocalizedStringResource`로 전환
