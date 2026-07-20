@@ -47,7 +47,8 @@ private extension LessonCard {
   var Contents: some View {
     VStack(alignment: .leading, spacing: 10) {
       VStack(alignment: .leading, spacing: 0) {
-        Text("Lesson \(lesson.id)".uppercased())
+        Text("Lesson \(lesson.id)")
+          .textCase(.uppercase)
 
         Text(lesson.title)
       }
