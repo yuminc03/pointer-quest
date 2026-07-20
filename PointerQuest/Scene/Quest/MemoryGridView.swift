@@ -50,7 +50,7 @@ struct MemoryGridView: View {
         .padding()
       }
     }
-    .navigationTitle(vm.currentLesson.title)
+    .navigationTitle(Text(vm.currentLesson.title))
     .background(Color(.systemGroupedBackground))
     .toolbar {
       ToolbarItem(placement: .topBarTrailing) {

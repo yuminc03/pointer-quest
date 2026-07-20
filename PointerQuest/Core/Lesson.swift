@@ -62,21 +62,29 @@ struct LessonData {
 /// 여러 레슨을 하나의 학습 주제로 묶는 그룹
 struct Chapter: Identifiable, Hashable {
   let id: Int
-  let title: String
+  let title: LocalizedStringResource
   var lessons: [Lesson]
+
+  // `LocalizedStringResource`는 synthesized Hashable 대상이 아니므로 `id` 기준으로 직접 구현한다.
+  static func == (lhs: Chapter, rhs: Chapter) -> Bool { lhs.id == rhs.id }
+  func hash(into hasher: inout Hasher) { hasher.combine(id) }
 }
 
 /// Pointer Quest의 각 학습 레슨을 정의하는 데이터 모델
 struct Lesson: Identifiable, Hashable {
   let id: Int
   /// 레슨 제목
-  let title: String
+  let title: LocalizedStringResource
   /// 레슨 상세설명
-  let description: String
+  let description: LocalizedStringResource
   /// 레슨 카드에 표시될 아이콘 또는 이미지 이름 (SF Symbol 등)
   let iconName: String
   /// 레슨의 초기 배치와 클리어 조건
   let blueprint: LessonBlueprint
+
+  // `LocalizedStringResource`는 synthesized Hashable 대상이 아니므로 `id` 기준으로 직접 구현한다.
+  static func == (lhs: Lesson, rhs: Lesson) -> Bool { lhs.id == rhs.id }
+  func hash(into hasher: inout Hasher) { hasher.combine(id) }
 }
 
 /// 레슨 시작 시 특정 인덱스의 메모리 슬롯을 어떤 상태로 초기화할지 정의

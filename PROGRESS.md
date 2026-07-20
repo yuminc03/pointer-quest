@@ -29,7 +29,7 @@
 - [x] `LessonCard.swift`의 "Lv. N"/"LEVEL N" → "Lesson N"
 - [x] `OnboardingView.swift`의 "Level" 잔존 표현 → "Lesson" 통일
 - [x] `Localizable.xcstrings` String Catalog를 프로젝트에 추가 (`project.pbxproj` 수동 편집 — 파일 참조 + Resources 빌드 페이즈 + `knownRegions`에 `ko` 추가, 빈 카탈로그 상태로 빌드 검증 완료)
-- [ ] `Lesson`/`Chapter`의 `title`/`description`을 `LocalizedStringResource`로 전환
+- [x] `Lesson`/`Chapter`의 `title`/`description`을 `LocalizedStringResource`로 전환 (사용처는 `Text(LocalizedStringResource)` 오버로드로 자동 처리, `Hashable`은 `id` 기준으로 직접 구현)
 - [ ] `Localizable.xcstrings`에 앱 전체 문구 `ko` 번역 채우기
 - [ ] 앱 최초 실행 시 한국어 기본값 강제 로직 추가
 - [ ] `SettingView`에 언어 선택(한국어/English) UI + 재시작 안내 추가
