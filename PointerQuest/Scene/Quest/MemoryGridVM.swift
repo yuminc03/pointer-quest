@@ -25,9 +25,9 @@ final class MemoryGridVM: ObservableObject {
   func handleTap(_ slot: MemorySlot) {
     print("클릭된 메모리 주소: \(slot.address)")
     
-    // Level 2: 잠긴 슬롯 탭 시 에러 피드백
+    // Lesson 2: 잠긴 슬롯 탭 시 에러 피드백
     if slot.isLocked {
-      codeLog = "// Error: Access Denied! Memory is locked."
+      codeLog = "// This memory is locked. Access it indirectly through an existing pointer."
       if let index = slots.firstIndex(where: { $0.id == slot.id }) {
         triggerError(for: index)
       }
@@ -100,7 +100,7 @@ final class MemoryGridVM: ObservableObject {
     // 1. 드래그한 슬롯(Source)의 인덱스를 찾기
     // 자기 자신을 가리키는 것은 방지 (Self-reference Prevention)
     if sourceAddress == destinationAddress {
-      codeLog = "// Error: Cannot point to itself (Self-Reference)."
+      codeLog = "// A pointer can't point to itself. Choose a different address to connect to."
       if let sourceIndex = slots.firstIndex(where: { $0.address == sourceAddress }) {
         triggerError(for: sourceIndex)
       }
@@ -117,7 +117,7 @@ final class MemoryGridVM: ObservableObject {
     if let targetIndex = slots.firstIndex(where: { $0.address == destinationAddress }),
        slots[targetIndex].isLocked
     {
-      codeLog = "// Error: Security Violation! Direct access is not allowed. (Access Denied)"
+      codeLog = "// This memory is locked. Direct access isn't allowed — connect through another pointer instead."
       triggerError(for: targetIndex)
       return
     }
@@ -193,7 +193,7 @@ final class MemoryGridVM: ObservableObject {
     print("역참조 성공! \(pointerAddr) -> \(targetAddr) (Value: \(slots[targetIndex].value ?? 0))")
     highlightSlot(for: targetIndex)
     
-    // Level 2: 잠금 해제 로직 (제거됨 - 징검다리 포인터 미션으로 변경)
+    // Lesson 2: 잠금 해제 로직 (제거됨 - 징검다리 포인터 미션으로 변경)
     // if slots[targetIndex].isLocked { ... } -> 삭제
   }
   
@@ -264,6 +264,6 @@ final class MemoryGridVM: ObservableObject {
   
   private func finishLevel() {
     isSuccess = true
-    codeLog = "// Congratulations! Level Clear! 🎉"
+    codeLog = "// Well done! Lesson Complete! 🎉"
   }
 }

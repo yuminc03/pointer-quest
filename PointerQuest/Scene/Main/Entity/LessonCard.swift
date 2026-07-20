@@ -39,7 +39,7 @@ private extension LessonCard {
 
       Spacer()
 
-      Text("Lv. \(lesson.id)")
+      Text("Lesson \(lesson.id)")
         .font(.title2)
     }
   }
@@ -47,7 +47,8 @@ private extension LessonCard {
   var Contents: some View {
     VStack(alignment: .leading, spacing: 10) {
       VStack(alignment: .leading, spacing: 0) {
-        Text("Level \(lesson.id)".uppercased())
+        Text("Lesson \(lesson.id)")
+          .textCase(.uppercase)
 
         Text(lesson.title)
       }

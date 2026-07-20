@@ -15,8 +15,8 @@ struct MemoryGridView: View {
   var body: some View {
     ScrollView {
       VStack(spacing: 20) {
-        // 미션 헤더
-        MissionHeaderView(lesson: vm.currentLesson)
+        // 레슨 헤더
+        LessonHeaderView(lesson: vm.currentLesson)
           .padding(.horizontal)
         
         ZStack { // 화살표를 그리기 위해 ZStack 사용 (Overlay로 변경됨)
@@ -50,7 +50,7 @@ struct MemoryGridView: View {
         .padding()
       }
     }
-    .navigationTitle(vm.currentLesson.title)
+    .navigationTitle(Text(vm.currentLesson.title))
     .background(Color(.systemGroupedBackground))
     .toolbar {
       ToolbarItem(placement: .topBarTrailing) {
@@ -66,7 +66,7 @@ struct MemoryGridView: View {
         .padding()
         .background(.thinMaterial)
     }
-    .alert("Mission Complete! 🎉", isPresented: $vm.isSuccess) {
+    .alert("Lesson Complete! 🎉", isPresented: $vm.isSuccess) {
       Button("Confirm", role: .cancel) { }
     }
   }

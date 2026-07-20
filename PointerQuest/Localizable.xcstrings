@@ -1,0 +1,338 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "-" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        }
+      }
+    },
+    "%lld" : {
+
+    },
+    "1. Long press a block to see it pop out in 3D." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. 블록을 길게 누르면 3D로 튀어나오는 모습을 볼 수 있어요."
+          }
+        }
+      }
+    },
+    "2. Drag it close to another block." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. 다른 블록 가까이로 드래그하세요."
+          }
+        }
+      }
+    },
+    "3. Release your finger to connect the two blocks." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3. 손가락을 떼면 두 블록이 연결됩니다."
+          }
+        }
+      }
+    },
+    "Chain Connection" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "체인 연결"
+          }
+        }
+      }
+    },
+    "Confirm" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "확인"
+          }
+        }
+      }
+    },
+    "Create a path to reach the data.\nConnect in order: Start -> Node A -> Node B -> Treasure." : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "데이터에 도달하는 경로를 만드세요.\n순서대로 연결하세요: 시작 -> 노드 A -> 노드 B -> 보물."
+          }
+        }
+      }
+    },
+    "Data is protected by a Lock system.\nConnect via the existing 'Link Pointer' instead of accessing directly." : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "데이터가 잠금 장치로 보호되어 있습니다.\n직접 접근하는 대신 기존 '연결 포인터'를 통해 연결하세요."
+          }
+        }
+      }
+    },
+    "Home" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "홈"
+          }
+        }
+      }
+    },
+    "How to use" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용 방법"
+          }
+        }
+      }
+    },
+    "How to use the app" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "앱 사용법"
+          }
+        }
+      }
+    },
+    "In this screen, you can reference a block containing a specific value with another block." : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 화면에서는 특정 값을 가진 블록을 다른 블록으로 참조(가리키게)할 수 있습니다."
+          }
+        }
+      }
+    },
+    "It's not the value, but the 'Address' that matters.\nDrag the pointer to point to address." : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "값이 아니라 '주소'가 중요합니다.\n포인터를 드래그해서 주소를 가리켜보세요."
+          }
+        }
+      }
+    },
+    "Language" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "언어"
+          }
+        }
+      }
+    },
+    "Lesson" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "레슨"
+          }
+        }
+      }
+    },
+    "Lesson %lld" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "레슨 %lld"
+          }
+        }
+      }
+    },
+    "Lesson Complete! 🎉" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "레슨 완료! 🎉"
+          }
+        }
+      }
+    },
+    "Let's Continue" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이어서 학습하기"
+          }
+        }
+      }
+    },
+    "New to the app? Check out the tutorial to learn how to use it!" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 앱이 처음이신가요? 튜토리얼에서 사용법을 확인해보세요!"
+          }
+        }
+      }
+    },
+    "No, I'm good." : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아니요, 괜찮아요."
+          }
+        }
+      }
+    },
+    "Please restart the app to apply the language change." : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "언어 변경 사항을 적용하려면 앱을 재시작해주세요."
+          }
+        }
+      }
+    },
+    "Pointer Quest" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pointer Quest"
+          }
+        }
+      }
+    },
+    "Restart Required" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "재시작 필요"
+          }
+        }
+      }
+    },
+    "Setting" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정"
+          }
+        }
+      }
+    },
+    "Stepping Stone Pointer" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "징검다리 포인터"
+          }
+        }
+      }
+    },
+    "The Importance of Address" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "주소가 중요한 이유"
+          }
+        }
+      }
+    },
+    "The Memory Maze" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "메모리의 미로"
+          }
+        }
+      }
+    },
+    "Welcome!" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "환영합니다!"
+          }
+        }
+      }
+    },
+    "When you select a Lesson and enter the next screen, you will see a screen with blocks arranged in a grid." : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "레슨을 선택해 다음 화면으로 이동하면, 격자 모양으로 배치된 블록 화면을 보게 됩니다."
+          }
+        }
+      }
+    },
+    "Yes, show me the tutorial." : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "네, 튜토리얼 보여주세요."
+          }
+        }
+      }
+    },
+    "You can check the tutorial again in Setting > How to use the app." : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "튜토리얼은 설정 > 앱 사용법에서 다시 확인할 수 있습니다."
+          }
+        }
+      }
+    },
+    "주소와 포인터" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Address & Pointers"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "주소와 포인터"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
