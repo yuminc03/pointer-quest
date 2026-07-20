@@ -111,6 +111,16 @@
         }
       }
     },
+    "Language" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "언어"
+          }
+        }
+      }
+    },
     "Lesson" : {
       "localizations" : {
         "ko" : {
@@ -171,12 +181,32 @@
         }
       }
     },
+    "Please restart the app to apply the language change." : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "언어 변경 사항을 적용하려면 앱을 재시작해주세요."
+          }
+        }
+      }
+    },
     "Pointer Quest" : {
       "localizations" : {
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pointer Quest"
+          }
+        }
+      }
+    },
+    "Restart Required" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "재시작 필요"
           }
         }
       }

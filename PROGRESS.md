@@ -32,7 +32,7 @@
 - [x] `Lesson`/`Chapter`의 `title`/`description`을 `LocalizedStringResource`로 전환 (사용처는 `Text(LocalizedStringResource)` 오버로드로 자동 처리, `Hashable`은 `id` 기준으로 직접 구현)
 - [x] `Localizable.xcstrings`에 앱 전체 문구 `ko` 번역 채우기 (`LessonCard`의 `"...".uppercased()` 패턴이 비-로컬라이즈 `Text(String)` 오버로드를 타던 문제를 `.textCase(.uppercase)`로 수정하여 함께 해결)
 - [x] 앱 최초 실행 시 한국어 기본값 강제 로직 추가 (`App/AppLanguage.swift` 신설, `MyApp.init()`에서 `applyInitialLanguageIfNeeded()` 호출)
-- [ ] `SettingView`에 언어 선택(한국어/English) UI + 재시작 안내 추가
+- [x] `SettingView`에 언어 선택(한국어/English) UI + 재시작 안내 추가
 
 ## 다음 작업
 
