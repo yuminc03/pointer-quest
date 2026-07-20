@@ -113,9 +113,9 @@ final class MemoryGridVM: ObservableObject {
       return
     }
     
-    // Level 2: 잠긴 슬롯 직접 연결 시도 방지 (Security Check)
+    // 잠긴 슬롯 직접 연결 시도 방지 (Security Check)
     if let targetIndex = slots.firstIndex(where: { $0.address == destinationAddress }),
-       currentLesson.id == 2 && slots[targetIndex].isLocked
+       slots[targetIndex].isLocked
     {
       codeLog = "// Error: Security Violation! Direct access is not allowed. (Access Denied)"
       triggerError(for: targetIndex)
@@ -217,7 +217,7 @@ final class MemoryGridVM: ObservableObject {
     }
   }
   
-  /// 4 X 4 그리드 형태 가상 메모리 주소를 생성 및 레벨별 초기화
+  /// 4 X 4 그리드 형태 가상 메모리 주소를 생성 및 블루프린트 기반 초기화
   private func setupLevel(level: Lesson) {
     // 1. 기본 빈 슬롯 16개 생성
     slots = (0 ..< 16).map {
@@ -227,129 +227,43 @@ final class MemoryGridVM: ObservableObject {
         type: .empty
       )
     }
-    
-    // 2. 레벨별 배치 (Level Design)
-    switch level.id {
-    case 1: // 주소의 중요성: 0x700C 찾기
-      // 0x700C = 0x7000 + 12 (index 3)
-      let targetIndex = 3
-      slots[targetIndex].type = .value
-      slots[targetIndex].value = 100 // 값은 중요하지 않음
-      
-      // 포인터 변수 준비
-      slots[8].type = .pointer
-      codeLog = "// Level 1: Drag the pointer to point to address 0x700C."
-      
-    case 2: // 이중 포인터: 직접 접근 금지, Double Pointer 이용
-      // Target Value (Locked)
-      let targetIndex = 7 // 0x701C
-      slots[targetIndex].type = .value
-      slots[targetIndex].value = 777
-      slots[targetIndex].isLocked = true // 직접 연결 불가
-      
-      // Double Pointer (Existing Pointer)
-      let linkIndex = 5 // 0x7014
-      slots[linkIndex].type = .pointer
-      slots[linkIndex].pointingTo = slots[targetIndex].address // Double Pointer -> Target
-      
-      // My Pointer
-      let myPointerIndex = 14 // 0x7038
-      slots[myPointerIndex].type = .pointer
-      
-      codeLog = "// Level 2: Data(0x701C) is locked. Do not access directly, use 'Double Pointer'."
-      
-    case 3: // 체인 연결: Start -> A -> B -> Treasure
-      // Start (Pointer) -> A (Pointer) -> B (Pointer) -> Treasure (Value)
-      
-      // Treasure
-      let treasureIndex = 15 // 0x703C
-      slots[treasureIndex].type = .value
-      slots[treasureIndex].value = 999
-      
-      // Node B (Pointer)
-      let nodeBIndex = 11 // 0x702C
-      slots[nodeBIndex].type = .pointer
-      // slots[nodeBIndex].pointingTo = slots[treasureIndex].address // 사용자가 연결해야 함.
-      
-      // Node A (Pointer)
-      let nodeAIndex = 5 // 0x7014
-      slots[nodeAIndex].type = .pointer
-      // slots[nodeAIndex].pointingTo = slots[nodeBIndex].address // 사용자가 연결해야 함
-      
-      // Start (Pointer)
-      let startIndex = 0 // 0x7000
-      slots[startIndex].type = .pointer
-      
-      codeLog = "// Level 3: Create a chain from Start(0x7000) to Treasure(0x703C)."
-      
-    default:
-      codeLog = "// Sandbox Mode"
+
+    // 2. 블루프린트에 정의된 시드로 슬롯 배치
+    for seed in level.blueprint.seeds {
+      slots[seed.index].type = seed.type
+      slots[seed.index].value = seed.value
+      slots[seed.index].isLocked = seed.isLocked
+      if let pointingToIndex = seed.pointingToIndex {
+        slots[seed.index].pointingTo = slots[pointingToIndex].address
+      }
     }
-    
+
+    codeLog = level.blueprint.initialCodeLog
     isSuccess = false
   }
   
-  /// 현재 상태가 레벨 클리어 조건을 만족하는지 검사
+  /// 현재 상태가 레슨의 클리어 조건(블루프린트의 `successCondition`)을 만족하는지 검사
   private func checkSuccess() {
-    switch currentLesson.id {
-    case 1:
-      // Level 1: 0x700C 주소를 가리키는 포인터가 있는가?
+    switch currentLesson.blueprint.successCondition {
+    case .anyPointerPointsTo(let index):
+      // 어떤 포인터든 대상 슬롯의 주소를 가리키면 성공
+      let targetAddress = slots[index].address
       let hasCorrectPointer = slots.contains { slot in
-        slot.type == .pointer && slot.pointingTo == "0x700C"
+        slot.type == .pointer && slot.pointingTo == targetAddress
       }
       if hasCorrectPointer { finishLevel() }
-      
-    case 2:
-      // Level 2: 내 포인터가 'Double Pointer'를 가리키고 있는가?
-      // Target은 7번, Double Pointer는 5번, MyPointer는 14번(사용자가 바꿀 수 있나? 보통 드래그로)
-      // 조건: 어떤 포인터든 '5번 슬롯(Double Pointer)'을 가리키면 성공 (단, 5번이 Target을 가리키고 있어야 함 - 초기값)
-      let linkAddr = slots[5].address
-      let hasConnectionToLink = slots.contains { slot in
-        slot.type == .pointer && slot.pointingTo == linkAddr
+
+    case .chain(let indices):
+      // indices가 순서대로 서로를 가리키는 체인이 완성되었는지 확인
+      let isConnected = zip(indices, indices.dropFirst()).allSatisfy { current, next in
+        slots[current].pointingTo == slots[next].address
       }
-      
-      if hasConnectionToLink { finishLevel() }
-      
-    case 3:
-      // Level 3: Chain 연결 확인
-      // Start(0) -> A(5) -> B(11) -> Treasure(15)
-      let startSlot = slots[0]
-      let nodeA = slots[5]
-      let nodeB = slots[11]
-      let treasure = slots[15] // 0x703C
-      
-      let isConnected = (startSlot.pointingTo == nodeA.address) &&
-      (nodeA.pointingTo == nodeB.address) &&
-      (nodeB.pointingTo == treasure.address)
-      
       if isConnected { finishLevel() }
-      
-    default:
-      break
     }
   }
   
   private func finishLevel() {
     isSuccess = true
     codeLog = "// Congratulations! Level Clear! 🎉"
-  }
-  
-  /// 4 X 4 그리드 형태 가상 메모리 주소를 생성
-  private func initializeMemory() {
-    slots = (0 ..< 16).map {
-      MemorySlot(
-        address: String(format: "0x%04X", 0x7000 + ($0 * 4)),
-        value: nil,
-        type: .empty
-      )
-    }
-    
-    // 초기 더미데이터 설정
-    
-    slots[0].value = 42
-    slots[0].type = .value
-    
-    slots[5].type = .pointer
-    slots[5].pointingTo = "0x7000"
   }
 }
