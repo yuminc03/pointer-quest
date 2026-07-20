@@ -5,7 +5,8 @@ struct LessonHeaderView: View {
 
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
-      Text("Lesson".uppercased())
+      Text("Lesson")
+        .textCase(.uppercase)
         .font(.caption)
         .fontWeight(.bold)
         .foregroundStyle(.secondary)
