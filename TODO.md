@@ -19,12 +19,16 @@
 
 ## Task 3 — `feature/learning-tone-copy`
 
-게임 카피 → 학습 도구 카피 전환
+게임 카피 → 학습 도구 카피 전환 + 로컬라이제이션(한국어 기본/영어 선택) 도입
 
-- [ ] "Mission" → "Goal/Lesson" 등 문구 조정
-- [ ] "Level Clear! 🎉" → 학습 완료 문구로 변경
+- [ ] "Mission" → "Lesson" 등 문구 조정 (`MissionHeaderView` → `LessonHeaderView` 컴포넌트명 포함)
+- [ ] "Level Clear! 🎉" → "Lesson Complete! 🎉" 학습 완료 문구로 변경
 - [ ] 에러/잠금 문구를 설명형으로 다듬기
-- [ ] "Lv. N" 등 게임 용어 조정
+- [ ] "Lv. N" 등 게임 용어를 "Lesson N"으로 조정
+- [ ] `Localizable.xcstrings` String Catalog 도입 (소스 `en`, 번역 `ko`), `project.pbxproj`의 `knownRegions`에 `ko` 추가
+- [ ] `Lesson`/`Chapter`의 `title`/`description`을 `LocalizedStringResource`로 전환하여 데이터 기반 문구도 로컬라이즈되도록 처리 (`codeLog`는 C 코드 관례상 영어로 고정, 로컬라이즈 제외)
+- [ ] 앱 최초 실행 시 한국어를 기본값으로 강제 적용하는 로직 추가
+- [ ] `SettingView`에 언어 선택(한국어/English) UI 및 재시작 안내 추가
 
 ## Task 4 — `feature/sandbox-mode`
 
