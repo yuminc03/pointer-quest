@@ -11,6 +11,9 @@
         }
       }
     },
+    "%lld" : {
+
+    },
     "1. Long press a block to see it pop out in 3D." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -45,7 +48,6 @@
       }
     },
     "Chain Connection" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -56,7 +58,6 @@
       }
     },
     "Confirm" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -67,7 +68,6 @@
       }
     },
     "Create a path to reach the data.\nConnect in order: Start -> Node A -> Node B -> Treasure." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -78,7 +78,6 @@
       }
     },
     "Data is protected by a Lock system.\nConnect via the existing 'Link Pointer' instead of accessing directly." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -129,7 +128,6 @@
       }
     },
     "It's not the value, but the 'Address' that matters.\nDrag the pointer to point to address." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -150,7 +148,6 @@
       }
     },
     "Lesson" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -161,7 +158,6 @@
       }
     },
     "Lesson %lld" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -172,7 +168,6 @@
       }
     },
     "Lesson Complete! 🎉" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -233,7 +228,6 @@
       }
     },
     "Restart Required" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -254,7 +248,6 @@
       }
     },
     "Stepping Stone Pointer" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -265,7 +258,6 @@
       }
     },
     "The Importance of Address" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -281,16 +273,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "메모리의 미로"
-          }
-        }
-      }
-    },
-    "You can check the tutorial again in Setting > How to use the app." : {
-      "localizations" : {
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "튜토리얼은 설정 > 앱 사용법에서 다시 확인할 수 있습니다."
           }
         }
       }
@@ -325,8 +307,17 @@
         }
       }
     },
+    "You can check the tutorial again in Setting > How to use the app." : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "튜토리얼은 설정 > 앱 사용법에서 다시 확인할 수 있습니다."
+          }
+        }
+      }
+    },
     "주소와 포인터" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

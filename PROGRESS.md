@@ -36,5 +36,8 @@
 
 ## 다음 작업
 
-- Task 3 완료, `develop` 병합 대기 중 — 사용자 커밋 확인 후 병합 진행
-- 이후 Task 4(`feature/sandbox-mode`) 브랜치 착수 예정
+- Task 3 완료, `develop` 병합 대기 중 — 사용자가 브랜치 리뷰 후 병합 예정
+- Task 3 로컬라이제이션 후속 검증 2건을 Task 4에 선행 확인 항목으로 추가 (`TODO.md` 참고)
+  - Xcode 클린 빌드 후 `Localizable.xcstrings`의 `STALE` 배지 해소 여부 확인
+  - 시뮬레이터가 영어로 표시되는 원인 점검 (Xcode 스킴 App Language 고정 여부, 앱 재설치 후 최초 실행 로직 재현 여부)
+- 이후 Task 4(`feature/sandbox-mode`) 착수 예정
