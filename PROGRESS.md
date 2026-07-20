@@ -17,23 +17,21 @@
   - Lesson 3: `.chain([0,5,11,15])` — 체인 연결
 - 시뮬레이터(iPhone 16) 설치·실행 확인: 앱이 크래시 없이 정상 구동되고 홈 화면·Lesson 1 카드가 정상 렌더링됨을 스크린샷으로 확인. 단, 이 환경에서는 좌표 기반 GUI 자동화 도구(idb/XCUITest 등)가 없어 드래그 기반 인터랙션(포인터 연결)의 자동 재현은 수행하지 못함 — 코드 레벨 검증으로 논리적 동일성은 확보했으나, 실제 드래그 조작 검증은 사용자의 수동 플레이 테스트를 권장
 
-## 진행 중 — Task 3 (`feature/learning-tone-copy`)
+## Task 3 완료 (`feature/learning-tone-copy`)
 
-게임 카피 → 학습 도구 카피 전환 + 로컬라이제이션(한국어 기본/영어 선택) 도입. 범위와 세부 계획은 `TODO.md`/`PLAN.md` 참고.
+게임 카피 → 학습 도구 카피 전환 + 로컬라이제이션(한국어 기본/영어 선택) 도입 완료. 세부 계획은 `TODO.md`/`PLAN.md` 참고.
 
-- [x] `Core/Lesson.swift`의 `initialCodeLog` "Level 1/2/3" → "Lesson 1/2/3" 텍스트 수정
-- [x] `TODO.md`/`PLAN.md`에 로컬라이제이션 범위(String Catalog, `LocalizedStringResource` 전환, 최초 실행 한국어 기본값, 설정 화면 언어 선택 UI) 반영
-- [x] `MemoryGridVM.swift`의 잠금/에러/완료 `codeLog` 문구를 설명형 학습 톤으로 변경 ("Access Denied"/"Security Violation"/"Level Clear!" 제거)
-- [x] `MissionHeaderView.swift` → `LessonHeaderView.swift` 리네임 (파일명·구조체명·"Mission"→"Lesson" 라벨), `MemoryGridView.swift`의 참조 갱신
-- [x] `MemoryGridView.swift`의 alert 타이틀 "Mission Complete! 🎉" → "Lesson Complete! 🎉"
-- [x] `LessonCard.swift`의 "Lv. N"/"LEVEL N" → "Lesson N"
-- [x] `OnboardingView.swift`의 "Level" 잔존 표현 → "Lesson" 통일
-- [x] `Localizable.xcstrings` String Catalog를 프로젝트에 추가 (`project.pbxproj` 수동 편집 — 파일 참조 + Resources 빌드 페이즈 + `knownRegions`에 `ko` 추가, 빈 카탈로그 상태로 빌드 검증 완료)
-- [x] `Lesson`/`Chapter`의 `title`/`description`을 `LocalizedStringResource`로 전환 (사용처는 `Text(LocalizedStringResource)` 오버로드로 자동 처리, `Hashable`은 `id` 기준으로 직접 구현)
-- [x] `Localizable.xcstrings`에 앱 전체 문구 `ko` 번역 채우기 (`LessonCard`의 `"...".uppercased()` 패턴이 비-로컬라이즈 `Text(String)` 오버로드를 타던 문제를 `.textCase(.uppercase)`로 수정하여 함께 해결)
-- [x] 앱 최초 실행 시 한국어 기본값 강제 로직 추가 (`App/AppLanguage.swift` 신설, `MyApp.init()`에서 `applyInitialLanguageIfNeeded()` 호출)
-- [x] `SettingView`에 언어 선택(한국어/English) UI + 재시작 안내 추가
+- `Core/Lesson.swift`의 `initialCodeLog` "Level 1/2/3" → "Lesson 1/2/3" 텍스트 수정
+- `MemoryGridVM.swift`의 잠금/에러/완료 `codeLog` 문구를 설명형 학습 톤으로 변경 ("Access Denied"/"Security Violation"/"Level Clear!" 제거)
+- `MissionHeaderView.swift` → `LessonHeaderView.swift` 리네임 (파일명·구조체명·"Mission"→"Lesson" 라벨), `MemoryGridView.swift`의 alert 타이틀도 "Lesson Complete! 🎉"로 변경
+- `LessonCard.swift`의 "Lv. N"/"LEVEL N" → "Lesson N", `OnboardingView.swift`의 "Level" 잔존 표현 → "Lesson" 통일
+- `Localizable.xcstrings` String Catalog를 프로젝트에 추가 (`project.pbxproj` 수동 편집 — 파일 시스템 동기화 그룹을 쓰지 않는 구식 형식이라 파일 참조·Resources 빌드 페이즈·`knownRegions`에 `ko`를 직접 추가, 매 단계 빌드로 검증)
+- `Lesson`/`Chapter`의 `title`/`description`을 `LocalizedStringResource`로 전환해 데이터 기반 문구도 카탈로그 번역이 적용되도록 함 (`Hashable`은 `id` 기준으로 직접 구현). `codeLog`는 계획대로 영어 고정, 로컬라이즈 제외
+- 앱 전체(메인/웰컴/설정/온보딩/레슨 헤더/그리드/카드) 사용자 노출 문구에 `ko` 번역 채움. `LessonCard`의 `"...".uppercased()`가 비-로컬라이즈 `Text(String)` 오버로드를 타던 버그를 `.textCase(.uppercase)`로 함께 수정
+- `App/AppLanguage.swift` 신설: 최초 실행 시 한국어를 기본값으로 강제 적용(`MyApp.init()`에서 호출), `SettingView`에 언어 선택(한국어/English) UI + "재시작 필요" 안내 추가
+- 매 커밋마다 `xcodebuild ... build` → BUILD SUCCEEDED 확인, 최종 grep으로 "Mission"/"Level Clear"/"Lv."/"Access Denied"/"Security Violation" 잔존 없음 확인
 
 ## 다음 작업
 
-- Task 3 완료 후 `develop`에 병합, Task 4(`feature/sandbox-mode`) 브랜치 착수 예정
+- Task 3 완료, `develop` 병합 대기 중 — 사용자 커밋 확인 후 병합 진행
+- 이후 Task 4(`feature/sandbox-mode`) 브랜치 착수 예정
