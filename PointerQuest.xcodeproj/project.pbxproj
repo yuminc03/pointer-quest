@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		04CF14F15053BE53D3603FF8 /* Arrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1AC0851B9C2B1EF6D8206 /* Arrow.swift */; };
 		0AD096100F74C74406EDF4F6 /* PagingCardsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCB0754AE4BFA53E9C97FDC /* PagingCardsScrollView.swift */; };
-		0B401B3744BCC4A11C792E8E /* MissionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914DBDA9B62D008D76F72044 /* MissionHeaderView.swift */; };
+		0B401B3744BCC4A11C792E8E /* LessonHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914DBDA9B62D008D76F72044 /* LessonHeaderView.swift */; };
 		0D76D32D151749C86952247E /* PageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4647B25894F973B6C4994 /* PageControl.swift */; };
 		26142A0C1ED2D4F3AB0ED676 /* ArrowDrawLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702C31E5EC1A46BD9762C11D /* ArrowDrawLayer.swift */; };
 		2B58D7CB7ABBDC1BA0283658 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740B4538D4942E8E7DCE1B88 /* WelcomeView.swift */; };
@@ -35,7 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		045BBD546163DB5310EA7B2A /* PointerQuest.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PointerQuest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		045BBD546163DB5310EA7B2A /* PointerQuest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PointerQuest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ABD85A090F5D629CEAC8280 /* MemorySlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorySlot.swift; sourceTree = "<group>"; };
 		1AD4647B25894F973B6C4994 /* PageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControl.swift; sourceTree = "<group>"; };
 		283DDC3FB03D740A93C567BB /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
@@ -50,7 +50,7 @@
 		7FCB0754AE4BFA53E9C97FDC /* PagingCardsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCardsScrollView.swift; sourceTree = "<group>"; };
 		85712ED8A8C53D03EE913BB8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		85C88D7489D3DA6FB62DBABB /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		914DBDA9B62D008D76F72044 /* MissionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionHeaderView.swift; sourceTree = "<group>"; };
+		914DBDA9B62D008D76F72044 /* LessonHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonHeaderView.swift; sourceTree = "<group>"; };
 		9F7C5BF4CE007621A194246D /* ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeEffect.swift; sourceTree = "<group>"; };
 		A1759D1212E75B1561252689 /* Image+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+.swift"; sourceTree = "<group>"; };
 		A90A60CA73AFF3DD1D349D28 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -104,7 +104,7 @@
 				702C31E5EC1A46BD9762C11D /* ArrowDrawLayer.swift */,
 				3F7306446CDA57BCCD346235 /* BoundsPreferenceKey.swift */,
 				D8ECF1EB8A8F76BCD431ABC8 /* MemoryItem.swift */,
-				914DBDA9B62D008D76F72044 /* MissionHeaderView.swift */,
+				914DBDA9B62D008D76F72044 /* LessonHeaderView.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -255,11 +255,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
-				TargetAttributes = {
-					0A3082D407AAE1B16F1B427C = {
-						DevelopmentTeam = GMHUACJXLZ;
-					};
-				};
 			};
 			buildConfigurationList = 97C6848218F6ABCE5894C257 /* Build configuration list for PBXProject "PointerQuest" */;
 			developmentRegion = en;
@@ -310,7 +305,7 @@
 				ABC46883E78734F25705CA5D /* MemoryGridView.swift in Sources */,
 				8961FC52E876B5DCF828B344 /* MemoryItem.swift in Sources */,
 				C234EBBD4920EC98D774265F /* MemorySlot.swift in Sources */,
-				0B401B3744BCC4A11C792E8E /* MissionHeaderView.swift in Sources */,
+				0B401B3744BCC4A11C792E8E /* LessonHeaderView.swift in Sources */,
 				87E475371748E3BCB04DD8A7 /* MyApp.swift in Sources */,
 				C7B8FEAAFF1E13DC88F05FE5 /* OnboardingView.swift in Sources */,
 				0D76D32D151749C86952247E /* PageControl.swift in Sources */,
@@ -397,6 +392,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6S73VSPTS8;
 				INFOPLIST_FILE = PointerQuest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -416,6 +412,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6S73VSPTS8;
 				INFOPLIST_FILE = PointerQuest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (

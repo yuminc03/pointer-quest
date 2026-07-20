@@ -1,11 +1,11 @@
 import SwiftUI
 
-struct MissionHeaderView: View {
+struct LessonHeaderView: View {
   let lesson: Lesson
 
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
-      Text("Mission".uppercased())
+      Text("Lesson".uppercased())
         .font(.caption)
         .fontWeight(.bold)
         .foregroundStyle(.secondary)
@@ -21,5 +21,5 @@ struct MissionHeaderView: View {
 }
 
 #Preview {
-  MissionHeaderView(lesson: LessonData.lessons[0])
+  LessonHeaderView(lesson: LessonData.lessons[0])
 }
