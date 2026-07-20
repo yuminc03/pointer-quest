@@ -20,7 +20,7 @@ struct LessonData {
               .init(index: 8, type: .pointer)
             ],
             successCondition: .anyPointerPointsTo(index: 3),
-            initialCodeLog: "// Level 1: Drag the pointer to point to address 0x700C."
+            initialCodeLog: "// Lesson 1: Drag the pointer to point to address 0x700C."
           )
         ),
         .init(
@@ -35,7 +35,7 @@ struct LessonData {
               .init(index: 14, type: .pointer)
             ],
             successCondition: .anyPointerPointsTo(index: 5),
-            initialCodeLog: "// Level 2: Data(0x701C) is locked. Do not access directly, use 'Double Pointer'."
+            initialCodeLog: "// Lesson 2: Data(0x701C) is locked. Do not access directly, use 'Double Pointer'."
           )
         ),
         .init(
@@ -51,7 +51,7 @@ struct LessonData {
               .init(index: 0, type: .pointer)
             ],
             successCondition: .chain(indices: [0, 5, 11, 15]),
-            initialCodeLog: "// Level 3: Create a chain from Start(0x7000) to Treasure(0x703C)."
+            initialCodeLog: "// Lesson 3: Create a chain from Start(0x7000) to Treasure(0x703C)."
           )
         )
       ]
