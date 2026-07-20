@@ -19,7 +19,7 @@ let address: String
   var isHighlighted = false
   /// 오류 발생 시 시각적 피드백(흔들림, 빨간색)을 주기 위한 상태값
   var isError = false
-  /// Level 2 등에서 잠김 상태를 표현 (역참조로만 풀 수 있음)
+  /// Lesson 2 등에서 잠김 상태를 표현 (역참조로만 풀 수 있음)
   var isLocked = false
   
   /// 메모리 슬롯의 역할
