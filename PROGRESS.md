@@ -4,8 +4,7 @@
 
 ## 현재 상태
 
-- `feature/lesson-data-model` (Task 1)은 `develop`에 병합 완료
-- 브랜치: `feature/blueprint-driven-vm` — Task 2 작업 중
+- `feature/lesson-data-model` (Task 1), `feature/blueprint-driven-vm` (Task 2) 모두 `develop`에 병합 완료 (병합 커밋 `42efd7b`)
 - `Level` → `Lesson` 타입/파일 리네임, `SlotSeed`/`SuccessCondition`/`LessonBlueprint`/`Chapter` 타입 추가, 기존 3레슨의 Chapter 1 마이그레이션은 Task 1에서 완료
 - `MemoryGridVM.setupLevel`을 `Lesson.blueprint.seeds` 기반 범용 로직으로 교체 완료 (`switch level.id` 제거, `SlotSeed`를 순회하며 슬롯 배치)
 - `MemoryGridVM.checkSuccess`를 `Lesson.blueprint.successCondition` 기반 범용 로직으로 교체 완료 (`switch currentLesson.id` 제거, `.anyPointerPointsTo`/`.chain` case 처리)
@@ -20,7 +19,10 @@
 
 ## 다음 작업
 
-- 사용자가 시뮬레이터/실기에서 3개 레슨을 수동 플레이하여 최종 확인 (권장)
-- Task 2 커밋 메시지 제안 확인 후 커밋
-- Task 2 완료 후 `develop` 병합 여부 확인
-- Task 3 (`feature/learning-tone-copy`): 게임 카피 → 학습 도구 카피 전환
+- Task 3 (`feature/learning-tone-copy`): 게임 카피 → 학습 도구 카피 전환. 잔존 위치 파악 완료:
+  - `MemoryGridVM.swift:267` 주석의 "Level Clear! 🎉"
+  - `Core/Lesson.swift:23,38,54`의 `initialCodeLog` 내 "Level 1/2/3" 텍스트
+  - `MemoryGridView.swift:19,69`의 `MissionHeaderView`, `"Mission Complete! 🎉"` alert
+  - `Entity/MissionHeaderView.swift:3,8`의 "Mission" 텍스트/컴포넌트명
+  - `Scene/Main/Entity/LessonCard.swift:42`의 `"Lv. \(lesson.id)"`
+- `feature/learning-tone-copy` 브랜치 생성 완료, 해당 브랜치에서 작업 시작 예정
