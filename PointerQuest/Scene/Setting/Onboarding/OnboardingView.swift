@@ -42,7 +42,7 @@ private extension OnboardingView {
   
   var TopSection: some View {
     VStack(alignment: .leading, spacing: 10) {
-      Text("When you select a Level and enter the next screen, you will see a screen with blocks arranged in a grid.")
+      Text("When you select a Lesson and enter the next screen, you will see a screen with blocks arranged in a grid.")
         .frame(maxWidth: .infinity, alignment: .leading)
       
       Text("In this screen, you can reference a block containing a specific value with another block.")

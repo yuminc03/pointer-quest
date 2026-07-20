@@ -27,7 +27,7 @@
 - [x] `MissionHeaderView.swift` → `LessonHeaderView.swift` 리네임 (파일명·구조체명·"Mission"→"Lesson" 라벨), `MemoryGridView.swift`의 참조 갱신
 - [x] `MemoryGridView.swift`의 alert 타이틀 "Mission Complete! 🎉" → "Lesson Complete! 🎉"
 - [x] `LessonCard.swift`의 "Lv. N"/"LEVEL N" → "Lesson N"
-- [ ] `OnboardingView.swift`의 "Level" 잔존 표현 → "Lesson" 통일
+- [x] `OnboardingView.swift`의 "Level" 잔존 표현 → "Lesson" 통일
 - [ ] `Localizable.xcstrings` String Catalog를 프로젝트에 추가 (`project.pbxproj` 수동 편집 필요 — 파일 참조 + Resources 빌드 페이즈 + `knownRegions`에 `ko` 추가)
 - [ ] `Lesson`/`Chapter`의 `title`/`description`을 `LocalizedStringResource`로 전환
 - [ ] `Localizable.xcstrings`에 앱 전체 문구 `ko` 번역 채우기
