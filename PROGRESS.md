@@ -4,7 +4,8 @@
 
 ## 현재 상태
 
-- `feature/lesson-data-model` (Task 1), `feature/blueprint-driven-vm` (Task 2) 모두 `develop`에 병합 완료 (병합 커밋 `42efd7b`)
+- `feature/lesson-data-model` (Task 1), `feature/blueprint-driven-vm` (Task 2), `feature/learning-tone-copy` (Task 3) 모두 `develop`에 병합 완료 (병합 커밋 `42efd7b`, `37ba5ce`), `origin/develop`에 푸시 완료
+- `feature/learning-tone-copy` 로컬 브랜치는 병합 후 삭제 완료
 - `Level` → `Lesson` 타입/파일 리네임, `SlotSeed`/`SuccessCondition`/`LessonBlueprint`/`Chapter` 타입 추가, 기존 3레슨의 Chapter 1 마이그레이션은 Task 1에서 완료
 - `MemoryGridVM.setupLevel`을 `Lesson.blueprint.seeds` 기반 범용 로직으로 교체 완료 (`switch level.id` 제거, `SlotSeed`를 순회하며 슬롯 배치)
 - `MemoryGridVM.checkSuccess`를 `Lesson.blueprint.successCondition` 기반 범용 로직으로 교체 완료 (`switch currentLesson.id` 제거, `.anyPointerPointsTo`/`.chain` case 처리)
@@ -36,8 +37,8 @@
 
 ## 다음 작업
 
-- Task 3 완료, `develop` 병합 대기 중 — 사용자가 브랜치 리뷰 후 병합 예정
-- Task 3 로컬라이제이션 후속 검증 2건을 Task 4에 선행 확인 항목으로 추가 (`TODO.md` 참고)
+- `feature/sandbox-mode` (Task 4) 브랜치 생성 완료, `develop`에서 분기. 아직 구현은 시작 전 — 다음 세션에서 이어서 착수
+- Task 4 착수 시 먼저 확인할 것 (Task 3 로컬라이제이션 후속 검증, `TODO.md` 참고)
   - Xcode 클린 빌드 후 `Localizable.xcstrings`의 `STALE` 배지 해소 여부 확인
   - 시뮬레이터가 영어로 표시되는 원인 점검 (Xcode 스킴 App Language 고정 여부, 앱 재설치 후 최초 실행 로직 재현 여부)
-- 이후 Task 4(`feature/sandbox-mode`) 착수 예정
+- Task 4 본 작업: `MemoryGridVM` sandbox 초기화 경로, `MemoryGridView` sandbox UI 분기, Main 화면 Playground 진입점 카드 (`TODO.md` 체크리스트 참고)
