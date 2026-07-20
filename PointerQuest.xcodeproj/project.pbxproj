@@ -10,6 +10,7 @@
 		04CF14F15053BE53D3603FF8 /* Arrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1AC0851B9C2B1EF6D8206 /* Arrow.swift */; };
 		0AD096100F74C74406EDF4F6 /* PagingCardsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCB0754AE4BFA53E9C97FDC /* PagingCardsScrollView.swift */; };
 		0B401B3744BCC4A11C792E8E /* LessonHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914DBDA9B62D008D76F72044 /* LessonHeaderView.swift */; };
+		2BA6BF8B1A134475BD106A7D /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6393DBD5E7E14E8A891A8003 /* Localizable.xcstrings */; };
 		0D76D32D151749C86952247E /* PageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4647B25894F973B6C4994 /* PageControl.swift */; };
 		26142A0C1ED2D4F3AB0ED676 /* ArrowDrawLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702C31E5EC1A46BD9762C11D /* ArrowDrawLayer.swift */; };
 		2B58D7CB7ABBDC1BA0283658 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740B4538D4942E8E7DCE1B88 /* WelcomeView.swift */; };
@@ -46,6 +47,7 @@
 		702C31E5EC1A46BD9762C11D /* ArrowDrawLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowDrawLayer.swift; sourceTree = "<group>"; };
 		740B4538D4942E8E7DCE1B88 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		74744C778036CD8DF74A2C27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		6393DBD5E7E14E8A891A8003 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		7D5D121A9FD10E8DE27F0586 /* UIDevice+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
 		7FCB0754AE4BFA53E9C97FDC /* PagingCardsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCardsScrollView.swift; sourceTree = "<group>"; };
 		85712ED8A8C53D03EE913BB8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				74744C778036CD8DF74A2C27 /* Info.plist */,
+				6393DBD5E7E14E8A891A8003 /* Localizable.xcstrings */,
 				80038CCA345D886683980751 /* App */,
 				E0F0269F93D6272727277004 /* Core */,
 				C1A1E473A43D220E00ABF309 /* DesignSystem */,
@@ -262,6 +265,7 @@
 			knownRegions = (
 				Base,
 				en,
+				ko,
 			);
 			mainGroup = EC41A835FEB0A66A78A23377;
 			minimizedProjectReferenceProxies = 1;
@@ -282,6 +286,7 @@
 			files = (
 				9524B5EEA5D6D9785F25D1C7 /* Colors.xcassets in Resources */,
 				767AE67A5CD16B7F4C56E362 /* Images.xcassets in Resources */,
+				2BA6BF8B1A134475BD106A7D /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
