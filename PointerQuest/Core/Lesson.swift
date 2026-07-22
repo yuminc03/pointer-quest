@@ -4,6 +4,20 @@ import Foundation
 struct LessonData {
   static let lessons: [Lesson] = chapters.flatMap(\.lessons)
 
+  /// 클리어 조건 없이 자유롭게 포인터를 연결/해제할 수 있는 샌드박스(Playground) 레슨
+  /// `chapters`/`lessons`에는 포함하지 않고, Main 화면의 별도 진입점에서만 참조한다
+  static let sandboxLesson = Lesson(
+    id: 0,
+    title: "Playground",
+    description: "Freely connect and disconnect pointers here.\nThere's no mission or wrong answer — just explore.",
+    iconName: "wand.and.stars",
+    blueprint: .init(
+      seeds: [],
+      successCondition: .sandbox,
+      initialCodeLog: "// Playground: Freely connect pointers. Nothing to break here."
+    )
+  )
+
   static let chapters: [Chapter] = [
     .init(
       id: 1,
@@ -104,6 +118,8 @@ enum SuccessCondition: Hashable {
   case anyPointerPointsTo(index: Int)
   /// `indices`가 순서대로 서로를 가리키는 체인이 완성되면 클리어 (마지막 원소는 값 슬롯)
   case chain(indices: [Int])
+  /// 클리어 조건 없이 자유롭게 탐험하는 샌드박스 모드
+  case sandbox
 }
 
 /// 레슨의 초기 배치와 클리어 조건을 데이터로 표현

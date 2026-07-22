@@ -5,7 +5,7 @@ struct LessonHeaderView: View {
 
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
-      Text("Lesson")
+      Text(sectionLabel)
         .textCase(.uppercase)
         .font(.caption)
         .fontWeight(.bold)
@@ -18,6 +18,11 @@ struct LessonHeaderView: View {
         .background(Color(.secondarySystemGroupedBackground))
         .cornerRadius(12)
     }
+  }
+
+  /// 샌드박스 모드는 "Lesson" 대신 "Playground" 라벨을 보여준다
+  private var sectionLabel: LocalizedStringResource {
+    lesson.blueprint.successCondition == .sandbox ? "Playground" : "Lesson"
   }
 }
 

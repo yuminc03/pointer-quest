@@ -15,7 +15,6 @@
 
     },
     "1. Long press a block to see it pop out in 3D." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -26,7 +25,6 @@
       }
     },
     "2. Drag it close to another block." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -37,7 +35,6 @@
       }
     },
     "3. Release your finger to connect the two blocks." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -83,6 +80,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "데이터가 잠금 장치로 보호되어 있습니다.\n직접 접근하는 대신 기존 '연결 포인터'를 통해 연결하세요."
+          }
+        }
+      }
+    },
+    "Freely connect and disconnect pointers here.\nThere's no mission or wrong answer — just explore." : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "여기서는 자유롭게 포인터를 연결하고 해제할 수 있어요.\n미션도 정답도 없으니 마음껏 탐험해 보세요."
           }
         }
       }
@@ -197,12 +204,32 @@
         }
       }
     },
+    "No objective. Just explore." : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "목표 없이 자유롭게 탐험해 보세요."
+          }
+        }
+      }
+    },
     "No, I'm good." : {
       "localizations" : {
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "아니요, 괜찮아요."
+          }
+        }
+      }
+    },
+    "Playground" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "플레이그라운드"
           }
         }
       }

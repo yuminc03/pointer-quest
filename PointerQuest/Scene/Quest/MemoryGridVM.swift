@@ -259,6 +259,10 @@ final class MemoryGridVM: ObservableObject {
         slots[current].pointingTo == slots[next].address
       }
       if isConnected { finishLevel() }
+
+    case .sandbox:
+      // 샌드박스 모드는 클리어 조건이 없어 항상 자유롭게 탐험 가능
+      break
     }
   }
   

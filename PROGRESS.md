@@ -4,7 +4,8 @@
 
 ## 현재 상태
 
-- `feature/lesson-data-model` (Task 1), `feature/blueprint-driven-vm` (Task 2) 모두 `develop`에 병합 완료 (병합 커밋 `42efd7b`)
+- `feature/lesson-data-model` (Task 1), `feature/blueprint-driven-vm` (Task 2), `feature/learning-tone-copy` (Task 3) 모두 `develop`에 병합 완료 (병합 커밋 `42efd7b`, `37ba5ce`), `origin/develop`에 푸시 완료
+- `feature/learning-tone-copy` 로컬 브랜치는 병합 후 삭제 완료
 - `Level` → `Lesson` 타입/파일 리네임, `SlotSeed`/`SuccessCondition`/`LessonBlueprint`/`Chapter` 타입 추가, 기존 3레슨의 Chapter 1 마이그레이션은 Task 1에서 완료
 - `MemoryGridVM.setupLevel`을 `Lesson.blueprint.seeds` 기반 범용 로직으로 교체 완료 (`switch level.id` 제거, `SlotSeed`를 순회하며 슬롯 배치)
 - `MemoryGridVM.checkSuccess`를 `Lesson.blueprint.successCondition` 기반 범용 로직으로 교체 완료 (`switch currentLesson.id` 제거, `.anyPointerPointsTo`/`.chain` case 처리)
@@ -34,10 +35,26 @@
   - `LessonHeaderView.swift`에도 `LessonCard`와 동일한 `Text("...".uppercased())` 비-로컬라이즈 버그가 남아있던 것을 추가로 발견해 `.textCase(.uppercase)`로 수정
   - `SWIFT_EMIT_LOC_STRINGS` 빌드 설정이 꺼져 있어 Xcode가 컴파일러 기반 정밀 추출 대신 약한 휴리스틱 스캔을 쓰면서 "Lesson %@" 같은 잘못된 포맷 스펙 항목이 생성된 것을 확인, 타깃 Debug/Release 설정에 `SWIFT_EMIT_LOC_STRINGS = YES` 추가로 근본 원인 해결
 
+## Task 4 진행 상황 (`feature/sandbox-mode`)
+
+샌드박스(Playground) 모드의 핵심 3개 체크리스트 항목 구현 완료. 기존 블루프린트 기반 아키텍처(`Lesson`/`SuccessCondition`)를 그대로 재사용하는 최소 변경 방식으로 설계 — `MemoryGridVM`/`MemoryGridView`의 드래그·역참조·에러 로직은 전혀 수정하지 않았다.
+
+- `SuccessCondition`에 `.sandbox` 케이스 추가, `MemoryGridVM.checkSuccess()`가 해당 케이스에서는 클리어 판정을 하지 않도록 처리 (커밋 `d423e21`)
+- `LessonData.sandboxLesson` 추가: `seeds: []`(16개 슬롯 모두 빈 상태로 시작), `successCondition: .sandbox`인 별도 `Lesson` 상수. 기존 `chapters`/`lessons` 배열에는 포함하지 않아 페이징 카드 목록·챕터 개수 등에 영향 없음 (커밋 `800c18d`)
+- `LessonHeaderView`: `successCondition == .sandbox`일 때 상단 라벨을 "Lesson" 대신 "Playground"로 표시 (커밋 `557c331`)
+- `MainView`: 기존 페이징 카드/"이어서 학습하기" 버튼과 별개로, `LessonData.sandboxLesson`으로 진입하는 독립된 카드(`SandboxEntry`)를 하단에 추가. 기존 `.navigationDestination(for: Lesson.self)` 라우트를 그대로 재사용해 `MemoryGridView` 쪽 변경 없이 연결 (커밋 `eae267c`)
+- "Playground"/샌드박스 설명문/카드 부제 3개 문구에 대한 `ko` 번역을 `Localizable.xcstrings`에 추가 (커밋 `77c63f4`)
+- 매 커밋마다 해당 파일 변경분만 격리한 상태로 `xcodebuild ... build` → BUILD SUCCEEDED 확인 (`git stash push --keep-index -- <path>`로 다른 파일 변경을 임시 대피시키는 방식)
+- 시뮬레이터(iPhone 16, iOS 18.5) 설치·실행 확인: Main 화면 하단에 "플레이그라운드" 카드(마법봉 아이콘, 노란색 그라데이션, "목표 없이 자유롭게 탐험해 보세요." 부제)가 의도대로 렌더링됨을 스크린샷으로 확인
+- AppleScript(`System Events`)로 카드 탭을 자동화해 그리드 화면 전환까지 확인을 시도했으나, Simulator 창의 좌표계(포인트/픽셀 배율, 타이틀바 높이)를 신뢰성 있게 계산하지 못해 탭이 반영되지 않음 — Task 3 때와 동일한 한계(이 환경에 idb/XCUITest 등 좌표 기반 GUI 자동화 도구 없음)로, 그리드 화면 진입 후 실제 드래그 동작 확인은 수행하지 못함. 다만 `MemoryGridView`/`MemoryGridVM`은 이번 작업에서 코드 변경이 없고 기존 3개 레슨에서 이미 정상 동작이 검증된 경로를 그대로 타므로 논리적 위험은 낮음
+- 사용자가 Xcode/시뮬레이터에서 직접 후속 검증 3건을 수행: 클린 빌드 후 `Localizable.xcstrings` `STALE` 배지 해소 확인, 시뮬레이터 언어 표시 정상 확인, Playground 화면 수동 드래그 테스트(포인터 연결/해제/리셋, "Lesson Complete" 알림 미표시) 모두 이상 없음으로 확인 — Task 4 체크리스트 전 항목 완료
+- 클린 빌드 검증 과정에서 `OnboardingView.section(text:)`가 `String` 파라미터를 받아 `Text(String)` 비-로컬라이즈 오버로드를 타던 버그를 추가로 발견, `LocalizedStringKey`로 변경해 수정 (`LessonCard`/`LessonHeaderView`에서 Task 3 때 발견한 것과 동일 유형의 버그, 커밋 `5428a85`). 온보딩 3개 문구의 `extractionState: "stale"`도 재추출로 해소됨을 확인
+
+## Task 4 완료 (`feature/sandbox-mode`)
+
+샌드박스(Playground) 모드 구현 및 후속 검증까지 완료. 세부 구현 내역은 위 "Task 4 진행 상황" 참고. 사용자 수동 검증(클린 빌드 STALE 배지 해소, 시뮬레이터 언어 표시, Playground 드래그 인터랙션) 완료로 `develop` 병합 조건 충족.
+
 ## 다음 작업
 
-- Task 3 완료, `develop` 병합 대기 중 — 사용자가 브랜치 리뷰 후 병합 예정
-- Task 3 로컬라이제이션 후속 검증 2건을 Task 4에 선행 확인 항목으로 추가 (`TODO.md` 참고)
-  - Xcode 클린 빌드 후 `Localizable.xcstrings`의 `STALE` 배지 해소 여부 확인
-  - 시뮬레이터가 영어로 표시되는 원인 점검 (Xcode 스킴 App Language 고정 여부, 앱 재설치 후 최초 실행 로직 재현 여부)
-- 이후 Task 4(`feature/sandbox-mode`) 착수 예정
+- Task 4(`feature/sandbox-mode`)를 `develop`에 병합
+- Task 5(`feature/lesson-progress-tracking`) 착수: 완료 레슨 id `UserDefaults` 저장, `LessonCard` 체크마크 표시
