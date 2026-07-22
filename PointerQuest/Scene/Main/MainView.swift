@@ -17,9 +17,11 @@ struct MainView: View {
         .padding(.top, 20)
         
         Cards
-        
+
         ContinueButton
-        
+
+        SandboxEntry
+
         Spacer()
       }
       .background(Color(.systemGroupedBackground))
@@ -82,6 +84,47 @@ private extension MainView {
           .fill(Color(.main))
       )
     }
+  }
+
+  var SandboxEntry: some View {
+    NavigationLink(value: LessonData.sandboxLesson) {
+      HStack(spacing: 16) {
+        Image(systemName: LessonData.sandboxLesson.iconName)
+          .font(.title2)
+          .foregroundStyle(.white)
+          .frame(width: 44, height: 44)
+          .background(
+            Circle().fill(LinearGradient(
+              colors: [Color(.yellow), Color(.lightYellow)],
+              startPoint: .bottomLeading,
+              endPoint: .topTrailing
+            ))
+          )
+
+        VStack(alignment: .leading, spacing: 2) {
+          Text(LessonData.sandboxLesson.title)
+            .font(.headline)
+            .foregroundStyle(.primary)
+
+          Text("No objective. Just explore.")
+            .font(.caption)
+            .foregroundStyle(.secondary)
+        }
+
+        Spacer()
+
+        Image(systemName: "chevron.right")
+          .foregroundStyle(.tertiary)
+      }
+      .padding(16)
+      .background(
+        RoundedRectangle(cornerRadius: 16)
+          .fill(Color(.secondarySystemGroupedBackground))
+      )
+    }
+    .buttonStyle(.plain)
+    .padding(.horizontal, 20)
+    .padding(.top, 12)
   }
 }
 
