@@ -4,8 +4,9 @@
 
 ## 현재 상태
 
-- `feature/lesson-data-model` (Task 1), `feature/blueprint-driven-vm` (Task 2), `feature/learning-tone-copy` (Task 3) 모두 `develop`에 병합 완료 (병합 커밋 `42efd7b`, `37ba5ce`), `origin/develop`에 푸시 완료
-- `feature/learning-tone-copy` 로컬 브랜치는 병합 후 삭제 완료
+- `feature/lesson-data-model` (Task 1), `feature/blueprint-driven-vm` (Task 2), `feature/learning-tone-copy` (Task 3), `feature/sandbox-mode` (Task 4) 모두 `develop`에 병합 완료 (병합 커밋 `42efd7b`, `37ba5ce`, `41d01af`), `origin/develop`에 푸시 완료
+- 병합 완료된 로컬 feature 브랜치는 매번 삭제 완료
+- 현재 `develop`에서 분기한 `feature/lesson-progress-tracking` (Task 5) 브랜치에서 작업 중
 - `Level` → `Lesson` 타입/파일 리네임, `SlotSeed`/`SuccessCondition`/`LessonBlueprint`/`Chapter` 타입 추가, 기존 3레슨의 Chapter 1 마이그레이션은 Task 1에서 완료
 - `MemoryGridVM.setupLevel`을 `Lesson.blueprint.seeds` 기반 범용 로직으로 교체 완료 (`switch level.id` 제거, `SlotSeed`를 순회하며 슬롯 배치)
 - `MemoryGridVM.checkSuccess`를 `Lesson.blueprint.successCondition` 기반 범용 로직으로 교체 완료 (`switch currentLesson.id` 제거, `.anyPointerPointsTo`/`.chain` case 처리)
@@ -54,7 +55,10 @@
 
 샌드박스(Playground) 모드 구현 및 후속 검증까지 완료. 세부 구현 내역은 위 "Task 4 진행 상황" 참고. 사용자 수동 검증(클린 빌드 STALE 배지 해소, 시뮬레이터 언어 표시, Playground 드래그 인터랙션) 완료로 `develop` 병합 조건 충족.
 
+- `develop`에 `--no-ff` 병합 완료 (병합 커밋 `41d01af`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
+- `origin/develop`에 push 완료 (`37ba5ce..41d01af`), 로컬 `feature/sandbox-mode` 브랜치 삭제
+
 ## 다음 작업
 
-- Task 4(`feature/sandbox-mode`)를 `develop`에 병합
-- Task 5(`feature/lesson-progress-tracking`) 착수: 완료 레슨 id `UserDefaults` 저장, `LessonCard` 체크마크 표시
+- Task 5(`feature/lesson-progress-tracking`) 진행 중: 완료 레슨 id `UserDefaults` 저장, `LessonCard` 체크마크 표시
+  - 저장 방식(예: `Set<Int>`/`[Int]`, `UserDefaults` 키 이름 등) 세부 설계는 착수 시 결정
