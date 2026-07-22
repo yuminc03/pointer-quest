@@ -104,6 +104,8 @@ enum SuccessCondition: Hashable {
   case anyPointerPointsTo(index: Int)
   /// `indices`가 순서대로 서로를 가리키는 체인이 완성되면 클리어 (마지막 원소는 값 슬롯)
   case chain(indices: [Int])
+  /// 클리어 조건 없이 자유롭게 탐험하는 샌드박스 모드
+  case sandbox
 }
 
 /// 레슨의 초기 배치와 클리어 조건을 데이터로 표현
