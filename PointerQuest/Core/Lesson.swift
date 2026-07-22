@@ -4,6 +4,20 @@ import Foundation
 struct LessonData {
   static let lessons: [Lesson] = chapters.flatMap(\.lessons)
 
+  /// 클리어 조건 없이 자유롭게 포인터를 연결/해제할 수 있는 샌드박스(Playground) 레슨
+  /// `chapters`/`lessons`에는 포함하지 않고, Main 화면의 별도 진입점에서만 참조한다
+  static let sandboxLesson = Lesson(
+    id: 0,
+    title: "Playground",
+    description: "Freely connect and disconnect pointers here.\nThere's no mission or wrong answer — just explore.",
+    iconName: "wand.and.stars",
+    blueprint: .init(
+      seeds: [],
+      successCondition: .sandbox,
+      initialCodeLog: "// Playground: Freely connect pointers. Nothing to break here."
+    )
+  )
+
   static let chapters: [Chapter] = [
     .init(
       id: 1,
