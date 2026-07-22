@@ -76,7 +76,10 @@ private extension OnboardingView {
     )
   }
   
-  private func section(text: String, image: ImageResource) -> some View {
+  private func section(
+    text: LocalizedStringKey,
+    image: ImageResource
+  ) -> some View {
     VStack(alignment: .leading, spacing: 10) {
       Text(text)
         .frame(maxWidth: .infinity, alignment: .leading)

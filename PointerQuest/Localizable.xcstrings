@@ -1,7 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "%lld" : {},
     "-" : {
       "localizations" : {
         "ko" : {
@@ -12,8 +11,10 @@
         }
       }
     },
+    "%lld" : {
+
+    },
     "1. Long press a block to see it pop out in 3D." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -24,7 +25,6 @@
       }
     },
     "2. Drag it close to another block." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -35,7 +35,6 @@
       }
     },
     "3. Release your finger to connect the two blocks." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
