@@ -34,9 +34,9 @@
 
 샌드박스 모드 추가
 
-- [ ] `MemoryGridVM` sandbox 초기화 경로 추가
-- [ ] `MemoryGridView` sandbox UI 분기
-- [ ] Main 화면 Playground 진입점 카드 추가
+- [x] `MemoryGridVM` sandbox 초기화 경로 추가
+- [x] `MemoryGridView` sandbox UI 분기
+- [x] Main 화면 Playground 진입점 카드 추가
 - [ ] (Task 3 후속) Xcode에서 클린 빌드 후 `Localizable.xcstrings`의 `STALE` 배지가 해소되는지 확인 (`SWIFT_EMIT_LOC_STRINGS` 반영에는 재컴파일이 필요해 증분 빌드만으로는 남아있을 수 있음)
 - [ ] (Task 3 후속) 시뮬레이터에서 앱이 영어로 표시되는 원인 점검: Xcode 스킴의 Run > Options > App Language가 "System Language"가 아닌 값으로 고정돼 있는지, 이미 설치된 앱이라 최초 실행 로직이 재실행되지 않는지(삭제 후 재설치로 재현) 확인
 
