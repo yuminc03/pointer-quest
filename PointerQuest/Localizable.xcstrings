@@ -54,6 +54,16 @@
         }
       }
     },
+    "Completed" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "완료"
+          }
+        }
+      }
+    },
     "Confirm" : {
       "localizations" : {
         "ko" : {

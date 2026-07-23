@@ -4,8 +4,9 @@
 
 ## 현재 상태
 
-- `feature/lesson-data-model` (Task 1), `feature/blueprint-driven-vm` (Task 2), `feature/learning-tone-copy` (Task 3) 모두 `develop`에 병합 완료 (병합 커밋 `42efd7b`, `37ba5ce`), `origin/develop`에 푸시 완료
-- `feature/learning-tone-copy` 로컬 브랜치는 병합 후 삭제 완료
+- `feature/lesson-data-model` (Task 1), `feature/blueprint-driven-vm` (Task 2), `feature/learning-tone-copy` (Task 3), `feature/sandbox-mode` (Task 4) 모두 `develop`에 병합 완료 (병합 커밋 `42efd7b`, `37ba5ce`, `41d01af`), `origin/develop`에 푸시 완료
+- 병합 완료된 로컬 feature 브랜치는 매번 삭제 완료
+- 현재 `develop`에서 분기한 `feature/lesson-progress-tracking` (Task 5) 브랜치에서 작업 중
 - `Level` → `Lesson` 타입/파일 리네임, `SlotSeed`/`SuccessCondition`/`LessonBlueprint`/`Chapter` 타입 추가, 기존 3레슨의 Chapter 1 마이그레이션은 Task 1에서 완료
 - `MemoryGridVM.setupLevel`을 `Lesson.blueprint.seeds` 기반 범용 로직으로 교체 완료 (`switch level.id` 제거, `SlotSeed`를 순회하며 슬롯 배치)
 - `MemoryGridVM.checkSuccess`를 `Lesson.blueprint.successCondition` 기반 범용 로직으로 교체 완료 (`switch currentLesson.id` 제거, `.anyPointerPointsTo`/`.chain` case 처리)
@@ -54,7 +55,25 @@
 
 샌드박스(Playground) 모드 구현 및 후속 검증까지 완료. 세부 구현 내역은 위 "Task 4 진행 상황" 참고. 사용자 수동 검증(클린 빌드 STALE 배지 해소, 시뮬레이터 언어 표시, Playground 드래그 인터랙션) 완료로 `develop` 병합 조건 충족.
 
+- `develop`에 `--no-ff` 병합 완료 (병합 커밋 `41d01af`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
+- `origin/develop`에 push 완료 (`37ba5ce..41d01af`), 로컬 `feature/sandbox-mode` 브랜치 삭제
+
+## Task 5 진행 상황 (`feature/lesson-progress-tracking`)
+
+레슨 완료 진행 상황 저장 및 카드 체크마크 표시 핵심 2개 체크리스트 항목 구현 완료. 기존 `MemoryGridVM.finishLevel()`/`LessonCard` 흐름에 최소 변경만 추가하는 방식으로 설계.
+
+- `Core/LessonProgressStore.swift` 신설: `@MainActor final class LessonProgressStore: ObservableObject`, `UserDefaults` 키 `completedLessonIds`에 `[Int]`로 저장하고 내부적으로 `Set<Int>`(`@Published private(set) var completedLessonIds`)로 관리. `AppLanguage.swift`와 달리 View가 완료 상태 변경을 실시간으로 관찰해야 해서(카드 체크마크 즉시 갱신) `ObservableObject` + 싱글턴(`.shared`)으로 설계
+- `project.pbxproj`에 `LessonProgressStore.swift` 파일 참조 수동 추가 (파일 시스템 동기화 그룹을 쓰지 않는 구식 포맷이라 `PBXBuildFile`/`PBXFileReference`/`Core` 그룹/`Sources` 빌드 페이즈 4곳에 직접 추가, `Localizable.xcstrings` 추가 때와 동일한 절차)
+- `MemoryGridVM.finishLevel()`에서 `LessonProgressStore.shared.markCompleted(currentLesson.id)` 호출 추가. 샌드박스 레슨(`id: 0`)은 `successCondition: .sandbox`라 `finishLevel()` 자체가 호출되지 않아 별도 예외 처리 없이도 진행 기록에서 자연히 제외됨
+- `LessonCard`에 `@ObservedObject private var progressStore = LessonProgressStore.shared` 추가, `TopSection`의 "Lesson N" 라벨 앞에 완료 시 `checkmark.circle.fill` 아이콘을 조건부로 표시
+- 체크마크 아이콘에 `Text("Completed")` 기반 accessibility label 추가, `Localizable.xcstrings`에 `ko` 번역("완료") 추가
+- `xcodebuild ... build` → BUILD SUCCEEDED 확인
+
+## Task 5 완료 (`feature/lesson-progress-tracking`)
+
+레슨 완료 진행 상황 저장 및 카드 체크마크 표시 구현 및 검증까지 완료. 세부 구현 내역은 위 "Task 5 진행 상황" 참고. 사용자가 시뮬레이터에서 직접 검증(레슨 클리어 후 카드 체크마크 표시, 앱 재실행 후에도 완료 상태 유지) 완료로 `develop` 병합 조건 충족.
+
 ## 다음 작업
 
-- Task 4(`feature/sandbox-mode`)를 `develop`에 병합
-- Task 5(`feature/lesson-progress-tracking`) 착수: 완료 레슨 id `UserDefaults` 저장, `LessonCard` 체크마크 표시
+- Task 5(`feature/lesson-progress-tracking`)를 `develop`에 병합
+- Task 6(`feature/chapter-placeholders`)으로 진행: Chapter 2~5 placeholder 등록 (Coming Soon UI)
