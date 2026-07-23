@@ -4,9 +4,9 @@
 
 ## 현재 상태
 
-- `feature/lesson-data-model` (Task 1), `feature/blueprint-driven-vm` (Task 2), `feature/learning-tone-copy` (Task 3), `feature/sandbox-mode` (Task 4) 모두 `develop`에 병합 완료 (병합 커밋 `42efd7b`, `37ba5ce`, `41d01af`), `origin/develop`에 푸시 완료
+- `feature/lesson-data-model` (Task 1), `feature/blueprint-driven-vm` (Task 2), `feature/learning-tone-copy` (Task 3), `feature/sandbox-mode` (Task 4), `feature/lesson-progress-tracking` (Task 5) 모두 `develop`에 병합 완료 (병합 커밋 `42efd7b`, `37ba5ce`, `41d01af`, `fc06f24`), `origin/develop`에 푸시 완료
 - 병합 완료된 로컬 feature 브랜치는 매번 삭제 완료
-- 현재 `develop`에서 분기한 `feature/lesson-progress-tracking` (Task 5) 브랜치에서 작업 중
+- 다음은 `develop`에서 `feature/chapter-placeholders` (Task 6) 브랜치를 분기해 착수 예정
 - `Level` → `Lesson` 타입/파일 리네임, `SlotSeed`/`SuccessCondition`/`LessonBlueprint`/`Chapter` 타입 추가, 기존 3레슨의 Chapter 1 마이그레이션은 Task 1에서 완료
 - `MemoryGridVM.setupLevel`을 `Lesson.blueprint.seeds` 기반 범용 로직으로 교체 완료 (`switch level.id` 제거, `SlotSeed`를 순회하며 슬롯 배치)
 - `MemoryGridVM.checkSuccess`를 `Lesson.blueprint.successCondition` 기반 범용 로직으로 교체 완료 (`switch currentLesson.id` 제거, `.anyPointerPointsTo`/`.chain` case 처리)
@@ -73,7 +73,9 @@
 
 레슨 완료 진행 상황 저장 및 카드 체크마크 표시 구현 및 검증까지 완료. 세부 구현 내역은 위 "Task 5 진행 상황" 참고. 사용자가 시뮬레이터에서 직접 검증(레슨 클리어 후 카드 체크마크 표시, 앱 재실행 후에도 완료 상태 유지) 완료로 `develop` 병합 조건 충족.
 
+- `develop`에 `--no-ff` 병합 완료 (병합 커밋 `fc06f24`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
+- `origin/develop`에 push 완료 (`41d01af..fc06f24`), 로컬 `feature/lesson-progress-tracking` 브랜치 삭제
+
 ## 다음 작업
 
-- Task 5(`feature/lesson-progress-tracking`)를 `develop`에 병합
-- Task 6(`feature/chapter-placeholders`)으로 진행: Chapter 2~5 placeholder 등록 (Coming Soon UI)
+- Task 6(`feature/chapter-placeholders`) 착수: Chapter 2~5 placeholder 등록 (Coming Soon UI)
