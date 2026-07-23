@@ -69,8 +69,25 @@ struct LessonData {
           )
         )
       ]
-    )
+    ),
+    .init(id: 2, title: "이중 포인터 심화", lessons: [comingSoonLesson(id: 4, title: "이중 포인터 심화")]),
+    .init(id: 3, title: "배열과 포인터 연산", lessons: [comingSoonLesson(id: 5, title: "배열과 포인터 연산")]),
+    .init(id: 4, title: "구조체와 포인터", lessons: [comingSoonLesson(id: 6, title: "구조체와 포인터")]),
+    .init(id: 5, title: "malloc·free와 스택 vs 힙", lessons: [comingSoonLesson(id: 7, title: "malloc·free와 스택 vs 힙")])
   ]
+
+  /// 아직 콘텐츠가 저작되지 않은 챕터를 나타내는 "Coming Soon" placeholder 레슨
+  /// `successCondition`은 실제로 열람되지 않으므로(Main 화면에서 진입 자체를 막음) 새 케이스 없이 `.sandbox`를 재사용한다
+  private static func comingSoonLesson(id: Int, title: LocalizedStringResource) -> Lesson {
+    .init(
+      id: id,
+      title: title,
+      description: "Coming soon in a future update.",
+      iconName: "lock.fill",
+      blueprint: .init(seeds: [], successCondition: .sandbox, initialCodeLog: ""),
+      isComingSoon: true
+    )
+  }
 }
 
 /// 여러 레슨을 하나의 학습 주제로 묶는 그룹
@@ -95,6 +112,8 @@ struct Lesson: Identifiable, Hashable {
   let iconName: String
   /// 레슨의 초기 배치와 클리어 조건
   let blueprint: LessonBlueprint
+  /// 아직 콘텐츠가 저작되지 않아 "Coming Soon"으로만 표시되는 레슨인지 여부
+  var isComingSoon: Bool = false
 
   // `LocalizedStringResource`는 synthesized Hashable 대상이 아니므로 `id` 기준으로 직접 구현한다.
   static func == (lhs: Lesson, rhs: Lesson) -> Bool { lhs.id == rhs.id }
