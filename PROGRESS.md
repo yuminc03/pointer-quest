@@ -69,7 +69,11 @@
 - 체크마크 아이콘에 `Text("Completed")` 기반 accessibility label 추가, `Localizable.xcstrings`에 `ko` 번역("완료") 추가
 - `xcodebuild ... build` → BUILD SUCCEEDED 확인
 
+## Task 5 완료 (`feature/lesson-progress-tracking`)
+
+레슨 완료 진행 상황 저장 및 카드 체크마크 표시 구현 및 검증까지 완료. 세부 구현 내역은 위 "Task 5 진행 상황" 참고. 사용자가 시뮬레이터에서 직접 검증(레슨 클리어 후 카드 체크마크 표시, 앱 재실행 후에도 완료 상태 유지) 완료로 `develop` 병합 조건 충족.
+
 ## 다음 작업
 
-- Task 5(`feature/lesson-progress-tracking`) 시뮬레이터 수동 검증 필요: 레슨 클리어 후 Main 화면으로 돌아왔을 때 해당 카드에 체크마크가 표시되는지, 앱을 재실행해도 `UserDefaults`에 저장된 완료 상태가 유지되는지 확인
-- 검증 완료 후 `develop` 병합 여부 확인 → Task 6(`feature/chapter-placeholders`)으로 진행
+- Task 5(`feature/lesson-progress-tracking`)를 `develop`에 병합
+- Task 6(`feature/chapter-placeholders`)으로 진행: Chapter 2~5 placeholder 등록 (Coming Soon UI)
