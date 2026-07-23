@@ -67,22 +67,44 @@ private extension MainView {
   }
 
   var ContinueButton: some View {
-    NavigationLink(value: LessonData.lessons[pageIndex]) {
-      Label {
-        Text("Let's Continue")
-          .font(.body)
-          .fontWeight(.semibold)
-      } icon: {
-        Image(systemName: "paperplane.fill")
-          .size(20)
+    let lesson = LessonData.lessons[pageIndex]
+
+    return Group {
+      if lesson.isComingSoon {
+        Label {
+          Text("Coming Soon")
+            .font(.body)
+            .fontWeight(.semibold)
+        } icon: {
+          Image(systemName: "lock.fill")
+            .size(20)
+        }
+        .foregroundStyle(.white)
+        .padding(.horizontal, 20)
+        .padding(.vertical, 16)
+        .background(
+          Capsule()
+            .fill(Color.gray)
+        )
+      } else {
+        NavigationLink(value: lesson) {
+          Label {
+            Text("Let's Continue")
+              .font(.body)
+              .fontWeight(.semibold)
+          } icon: {
+            Image(systemName: "paperplane.fill")
+              .size(20)
+          }
+          .foregroundStyle(.white)
+          .padding(.horizontal, 20)
+          .padding(.vertical, 16)
+          .background(
+            Capsule()
+              .fill(Color(.main))
+          )
+        }
       }
-      .foregroundStyle(.white)
-      .padding(.horizontal, 20)
-      .padding(.vertical, 16)
-      .background(
-        Capsule()
-          .fill(Color(.main))
-      )
     }
   }
 
