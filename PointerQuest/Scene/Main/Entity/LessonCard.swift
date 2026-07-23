@@ -4,6 +4,7 @@ import SwiftUI
 struct LessonCard: View {
   let lesson: Lesson
   let colors: [Color]
+  @ObservedObject private var progressStore = LessonProgressStore.shared
 
   var body: some View {
     VStack(alignment: .leading, spacing: 20) {
@@ -38,6 +39,12 @@ private extension LessonCard {
         .size(60)
 
       Spacer()
+
+      if progressStore.isCompleted(lesson.id) {
+        Image(systemName: "checkmark.circle.fill")
+          .font(.title2)
+          .accessibilityLabel(Text("Completed"))
+      }
 
       Text("Lesson \(lesson.id)")
         .font(.title2)
