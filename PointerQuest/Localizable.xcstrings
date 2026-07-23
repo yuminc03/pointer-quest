@@ -54,6 +54,26 @@
         }
       }
     },
+    "Coming Soon" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "준비 중"
+          }
+        }
+      }
+    },
+    "Coming soon in a future update." : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다음 업데이트에서 만나볼 수 있어요."
+          }
+        }
+      }
+    },
     "Completed" : {
       "localizations" : {
         "ko" : {
@@ -204,6 +224,22 @@
         }
       }
     },
+    "malloc·free와 스택 vs 힙" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "malloc/free & Stack vs Heap"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "malloc·free와 스택 vs 힙"
+          }
+        }
+      }
+    },
     "New to the app? Check out the tutorial to learn how to use it!" : {
       "localizations" : {
         "ko" : {
@@ -350,6 +386,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "튜토리얼은 설정 > 앱 사용법에서 다시 확인할 수 있습니다."
+          }
+        }
+      }
+    },
+    "구조체와 포인터" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Structs & Pointers"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "구조체와 포인터"
+          }
+        }
+      }
+    },
+    "배열과 포인터 연산" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrays & Pointer Arithmetic"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "배열과 포인터 연산"
+          }
+        }
+      }
+    },
+    "이중 포인터 심화" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced Double Pointers"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이중 포인터 심화"
           }
         }
       }

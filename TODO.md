@@ -52,8 +52,8 @@
 
 Chapter 2~5 placeholder 등록 (Coming Soon UI)
 
-- [ ] Chapter 2~5 데이터 등록
-- [ ] Coming Soon 카드 UI
+- [x] Chapter 2~5 데이터 등록
+- [x] Coming Soon 카드 UI
 
 ## 백로그
 
