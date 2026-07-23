@@ -76,6 +76,20 @@
 - `develop`에 `--no-ff` 병합 완료 (병합 커밋 `fc06f24`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
 - `origin/develop`에 push 완료 (`41d01af..fc06f24`), 로컬 `feature/lesson-progress-tracking` 브랜치 삭제
 
+## Task 6 진행 상황 (`feature/chapter-placeholders`)
+
+Chapter 2~5 placeholder 등록 및 Coming Soon UI 핵심 2개 체크리스트 항목 구현 완료. Task 4(샌드박스 모드)에서 검증한 "새 타입을 만들지 않고 기존 `Lesson`에 필드를 추가해 재사용"하는 최소 변경 패턴을 그대로 따랐다.
+
+- `Core/Lesson.swift`: `Lesson`에 `var isComingSoon: Bool = false` 필드 추가(기존 4개 `Lesson.init` 호출부는 기본값 덕분에 무수정), `chapters`에 Chapter 2~5(이중 포인터 심화/배열과 포인터 연산/구조체와 포인터/malloc·free와 스택 vs 힙) 추가. 각 챕터에는 `comingSoonLesson(id:title:)` 헬퍼로 만든 placeholder 레슨 1개씩 포함(`id` 4~7, 기존 1~3과 전역 유일성 유지). `successCondition`은 실제로 열람되지 않으므로 새 케이스 없이 기존 `.sandbox`를 재사용 (커밋 `c5f390d`)
+- `PagingCardsScrollView.swift`: `colors[$0]`이 3개짜리 리터럴 배열을 직접 인덱싱해 카드가 3개를 넘으면 크래시하던 부분을 `colors[$0 % colors.count]`로 수정 — Chapter 2~5 카드 추가로 총 7개 카드가 되면서 반드시 선행되어야 했던 수정 (커밋 `b09fb4e`)
+- `LessonCard.swift`: `isComingSoon`이면 완료 체크마크/"Lesson N" 라벨 대신 "Coming Soon" 배지를, 기존 컬러 그라데이션 대신 회색 톤 그라데이션을 표시하도록 분기 (커밋 `a4f4211`)
+- `MainView.swift`: `ContinueButton`에서 현재 페이지 레슨이 `isComingSoon`이면 `NavigationLink` 대신 탭 되지 않는 회색 "Coming Soon" 버튼으로 대체해 실제 콘텐츠 없는 `MemoryGridView` 진입을 차단 (커밋 `4244fe7`)
+- `Localizable.xcstrings`: Chapter 2~5 제목 4개(한글 키 + `en` 번역) 및 "Coming Soon"/"Coming soon in a future update." 문구의 `ko` 번역 추가. `SWIFT_EMIT_LOC_STRINGS` 설정 덕분에 새 문구가 자동으로 카탈로그에 빈 항목으로 추출된 것을 확인 후 값을 채움 (커밋 `1b0c0dc`)
+- 매 커밋마다 논리 단위를 분리해 `git stash push --keep-index`로 다른 파일 변경을 격리한 상태로 `xcodebuild ... build` → BUILD SUCCEEDED 확인 (Task 4/5와 동일한 패턴)
+- 시뮬레이터(iPhone 16) 설치 시도 중 여러 개의 stale `DerivedData` 캐시 폴더가 있어 잘못된(구버전 기본 템플릿) 빌드가 먼저 설치되는 문제 발견, `-showBuildSettings`로 정확한 `TARGET_BUILD_DIR`을 확인해 올바른 최신 빌드로 재설치 후 온보딩 화면이 정상 렌더링됨을 스크린샷으로 확인
+- 사용자가 이후로는 시뮬레이터 인터랙션 테스트(카드 스와이프, Coming Soon 버튼 탭 등)를 직접 수행하고 결과를 공유하기로 함 — Coming Soon 카드/비활성 버튼의 실제 동작 확인은 사용자의 수동 테스트 대기 중
+
 ## 다음 작업
 
-- Task 6(`feature/chapter-placeholders`) 착수: Chapter 2~5 placeholder 등록 (Coming Soon UI)
+- 사용자의 시뮬레이터 수동 검증(Coming Soon 카드 7개 정상 렌더링, 비활성 Continue 버튼 동작, 기존 레슨 1~3/Playground 회귀 없음) 결과 확인
+- 검증 완료 시 `TODO.md` Task 6 체크리스트 반영 후 `develop` 병합 진행
