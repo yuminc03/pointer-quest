@@ -20,7 +20,7 @@ struct LessonCard: View {
     .background(
       RoundedRectangle(cornerRadius: 20)
         .fill(LinearGradient(
-          gradient: .init(colors: colors),
+          gradient: .init(colors: lesson.isComingSoon ? [.gray, .gray.opacity(0.6)] : colors),
           startPoint: .bottomLeading,
           endPoint: .topTrailing
         ))
@@ -40,22 +40,33 @@ private extension LessonCard {
 
       Spacer()
 
-      if progressStore.isCompleted(lesson.id) {
-        Image(systemName: "checkmark.circle.fill")
-          .font(.title2)
-          .accessibilityLabel(Text("Completed"))
-      }
+      if lesson.isComingSoon {
+        Text("Coming Soon")
+          .font(.subheadline)
+          .fontWeight(.semibold)
+          .padding(.horizontal, 10)
+          .padding(.vertical, 4)
+          .background(Capsule().fill(.white.opacity(0.25)))
+      } else {
+        if progressStore.isCompleted(lesson.id) {
+          Image(systemName: "checkmark.circle.fill")
+            .font(.title2)
+            .accessibilityLabel(Text("Completed"))
+        }
 
-      Text("Lesson \(lesson.id)")
-        .font(.title2)
+        Text("Lesson \(lesson.id)")
+          .font(.title2)
+      }
     }
   }
 
   var Contents: some View {
     VStack(alignment: .leading, spacing: 10) {
       VStack(alignment: .leading, spacing: 0) {
-        Text("Lesson \(lesson.id)")
-          .textCase(.uppercase)
+        if !lesson.isComingSoon {
+          Text("Lesson \(lesson.id)")
+            .textCase(.uppercase)
+        }
 
         Text(lesson.title)
       }
