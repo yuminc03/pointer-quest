@@ -98,4 +98,6 @@ Chapter 2~5 placeholder 등록 및 Coming Soon UI 구현 및 검증까지 완료
 
 ## 다음 작업
 
-- 백로그(`Chapter 2~5 실제 레슨 콘텐츠 저작`, `앱 이름/브랜딩/아이콘 재검토`, `App Store 심사 대비 항목 점검`) 중 다음 착수 항목 논의
+- Task 7(`feature/card-paging-redesign`) 착수: Main 화면 카드 페이징 UI 개선 (Apple HIG 준수, 모든 iPhone 화면 크기 반응형 대응)
+- Task 8(`feature/localization-source-swap`) 착수: 앱 전체 문구 코드 리터럴을 한국어로 전환하고 기존 영어 문구를 `Localizable.xcstrings`의 `en` 로컬라이제이션으로 이관
+- (참고) 백로그(`Chapter 2~5 실제 레슨 콘텐츠 저작`, `앱 이름/브랜딩/아이콘 재검토`, `App Store 심사 대비 항목 점검`)는 Task 7/8 이후 순서 논의

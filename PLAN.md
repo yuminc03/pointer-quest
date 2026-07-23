@@ -59,6 +59,16 @@ Pointer Quest는 Swift Student Challenge(SSC) 제출을 위해 4주 일정으로
 
 - 완료한 레슨 id를 `UserDefaults` 기반으로 저장, 카드에 체크마크만 표시 (XP/포인트 등 추가 수치 없음)
 
+### 6. Main 화면 카드 페이징 UI 개선 (Apple HIG 준수 + 반응형 대응)
+
+- Chapter 2~5 placeholder 추가로 카드 개수가 3개 → 7개로 늘어났고, 현재 `PagingCardsScrollView`의 치수 계산(`screenWidth - 100`, `cardWidth / 2.5 * 3.5` 등)이 특정 화면 크기를 가정한 하드코딩이라 iPhone SE처럼 작은 기기나 Pro Max처럼 큰 기기에서 카드 잘림·여백 붕괴 위험이 있음
+- Apple Human Interface Guidelines의 여백/타이포그래피/터치 타겟 가이드를 참고해 카드 레이아웃을 재검토하고, 모든 iPhone 화면 크기에서 카드가 깨지지 않고 정상 표시되도록 반응형으로 처리
+
+### 7. 로컬라이제이션 소스 언어를 한국어로 전환
+
+- 현재 코드 내 `Text()`/`Lesson`·`Chapter`의 문자열 리터럴은 영어로 작성되어 있고 `Localizable.xcstrings`에서 `ko`를 번역으로 추가하는 구조. 하지만 이 앱의 실질적 기본/타깃 언어는 한국어이므로, 소스 문자열 자체를 한국어로 두고 영어를 번역으로 관리하는 편이 실제 개발 흐름과 더 맞음 (이미 `Chapter.title`에는 이 방식이 부분적으로 적용되어 있었음)
+- 앱 전체 사용자 노출 문구의 코드 리터럴을 한국어로 전환하고, 기존 영어 문구는 `Localizable.xcstrings`의 `en` 로컬라이제이션으로 이관해 영어 사용자에게 보이는 내용은 동일하게 유지
+
 ## 백로그 (다음 단계로 분리)
 
 - Chapter 2~5 실제 레슨 콘텐츠 저작 (커리큘럼 상세는 별도 협의)

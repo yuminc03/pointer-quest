@@ -55,6 +55,20 @@ Chapter 2~5 placeholder 등록 (Coming Soon UI)
 - [x] Chapter 2~5 데이터 등록
 - [x] Coming Soon 카드 UI
 
+## Task 7 — `feature/card-paging-redesign`
+
+Main 화면 카드 페이징 UI 개선 (Apple HIG 준수 + 반응형 대응)
+
+- [ ] `PagingCardsScrollView`/`LessonCard` 레이아웃을 Apple Human Interface Guidelines 기준(여백, 타이포그래피, 터치 타겟 크기 등)으로 재검토
+- [ ] iPhone SE~Pro Max 등 다양한 화면 크기에서 카드가 잘리거나 깨지지 않도록 반응형 처리 (현재 `screenWidth - 100`, `cardWidth / 2.5 * 3.5` 등 특정 화면 크기를 가정한 하드코딩 치수 점검)
+
+## Task 8 — `feature/localization-source-swap`
+
+로컬라이제이션 소스 언어를 한국어로 전환
+
+- [ ] 앱 전체 `Text()`/`Lesson`·`Chapter`의 `title`/`description` 등 사용자 노출 문구의 코드 리터럴을 한국어로 전환
+- [ ] 기존 영어 문구를 `Localizable.xcstrings`의 `en` 로컬라이제이션으로 이관 (영어 사용자에게 보이는 내용은 동일하게 유지)
+
 ## 백로그
 
 - [ ] Chapter 2~5 실제 레슨 콘텐츠 저작
