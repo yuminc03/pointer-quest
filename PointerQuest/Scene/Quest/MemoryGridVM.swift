@@ -269,5 +269,6 @@ final class MemoryGridVM: ObservableObject {
   private func finishLevel() {
     isSuccess = true
     codeLog = "// Well done! Lesson Complete! 🎉"
+    LessonProgressStore.shared.markCompleted(currentLesson.id)
   }
 }
