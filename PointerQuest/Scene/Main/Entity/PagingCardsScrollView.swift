@@ -52,7 +52,7 @@ struct PagingCardsScrollView: View {
           lessonCard(
             lesson: cards[$0],
             proxy: proxy,
-            colors: colors[$0]
+            colors: colors[$0 % colors.count]
           )
         }
       }
