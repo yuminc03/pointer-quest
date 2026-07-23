@@ -89,7 +89,10 @@ Chapter 2~5 placeholder 등록 및 Coming Soon UI 핵심 2개 체크리스트 �
 - 시뮬레이터(iPhone 16) 설치 시도 중 여러 개의 stale `DerivedData` 캐시 폴더가 있어 잘못된(구버전 기본 템플릿) 빌드가 먼저 설치되는 문제 발견, `-showBuildSettings`로 정확한 `TARGET_BUILD_DIR`을 확인해 올바른 최신 빌드로 재설치 후 온보딩 화면이 정상 렌더링됨을 스크린샷으로 확인
 - 사용자가 이후로는 시뮬레이터 인터랙션 테스트(카드 스와이프, Coming Soon 버튼 탭 등)를 직접 수행하고 결과를 공유하기로 함 — Coming Soon 카드/비활성 버튼의 실제 동작 확인은 사용자의 수동 테스트 대기 중
 
+## Task 6 완료 (`feature/chapter-placeholders`)
+
+Chapter 2~5 placeholder 등록 및 Coming Soon UI 구현 및 검증까지 완료. 세부 구현 내역은 위 "Task 6 진행 상황" 참고. 사용자가 시뮬레이터에서 직접 검증(Coming Soon 카드 7개 정상 렌더링, 비활성 Continue 버튼 동작, 기존 레슨 1~3/Playground 회귀 없음) 완료로 `develop` 병합 조건 충족.
+
 ## 다음 작업
 
-- 사용자의 시뮬레이터 수동 검증(Coming Soon 카드 7개 정상 렌더링, 비활성 Continue 버튼 동작, 기존 레슨 1~3/Playground 회귀 없음) 결과 확인
-- 검증 완료 시 `TODO.md` Task 6 체크리스트 반영 후 `develop` 병합 진행
+- `feature/chapter-placeholders`를 `develop`에 병합 (사용자 확인 대기)
