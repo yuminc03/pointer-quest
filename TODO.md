@@ -45,8 +45,8 @@
 
 레슨 완료 진행 상황 저장 및 카드 체크마크 표시
 
-- [ ] 완료 레슨 id `UserDefaults` 저장
-- [ ] `LessonCard` 체크마크 표시
+- [x] 완료 레슨 id `UserDefaults` 저장
+- [x] `LessonCard` 체크마크 표시
 
 ## Task 6 — `feature/chapter-placeholders`
 

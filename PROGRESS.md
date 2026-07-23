@@ -58,7 +58,18 @@
 - `develop`에 `--no-ff` 병합 완료 (병합 커밋 `41d01af`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
 - `origin/develop`에 push 완료 (`37ba5ce..41d01af`), 로컬 `feature/sandbox-mode` 브랜치 삭제
 
+## Task 5 진행 상황 (`feature/lesson-progress-tracking`)
+
+레슨 완료 진행 상황 저장 및 카드 체크마크 표시 핵심 2개 체크리스트 항목 구현 완료. 기존 `MemoryGridVM.finishLevel()`/`LessonCard` 흐름에 최소 변경만 추가하는 방식으로 설계.
+
+- `Core/LessonProgressStore.swift` 신설: `@MainActor final class LessonProgressStore: ObservableObject`, `UserDefaults` 키 `completedLessonIds`에 `[Int]`로 저장하고 내부적으로 `Set<Int>`(`@Published private(set) var completedLessonIds`)로 관리. `AppLanguage.swift`와 달리 View가 완료 상태 변경을 실시간으로 관찰해야 해서(카드 체크마크 즉시 갱신) `ObservableObject` + 싱글턴(`.shared`)으로 설계
+- `project.pbxproj`에 `LessonProgressStore.swift` 파일 참조 수동 추가 (파일 시스템 동기화 그룹을 쓰지 않는 구식 포맷이라 `PBXBuildFile`/`PBXFileReference`/`Core` 그룹/`Sources` 빌드 페이즈 4곳에 직접 추가, `Localizable.xcstrings` 추가 때와 동일한 절차)
+- `MemoryGridVM.finishLevel()`에서 `LessonProgressStore.shared.markCompleted(currentLesson.id)` 호출 추가. 샌드박스 레슨(`id: 0`)은 `successCondition: .sandbox`라 `finishLevel()` 자체가 호출되지 않아 별도 예외 처리 없이도 진행 기록에서 자연히 제외됨
+- `LessonCard`에 `@ObservedObject private var progressStore = LessonProgressStore.shared` 추가, `TopSection`의 "Lesson N" 라벨 앞에 완료 시 `checkmark.circle.fill` 아이콘을 조건부로 표시
+- 체크마크 아이콘에 `Text("Completed")` 기반 accessibility label 추가, `Localizable.xcstrings`에 `ko` 번역("완료") 추가
+- `xcodebuild ... build` → BUILD SUCCEEDED 확인
+
 ## 다음 작업
 
-- Task 5(`feature/lesson-progress-tracking`) 진행 중: 완료 레슨 id `UserDefaults` 저장, `LessonCard` 체크마크 표시
-  - 저장 방식(예: `Set<Int>`/`[Int]`, `UserDefaults` 키 이름 등) 세부 설계는 착수 시 결정
+- Task 5(`feature/lesson-progress-tracking`) 시뮬레이터 수동 검증 필요: 레슨 클리어 후 Main 화면으로 돌아왔을 때 해당 카드에 체크마크가 표시되는지, 앱을 재실행해도 `UserDefaults`에 저장된 완료 상태가 유지되는지 확인
+- 검증 완료 후 `develop` 병합 여부 확인 → Task 6(`feature/chapter-placeholders`)으로 진행
