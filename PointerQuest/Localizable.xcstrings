@@ -1,6 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    " · " : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " · "
+          }
+        }
+      }
+    },
     "-" : {
       "localizations" : {
         "ko" : {
@@ -50,6 +60,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "체인 연결"
+          }
+        }
+      }
+    },
+    "Chapter %lld" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "챕터 %lld"
           }
         }
       }
@@ -210,16 +230,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "레슨 완료! 🎉"
-          }
-        }
-      }
-    },
-    "Let's Continue" : {
-      "localizations" : {
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "이어서 학습하기"
           }
         }
       }
