@@ -107,10 +107,15 @@ Chapter 2~5 placeholder 등록 및 Coming Soon UI 구현 및 검증까지 완료
 - 코드 변경 코드 스타일은 기존 컨벤션을 따름: 파라미터 없는 섹션 뷰는 `private extension` 안 대문자 계산 프로퍼티(`Title`, `SandboxEntry`), 파라미터가 있는 헬퍼는 소문자 함수(`lessonRow(lesson:colors:)`) — `PagingCardsScrollView`의 기존 `lessonCard(lesson:proxy:colors:)` 패턴과 동일하게 맞춤
 - `project.pbxproj`는 파일시스템 동기화 그룹을 쓰지 않는 구식 포맷이라 파일 삭제/리네임마다 `PBXBuildFile`/`PBXFileReference`/그룹 참조/`Sources` 빌드 페이즈를 수동으로 맞춰 편집 (Task 3/5/6과 동일 절차)
 - 각 커밋 전 `xcodebuild ... build` → BUILD SUCCEEDED 확인, `grep`으로 `PagingCardsScrollView`/`LessonCard`/`PageControl` 잔존 참조 없음 확인
-- 시뮬레이터 인터랙션·반응형 레이아웃(iPhone SE~Pro Max) 검증은 사용자가 Xcode/시뮬레이터에서 직접 수행하기로 함 — 아직 미검증 상태
+- 시뮬레이터 인터랙션·반응형 레이아웃(iPhone SE~Pro Max) 검증은 사용자가 Xcode/시뮬레이터에서 직접 수행하기로 함
+
+## Task 7 완료 (`feature/card-paging-redesign`)
+
+카드 페이징 → 챕터별 세로 리스트 재설계 구현 및 검증까지 완료. 세부 구현 내역은 위 "Task 7 진행 상황" 참고. 사용자가 iPhone 17 시뮬레이터에서 직접 검증(레이아웃 정상 표시, 이상 없음) 완료로 `develop` 병합 조건 충족.
+
+- `TODO.md` Task 7 체크리스트 2개 항목을 완료로 반영 (원래 "HIG 재검토/반응형 처리"였던 범위가 조사 과정에서 "가로 캐러셀 → 세로 리스트 전면 재설계"로 확장되었음을 체크리스트에 함께 기록)
 
 ## 다음 작업
 
-- Task 7: 사용자가 Xcode/시뮬레이터에서 직접 검증(iPhone SE~Pro Max 반응형, 챕터 섹션/레슨 행/체크마크/Coming Soon/Playground 진입 동작, iPad에서 깨지지 않는지) 후 `TODO.md` 체크리스트 반영 및 `develop` 병합 예정
 - Task 8(`feature/localization-source-swap`) 착수 예정: 앱 전체 문구 코드 리터럴을 한국어로 전환하고 기존 영어 문구를 `Localizable.xcstrings`의 `en` 로컬라이제이션으로 이관
-- (참고) 백로그(`Chapter 2~5 실제 레슨 콘텐츠 저작`, `앱 이름/브랜딩/아이콘 재검토`, `App Store 심사 대비 항목 점검`)는 Task 7/8 이후 순서 논의
+- (참고) 백로그(`Chapter 2~5 실제 레슨 콘텐츠 저작`, `앱 이름/브랜딩/아이콘 재검토`, `App Store 심사 대비 항목 점검`)는 Task 8 이후 순서 논의
