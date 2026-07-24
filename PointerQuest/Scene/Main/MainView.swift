@@ -1,28 +1,36 @@
 import SwiftUI
 
 struct MainView: View {
-  @State private var pageIndex = 0
-  
+  private let chapterColorPalette: [[Color]] = [
+    [Color(.main), Color(.lightBlue)],
+    [Color(.green), Color(.lightGreen)],
+    [Color(.red), Color(.lightRed)],
+  ]
+
   var body: some View {
     NavigationStack {
       VStack(spacing: 0) {
-        HStack(alignment: .bottom, spacing: 0) {
-          Title
-          
-          Spacer()
-          
-          PageIndicator
+        Title
+          .padding(.horizontal, 20)
+          .padding(.top, 20)
+          .padding(.bottom, 8)
+
+        List {
+          ForEach(Array(LessonData.chapters.enumerated()), id: \.element.id) { index, chapter in
+            Section {
+              ForEach(chapter.lessons) { lesson in
+                lessonRow(lesson: lesson, colors: chapterColorPalette[index % chapterColorPalette.count])
+              }
+            } header: {
+              Text("Chapter \(chapter.id)") + Text(" · ") + Text(chapter.title)
+            }
+          }
+
+          Section {
+            SandboxEntry
+          }
         }
-        .padding(.horizontal, 20)
-        .padding(.top, 20)
-        
-        Cards
-
-        ContinueButton
-
-        SandboxEntry
-
-        Spacer()
+        .listStyle(.insetGrouped)
       }
       .background(Color(.systemGroupedBackground))
       .navigationDestination(for: Lesson.self) { lesson in
@@ -40,70 +48,21 @@ private extension MainView {
         .font(.largeTitle)
         .fontWeight(.bold)
         .foregroundStyle(.primary)
-      
+
       Text("The Memory Maze")
         .font(.title3)
         .foregroundStyle(.secondary)
     }
     .frame(maxWidth: .infinity, alignment: .leading)
   }
-  
-  var PageIndicator: some View {
-    HStack {
-      PageControl(
-        numberOfPages: LessonData.lessons.count,
-        currentPage: $pageIndex
-      )
-      .aspectRatio(contentMode: .fit)
-      .frame(height: 10)
-    }
-  }
-  
-  var Cards: some View {
-    PagingCardsScrollView(
-      currentPageIndex: $pageIndex,
-      cards: LessonData.lessons
-    )
-  }
 
-  var ContinueButton: some View {
-    let lesson = LessonData.lessons[pageIndex]
-
-    return Group {
-      if lesson.isComingSoon {
-        Label {
-          Text("Coming Soon")
-            .font(.body)
-            .fontWeight(.semibold)
-        } icon: {
-          Image(systemName: "lock.fill")
-            .size(20)
-        }
-        .foregroundStyle(.white)
-        .padding(.horizontal, 20)
-        .padding(.vertical, 16)
-        .background(
-          Capsule()
-            .fill(Color.gray)
-        )
-      } else {
-        NavigationLink(value: lesson) {
-          Label {
-            Text("Let's Continue")
-              .font(.body)
-              .fontWeight(.semibold)
-          } icon: {
-            Image(systemName: "paperplane.fill")
-              .size(20)
-          }
-          .foregroundStyle(.white)
-          .padding(.horizontal, 20)
-          .padding(.vertical, 16)
-          .background(
-            Capsule()
-              .fill(Color(.main))
-          )
-        }
+  @ViewBuilder
+  func lessonRow(lesson: Lesson, colors: [Color]) -> some View {
+    if lesson.isComingSoon {
+      LessonRow(lesson: lesson, colors: colors)
+    } else {
+      NavigationLink(value: lesson) {
+        LessonRow(lesson: lesson, colors: colors)
       }
     }
   }
@@ -132,21 +91,9 @@ private extension MainView {
             .font(.caption)
             .foregroundStyle(.secondary)
         }
-
-        Spacer()
-
-        Image(systemName: "chevron.right")
-          .foregroundStyle(.tertiary)
       }
-      .padding(16)
-      .background(
-        RoundedRectangle(cornerRadius: 16)
-          .fill(Color(.secondarySystemGroupedBackground))
-      )
+      .padding(.vertical, 6)
     }
-    .buttonStyle(.plain)
-    .padding(.horizontal, 20)
-    .padding(.top, 12)
   }
 }
 
