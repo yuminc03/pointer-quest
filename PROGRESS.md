@@ -96,8 +96,21 @@ Chapter 2~5 placeholder 등록 및 Coming Soon UI 구현 및 검증까지 완료
 - `develop`에 `--no-ff` 병합 완료 (병합 커밋 `31b4b85`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
 - `origin/develop`에 push 완료 (`850b0ef..31b4b85`), 로컬 `feature/chapter-placeholders` 브랜치 삭제
 
+## Task 7 진행 상황 (`feature/card-paging-redesign`)
+
+조사 결과 원래 범위(치수 하드코딩 반응형 수정)보다 근본 문제가 컸다: `PagingCardsScrollView`가 `TabView(.page)`가 아니라 `GeometryReader` + `LazyHStack` + 커스텀 `DragGesture`로 관성/스프링 애니메이션까지 직접 구현한 캐러셀이었고, 카드 너비/높이가 `screenWidth - 100`, `cardWidth / 2.5 * 3.5` 등으로 하드코딩되어 있었다. Chapter 2~5 placeholder로 카드가 3장 → 7장이 되었고 백로그상 계속 늘어날 예정이라, Apple HIG가 권장하는 대로(가로 페이징은 소수의 동등 항목용, 계층적 콘텐츠는 세로 리스트용) **가로 캐러셀을 걷어내고 챕터 섹션으로 그룹핑한 세로 `List`로 전면 재설계**하기로 사용자와 합의(`AskUserQuestion`으로 방향 확정: 챕터별 세로 리스트, iPad는 "깨지지만 않게" 수준). 계획은 `/Users/chuyumin/.claude/plans/todo-md-plan-md-snappy-dusk.md`에 저장.
+
+- `PointerQuest/Scene/Main/Entity/PagingCardsScrollView.swift` 삭제 (커스텀 드래그 캐러셀 전체 제거)
+- `LessonCard.swift` → `LessonRow.swift`로 리네임 + 구조체명도 `LessonCard` → `LessonRow`로 변경, 카드형 레이아웃(풀사이즈 그라데이션 배경)을 리스트 행 레이아웃(44×44 원형 아이콘 칩 + 제목/설명 + 완료 체크마크/Coming Soon 라벨)으로 재작성. `LessonProgressStore.shared.isCompleted(_:)`, `Image.size(_:)` 등 기존 유틸은 그대로 재사용 (커밋 `5cf9d8a`)
+- `MainView.swift`: `pageIndex`/`ContinueButton`/`PageIndicator`/`Cards` 제거, `List(insetGrouped)` 안에 `LessonData.chapters`를 챕터별 `Section`으로 순회하며 `LessonRow` 배치. 일반 레슨은 `NavigationLink(value: lesson)`, Coming Soon은 링크 없이 표시. 기존 `.navigationDestination(for: Lesson.self)` 라우트 그대로 재사용. 챕터별 아이콘 그라데이션은 `PagingCardsScrollView`에 있던 3세트 팔레트를 챕터 index 기준으로 순환 배정(레슨 단위 → 챕터 단위로 변경). `List` 안의 `NavigationLink`가 자동으로 disclosure chevron을 그려주므로 기존에 수동으로 그리던 `chevron.right`는 제거 (커밋 `5cf9d8a`)
+- `PointerQuest/DesignSystem/Component/PageControl.swift`(페이지 도트 인디케이터) 삭제 — 세로 리스트로 전환되며 더 이상 참조되지 않는 죽은 코드가 되어 정리 (커밋 `3d7b7d5`)
+- 코드 변경 코드 스타일은 기존 컨벤션을 따름: 파라미터 없는 섹션 뷰는 `private extension` 안 대문자 계산 프로퍼티(`Title`, `SandboxEntry`), 파라미터가 있는 헬퍼는 소문자 함수(`lessonRow(lesson:colors:)`) — `PagingCardsScrollView`의 기존 `lessonCard(lesson:proxy:colors:)` 패턴과 동일하게 맞춤
+- `project.pbxproj`는 파일시스템 동기화 그룹을 쓰지 않는 구식 포맷이라 파일 삭제/리네임마다 `PBXBuildFile`/`PBXFileReference`/그룹 참조/`Sources` 빌드 페이즈를 수동으로 맞춰 편집 (Task 3/5/6과 동일 절차)
+- 각 커밋 전 `xcodebuild ... build` → BUILD SUCCEEDED 확인, `grep`으로 `PagingCardsScrollView`/`LessonCard`/`PageControl` 잔존 참조 없음 확인
+- 시뮬레이터 인터랙션·반응형 레이아웃(iPhone SE~Pro Max) 검증은 사용자가 Xcode/시뮬레이터에서 직접 수행하기로 함 — 아직 미검증 상태
+
 ## 다음 작업
 
-- Task 7(`feature/card-paging-redesign`) 착수: Main 화면 카드 페이징 UI 개선 (Apple HIG 준수, 모든 iPhone 화면 크기 반응형 대응)
-- Task 8(`feature/localization-source-swap`) 착수: 앱 전체 문구 코드 리터럴을 한국어로 전환하고 기존 영어 문구를 `Localizable.xcstrings`의 `en` 로컬라이제이션으로 이관
+- Task 7: 사용자가 Xcode/시뮬레이터에서 직접 검증(iPhone SE~Pro Max 반응형, 챕터 섹션/레슨 행/체크마크/Coming Soon/Playground 진입 동작, iPad에서 깨지지 않는지) 후 `TODO.md` 체크리스트 반영 및 `develop` 병합 예정
+- Task 8(`feature/localization-source-swap`) 착수 예정: 앱 전체 문구 코드 리터럴을 한국어로 전환하고 기존 영어 문구를 `Localizable.xcstrings`의 `en` 로컬라이제이션으로 이관
 - (참고) 백로그(`Chapter 2~5 실제 레슨 콘텐츠 저작`, `앱 이름/브랜딩/아이콘 재검토`, `App Store 심사 대비 항목 점검`)는 Task 7/8 이후 순서 논의
