@@ -114,8 +114,10 @@ Chapter 2~5 placeholder 등록 및 Coming Soon UI 구현 및 검증까지 완료
 카드 페이징 → 챕터별 세로 리스트 재설계 구현 및 검증까지 완료. 세부 구현 내역은 위 "Task 7 진행 상황" 참고. 사용자가 iPhone 17 시뮬레이터에서 직접 검증(레이아웃 정상 표시, 이상 없음) 완료로 `develop` 병합 조건 충족.
 
 - `TODO.md` Task 7 체크리스트 2개 항목을 완료로 반영 (원래 "HIG 재검토/반응형 처리"였던 범위가 조사 과정에서 "가로 캐러셀 → 세로 리스트 전면 재설계"로 확장되었음을 체크리스트에 함께 기록)
+- `develop`에 `--no-ff` 병합 완료 (병합 커밋 `a9e83e0`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
+- `origin/develop`에 push 완료 (`7ad05b4..a9e83e0`), 로컬 `feature/card-paging-redesign` 브랜치 삭제
 
 ## 다음 작업
 
-- Task 8(`feature/localization-source-swap`) 착수 예정: 앱 전체 문구 코드 리터럴을 한국어로 전환하고 기존 영어 문구를 `Localizable.xcstrings`의 `en` 로컬라이제이션으로 이관
+- `develop`에서 `feature/localization-source-swap`(Task 8) 브랜치를 새로 분기해 착수 예정: 앱 전체 문구 코드 리터럴을 한국어로 전환하고 기존 영어 문구를 `Localizable.xcstrings`의 `en` 로컬라이제이션으로 이관
 - (참고) 백로그(`Chapter 2~5 실제 레슨 콘텐츠 저작`, `앱 이름/브랜딩/아이콘 재검토`, `App Store 심사 대비 항목 점검`)는 Task 8 이후 순서 논의
