@@ -10,7 +10,6 @@
 		04CF14F15053BE53D3603FF8 /* Arrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1AC0851B9C2B1EF6D8206 /* Arrow.swift */; };
 		0B401B3744BCC4A11C792E8E /* LessonHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914DBDA9B62D008D76F72044 /* LessonHeaderView.swift */; };
 		2BA6BF8B1A134475BD106A7D /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6393DBD5E7E14E8A891A8003 /* Localizable.xcstrings */; };
-		0D76D32D151749C86952247E /* PageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4647B25894F973B6C4994 /* PageControl.swift */; };
 		26142A0C1ED2D4F3AB0ED676 /* ArrowDrawLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702C31E5EC1A46BD9762C11D /* ArrowDrawLayer.swift */; };
 		2B58D7CB7ABBDC1BA0283658 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740B4538D4942E8E7DCE1B88 /* WelcomeView.swift */; };
 		372270F03F67DEA5BABAD2C1 /* CodeFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4144E6FC1AC603326D97296 /* CodeFeedbackView.swift */; };
@@ -39,7 +38,6 @@
 /* Begin PBXFileReference section */
 		045BBD546163DB5310EA7B2A /* PointerQuest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PointerQuest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ABD85A090F5D629CEAC8280 /* MemorySlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorySlot.swift; sourceTree = "<group>"; };
-		1AD4647B25894F973B6C4994 /* PageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControl.swift; sourceTree = "<group>"; };
 		283DDC3FB03D740A93C567BB /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
 		3F7306446CDA57BCCD346235 /* BoundsPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundsPreferenceKey.swift; sourceTree = "<group>"; };
 		48A9A1E558B7D028B4E61223 /* MyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyApp.swift; sourceTree = "<group>"; };
@@ -129,7 +127,6 @@
 			children = (
 				4BD1AC0851B9C2B1EF6D8206 /* Arrow.swift */,
 				F4144E6FC1AC603326D97296 /* CodeFeedbackView.swift */,
-				1AD4647B25894F973B6C4994 /* PageControl.swift */,
 				283DDC3FB03D740A93C567BB /* Triangle.swift */,
 			);
 			path = Component;
@@ -318,7 +315,6 @@
 				0B401B3744BCC4A11C792E8E /* LessonHeaderView.swift in Sources */,
 				87E475371748E3BCB04DD8A7 /* MyApp.swift in Sources */,
 				C7B8FEAAFF1E13DC88F05FE5 /* OnboardingView.swift in Sources */,
-				0D76D32D151749C86952247E /* PageControl.swift in Sources */,
 				81BA0A206D188D45EE6D1C20 /* SettingView.swift in Sources */,
 				EABA859868C9C1BDB472C087 /* ShakeEffect.swift in Sources */,
 				5608BEB4B6E972BB5F39B737 /* Triangle.swift in Sources */,
