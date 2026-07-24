@@ -59,10 +59,11 @@ Pointer Quest는 Swift Student Challenge(SSC) 제출을 위해 4주 일정으로
 
 - 완료한 레슨 id를 `UserDefaults` 기반으로 저장, 카드에 체크마크만 표시 (XP/포인트 등 추가 수치 없음)
 
-### 6. Main 화면 카드 페이징 UI 개선 (Apple HIG 준수 + 반응형 대응)
+### 6. Main 화면 카드 페이징 → 챕터별 세로 리스트 재설계
 
-- Chapter 2~5 placeholder 추가로 카드 개수가 3개 → 7개로 늘어났고, 현재 `PagingCardsScrollView`의 치수 계산(`screenWidth - 100`, `cardWidth / 2.5 * 3.5` 등)이 특정 화면 크기를 가정한 하드코딩이라 iPhone SE처럼 작은 기기나 Pro Max처럼 큰 기기에서 카드 잘림·여백 붕괴 위험이 있음
-- Apple Human Interface Guidelines의 여백/타이포그래피/터치 타겟 가이드를 참고해 카드 레이아웃을 재검토하고, 모든 iPhone 화면 크기에서 카드가 깨지지 않고 정상 표시되도록 반응형으로 처리
+- Chapter 2~5 placeholder 추가로 카드 개수가 3개 → 7개로 늘어났고, 향후 각 챕터에 실제 레슨이 계속 추가될 예정이라 항목 수는 계속 늘어남. 기존 `PagingCardsScrollView`는 `TabView(.page)`가 아니라 커스텀 `DragGesture` 기반 캐러셀이었고 치수 계산(`screenWidth - 100`, `cardWidth / 2.5 * 3.5` 등)도 특정 화면 크기를 가정한 하드코딩이라 iPhone SE~Pro Max에서 카드 잘림·여백 붕괴 위험이 있었음
+- Apple HIG는 가로 페이징을 소수의 동등한 가치를 가진 항목(온보딩, 에디토리얼 피처)에 권장하고, 챕터-레슨처럼 계층을 가진 콘텐츠 탐색에는 세로 스크롤 리스트를 권장함. 이에 따라 가로 캐러셀을 걷어내고 챕터를 `Section`으로 그룹핑한 세로 `List`(insetGrouped)로 전면 재설계 — 최소 터치 타겟, Dynamic Type, VoiceOver, 다크모드 배경을 시스템이 기본 제공하도록 함
+- iPad는 이번 범위에서 별도 적응형(멀티컬럼) 레이아웃까지는 만들지 않고 "깨지지 않는" 수준만 보장
 
 ### 7. 로컬라이제이션 소스 언어를 한국어로 전환
 
