@@ -12,7 +12,7 @@ struct SettingView: View {
           Button {
             isOnboardingPresented.toggle()
           } label: {
-            Text("How to use the app")
+            Text("앱 사용법")
           }
         }
 
@@ -35,17 +35,17 @@ struct SettingView: View {
             }
           }
         } header: {
-          Text("Language")
+          Text("언어")
         }
       }
-      .navigationTitle("Setting")
+      .navigationTitle("설정")
       .sheet(isPresented: $isOnboardingPresented) {
         OnboardingView()
       }
-      .alert("Restart Required", isPresented: $isRestartAlertPresented) {
-        Button("Confirm", role: .cancel) { }
+      .alert("재시작 필요", isPresented: $isRestartAlertPresented) {
+        Button("확인", role: .cancel) { }
       } message: {
-        Text("Please restart the app to apply the language change.")
+        Text("언어 변경 사항을 적용하려면 앱을 재시작해주세요.")
       }
     }
   }

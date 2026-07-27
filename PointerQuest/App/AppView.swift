@@ -11,13 +11,13 @@ struct AppView: View {
       MainView()
         .tabItem {
           Image(systemName: "house")
-          Text("Home")
+          Text("홈")
         }
-      
+
       SettingView()
         .tabItem {
           Image(systemName: "gearshape.fill")
-          Text("Setting")
+          Text("설정")
         }
     }
     .sheet(isPresented: $isWelcomePresented) {
@@ -31,10 +31,10 @@ struct AppView: View {
       OnboardingView()
     }
     .alert(
-      "You can check the tutorial again in Setting > How to use the app.",
+      "튜토리얼은 설정 > 앱 사용법에서 다시 확인할 수 있습니다.",
       isPresented: $isAlertPresented
     ) {
-      Button("Confirm", role: .cancel) { }
+      Button("확인", role: .cancel) { }
     }
     .onAppear {
       if isOnboardingWatched != true {
