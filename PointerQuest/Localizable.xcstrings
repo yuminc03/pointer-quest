@@ -22,8 +22,14 @@
       }
     },
     "%lld" : {},
-    "1. Long press a block to see it pop out in 3D." : {
+    "1. 블록을 길게 누르면 3D로 튀어나오는 모습을 볼 수 있어요." : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Long press a block to see it pop out in 3D."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -32,8 +38,14 @@
         }
       }
     },
-    "2. Drag it close to another block." : {
+    "2. 다른 블록 가까이로 드래그하세요." : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. Drag it close to another block."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -42,8 +54,14 @@
         }
       }
     },
-    "3. Release your finger to connect the two blocks." : {
+    "3. 손가락을 떼면 두 블록이 연결됩니다." : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3. Release your finger to connect the two blocks."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -182,8 +200,14 @@
         }
       }
     },
-    "How to use" : {
+    "사용 방법" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How to use"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -202,8 +226,14 @@
         }
       }
     },
-    "In this screen, you can reference a block containing a specific value with another block." : {
+    "이 화면에서는 특정 값을 가진 블록을 다른 블록으로 참조(가리키게)할 수 있습니다." : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In this screen, you can reference a block containing a specific value with another block."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -284,8 +314,14 @@
         }
       }
     },
-    "New to the app? Check out the tutorial to learn how to use it!" : {
+    "이 앱이 처음이신가요? 튜토리얼에서 사용법을 확인해보세요!" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New to the app? Check out the tutorial to learn how to use it!"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -304,8 +340,14 @@
         }
       }
     },
-    "No, I'm good." : {
+    "아니요, 괜찮아요." : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No, I'm good."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -406,8 +448,14 @@
         }
       }
     },
-    "Welcome!" : {
+    "환영합니다!" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome!"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -416,8 +464,14 @@
         }
       }
     },
-    "When you select a Lesson and enter the next screen, you will see a screen with blocks arranged in a grid." : {
+    "레슨을 선택해 다음 화면으로 이동하면, 격자 모양으로 배치된 블록 화면을 보게 됩니다." : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When you select a Lesson and enter the next screen, you will see a screen with blocks arranged in a grid."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -426,8 +480,14 @@
         }
       }
     },
-    "Yes, show me the tutorial." : {
+    "네, 튜토리얼 보여주세요." : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes, show me the tutorial."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
