@@ -12,7 +12,7 @@ struct LessonRow: View {
 
       VStack(alignment: .leading, spacing: 2) {
         if !lesson.isComingSoon {
-          Text("Lesson \(lesson.id)")
+          Text("레슨 \(lesson.id)")
             .font(.caption2)
             .fontWeight(.semibold)
             .textCase(.uppercase)
@@ -32,13 +32,13 @@ struct LessonRow: View {
       Spacer(minLength: 8)
 
       if lesson.isComingSoon {
-        Text("Coming Soon")
+        Text("준비 중")
           .font(.caption)
           .foregroundStyle(.secondary)
       } else if progressStore.isCompleted(lesson.id) {
         Image(systemName: "checkmark.circle.fill")
           .foregroundStyle(.green)
-          .accessibilityLabel(Text("Completed"))
+          .accessibilityLabel(Text("완료"))
       }
     }
     .padding(.vertical, 6)

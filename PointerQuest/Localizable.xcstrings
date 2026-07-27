@@ -86,8 +86,14 @@
         }
       }
     },
-    "Chapter %lld" : {
+    "챕터 %lld" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chapter %lld"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -96,8 +102,14 @@
         }
       }
     },
-    "Coming Soon" : {
+    "준비 중" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coming Soon"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -122,8 +134,14 @@
         }
       }
     },
-    "Completed" : {
+    "완료" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completed"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -132,8 +150,14 @@
         }
       }
     },
-    "Confirm" : {
+    "확인" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -286,8 +310,14 @@
         }
       }
     },
-    "Lesson" : {
+    "레슨" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lesson"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -296,8 +326,14 @@
         }
       }
     },
-    "Lesson %lld" : {
+    "레슨 %lld" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lesson %lld"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -306,8 +342,14 @@
         }
       }
     },
-    "Lesson Complete! 🎉" : {
+    "레슨 완료! 🎉" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lesson Complete! 🎉"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -348,8 +390,14 @@
         }
       }
     },
-    "No objective. Just explore." : {
+    "목표 없이 자유롭게 탐험해 보세요." : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No objective. Just explore."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -374,8 +422,14 @@
         }
       }
     },
-    "Playground" : {
+    "플레이그라운드" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Playground"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -474,8 +528,14 @@
         }
       }
     },
-    "The Memory Maze" : {
+    "메모리의 미로" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Memory Maze"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
