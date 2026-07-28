@@ -2,7 +2,7 @@ import SwiftUI
 
 /// 생성된 코드를 Terminal 스타일로 보여주는 컴포넌트
 struct CodeFeedbackView: View {
-  let code: String
+  let code: LocalizedStringResource
   
   var body: some View {
     HStack(alignment: .firstTextBaseline) {

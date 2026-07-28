@@ -14,7 +14,7 @@ struct LessonData {
     blueprint: .init(
       seeds: [],
       successCondition: .sandbox,
-      initialCodeLog: "// Playground: Freely connect pointers. Nothing to break here."
+      initialCodeLog: "// 플레이그라운드: 자유롭게 포인터를 연결해보세요. 여기선 아무것도 망가지지 않아요."
     )
   )
 
@@ -34,7 +34,7 @@ struct LessonData {
               .init(index: 8, type: .pointer)
             ],
             successCondition: .anyPointerPointsTo(index: 3),
-            initialCodeLog: "// Lesson 1: Drag the pointer to point to address 0x700C."
+            initialCodeLog: "// 레슨 1: 포인터를 드래그해서 0x700C 주소를 가리키세요."
           )
         ),
         .init(
@@ -49,7 +49,7 @@ struct LessonData {
               .init(index: 14, type: .pointer)
             ],
             successCondition: .anyPointerPointsTo(index: 5),
-            initialCodeLog: "// Lesson 2: Data(0x701C) is locked. Do not access directly, use 'Double Pointer'."
+            initialCodeLog: "// 레슨 2: 데이터(0x701C)가 잠겨 있습니다. 직접 접근하지 말고 '이중 포인터'를 사용하세요."
           )
         ),
         .init(
@@ -65,7 +65,7 @@ struct LessonData {
               .init(index: 0, type: .pointer)
             ],
             successCondition: .chain(indices: [0, 5, 11, 15]),
-            initialCodeLog: "// Lesson 3: Create a chain from Start(0x7000) to Treasure(0x703C)."
+            initialCodeLog: "// 레슨 3: Start(0x7000)에서 Treasure(0x703C)까지 체인을 만드세요."
           )
         )
       ]
@@ -142,8 +142,8 @@ enum SuccessCondition: Hashable {
 }
 
 /// 레슨의 초기 배치와 클리어 조건을 데이터로 표현
-struct LessonBlueprint: Hashable {
+struct LessonBlueprint {
   var seeds: [SlotSeed]
   var successCondition: SuccessCondition
-  var initialCodeLog: String
+  var initialCodeLog: LocalizedStringResource
 }
