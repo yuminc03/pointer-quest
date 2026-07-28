@@ -117,7 +117,18 @@ Chapter 2~5 placeholder 등록 및 Coming Soon UI 구현 및 검증까지 완료
 - `develop`에 `--no-ff` 병합 완료 (병합 커밋 `a9e83e0`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
 - `origin/develop`에 push 완료 (`7ad05b4..a9e83e0`), 로컬 `feature/card-paging-redesign` 브랜치 삭제
 
+## Task 8 후속 (`codeLog` 실제 로컬라이즈 전환)
+
+Task 3 당시 "`codeLog`는 C 코드 관례상 영어로 고정, 로컬라이즈 제외"로 결정했던 부분을 사용자 요청으로 재검토. 처음에는 `//` 주석만 한국어 리터럴로 바꿨으나, `codeLog`가 `Text(String)`으로 렌더링되고 있어 `Localizable.xcstrings`에 전혀 걸리지 않는다는 점(=번역을 채워도 적용 안 됨, 앱 언어 설정과 무관하게 항상 같은 문구로 고정)을 사용자가 지적. 확인 후 실제로 앱 언어를 따르도록 구조를 바꾸는 방향으로 재작업.
+
+- `Core/Lesson.swift`: `LessonBlueprint.initialCodeLog` 타입을 `String` → `LocalizedStringResource`로 변경 (`Lesson.title`/`description`과 동일한 방식). `LessonBlueprint`는 이 변경으로 `Hashable` 자동 합성이 깨졌는데(`LocalizedStringResource`가 `Hashable` 미준수), 실제로는 `Lesson`(자체 `id` 기준 수동 `Hashable`)의 저장 프로퍼티로만 쓰이고 `Hashable` conformance가 어디서도 요구되지 않아 `LessonBlueprint`에서 `Hashable` 자체를 제거
+- `Scene/Quest/MemoryGridVM.swift`: `codeLog` 프로퍼티 타입을 `LocalizedStringResource`로 변경. 이중 포인터 케이스(`handleTap` Case B)에서 `explicitLog`라는 중간 `String` 변수에 완성된 문구를 조립한 뒤 다시 끼워 넣던 구조를 제거하고, 분기마다 완성된 `codeLog` 리터럴을 직접 작성하도록 재구성 — 그렇지 않으면 바깥 템플릿만 번역되고 안에 끼워진 조각은 계속 한국어로 하드코딩된 채 남는 문제가 있었음
+- `DesignSystem/Component/CodeFeedbackView.swift`: `code` 프로퍼티 타입을 `String` → `LocalizedStringResource`로 변경
+- `Localizable.xcstrings`에 새 키 19개(주석이 포함된 `codeLog` 문구만 대상, 코드만 있고 자연어가 없는 문구는 언어 무관이라 제외)를 JSON으로 직접 추가하고 `en` 번역 채움 — 원래 Task 3~4에서 사용하던 영어 원문을 그대로 복원해 매칭
+- `printf("%d", ...)`/`printf("%p", ...)` 코드 로그 3곳: 리터럴 `%d`/`%p`가 `LocalizedStringResource`의 실제 보간(`%lld`/`%@`)과 공존하면 포맷 플레이스홀더로 오인될 수 있다고 판단해 처음엔 소스에 `%%d`/`%%p`로 직접 이스케이프. 그런데 이후 빌드 과정에서 Xcode의 컴파일러 기반 문자열 추출이 실제로 동작하는 것을 확인했는데(= CLI 빌드도 결국 `.xcstrings`에 자동 동기화됨, 이전 Task들에서 "CLI로는 추출 안 됨"이라 판단했던 것은 틀린 결론이었고 단지 지연/비동기적으로 반영되는 것이었음), 이 추출기가 리터럴 `%`를 자체적으로 한 번 더 이스케이프하면서 소스의 `%%d`가 카탈로그에는 `%%%%d`로 중복 이스케이프되어 깨진 항목이 생성됨을 발견. 소스는 원래대로 단일 `%d`/`%p`로 되돌리고(이스케이프는 추출기가 처리), 잘못 생성된 중복 카탈로그 항목 2개를 제거
+- `xcodebuild ... build` → BUILD SUCCEEDED 확인 (각 단계마다 반복 검증)
+- CLI 환경 특성상 앱 언어를 English로 전환했을 때 실제 화면에서 `codeLog`가 영어로, 그리고 `%d`/`%p`가 깨지지 않고 정상 표시되는지는 사용자의 시뮬레이터 수동 확인 필요
+
 ## 다음 작업
 
-- `develop`에서 `feature/localization-source-swap`(Task 8) 브랜치를 새로 분기해 착수 예정: 앱 전체 문구 코드 리터럴을 한국어로 전환하고 기존 영어 문구를 `Localizable.xcstrings`의 `en` 로컬라이제이션으로 이관
 - (참고) 백로그(`Chapter 2~5 실제 레슨 콘텐츠 저작`, `앱 이름/브랜딩/아이콘 재검토`, `App Store 심사 대비 항목 점검`)는 Task 8 이후 순서 논의

@@ -68,6 +68,7 @@ Main 화면 카드 페이징 UI 개선 (Apple HIG 준수 + 반응형 대응)
 
 - [x] 앱 전체 `Text()`/`Lesson`·`Chapter`의 `title`/`description` 등 사용자 노출 문구의 코드 리터럴을 한국어로 전환
 - [x] 기존 영어 문구를 `Localizable.xcstrings`의 `en` 로컬라이제이션으로 이관 (영어 사용자에게 보이는 내용은 동일하게 유지) — `sourceLanguage`(`ko`)와 `project.pbxproj`의 `developmentRegion`(`ko`)도 함께 전환
+- [x] `codeLog`(하단 C 코드 로그 영역)를 실제 로컬라이즈 대상으로 전환 — `String` → `LocalizedStringResource`로 타입 변경, `//` 주석은 한국어 소스로 작성하고 `Localizable.xcstrings`에 `en` 번역 추가 (`int`/`printf` 등 C 코드 구문 자체는 두 언어 공통으로 영어 유지)
 
 ## 백로그
 
