@@ -129,7 +129,14 @@ Task 3 당시 "`codeLog`는 C 코드 관례상 영어로 고정, 로컬라이즈
 - `xcodebuild ... build` → BUILD SUCCEEDED 확인 (각 단계마다 반복 검증)
 - 사용자가 시뮬레이터에서 직접 검증 (2026-07-29): `printf %d/%p` 깨짐 등은 재현되지 않았으나, 새로운 문제 발견 — `int *p = &target;`처럼 포인터 기호 `*`가 포함된 codeLog 일부에서 `&target` 같은 뒷부분 텍스트가 화면에 표시되지 않음. `codeLog`가 `LocalizedStringResource`로 바뀌며 `Text`가 마크다운을 파싱하게 됐는데, C 코드의 `*`/`**`(포인터 선언·역참조 기호)가 마크다운 강조 구문(`*이탤릭*`, `**볼드**`)으로 오인됐을 가능성이 유력함. 사용자 요청에 따라 지금 당장 수정하지 않고 `TODO.md` 백로그에 기록만 해둠 — 원인 조사·수정은 별도 작업으로 진행 예정
 
+## Task 8 완료 (`feature/localization-source-swap`)
+
+로컬라이제이션 소스 언어 한국어 전환 + `codeLog` 실제 로컬라이즈 전환까지 완료. `codeLog` 마크다운 파싱 버그(위 "Task 8 후속" 참고)는 미해결 상태이지만, 사용자 판단으로 우선 병합하고 별도 브랜치에서 후속 수정하기로 함.
+
+- `develop`에 `--no-ff` 병합 완료 (병합 커밋 `1072d46`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
+- `origin/develop`에 push 완료 (`2da7f8c..1072d46`), 로컬 `feature/localization-source-swap` 브랜치 삭제
+
 ## 다음 작업
 
-- `feature/localization-source-swap`(Task 8, `codeLog` 로컬라이즈 후속 포함)은 구현·빌드 검증까지 끝났고 `develop` 병합 전 단계. 다만 위에서 발견된 `codeLog` 마크다운 파싱 버그는 아직 해결 전이라, 이 상태로 병합할지 버그부터 고치고 병합할지는 사용자와 논의 필요
-- (참고) 백로그(`Chapter 2~5 실제 레슨 콘텐츠 저작`, `앱 이름/브랜딩/아이콘 재검토`, `App Store 심사 대비 항목 점검`, `codeLog` 마크다운 파싱 버그)는 이후 순서 논의
+- `codeLog` 마크다운 파싱 버그 수정을 위한 별도 브랜치 착수 예정 (`int *p = &target;` 등 포인터 기호 `*`/`**`가 포함된 문구 일부가 화면에서 사라지는 문제, 원인 추정은 `TODO.md` 백로그 참고)
+- (참고) 백로그(`Chapter 2~5 실제 레슨 콘텐츠 저작`, `앱 이름/브랜딩/아이콘 재검토`, `App Store 심사 대비 항목 점검`)는 이후 순서 논의
