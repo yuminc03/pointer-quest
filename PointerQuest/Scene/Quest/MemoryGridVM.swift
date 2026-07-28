@@ -51,22 +51,21 @@ final class MemoryGridVM: ObservableObject {
       // Case B: 가리킨 곳도 포인터인 경우 (이중 포인터)
       else if targetSlot.type == .pointer {
         // ptr1이 가리키는 최종 대상 찾기
-        var explicitLog = ""
-
         if let ultimateAddr = targetSlot.pointingTo,
            let ultimateIndex = slots.firstIndex(where: { $0.address == ultimateAddr }),
            let ultimateValue = slots[ultimateIndex].value {
-
-          explicitLog = "int value = \(ultimateValue); // \(ultimateAddr)의 값\n"
-          + "int *ptr1 = &value; // ptr1이 value를 가리킴\n"
+          codeLog = """
+          int value = \(ultimateValue); // \(ultimateAddr)의 값
+          int *ptr1 = &value; // ptr1이 value를 가리킴
+          int **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)
+          """
         } else {
           // 최종 대상이 없거나 값이 없는 경우 (단순 주소 표기)
-          explicitLog = "int *ptr1 = \(targetSlot.pointingTo ?? "NULL"); // \(targetAddress)\n"
+          codeLog = """
+          int *ptr1 = \(targetSlot.pointingTo ?? "NULL"); // \(targetAddress)
+          int **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)
+          """
         }
-
-        codeLog = """
-        \(explicitLog)int **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)
-        """
       }
       // Case C: 가리킨 곳이 비어있는 경우
       else {
