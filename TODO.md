@@ -26,7 +26,7 @@
 - [x] 에러/잠금 문구를 설명형으로 다듬기
 - [x] "Lv. N" 등 게임 용어를 "Lesson N"으로 조정
 - [x] `Localizable.xcstrings` String Catalog 도입 (소스 `en`, 번역 `ko`), `project.pbxproj`의 `knownRegions`에 `ko` 추가
-- [x] `Lesson`/`Chapter`의 `title`/`description`을 `LocalizedStringResource`로 전환하여 데이터 기반 문구도 로컬라이즈되도록 처리 (`codeLog`는 C 코드 관례상 영어로 고정, 로컬라이즈 제외)
+- [x] `Lesson`/`Chapter`의 `title`/`description`을 `LocalizedStringResource`로 전환하여 데이터 기반 문구도 로컬라이즈되도록 처리 (`codeLog`는 이 시점엔 C 코드 관례상 영어로 고정, 로컬라이즈 제외 — 이후 Task 8 후속에서 재검토되어 로컬라이즈 대상으로 전환됨)
 - [x] 앱 최초 실행 시 한국어를 기본값으로 강제 적용하는 로직 추가
 - [x] `SettingView`에 언어 선택(한국어/English) UI 및 재시작 안내 추가
 
@@ -66,11 +66,14 @@ Main 화면 카드 페이징 UI 개선 (Apple HIG 준수 + 반응형 대응)
 
 로컬라이제이션 소스 언어를 한국어로 전환
 
-- [ ] 앱 전체 `Text()`/`Lesson`·`Chapter`의 `title`/`description` 등 사용자 노출 문구의 코드 리터럴을 한국어로 전환
-- [ ] 기존 영어 문구를 `Localizable.xcstrings`의 `en` 로컬라이제이션으로 이관 (영어 사용자에게 보이는 내용은 동일하게 유지)
+- [x] 앱 전체 `Text()`/`Lesson`·`Chapter`의 `title`/`description` 등 사용자 노출 문구의 코드 리터럴을 한국어로 전환
+- [x] 기존 영어 문구를 `Localizable.xcstrings`의 `en` 로컬라이제이션으로 이관 (영어 사용자에게 보이는 내용은 동일하게 유지) — `sourceLanguage`(`ko`)와 `project.pbxproj`의 `developmentRegion`(`ko`)도 함께 전환
+- [x] `codeLog`(하단 C 코드 로그 영역)를 실제 로컬라이즈 대상으로 전환 — `String` → `LocalizedStringResource`로 타입 변경, `//` 주석은 한국어 소스로 작성하고 `Localizable.xcstrings`에 `en` 번역 추가 (`int`/`printf` 등 C 코드 구문 자체는 두 언어 공통으로 영어 유지)
 
 ## 백로그
 
 - [ ] Chapter 2~5 실제 레슨 콘텐츠 저작
 - [ ] 앱 이름/브랜딩/아이콘 재검토
 - [ ] App Store 심사 대비 항목 점검 (개인정보처리방침, 스크린샷, 지원 언어 등)
+- [ ] SwiftUI 코드를 사용자 코딩 스타일에 맞게 정리 — 작업 시작 전 git tag `1.0`(사용자가 직접 작성한 원본 스타일)과 SwiftUI 코딩 스타일 가이드를 먼저 확인할 것
+- [ ] `codeLog` 일부 문구가 시뮬레이터 화면에서 잘려 보이는 문제 수정 — 예: `int *p = &target;`에서 `&target` 부분이 표시되지 않음. `codeLog`를 `LocalizedStringResource`로 전환(Task 8 후속)하면서 `Text`가 마크다운을 파싱하게 됐는데, C 코드의 포인터 기호 `*`/`**`(예: `int *p`, `int **ptr2`)가 마크다운 강조 구문(`*이탤릭*`, `**볼드**`)으로 오인되는 것이 원인일 가능성이 높음. 사용자가 시뮬레이터에서 직접 발견 (2026-07-29), 아직 원인 확정·수정 전

@@ -5,7 +5,7 @@ final class MemoryGridVM: ObservableObject {
   /// 메모리 Cells
   @Published private(set) var slots = [MemorySlot]()
   /// 현재 실행된 동작을 C 코드로 보여주는 로그
-  @Published var codeLog = "// The executed operation is represented as C language code."
+  @Published var codeLog: LocalizedStringResource = "// 실행된 연산을 C 언어 코드로 표현합니다."
   /// 현재 진행 중인 레슨
   @Published private(set) var currentLesson: Lesson
   /// 미션 성공 여부
@@ -27,7 +27,7 @@ final class MemoryGridVM: ObservableObject {
     
     // Lesson 2: 잠긴 슬롯 탭 시 에러 피드백
     if slot.isLocked {
-      codeLog = "// This memory is locked. Access it indirectly through an existing pointer."
+      codeLog = "// 이 메모리는 잠겨 있습니다. 기존 포인터를 통해 간접적으로 접근하세요."
       if let index = slots.firstIndex(where: { $0.id == slot.id }) {
         triggerError(for: index)
       }
@@ -44,36 +44,35 @@ final class MemoryGridVM: ObservableObject {
       // Case A: 가리킨 곳에 값이 있는 경우 (일반 포인터)
       if let targetValue = targetSlot.value {
         codeLog = """
-        int target = \(targetValue); // Value at \(targetAddress)
-        int *p = &target; // This slot(\(slot.address)) points to target
+        int target = \(targetValue); // \(targetAddress)의 값
+        int *p = &target; // 이 슬롯(\(slot.address))이 target을 가리킴
         """
       }
       // Case B: 가리킨 곳도 포인터인 경우 (이중 포인터)
       else if targetSlot.type == .pointer {
         // ptr1이 가리키는 최종 대상 찾기
-        var explicitLog = ""
-        
         if let ultimateAddr = targetSlot.pointingTo,
            let ultimateIndex = slots.firstIndex(where: { $0.address == ultimateAddr }),
            let ultimateValue = slots[ultimateIndex].value {
-          
-          explicitLog = "int value = \(ultimateValue); // Value at \(ultimateAddr)\n"
-          + "int *ptr1 = &value; // Ptr1 points to value\n"
+          codeLog = """
+          int value = \(ultimateValue); // \(ultimateAddr)의 값
+          int *ptr1 = &value; // ptr1이 value를 가리킴
+          int **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)
+          """
         } else {
           // 최종 대상이 없거나 값이 없는 경우 (단순 주소 표기)
-          explicitLog = "int *ptr1 = \(targetSlot.pointingTo ?? "NULL"); // \(targetAddress)\n"
+          codeLog = """
+          int *ptr1 = \(targetSlot.pointingTo ?? "NULL"); // \(targetAddress)
+          int **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)
+          """
         }
-        
-        codeLog = """
-        \(explicitLog)int **ptr2 = &ptr1; // Double Pointer (This slot points to ptr1)
-        """
       }
       // Case C: 가리킨 곳이 비어있는 경우
       else {
         codeLog = """
-        int unknown; // Variable at \(targetAddress) is uninitialized
-        int *p = &unknown; 
-        // Warning: Dereferencing 'p' yields garbage value.
+        int unknown; // \(targetAddress)의 변수가 초기화되지 않음
+        int *p = &unknown;
+        // 경고: 'p'를 역참조하면 쓰레기 값이 반환됩니다.
         """
       }
       
@@ -84,11 +83,11 @@ final class MemoryGridVM: ObservableObject {
     
     // 2. 값을 가진 변수인 경우
     if let value = slot.value {
-      codeLog = "int val = \(value); // Value at \(slot.address)"
+      codeLog = "int val = \(value); // \(slot.address)의 값"
     }
     // 3. 빈 슬롯인 경우
     else {
-      codeLog = "// Address: \(slot.address)"
+      codeLog = "// 주소: \(slot.address)"
     }
   }
   
@@ -100,7 +99,7 @@ final class MemoryGridVM: ObservableObject {
     // 1. 드래그한 슬롯(Source)의 인덱스를 찾기
     // 자기 자신을 가리키는 것은 방지 (Self-reference Prevention)
     if sourceAddress == destinationAddress {
-      codeLog = "// A pointer can't point to itself. Choose a different address to connect to."
+      codeLog = "// 포인터는 자기 자신을 가리킬 수 없습니다. 다른 주소를 선택해 연결하세요."
       if let sourceIndex = slots.firstIndex(where: { $0.address == sourceAddress }) {
         triggerError(for: sourceIndex)
       }
@@ -117,7 +116,7 @@ final class MemoryGridVM: ObservableObject {
     if let targetIndex = slots.firstIndex(where: { $0.address == destinationAddress }),
        slots[targetIndex].isLocked
     {
-      codeLog = "// This memory is locked. Direct access isn't allowed — connect through another pointer instead."
+      codeLog = "// 이 메모리는 잠겨 있습니다. 직접 접근할 수 없으니 다른 포인터를 통해 연결하세요."
       triggerError(for: targetIndex)
       return
     }
@@ -173,7 +172,7 @@ final class MemoryGridVM: ObservableObject {
     else {
       // 포인터가 아니거나 가리키는 대상이 없는 경우
       print("역참조 실패: 유효한 포인터가 아닙니다.")
-      codeLog = "// Error: Invalid pointer."
+      codeLog = "// 오류: 유효하지 않은 포인터입니다."
       triggerError(for: pointerIndex)
       return
     }
@@ -181,12 +180,12 @@ final class MemoryGridVM: ObservableObject {
     // 로그 업데이트
     let targetSlot = slots[targetIndex]
     if let value = targetSlot.value {
-      codeLog = "printf(\"%d\", *p); // Value: \(value)"
+      codeLog = "printf(\"%d\", *p); // 값: \(value)"
     } else if targetSlot.type == .pointer {
       // 이중 포인터인 경우 더 명확한 로그 제공
-      codeLog = "printf(\"%p\", *p); // Double Pointer (Target is also a pointer)"
+      codeLog = "printf(\"%p\", *p); // 이중 포인터 (대상도 포인터임)"
     } else {
-      codeLog = "printf(\"%p\", *p); // Address: \(targetAddr)"
+      codeLog = "printf(\"%p\", *p); // 주소: \(targetAddr)"
     }
     
     // 3. 대상 슬롯 하이라이트 (포인터를 따라간 효과)
@@ -268,7 +267,7 @@ final class MemoryGridVM: ObservableObject {
   
   private func finishLevel() {
     isSuccess = true
-    codeLog = "// Well done! Lesson Complete! 🎉"
+    codeLog = "// 잘했어요! 레슨 완료! 🎉"
     LessonProgressStore.shared.markCompleted(currentLesson.id)
   }
 }

@@ -22,7 +22,7 @@ struct LessonHeaderView: View {
 
   /// 샌드박스 모드는 "Lesson" 대신 "Playground" 라벨을 보여준다
   private var sectionLabel: LocalizedStringResource {
-    lesson.blueprint.successCondition == .sandbox ? "Playground" : "Lesson"
+    lesson.blueprint.successCondition == .sandbox ? "플레이그라운드" : "레슨"
   }
 }
 

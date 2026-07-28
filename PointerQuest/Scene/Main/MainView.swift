@@ -22,7 +22,7 @@ struct MainView: View {
                 lessonRow(lesson: lesson, colors: chapterColorPalette[index % chapterColorPalette.count])
               }
             } header: {
-              Text("Chapter \(chapter.id)") + Text(" · ") + Text(chapter.title)
+              Text("챕터 \(chapter.id)") + Text(" · ") + Text(chapter.title)
             }
           }
 
@@ -49,7 +49,7 @@ private extension MainView {
         .fontWeight(.bold)
         .foregroundStyle(.primary)
 
-      Text("The Memory Maze")
+      Text("메모리의 미로")
         .font(.title3)
         .foregroundStyle(.secondary)
     }
@@ -87,7 +87,7 @@ private extension MainView {
             .font(.headline)
             .foregroundStyle(.primary)
 
-          Text("No objective. Just explore.")
+          Text("목표 없이 자유롭게 탐험해 보세요.")
             .font(.caption)
             .foregroundStyle(.secondary)
         }

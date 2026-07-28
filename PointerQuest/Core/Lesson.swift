@@ -8,13 +8,13 @@ struct LessonData {
   /// `chapters`/`lessons`에는 포함하지 않고, Main 화면의 별도 진입점에서만 참조한다
   static let sandboxLesson = Lesson(
     id: 0,
-    title: "Playground",
-    description: "Freely connect and disconnect pointers here.\nThere's no mission or wrong answer — just explore.",
+    title: "플레이그라운드",
+    description: "여기서는 자유롭게 포인터를 연결하고 해제할 수 있어요.\n미션도 정답도 없으니 마음껏 탐험해 보세요.",
     iconName: "wand.and.stars",
     blueprint: .init(
       seeds: [],
       successCondition: .sandbox,
-      initialCodeLog: "// Playground: Freely connect pointers. Nothing to break here."
+      initialCodeLog: "// 플레이그라운드: 자유롭게 포인터를 연결해보세요. 여기선 아무것도 망가지지 않아요."
     )
   )
 
@@ -25,8 +25,8 @@ struct LessonData {
       lessons: [
         .init(
           id: 1,
-          title: "The Importance of Address",
-          description: "It's not the value, but the 'Address' that matters.\nDrag the pointer to point to address.",
+          title: "주소가 중요한 이유",
+          description: "값이 아니라 '주소'가 중요합니다.\n포인터를 드래그해서 주소를 가리켜보세요.",
           iconName: "map",
           blueprint: .init(
             seeds: [
@@ -34,13 +34,13 @@ struct LessonData {
               .init(index: 8, type: .pointer)
             ],
             successCondition: .anyPointerPointsTo(index: 3),
-            initialCodeLog: "// Lesson 1: Drag the pointer to point to address 0x700C."
+            initialCodeLog: "// 레슨 1: 포인터를 드래그해서 0x700C 주소를 가리키세요."
           )
         ),
         .init(
           id: 2,
-          title: "Stepping Stone Pointer",
-          description: "Data is protected by a Lock system.\nConnect via the existing 'Link Pointer' instead of accessing directly.",
+          title: "징검다리 포인터",
+          description: "데이터가 잠금 장치로 보호되어 있습니다.\n직접 접근하는 대신 기존 '연결 포인터'를 통해 연결하세요.",
           iconName: "arrow.triangle.merge",
           blueprint: .init(
             seeds: [
@@ -49,13 +49,13 @@ struct LessonData {
               .init(index: 14, type: .pointer)
             ],
             successCondition: .anyPointerPointsTo(index: 5),
-            initialCodeLog: "// Lesson 2: Data(0x701C) is locked. Do not access directly, use 'Double Pointer'."
+            initialCodeLog: "// 레슨 2: 데이터(0x701C)가 잠겨 있습니다. 직접 접근하지 말고 '이중 포인터'를 사용하세요."
           )
         ),
         .init(
           id: 3,
-          title: "Chain Connection",
-          description: "Create a path to reach the data.\nConnect in order: Start -> Node A -> Node B -> Treasure.",
+          title: "체인 연결",
+          description: "데이터에 도달하는 경로를 만드세요.\n순서대로 연결하세요: 시작 -> 노드 A -> 노드 B -> 보물.",
           iconName: "link",
           blueprint: .init(
             seeds: [
@@ -65,7 +65,7 @@ struct LessonData {
               .init(index: 0, type: .pointer)
             ],
             successCondition: .chain(indices: [0, 5, 11, 15]),
-            initialCodeLog: "// Lesson 3: Create a chain from Start(0x7000) to Treasure(0x703C)."
+            initialCodeLog: "// 레슨 3: Start(0x7000)에서 Treasure(0x703C)까지 체인을 만드세요."
           )
         )
       ]
@@ -82,7 +82,7 @@ struct LessonData {
     .init(
       id: id,
       title: title,
-      description: "Coming soon in a future update.",
+      description: "다음 업데이트에서 만나볼 수 있어요.",
       iconName: "lock.fill",
       blueprint: .init(seeds: [], successCondition: .sandbox, initialCodeLog: ""),
       isComingSoon: true
@@ -142,8 +142,8 @@ enum SuccessCondition: Hashable {
 }
 
 /// 레슨의 초기 배치와 클리어 조건을 데이터로 표현
-struct LessonBlueprint: Hashable {
+struct LessonBlueprint {
   var seeds: [SlotSeed]
   var successCondition: SuccessCondition
-  var initialCodeLog: String
+  var initialCodeLog: LocalizedStringResource
 }

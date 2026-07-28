@@ -260,7 +260,7 @@
 				LastUpgradeCheck = 1430;
 			};
 			buildConfigurationList = 97C6848218F6ABCE5894C257 /* Build configuration list for PBXProject "PointerQuest" */;
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,

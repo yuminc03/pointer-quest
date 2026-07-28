@@ -47,7 +47,7 @@ Pointer Quest는 Swift Student Challenge(SSC) 제출을 위해 4주 일정으로
 ### 3-1. 로컬라이제이션 (한국어 기본 / 영어 선택)
 
 - Xcode String Catalog(`Localizable.xcstrings`)를 도입해 앱 전체 사용자 노출 문구를 로컬라이즈한다 (소스 언어 `en` 유지, `ko` 번역 추가)
-- `Lesson`/`Chapter`의 `title`/`description`처럼 데이터로 정의된 문구는 `LocalizedStringResource` 타입으로 전환해 카탈로그 기반 번역이 적용되도록 한다. `MemoryGridVM`의 `codeLog`(C 코드 피드백)는 코드 관례상 영어로 고정하고 로컬라이즈 대상에서 제외한다
+- `Lesson`/`Chapter`의 `title`/`description`처럼 데이터로 정의된 문구는 `LocalizedStringResource` 타입으로 전환해 카탈로그 기반 번역이 적용되도록 한다. `MemoryGridVM`의 `codeLog`(C 코드 피드백)도 최종적으로는(Task 8 후속) `LocalizedStringResource`로 전환해 로컬라이즈 대상에 포함시켰다 — `int`/`printf` 등 코드 구문 자체는 두 언어 공통으로 영어 유지, `//` 주석만 번역
 - 앱 최초 실행 시에는 기기 시스템 언어와 무관하게 한국어를 기본값으로 보여주고, `SettingView`에 언어 선택(한국어/English) UI를 추가해 사용자가 영어로 전환할 수 있게 한다. 전환은 즉시 적용이 아닌 "재시작 필요" 방식으로 구현한다 (Bundle 스위즐링 등 즉시 전환 방식은 채택하지 않음)
 
 ### 4. 샌드박스(자유 탐험) 모드 추가
