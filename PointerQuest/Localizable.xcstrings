@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "ko",
   "strings" : {
+    "" : {
+
+    },
     " · " : {
       "localizations" : {
         "ko" : {
@@ -21,7 +24,185 @@
         }
       }
     },
-    "%lld" : {},
+    "// 레슨 1: 포인터를 드래그해서 0x700C 주소를 가리키세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// Lesson 1: Drag the pointer to point to address 0x700C."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 레슨 1: 포인터를 드래그해서 0x700C 주소를 가리키세요."
+          }
+        }
+      }
+    },
+    "// 레슨 2: 데이터(0x701C)가 잠겨 있습니다. 직접 접근하지 말고 '이중 포인터'를 사용하세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// Lesson 2: Data(0x701C) is locked. Do not access directly, use 'Double Pointer'."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 레슨 2: 데이터(0x701C)가 잠겨 있습니다. 직접 접근하지 말고 '이중 포인터'를 사용하세요."
+          }
+        }
+      }
+    },
+    "// 레슨 3: Start(0x7000)에서 Treasure(0x703C)까지 체인을 만드세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// Lesson 3: Create a chain from Start(0x7000) to Treasure(0x703C)."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 레슨 3: Start(0x7000)에서 Treasure(0x703C)까지 체인을 만드세요."
+          }
+        }
+      }
+    },
+    "// 실행된 연산을 C 언어 코드로 표현합니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// The executed operation is represented as C language code."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 실행된 연산을 C 언어 코드로 표현합니다."
+          }
+        }
+      }
+    },
+    "// 오류: 유효하지 않은 포인터입니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// Error: Invalid pointer."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 오류: 유효하지 않은 포인터입니다."
+          }
+        }
+      }
+    },
+    "// 이 메모리는 잠겨 있습니다. 기존 포인터를 통해 간접적으로 접근하세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// This memory is locked. Access it indirectly through an existing pointer."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 이 메모리는 잠겨 있습니다. 기존 포인터를 통해 간접적으로 접근하세요."
+          }
+        }
+      }
+    },
+    "// 이 메모리는 잠겨 있습니다. 직접 접근할 수 없으니 다른 포인터를 통해 연결하세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// This memory is locked. Direct access isn't allowed — connect through another pointer instead."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 이 메모리는 잠겨 있습니다. 직접 접근할 수 없으니 다른 포인터를 통해 연결하세요."
+          }
+        }
+      }
+    },
+    "// 잘했어요! 레슨 완료! 🎉" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// Well done! Lesson Complete! 🎉"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 잘했어요! 레슨 완료! 🎉"
+          }
+        }
+      }
+    },
+    "// 주소: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// Address: %@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 주소: %@"
+          }
+        }
+      }
+    },
+    "// 포인터는 자기 자신을 가리킬 수 없습니다. 다른 주소를 선택해 연결하세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// A pointer can't point to itself. Choose a different address to connect to."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 포인터는 자기 자신을 가리킬 수 없습니다. 다른 주소를 선택해 연결하세요."
+          }
+        }
+      }
+    },
+    "// 플레이그라운드: 자유롭게 포인터를 연결해보세요. 여기선 아무것도 망가지지 않아요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// Playground: Freely connect pointers. Nothing to break here."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 플레이그라운드: 자유롭게 포인터를 연결해보세요. 여기선 아무것도 망가지지 않아요."
+          }
+        }
+      }
+    },
+    "%lld" : {
+
+    },
     "1. 블록을 길게 누르면 3D로 튀어나오는 모습을 볼 수 있어요." : {
       "localizations" : {
         "en" : {
@@ -70,210 +251,170 @@
         }
       }
     },
-    "체인 연결" : {
+    "int *p = %@;" : {
+
+    },
+    "int *ptr1 = %@; // %@\nint **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Chain Connection"
+            "value" : "int *ptr1 = %@; // %@\nint **ptr2 = &ptr1; // Double Pointer (This slot points to ptr1)"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "체인 연결"
+            "value" : "int *ptr1 = %@; // %@\nint **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)"
           }
         }
       }
     },
-    "챕터 %lld" : {
+    "int target = %lld;\nint *p = &target;" : {
+
+    },
+    "int target = %lld; // %@의 값\nint *p = &target; // 이 슬롯(%@)이 target을 가리킴" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Chapter %lld"
+            "value" : "int target = %lld; // Value at %@\nint *p = &target; // This slot(%@) points to target"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "챕터 %lld"
+            "value" : "int target = %lld; // %@의 값\nint *p = &target; // 이 슬롯(%@)이 target을 가리킴"
           }
         }
       }
     },
-    "준비 중" : {
+    "int unknown; // %@의 변수가 초기화되지 않음\nint *p = &unknown;\n// 경고: 'p'를 역참조하면 쓰레기 값이 반환됩니다." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Coming Soon"
+            "value" : "int unknown; // Variable at %@ is uninitialized\nint *p = &unknown;\n// Warning: Dereferencing 'p' yields garbage value."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "준비 중"
+            "value" : "int unknown; // %@의 변수가 초기화되지 않음\nint *p = &unknown;\n// 경고: 'p'를 역참조하면 쓰레기 값이 반환됩니다."
           }
         }
       }
     },
-    "다음 업데이트에서 만나볼 수 있어요." : {
+    "int val = %lld; // %@의 값" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Coming soon in a future update."
+            "value" : "int val = %lld; // Value at %@"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "다음 업데이트에서 만나볼 수 있어요."
+            "value" : "int val = %lld; // %@의 값"
           }
         }
       }
     },
-    "완료" : {
+    "int value = %lld; // %@의 값\nint *ptr1 = &value; // ptr1이 value를 가리킴\nint **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Completed"
+            "value" : "int value = %lld; // Value at %@\nint *ptr1 = &value; // Ptr1 points to value\nint **ptr2 = &ptr1; // Double Pointer (This slot points to ptr1)"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "완료"
+            "value" : "int value = %lld; // %@의 값\nint *ptr1 = &value; // ptr1이 value를 가리킴\nint **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)"
           }
         }
       }
     },
-    "확인" : {
+    "malloc·free와 스택 vs 힙" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Confirm"
+            "value" : "malloc/free & Stack vs Heap"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "확인"
+            "value" : "malloc·free와 스택 vs 힙"
           }
         }
       }
     },
-    "데이터에 도달하는 경로를 만드세요.\n순서대로 연결하세요: 시작 -> 노드 A -> 노드 B -> 보물." : {
+    "Pointer Quest" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Create a path to reach the data.\nConnect in order: Start -> Node A -> Node B -> Treasure."
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "데이터에 도달하는 경로를 만드세요.\n순서대로 연결하세요: 시작 -> 노드 A -> 노드 B -> 보물."
+            "value" : "Pointer Quest"
           }
         }
       }
     },
-    "데이터가 잠금 장치로 보호되어 있습니다.\n직접 접근하는 대신 기존 '연결 포인터'를 통해 연결하세요." : {
+    "printf(\"%%%%d\", *p); // 값: %lld" : {
+
+    },
+    "printf(\"%%%%p\", *p); // 주소: %@" : {
+
+    },
+    "printf(\"%%d\", *p); // 값: %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Data is protected by a Lock system.\nConnect via the existing 'Link Pointer' instead of accessing directly."
+            "value" : "printf(\"%%d\", *p); // Value: %lld"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "데이터가 잠금 장치로 보호되어 있습니다.\n직접 접근하는 대신 기존 '연결 포인터'를 통해 연결하세요."
+            "value" : "printf(\"%%d\", *p); // 값: %lld"
           }
         }
       }
     },
-    "여기서는 자유롭게 포인터를 연결하고 해제할 수 있어요.\n미션도 정답도 없으니 마음껏 탐험해 보세요." : {
+    "printf(\"%%p\", *p); // 이중 포인터 (대상도 포인터임)" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Freely connect and disconnect pointers here.\nThere's no mission or wrong answer — just explore."
+            "value" : "printf(\"%%p\", *p); // Double Pointer (Target is also a pointer)"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "여기서는 자유롭게 포인터를 연결하고 해제할 수 있어요.\n미션도 정답도 없으니 마음껏 탐험해 보세요."
+            "value" : "printf(\"%%p\", *p); // 이중 포인터 (대상도 포인터임)"
           }
         }
       }
     },
-    "홈" : {
+    "printf(\"%%p\", *p); // 주소: %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Home"
+            "value" : "printf(\"%%p\", *p); // Address: %@"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "홈"
-          }
-        }
-      }
-    },
-    "사용 방법" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "How to use"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "사용 방법"
-          }
-        }
-      }
-    },
-    "앱 사용법" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "How to use the app"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "앱 사용법"
-          }
-        }
-      }
-    },
-    "이 화면에서는 특정 값을 가진 블록을 다른 블록으로 참조(가리키게)할 수 있습니다." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "In this screen, you can reference a block containing a specific value with another block."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "이 화면에서는 특정 값을 가진 블록을 다른 블록으로 참조(가리키게)할 수 있습니다."
+            "value" : "printf(\"%%p\", *p); // 주소: %@"
           }
         }
       }
@@ -294,18 +435,82 @@
         }
       }
     },
-    "언어" : {
+    "구조체와 포인터" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Language"
+            "value" : "Structs & Pointers"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "언어"
+            "value" : "구조체와 포인터"
+          }
+        }
+      }
+    },
+    "네, 튜토리얼 보여주세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes, show me the tutorial."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "네, 튜토리얼 보여주세요."
+          }
+        }
+      }
+    },
+    "다음 업데이트에서 만나볼 수 있어요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coming soon in a future update."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다음 업데이트에서 만나볼 수 있어요."
+          }
+        }
+      }
+    },
+    "데이터가 잠금 장치로 보호되어 있습니다.\n직접 접근하는 대신 기존 '연결 포인터'를 통해 연결하세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data is protected by a Lock system.\nConnect via the existing 'Link Pointer' instead of accessing directly."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "데이터가 잠금 장치로 보호되어 있습니다.\n직접 접근하는 대신 기존 '연결 포인터'를 통해 연결하세요."
+          }
+        }
+      }
+    },
+    "데이터에 도달하는 경로를 만드세요.\n순서대로 연결하세요: 시작 -> 노드 A -> 노드 B -> 보물." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a path to reach the data.\nConnect in order: Start -> Node A -> Node B -> Treasure."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "데이터에 도달하는 경로를 만드세요.\n순서대로 연결하세요: 시작 -> 노드 A -> 노드 B -> 보물."
           }
         }
       }
@@ -358,172 +563,18 @@
         }
       }
     },
-    "malloc·free와 스택 vs 힙" : {
+    "레슨을 선택해 다음 화면으로 이동하면, 격자 모양으로 배치된 블록 화면을 보게 됩니다." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "malloc/free & Stack vs Heap"
+            "value" : "When you select a Lesson and enter the next screen, you will see a screen with blocks arranged in a grid."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "malloc·free와 스택 vs 힙"
-          }
-        }
-      }
-    },
-    "이 앱이 처음이신가요? 튜토리얼에서 사용법을 확인해보세요!" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "New to the app? Check out the tutorial to learn how to use it!"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "이 앱이 처음이신가요? 튜토리얼에서 사용법을 확인해보세요!"
-          }
-        }
-      }
-    },
-    "목표 없이 자유롭게 탐험해 보세요." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No objective. Just explore."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "목표 없이 자유롭게 탐험해 보세요."
-          }
-        }
-      }
-    },
-    "아니요, 괜찮아요." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No, I'm good."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "아니요, 괜찮아요."
-          }
-        }
-      }
-    },
-    "플레이그라운드" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Playground"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "플레이그라운드"
-          }
-        }
-      }
-    },
-    "언어 변경 사항을 적용하려면 앱을 재시작해주세요." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Please restart the app to apply the language change."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "언어 변경 사항을 적용하려면 앱을 재시작해주세요."
-          }
-        }
-      }
-    },
-    "Pointer Quest" : {
-      "localizations" : {
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pointer Quest"
-          }
-        }
-      }
-    },
-    "재시작 필요" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Restart Required"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "재시작 필요"
-          }
-        }
-      }
-    },
-    "설정" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Setting"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "설정"
-          }
-        }
-      }
-    },
-    "징검다리 포인터" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stepping Stone Pointer"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "징검다리 포인터"
-          }
-        }
-      }
-    },
-    "주소가 중요한 이유" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The Importance of Address"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "주소가 중요한 이유"
+            "value" : "레슨을 선택해 다음 화면으로 이동하면, 격자 모양으로 배치된 블록 화면을 보게 됩니다."
           }
         }
       }
@@ -544,82 +595,18 @@
         }
       }
     },
-    "환영합니다!" : {
+    "목표 없이 자유롭게 탐험해 보세요." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Welcome!"
+            "value" : "No objective. Just explore."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "환영합니다!"
-          }
-        }
-      }
-    },
-    "레슨을 선택해 다음 화면으로 이동하면, 격자 모양으로 배치된 블록 화면을 보게 됩니다." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "When you select a Lesson and enter the next screen, you will see a screen with blocks arranged in a grid."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "레슨을 선택해 다음 화면으로 이동하면, 격자 모양으로 배치된 블록 화면을 보게 됩니다."
-          }
-        }
-      }
-    },
-    "네, 튜토리얼 보여주세요." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yes, show me the tutorial."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "네, 튜토리얼 보여주세요."
-          }
-        }
-      }
-    },
-    "튜토리얼은 설정 > 앱 사용법에서 다시 확인할 수 있습니다." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You can check the tutorial again in Setting > How to use the app."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "튜토리얼은 설정 > 앱 사용법에서 다시 확인할 수 있습니다."
-          }
-        }
-      }
-    },
-    "구조체와 포인터" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Structs & Pointers"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "구조체와 포인터"
+            "value" : "목표 없이 자유롭게 탐험해 보세요."
           }
         }
       }
@@ -640,6 +627,166 @@
         }
       }
     },
+    "사용 방법" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How to use"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용 방법"
+          }
+        }
+      }
+    },
+    "설정" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Setting"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정"
+          }
+        }
+      }
+    },
+    "아니요, 괜찮아요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No, I'm good."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아니요, 괜찮아요."
+          }
+        }
+      }
+    },
+    "앱 사용법" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How to use the app"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "앱 사용법"
+          }
+        }
+      }
+    },
+    "언어" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Language"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "언어"
+          }
+        }
+      }
+    },
+    "언어 변경 사항을 적용하려면 앱을 재시작해주세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please restart the app to apply the language change."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "언어 변경 사항을 적용하려면 앱을 재시작해주세요."
+          }
+        }
+      }
+    },
+    "여기서는 자유롭게 포인터를 연결하고 해제할 수 있어요.\n미션도 정답도 없으니 마음껏 탐험해 보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Freely connect and disconnect pointers here.\nThere's no mission or wrong answer — just explore."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "여기서는 자유롭게 포인터를 연결하고 해제할 수 있어요.\n미션도 정답도 없으니 마음껏 탐험해 보세요."
+          }
+        }
+      }
+    },
+    "완료" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completed"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "완료"
+          }
+        }
+      }
+    },
+    "이 앱이 처음이신가요? 튜토리얼에서 사용법을 확인해보세요!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New to the app? Check out the tutorial to learn how to use it!"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 앱이 처음이신가요? 튜토리얼에서 사용법을 확인해보세요!"
+          }
+        }
+      }
+    },
+    "이 화면에서는 특정 값을 가진 블록을 다른 블록으로 참조(가리키게)할 수 있습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In this screen, you can reference a block containing a specific value with another block."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 화면에서는 특정 값을 가진 블록을 다른 블록으로 참조(가리키게)할 수 있습니다."
+          }
+        }
+      }
+    },
     "이중 포인터 심화" : {
       "localizations" : {
         "en" : {
@@ -656,6 +803,38 @@
         }
       }
     },
+    "재시작 필요" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restart Required"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "재시작 필요"
+          }
+        }
+      }
+    },
+    "주소가 중요한 이유" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Importance of Address"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "주소가 중요한 이유"
+          }
+        }
+      }
+    },
     "주소와 포인터" : {
       "localizations" : {
         "en" : {
@@ -668,6 +847,150 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "주소와 포인터"
+          }
+        }
+      }
+    },
+    "준비 중" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coming Soon"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "준비 중"
+          }
+        }
+      }
+    },
+    "징검다리 포인터" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stepping Stone Pointer"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "징검다리 포인터"
+          }
+        }
+      }
+    },
+    "챕터 %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chapter %lld"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "챕터 %lld"
+          }
+        }
+      }
+    },
+    "체인 연결" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chain Connection"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "체인 연결"
+          }
+        }
+      }
+    },
+    "튜토리얼은 설정 > 앱 사용법에서 다시 확인할 수 있습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can check the tutorial again in Setting > How to use the app."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "튜토리얼은 설정 > 앱 사용법에서 다시 확인할 수 있습니다."
+          }
+        }
+      }
+    },
+    "플레이그라운드" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Playground"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "플레이그라운드"
+          }
+        }
+      }
+    },
+    "홈" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "홈"
+          }
+        }
+      }
+    },
+    "확인" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "확인"
+          }
+        }
+      }
+    },
+    "환영합니다!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome!"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "환영합니다!"
           }
         }
       }
