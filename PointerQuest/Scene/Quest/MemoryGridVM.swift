@@ -180,12 +180,12 @@ final class MemoryGridVM: ObservableObject {
     // 로그 업데이트
     let targetSlot = slots[targetIndex]
     if let value = targetSlot.value {
-      codeLog = "printf(\"%d\", *p); // 값: \(value)"
+      codeLog = "printf(\"%%d\", *p); // 값: \(value)"
     } else if targetSlot.type == .pointer {
       // 이중 포인터인 경우 더 명확한 로그 제공
-      codeLog = "printf(\"%p\", *p); // 이중 포인터 (대상도 포인터임)"
+      codeLog = "printf(\"%%p\", *p); // 이중 포인터 (대상도 포인터임)"
     } else {
-      codeLog = "printf(\"%p\", *p); // 주소: \(targetAddr)"
+      codeLog = "printf(\"%%p\", *p); // 주소: \(targetAddr)"
     }
     
     // 3. 대상 슬롯 하이라이트 (포인터를 따라간 효과)
