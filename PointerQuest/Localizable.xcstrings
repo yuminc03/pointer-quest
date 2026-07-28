@@ -1,9 +1,7 @@
 {
   "sourceLanguage" : "ko",
   "strings" : {
-    "" : {
-
-    },
+    "" : {},
     " · " : {
       "localizations" : {
         "ko" : {
@@ -200,9 +198,7 @@
         }
       }
     },
-    "%lld" : {
-
-    },
+    "%lld" : {},
     "1. 블록을 길게 누르면 3D로 튀어나오는 모습을 볼 수 있어요." : {
       "localizations" : {
         "en" : {
@@ -251,9 +247,7 @@
         }
       }
     },
-    "int *p = %@;" : {
-
-    },
+    "int *p = %@;" : {},
     "int *ptr1 = %@; // %@\nint **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)" : {
       "localizations" : {
         "en" : {
@@ -270,9 +264,7 @@
         }
       }
     },
-    "int target = %lld;\nint *p = &target;" : {
-
-    },
+    "int target = %lld;\nint *p = &target;" : {},
     "int target = %lld; // %@의 값\nint *p = &target; // 이 슬롯(%@)이 target을 가리킴" : {
       "localizations" : {
         "en" : {
@@ -362,12 +354,6 @@
           }
         }
       }
-    },
-    "printf(\"%%%%d\", *p); // 값: %lld" : {
-
-    },
-    "printf(\"%%%%p\", *p); // 주소: %@" : {
-
     },
     "printf(\"%%d\", *p); // 값: %lld" : {
       "extractionState" : "stale",
