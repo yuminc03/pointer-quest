@@ -136,7 +136,19 @@ Task 3 당시 "`codeLog`는 C 코드 관례상 영어로 고정, 로컬라이즈
 - `develop`에 `--no-ff` 병합 완료 (병합 커밋 `1072d46`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
 - `origin/develop`에 push 완료 (`2da7f8c..1072d46`), 로컬 `feature/localization-source-swap` 브랜치 삭제
 
+## Task 9 진행 상황 (`feature/lesson-grid-ux-improvements`)
+
+2026-07-29 사용자가 "처음 앱을 써보는 사람" 시점에서 4가지 UX 우려(사용법을 모름/빨간 흔들림이 오답처럼 느껴짐/화살표만으론 포인터 개념 부족/코드 패널이 좁고 문법 강조 없음)를 제기해 착수. 세부 배경·진단·결정 근거는 `PLAN.md`의 "Task 9: 그리드 인터랙션 UX 개선" 참고, 실행 계획은 `/Users/chuyumin/.claude/plans/i-m-concerned-about-whether-hashed-pinwheel.md`에 저장.
+
+- 서브에이전트 3개로 온보딩/구조, 에러(`isError`) 트리거, 코드 패널 구현을 병렬 조사한 뒤 핵심 파일을 직접 읽어 확인
+- `AskUserQuestion`으로 방향 확정: 레슨 2 "Lock" 메커닉은 완전 제거(실제 C 시맨틱과 안 맞고 빨간 흔들림이 오답처럼 느껴지는 근본 원인이라는 사용자 판단) 후 논블로킹 힌트로 전환, 온보딩은 그리드 화면 내 실사용 맥락 힌트 추가, 포인터 이해도는 레슨 1 범위에서 "주소 vs 값" 구분 보강, 코드 패널은 마크다운 버그와 함께 개편
+- `develop`에서 `feature/lesson-grid-ux-improvements` 브랜치 분기
+- Task A 착수: `PointerQuest/DesignSystem/Component/CCodeHighlighter.swift` 신설(`//` 주석/C 키워드/문자열 리터럴 채색 유틸리티), `CodeFeedbackView.swift`에서 `Text(code)`를 `Text(CCodeHighlighter.highlight(String(localized: code)))`로 교체해 `LocalizedStringResource`의 자동 마크다운 파싱 경로를 우회
+- 아직 `project.pbxproj`에 `CCodeHighlighter.swift`가 등록되지 않음(이 프로젝트는 파일시스템 동기화 그룹을 쓰지 않아 신규 파일마다 수동 등록 필요) — 사용자 요청으로 이번 세션에서는 여기서 중단, Xcode에서 직접 "Add Files"로 `Component` 그룹에 추가하는 것을 권장. 빌드 검증·커밋은 아직 하지 않음
+- Task B(그리드 내 힌트)/Task C(Lock 제거)/Task D(주소 vs 값 구분)는 계획 파일에 상세 기록된 상태로 착수 전
+
 ## 다음 작업
 
-- `codeLog` 마크다운 파싱 버그 수정을 위한 별도 브랜치 착수 예정 (`int *p = &target;` 등 포인터 기호 `*`/`**`가 포함된 문구 일부가 화면에서 사라지는 문제, 원인 추정은 `TODO.md` 백로그 참고)
+- Task 9 Task A 마무리: `CCodeHighlighter.swift`를 Xcode 프로젝트에 등록 → 빌드 검증 → 커밋 메시지 제안 및 사용자 확인 후 커밋
+- 이어서 Task B(그리드 내 실사용 맥락 힌트) → Task C(레슨 2 Lock 제거) → Task D(레슨 1 주소 vs 값 구분) 순으로 진행
 - (참고) 백로그(`Chapter 2~5 실제 레슨 콘텐츠 저작`, `앱 이름/브랜딩/아이콘 재검토`, `App Store 심사 대비 항목 점검`)는 이후 순서 논의
