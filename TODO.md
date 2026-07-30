@@ -74,7 +74,7 @@ Main 화면 카드 페이징 UI 개선 (Apple HIG 준수 + 반응형 대응)
 
 2026-07-29 사용자 UX 리뷰(처음 써보는 사람 시점) 반영. 계획 상세는 `/Users/chuyumin/.claude/plans/i-m-concerned-about-whether-hashed-pinwheel.md` 참고.
 
-- [ ] Task A: 코드 패널(`CodeFeedbackView`) 개편 — `codeLog` 마크다운 오인식 버그 수정(`String(localized:)` 리졸브 후 `CCodeHighlighter`로 직접 채색해 `Text`의 마크다운 파싱 경로 우회) + C 키워드/문자열/주석 문법 강조 + 여러 줄 표시 레이아웃 개선. `CCodeHighlighter.swift` 신설, `CodeFeedbackView.swift` 수정까지 착수함 — `project.pbxproj` 등록 및 빌드 검증 남음
+- [ ] Task A: 코드 패널(`CodeFeedbackView`) 개편 — `codeLog` 마크다운 오인식 버그 수정(`String(localized:)` 리졸브 후 `CCodeHighlighter`로 직접 채색해 `Text`의 마크다운 파싱 경로 우회) + C 키워드/문자열/주석 문법 강조 + 여러 줄 표시 레이아웃 개선. `CCodeHighlighter.swift` 신설·`CodeFeedbackView.swift` 수정·`project.pbxproj` 등록까지 완료, `xcodebuild` 빌드 성공 확인 — 시뮬레이터 수동 검증(마크다운 버그 재현 여부, 문법 강조 표시) 대기 중
 - [ ] Task B: 그리드 화면(`MemoryGridView`) 내 실사용 맥락 힌트 오버레이 추가 — 기존 Welcome 시트/정적 이미지 튜토리얼(`OnboardingView`)은 유지하되, 레슨 1 최초 진입 시 실제 그리드 위에 드래그 방법을 보여주는 힌트를 1회 노출
 - [ ] Task C: 레슨 2 "Lock" 메커닉 제거 — 실제 C에는 없는 "잠긴 메모리" 개념이 빨간 흔들림 에러와 결합돼 오답처럼 느껴지는 문제의 근본 원인이라 판단, 논블로킹 힌트("이미 있는 포인터를 가리켜보세요") + "힌트 보기" 버튼으로 전환. 자기참조 포인터/잘못된 역참조 에러는 실제 C 오류이므로 그대로 유지
 - [ ] Task D: 레슨 1 포인터 슬롯에 "주소 vs 값" 구분 보강 — 대상 주소 앞에 화살표 접두어(`→`) 표시 + `codeLog` 설명 문구에 "포인터 자신도 메모리에 저장된 값(주소)"이라는 점을 한 줄 추가해, 화살표 애니메이션 하나에만 의존하지 않도록 함

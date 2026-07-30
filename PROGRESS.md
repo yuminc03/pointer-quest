@@ -143,12 +143,15 @@ Task 3 당시 "`codeLog`는 C 코드 관례상 영어로 고정, 로컬라이즈
 - 서브에이전트 3개로 온보딩/구조, 에러(`isError`) 트리거, 코드 패널 구현을 병렬 조사한 뒤 핵심 파일을 직접 읽어 확인
 - `AskUserQuestion`으로 방향 확정: 레슨 2 "Lock" 메커닉은 완전 제거(실제 C 시맨틱과 안 맞고 빨간 흔들림이 오답처럼 느껴지는 근본 원인이라는 사용자 판단) 후 논블로킹 힌트로 전환, 온보딩은 그리드 화면 내 실사용 맥락 힌트 추가, 포인터 이해도는 레슨 1 범위에서 "주소 vs 값" 구분 보강, 코드 패널은 마크다운 버그와 함께 개편
 - `develop`에서 `feature/lesson-grid-ux-improvements` 브랜치 분기
-- Task A 착수: `PointerQuest/DesignSystem/Component/CCodeHighlighter.swift` 신설(`//` 주석/C 키워드/문자열 리터럴 채색 유틸리티), `CodeFeedbackView.swift`에서 `Text(code)`를 `Text(CCodeHighlighter.highlight(String(localized: code)))`로 교체해 `LocalizedStringResource`의 자동 마크다운 파싱 경로를 우회
-- 아직 `project.pbxproj`에 `CCodeHighlighter.swift`가 등록되지 않음(이 프로젝트는 파일시스템 동기화 그룹을 쓰지 않아 신규 파일마다 수동 등록 필요) — 사용자 요청으로 이번 세션에서는 여기서 중단, Xcode에서 직접 "Add Files"로 `Component` 그룹에 추가하는 것을 권장. 빌드 검증·커밋은 아직 하지 않음
+- Task A 구현: `PointerQuest/DesignSystem/Component/CCodeHighlighter.swift` 신설(`//` 주석/C 키워드/문자열 리터럴 채색 유틸리티), `CodeFeedbackView.swift`에서 `Text(code)`를 `Text(CCodeHighlighter.highlight(String(localized: code)))`로 교체해 `LocalizedStringResource`의 자동 마크다운 파싱 경로를 우회. `.fixedSize(horizontal: false, vertical: true)` 추가로 여러 줄 표시 보장
+- `project.pbxproj`에 `CCodeHighlighter.swift` 등록 완료 — 이 프로젝트는 파일시스템 동기화 그룹을 쓰지 않는 구식 포맷이라 `PBXBuildFile`/`PBXFileReference`/`Component` 그룹 children/`Sources` 빌드 페이즈 4곳에 기존 `Arrow.swift`/`CodeFeedbackView.swift`와 동일한 패턴으로 수동 추가 (Task 3/5/6/7과 동일 절차). `plutil -lint`로 pbxproj 문법 확인, `xcodebuild -scheme PointerQuest -destination 'generic/platform=iOS Simulator' build` → BUILD SUCCEEDED 확인
+- 사용자가 시뮬레이터에서 직접 확인하는 과정에서 색상 대비 문제 2건 발견 및 수정: (1) 키워드가 아닌 일반 코드/기호(`*`, `;`, `=` 등)에 색을 지정하지 않았더니 `Text(AttributedString)`이 `.foregroundStyle(.white)` 뷰 수정자를 따르지 않고 시스템 라이트/다크 모드에 따라 바뀌는 기본 라벨 색(라이트 모드에서 검정)을 써서 고정 어두운 배경 위에서 텍스트가 안 보임 → `flushToken()`/구두점 처리에 명시적으로 `.white` 지정. (2) 주석 색으로 썼던 `.secondary`도 동일하게 시스템 모드에 따라 바뀌는 색이라 라이트 모드에서 잘 안 보임 → `.white.opacity(0.5)` 고정값으로 변경. `Color(.main)`(키워드 색)은 `Colors.xcassets/Main.colorset`에 라이트/다크 variant 없이 고정 RGB로 정의돼 있어 동일 문제 없음을 확인
+- 사용자 피드백으로 색상 2건 추가 조정: 주석 색을 `.white.opacity(0.5)` → `.green`(터미널 스타일)으로, `CodeFeedbackView`의 왼쪽 `chevron.right` 프롬프트 아이콘을 `Color(.green)` → `.white`로 변경
+- 아직 커밋은 하지 않음 — 사용자가 코드 리뷰 후 커밋 여부 확인하기로 함
 - Task B(그리드 내 힌트)/Task C(Lock 제거)/Task D(주소 vs 값 구분)는 계획 파일에 상세 기록된 상태로 착수 전
 
 ## 다음 작업
 
-- Task 9 Task A 마무리: `CCodeHighlighter.swift`를 Xcode 프로젝트에 등록 → 빌드 검증 → 커밋 메시지 제안 및 사용자 확인 후 커밋
+- Task 9 Task A: 사용자가 시뮬레이터에서 직접 검증(마크다운 버그 재현 여부, 문법 강조 표시) 예정. 검증 후 커밋 메시지 제안 및 확인 후 커밋
 - 이어서 Task B(그리드 내 실사용 맥락 힌트) → Task C(레슨 2 Lock 제거) → Task D(레슨 1 주소 vs 값 구분) 순으로 진행
 - (참고) 백로그(`Chapter 2~5 실제 레슨 콘텐츠 저작`, `앱 이름/브랜딩/아이콘 재검토`, `App Store 심사 대비 항목 점검`)는 이후 순서 논의
