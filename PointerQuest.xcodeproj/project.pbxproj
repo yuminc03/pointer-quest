@@ -13,6 +13,7 @@
 		26142A0C1ED2D4F3AB0ED676 /* ArrowDrawLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702C31E5EC1A46BD9762C11D /* ArrowDrawLayer.swift */; };
 		2B58D7CB7ABBDC1BA0283658 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740B4538D4942E8E7DCE1B88 /* WelcomeView.swift */; };
 		372270F03F67DEA5BABAD2C1 /* CodeFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4144E6FC1AC603326D97296 /* CodeFeedbackView.swift */; };
+		3E23832B5B1F36FC47B59616 /* CCodeHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EE5AC02BC08085176331E1 /* CCodeHighlighter.swift */; };
 		515EA905873F1EFD69931E45 /* BoundsPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7306446CDA57BCCD346235 /* BoundsPreferenceKey.swift */; };
 		5608BEB4B6E972BB5F39B737 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283DDC3FB03D740A93C567BB /* Triangle.swift */; };
 		5EE9AC49CDD50581CAFAD60D /* Image+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1759D1212E75B1561252689 /* Image+.swift */; };
@@ -61,6 +62,7 @@
 		D8ECF1EB8A8F76BCD431ABC8 /* MemoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryItem.swift; sourceTree = "<group>"; };
 		ED3CD1339FCB8E34A21D0BC6 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		F4144E6FC1AC603326D97296 /* CodeFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeFeedbackView.swift; sourceTree = "<group>"; };
+		17EE5AC02BC08085176331E1 /* CCodeHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCodeHighlighter.swift; sourceTree = "<group>"; };
 		F44314D254697679309C489F /* MemoryGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGridView.swift; sourceTree = "<group>"; };
 		F44C75279DD18CB7065371D8 /* LessonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonRow.swift; sourceTree = "<group>"; };
 		F8D3E75F6C13848BE50363AE /* MemoryGridVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGridVM.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				4BD1AC0851B9C2B1EF6D8206 /* Arrow.swift */,
+				17EE5AC02BC08085176331E1 /* CCodeHighlighter.swift */,
 				F4144E6FC1AC603326D97296 /* CodeFeedbackView.swift */,
 				283DDC3FB03D740A93C567BB /* Triangle.swift */,
 			);
@@ -302,6 +305,7 @@
 				04CF14F15053BE53D3603FF8 /* Arrow.swift in Sources */,
 				26142A0C1ED2D4F3AB0ED676 /* ArrowDrawLayer.swift in Sources */,
 				515EA905873F1EFD69931E45 /* BoundsPreferenceKey.swift in Sources */,
+				3E23832B5B1F36FC47B59616 /* CCodeHighlighter.swift in Sources */,
 				372270F03F67DEA5BABAD2C1 /* CodeFeedbackView.swift in Sources */,
 				5EE9AC49CDD50581CAFAD60D /* Image+.swift in Sources */,
 				604B47BAFDFC0F8B8EB39748 /* Lesson.swift in Sources */,
