@@ -3,14 +3,21 @@ import SwiftUI
 /// 메모리 Grid 화면
 struct MemoryGridView: View {
   @StateObject private var vm: MemoryGridVM
-  
+  /// 레슨 1 그리드 힌트를 이미 확인했는지 여부 (앱 전체에서 최초 1회만 노출)
+  @AppStorage("hasSeenGridHint") private var hasSeenGridHint = false
+
   init(lesson: Lesson = LessonData.lessons[0]) {
     _vm = StateObject(wrappedValue: MemoryGridVM(lesson: lesson))
   }
-  
+
   private let columns: [GridItem] = [
     .init(.adaptive(minimum: 100), spacing: 16)
   ]
+
+  /// 레슨 1에 처음 진입했을 때만 그리드 힌트를 표시
+  private var showGridHint: Bool {
+    vm.currentLesson.id == 1 && !hasSeenGridHint
+  }
   
   var body: some View {
     ScrollView {
@@ -40,10 +47,25 @@ struct MemoryGridView: View {
           // overlayPreferenceValue를 사용하면 GeometryProxy를 통해 Anchor를 좌표로 변환 가능
           .overlayPreferenceValue(BoundsPreferenceKey.self) { preferences in
             GeometryReader { proxy in
-              ArrowDrawLayer(
-                vm: vm,
-                slotFrames: resolveFrames(from: preferences, proxy: proxy)
-              )
+              let frames = resolveFrames(from: preferences, proxy: proxy)
+
+              ArrowDrawLayer(vm: vm, slotFrames: frames)
+
+              // 레슨 1 전용 힌트: 소스(포인터, index 8) -> 타겟(값, index 3) 슬롯 좌표가
+              // 모두 확인된 경우에만 표시
+              if showGridHint,
+                 vm.slots.indices.contains(8),
+                 vm.slots.indices.contains(3),
+                 let sourceRect = frames[vm.slots[8].id],
+                 let targetRect = frames[vm.slots[3].id]
+              {
+                GridInteractionHintOverlay(
+                  sourceRect: sourceRect,
+                  targetRect: targetRect,
+                  containerSize: proxy.size,
+                  onDismiss: { hasSeenGridHint = true }
+                )
+              }
             }
           }
         }
@@ -52,6 +74,12 @@ struct MemoryGridView: View {
     }
     .navigationTitle(Text(vm.currentLesson.title))
     .background(Color(.systemGroupedBackground))
+    .onChange(of: vm.slots.indices.contains(8) ? vm.slots[8].pointingTo : nil) { newValue in
+      // 소스 슬롯(index 8)이 실제로 어딘가를 가리키게 되면(=첫 드래그 완료) 힌트를 자동으로 닫는다
+      if newValue != nil {
+        hasSeenGridHint = true
+      }
+    }
     .toolbar {
       ToolbarItem(placement: .topBarTrailing) {
         Button {
