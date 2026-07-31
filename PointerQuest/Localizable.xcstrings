@@ -1,7 +1,9 @@
 {
   "sourceLanguage" : "ko",
   "strings" : {
-    "" : {},
+    "" : {
+
+    },
     " · " : {
       "localizations" : {
         "ko" : {
@@ -198,7 +200,9 @@
         }
       }
     },
-    "%lld" : {},
+    "%lld" : {
+
+    },
     "1. 블록을 길게 누르면 3D로 튀어나오는 모습을 볼 수 있어요." : {
       "localizations" : {
         "en" : {
@@ -247,7 +251,9 @@
         }
       }
     },
-    "int *p = %@;" : {},
+    "int *p = %@;" : {
+
+    },
     "int *ptr1 = %@; // %@\nint **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)" : {
       "localizations" : {
         "en" : {
@@ -264,7 +270,9 @@
         }
       }
     },
-    "int target = %lld;\nint *p = &target;" : {},
+    "int target = %lld;\nint *p = &target;" : {
+
+    },
     "int target = %lld; // %@의 값\nint *p = &target; // 이 슬롯(%@)이 target을 가리킴" : {
       "localizations" : {
         "en" : {
@@ -356,7 +364,6 @@
       }
     },
     "printf(\"%%d\", *p); // 값: %lld" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -373,6 +380,7 @@
       }
     },
     "printf(\"%%p\", *p); // 이중 포인터 (대상도 포인터임)" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -389,7 +397,6 @@
       }
     },
     "printf(\"%%p\", *p); // 주소: %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -404,6 +411,9 @@
           }
         }
       }
+    },
+    "printf(\"%p\", *p); // 이중 포인터 (대상도 포인터임)" : {
+
     },
     "값이 아니라 '주소'가 중요합니다.\n포인터를 드래그해서 주소를 가리켜보세요." : {
       "localizations" : {
@@ -740,6 +750,9 @@
           }
         }
       }
+    },
+    "이 슬롯을 드래그해서 저 주소 위에 놓아보세요" : {
+
     },
     "이 앱이 처음이신가요? 튜토리얼에서 사용법을 확인해보세요!" : {
       "localizations" : {
