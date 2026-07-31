@@ -147,8 +147,12 @@ Task 3 당시 "`codeLog`는 C 코드 관례상 영어로 고정, 로컬라이즈
 - `project.pbxproj`에 `CCodeHighlighter.swift` 등록 완료 — 이 프로젝트는 파일시스템 동기화 그룹을 쓰지 않는 구식 포맷이라 `PBXBuildFile`/`PBXFileReference`/`Component` 그룹 children/`Sources` 빌드 페이즈 4곳에 기존 `Arrow.swift`/`CodeFeedbackView.swift`와 동일한 패턴으로 수동 추가 (Task 3/5/6/7과 동일 절차). `plutil -lint`로 pbxproj 문법 확인, `xcodebuild -scheme PointerQuest -destination 'generic/platform=iOS Simulator' build` → BUILD SUCCEEDED 확인
 - 사용자가 시뮬레이터에서 직접 확인하는 과정에서 색상 대비 문제 2건 발견 및 수정: (1) 키워드가 아닌 일반 코드/기호(`*`, `;`, `=` 등)에 색을 지정하지 않았더니 `Text(AttributedString)`이 `.foregroundStyle(.white)` 뷰 수정자를 따르지 않고 시스템 라이트/다크 모드에 따라 바뀌는 기본 라벨 색(라이트 모드에서 검정)을 써서 고정 어두운 배경 위에서 텍스트가 안 보임 → `flushToken()`/구두점 처리에 명시적으로 `.white` 지정. (2) 주석 색으로 썼던 `.secondary`도 동일하게 시스템 모드에 따라 바뀌는 색이라 라이트 모드에서 잘 안 보임 → `.white.opacity(0.5)` 고정값으로 변경. `Color(.main)`(키워드 색)은 `Colors.xcassets/Main.colorset`에 라이트/다크 variant 없이 고정 RGB로 정의돼 있어 동일 문제 없음을 확인
 - 사용자 피드백으로 색상 2건 추가 조정: 주석 색을 `.white.opacity(0.5)` → `.green`(터미널 스타일)으로, `CodeFeedbackView`의 왼쪽 `chevron.right` 프롬프트 아이콘을 `Color(.green)` → `.white`로 변경
-- 아직 커밋은 하지 않음 — 사용자가 코드 리뷰 후 커밋 여부 확인하기로 함
-- Task B(그리드 내 힌트)/Task C(Lock 제거)/Task D(주소 vs 값 구분)는 계획 파일에 상세 기록된 상태로 착수 전
+- 사용자가 시뮬레이터에서 직접 검증(마크다운 버그 재현 안 됨, 문법 강조 정상 표시) 완료, `TODO.md`에 검증 완료 반영 (`5126cad`)
+- Task B 구현: `PointerQuest/Scene/Quest/Entity/GridInteractionHintOverlay.swift` 신설 — 소스 슬롯(index 8, 포인터) ↔ 타겟 슬롯(index 3, 값) 사이를 오가는 `hand.draw.fill` 아이콘 애니메이션(터치 통과)과 "이 슬롯을 드래그해서 저 주소 위에 놓아보세요" 안내 말풍선 + 닫기 버튼으로 구성. 코드 스타일은 사용자가 직접 `private extension` + 대문자 계산 프로퍼티(`HandIcon`/`CalloutBubble`) 형태로 정리(`OnboardingView`/`MainView` 등 기존 컨벤션과 동일)
+- `MemoryGridView.swift` 연동: `@AppStorage("hasSeenGridHint")`로 앱 전체 최초 1회만 노출. 기존 `ArrowDrawLayer`가 쓰던 `overlayPreferenceValue`/`GeometryReader` 블록의 `frames` 딕셔너리를 재사용해, 레슨 1이고 아직 힌트를 안 본 경우에만 오버레이 표시. `MemoryGridVM`에는 힌트 관련 로직을 섞지 않고, 뷰 레벨에서 `vm.slots[8].pointingTo`가 `nil → non-nil`로 바뀌는 순간(=첫 드래그 완료)을 `.onChange`로 감지해 자동 해제(iOS 16 배포 타겟이라 구버전 단일 파라미터 `onChange(of:perform:)` 사용), 닫기 버튼으로도 즉시 해제 가능
+- 커밋을 빌드 가능한 최소 단위 2개로 분리(사용자 요청): (1) 컴포넌트 신설 + `project.pbxproj` 등록 + `Localizable.xcstrings` 자동 추출분(신규 안내 문구 카탈로그 항목) — `5603171`, (2) `MemoryGridView` 연동 — `f2c88ec`. 각 커밋 전 `git stash push --keep-index`로 다음 단계 변경분을 격리한 상태에서 `xcodebuild ... build` → BUILD SUCCEEDED 확인. 이번 작업과 무관한 `.claude/settings.json` 변경은 커밋에서 제외하고 그대로 둠
+- 사용자가 시뮬레이터에서 직접 검증(힌트 노출, 드래그 후 자동 해제 등) 완료
+- Task C(Lock 제거)/Task D(주소 vs 값 구분)는 계획 파일에 상세 기록된 상태로 착수 전
 
 ## 계획됨 (2026-07-30 제안, 미착수)
 
@@ -156,6 +160,6 @@ Task 9 Task A 리뷰 도중 사용자가 제안한 아이디어: 코드 패널(`
 
 ## 다음 작업
 
-- Task 9 Task A: 사용자가 시뮬레이터에서 직접 검증(마크다운 버그 재현 여부, 문법 강조 표시) 예정. 검증 후 커밋 메시지 제안 및 확인 후 커밋
-- 이어서 Task B(그리드 내 실사용 맥락 힌트) → Task C(레슨 2 Lock 제거) → Task D(레슨 1 주소 vs 값 구분) 순으로 진행
+- Task 9 Task A/B 완료 (사용자 시뮬레이터 검증 및 커밋까지 완료)
+- 이어서 Task C(레슨 2 Lock 제거) → Task D(레슨 1 주소 vs 값 구분) 순으로 진행
 - (참고) 백로그(`Chapter 2~5 실제 레슨 콘텐츠 저작`, `앱 이름/브랜딩/아이콘 재검토`, `App Store 심사 대비 항목 점검`, `그리드 블록에 변수명 표시`)는 이후 순서 논의
