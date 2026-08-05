@@ -40,22 +40,6 @@
         }
       }
     },
-    "// 레슨 2: 데이터(0x701C)가 잠겨 있습니다. 직접 접근하지 말고 '이중 포인터'를 사용하세요." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "// Lesson 2: Data(0x701C) is locked. Do not access directly, use 'Double Pointer'."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "// 레슨 2: 데이터(0x701C)가 잠겨 있습니다. 직접 접근하지 말고 '이중 포인터'를 사용하세요."
-          }
-        }
-      }
-    },
     "// 레슨 3: Start(0x7000)에서 Treasure(0x703C)까지 체인을 만드세요." : {
       "localizations" : {
         "en" : {
@@ -443,22 +427,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "다음 업데이트에서 만나볼 수 있어요."
-          }
-        }
-      }
-    },
-    "데이터가 잠금 장치로 보호되어 있습니다.\n직접 접근하는 대신 기존 '연결 포인터'를 통해 연결하세요." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Data is protected by a Lock system.\nConnect via the existing 'Link Pointer' instead of accessing directly."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "데이터가 잠금 장치로 보호되어 있습니다.\n직접 접근하는 대신 기존 '연결 포인터'를 통해 연결하세요."
           }
         }
       }
@@ -990,6 +958,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "// 직접 연결도 가능하지만, 지금은 이중 포인터를 연습해봐요 — 이미 있는 포인터(%@)를 가리켜보세요."
+          }
+        }
+      }
+    },
+    "이미 데이터를 가리키는 포인터가 있습니다.\n새 포인터로 그 포인터를 가리켜 이중 포인터를 만들어보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There's already a pointer pointing to the data.\nPoint a new pointer at that pointer to create a double pointer."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이미 데이터를 가리키는 포인터가 있습니다.\n새 포인터로 그 포인터를 가리켜 이중 포인터를 만들어보세요."
+          }
+        }
+      }
+    },
+    "// 레슨 2: 0x701C를 직접 가리켜도 되지만, 이미 있는 포인터(0x7014)를 가리켜 이중 포인터를 만들어보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// Lesson 2: You can point directly at 0x701C, but try pointing at the existing pointer(0x7014) instead to create a double pointer."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 레슨 2: 0x701C를 직접 가리켜도 되지만, 이미 있는 포인터(0x7014)를 가리켜 이중 포인터를 만들어보세요."
           }
         }
       }

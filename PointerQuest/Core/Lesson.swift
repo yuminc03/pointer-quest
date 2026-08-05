@@ -40,7 +40,7 @@ struct LessonData {
         .init(
           id: 2,
           title: "징검다리 포인터",
-          description: "데이터가 잠금 장치로 보호되어 있습니다.\n직접 접근하는 대신 기존 '연결 포인터'를 통해 연결하세요.",
+          description: "이미 데이터를 가리키는 포인터가 있습니다.\n새 포인터로 그 포인터를 가리켜 이중 포인터를 만들어보세요.",
           iconName: "arrow.triangle.merge",
           blueprint: .init(
             seeds: [
@@ -49,7 +49,7 @@ struct LessonData {
               .init(index: 14, type: .pointer)
             ],
             successCondition: .anyPointerPointsTo(index: 5),
-            initialCodeLog: "// 레슨 2: 데이터(0x701C)가 잠겨 있습니다. 직접 접근하지 말고 '이중 포인터'를 사용하세요."
+            initialCodeLog: "// 레슨 2: 0x701C를 직접 가리켜도 되지만, 이미 있는 포인터(0x7014)를 가리켜 이중 포인터를 만들어보세요."
           )
         ),
         .init(
