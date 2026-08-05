@@ -152,7 +152,10 @@ Task 3 당시 "`codeLog`는 C 코드 관례상 영어로 고정, 로컬라이즈
 - `MemoryGridView.swift` 연동: `@AppStorage("hasSeenGridHint")`로 앱 전체 최초 1회만 노출. 기존 `ArrowDrawLayer`가 쓰던 `overlayPreferenceValue`/`GeometryReader` 블록의 `frames` 딕셔너리를 재사용해, 레슨 1이고 아직 힌트를 안 본 경우에만 오버레이 표시. `MemoryGridVM`에는 힌트 관련 로직을 섞지 않고, 뷰 레벨에서 `vm.slots[8].pointingTo`가 `nil → non-nil`로 바뀌는 순간(=첫 드래그 완료)을 `.onChange`로 감지해 자동 해제(iOS 16 배포 타겟이라 구버전 단일 파라미터 `onChange(of:perform:)` 사용), 닫기 버튼으로도 즉시 해제 가능
 - 커밋을 빌드 가능한 최소 단위 2개로 분리(사용자 요청): (1) 컴포넌트 신설 + `project.pbxproj` 등록 + `Localizable.xcstrings` 자동 추출분(신규 안내 문구 카탈로그 항목) — `5603171`, (2) `MemoryGridView` 연동 — `f2c88ec`. 각 커밋 전 `git stash push --keep-index`로 다음 단계 변경분을 격리한 상태에서 `xcodebuild ... build` → BUILD SUCCEEDED 확인. 이번 작업과 무관한 `.claude/settings.json` 변경은 커밋에서 제외하고 그대로 둠
 - 사용자가 시뮬레이터에서 직접 검증(힌트 노출, 드래그 후 자동 해제 등) 완료
-- Task C(Lock 제거)/Task D(주소 vs 값 구분)는 계획 파일에 상세 기록된 상태로 착수 전
+- Task C(Lock 제거) 구현: `MemorySlot`/`SlotSeed`의 `isLocked`(차단 의미)를 `isReferenced`(배지 의미, 접근 차단 없음)로 재정의하고, `MemoryGridVM.handleTap`/`handleDrop`의 잠금 차단 블록을 제거해 어떤 슬롯이든 직접 가리키는 것을 항상 허용. 자기참조 포인터 차단(`handleDrop` 자기 자신 검사)과 잘못된 역참조 에러(`dereference`)는 실제 C 오류이므로 그대로 유지 — 에러 트리거 지점이 3곳에서 2곳으로 감소. `MemoryItem`의 큼직한 `lock.fill` 오버레이를 우상단 `link` 아이콘 배지(`isReferenced`일 때만 표시)로 교체. 이미 참조된 슬롯(레슨 2의 0x701C)에 직접 연결해도 연결 자체는 정상 처리하되, `codeLog`를 에러가 아닌 이중 포인터 연습 유도 안내로 대체(`handleDrop`에 `isReferenced` 분기 추가). 레슨 2 `description`/`initialCodeLog`도 "잠금 장치" 문구를 논블로킹 톤으로 수정. `LessonBlueprint`에 `hintCode: LocalizedStringResource?` 필드를 추가하고 레슨 2에 목표 코드(`int **pp = &p;`)를 채운 뒤, `MemoryGridVM.showHint()`와 그리드 툴바의 "힌트 보기" 버튼(`hintCode`가 있는 레슨에서만 노출)으로 연결
+- 사용자 피드백으로 커밋 단위를 재검토: 최초 시도는 리네임+차단제거+UI+카피 변경을 한 커밋에 묶었는데, "커밋을 최소 단위로 쪼갰는지" 재확인 요청을 받아 `git reset`으로 되돌린 뒤 (1) 차단 로직 제거 (2) `isLocked`→`isReferenced` 리네임+배지 (3) 참조 슬롯 직접 연결 시 안내 메시지 (4) 레슨 2 카피 수정 (5) "힌트 보기" 버튼, 5개 커밋으로 재작성. 각 커밋 전 해당 범위만 남기고(`git checkout --`로 임시 되돌림) `xcodebuild ... build` → BUILD SUCCEEDED 확인 후 커밋
+- 시뮬레이터(iPhone 16) 설치 확인: 홈 화면에서 레슨 2 카드의 새 설명 문구("이미 데이터를 가리키는 포인터가 있습니다...")가 정상 렌더링되고 크래시 없음을 스크린샷으로 확인. 그리드 화면 진입에는 좌표 기반 GUI 자동화 도구가 없어(기존 한계와 동일) 참조 배지 표시, 참조된 슬롯 직접 연결 시 안내 문구, 힌트 보기 버튼 등 실제 인터랙션 동작은 사용자의 수동 시뮬레이터 테스트 대기 중
+- Task D(주소 vs 값 구분)는 계획 파일에 상세 기록된 상태로 착수 전
 
 ## 계획됨 (2026-07-30 제안, 미착수)
 
@@ -161,5 +164,6 @@ Task 9 Task A 리뷰 도중 사용자가 제안한 아이디어: 코드 패널(`
 ## 다음 작업
 
 - Task 9 Task A/B 완료 (사용자 시뮬레이터 검증 및 커밋까지 완료)
-- 이어서 Task C(레슨 2 Lock 제거) → Task D(레슨 1 주소 vs 값 구분) 순으로 진행
+- Task C(레슨 2 Lock 제거) 구현 및 5개 커밋 완료, 사용자의 시뮬레이터 인터랙션 검증(참조 배지, 안내 문구, 힌트 보기 버튼) 대기 중
+- 사용자 검증 완료 후 Task D(레슨 1 주소 vs 값 구분) 진행
 - (참고) 백로그(`Chapter 2~5 실제 레슨 콘텐츠 저작`, `앱 이름/브랜딩/아이콘 재검토`, `App Store 심사 대비 항목 점검`, `그리드 블록에 변수명 표시`)는 이후 순서 논의
