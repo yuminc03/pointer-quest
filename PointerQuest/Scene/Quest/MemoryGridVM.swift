@@ -24,16 +24,7 @@ final class MemoryGridVM: ObservableObject {
   /// 슬롯 탭 처리
   func handleTap(_ slot: MemorySlot) {
     print("클릭된 메모리 주소: \(slot.address)")
-    
-    // Lesson 2: 잠긴 슬롯 탭 시 에러 피드백
-    if slot.isLocked {
-      codeLog = "// 이 메모리는 잠겨 있습니다. 기존 포인터를 통해 간접적으로 접근하세요."
-      if let index = slots.firstIndex(where: { $0.id == slot.id }) {
-        triggerError(for: index)
-      }
-      return
-    }
-    
+
     // 1. 포인터인 경우 (어딘가를 가리키고 있음)
     if let targetAddress = slot.pointingTo,
        let targetIndex = slots.firstIndex(where: { $0.address == targetAddress })
@@ -112,15 +103,6 @@ final class MemoryGridVM: ObservableObject {
       return
     }
     
-    // 잠긴 슬롯 직접 연결 시도 방지 (Security Check)
-    if let targetIndex = slots.firstIndex(where: { $0.address == destinationAddress }),
-       slots[targetIndex].isLocked
-    {
-      codeLog = "// 이 메모리는 잠겨 있습니다. 직접 접근할 수 없으니 다른 포인터를 통해 연결하세요."
-      triggerError(for: targetIndex)
-      return
-    }
-    
     // 2. 드래그한 슬롯을 pointer 타입으로 변경하고, 대상의 주소를 저장
     // C 언어의 `source = &destination;`과 같은 논리
     slots[sourceIndex].type = .pointer
@@ -191,9 +173,6 @@ final class MemoryGridVM: ObservableObject {
     // 3. 대상 슬롯 하이라이트 (포인터를 따라간 효과)
     print("역참조 성공! \(pointerAddr) -> \(targetAddr) (Value: \(slots[targetIndex].value ?? 0))")
     highlightSlot(for: targetIndex)
-    
-    // Lesson 2: 잠금 해제 로직 (제거됨 - 징검다리 포인터 미션으로 변경)
-    // if slots[targetIndex].isLocked { ... } -> 삭제
   }
   
   /// 에러 발생 시 시각적 피드백 (흔들림 + 빨간색)

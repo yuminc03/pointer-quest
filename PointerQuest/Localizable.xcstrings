@@ -104,38 +104,6 @@
         }
       }
     },
-    "// 이 메모리는 잠겨 있습니다. 기존 포인터를 통해 간접적으로 접근하세요." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "// This memory is locked. Access it indirectly through an existing pointer."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "// 이 메모리는 잠겨 있습니다. 기존 포인터를 통해 간접적으로 접근하세요."
-          }
-        }
-      }
-    },
-    "// 이 메모리는 잠겨 있습니다. 직접 접근할 수 없으니 다른 포인터를 통해 연결하세요." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "// This memory is locked. Direct access isn't allowed — connect through another pointer instead."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "// 이 메모리는 잠겨 있습니다. 직접 접근할 수 없으니 다른 포인터를 통해 연결하세요."
-          }
-        }
-      }
-    },
     "// 잘했어요! 레슨 완료! 🎉" : {
       "localizations" : {
         "en" : {
