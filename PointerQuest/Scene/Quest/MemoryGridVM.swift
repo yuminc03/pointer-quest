@@ -124,6 +124,12 @@ final class MemoryGridVM: ObservableObject {
         
         // 시각적 혼란을 줄이기 위해 타겟에도 하이라이트 효과
         highlightSlot(for: targetIndex)
+      } else if slots[targetIndex].isReferenced,
+                let existingPointerAddress = slots.first(where: {
+                  $0.pointingTo == destinationAddress && $0.address != sourceAddress
+                })?.address {
+        // 직접 연결 자체는 허용하되(실제 C에서도 가능한 연산), 이중 포인터 연습을 유도하는 안내로 대체
+        codeLog = "// 직접 연결도 가능하지만, 지금은 이중 포인터를 연습해봐요 — 이미 있는 포인터(\(existingPointerAddress))를 가리켜보세요."
       } else {
         codeLog = "int *p = \(destinationAddress);"
       }

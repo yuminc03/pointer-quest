@@ -977,6 +977,22 @@
           }
         }
       }
+    },
+    "// 직접 연결도 가능하지만, 지금은 이중 포인터를 연습해봐요 — 이미 있는 포인터(%@)를 가리켜보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// A direct connection works too, but let's practice double pointers — try pointing at the existing pointer(%@) instead."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 직접 연결도 가능하지만, 지금은 이중 포인터를 연습해봐요 — 이미 있는 포인터(%@)를 가리켜보세요."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
