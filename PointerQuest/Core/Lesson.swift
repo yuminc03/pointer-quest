@@ -49,7 +49,8 @@ struct LessonData {
               .init(index: 14, type: .pointer)
             ],
             successCondition: .anyPointerPointsTo(index: 5),
-            initialCodeLog: "// 레슨 2: 0x701C를 직접 가리켜도 되지만, 이미 있는 포인터(0x7014)를 가리켜 이중 포인터를 만들어보세요."
+            initialCodeLog: "// 레슨 2: 0x701C를 직접 가리켜도 되지만, 이미 있는 포인터(0x7014)를 가리켜 이중 포인터를 만들어보세요.",
+            hintCode: "int **pp = &p; // p(0x7014)를 가리키는 이중 포인터"
           )
         ),
         .init(
@@ -147,4 +148,6 @@ struct LessonBlueprint {
   var seeds: [SlotSeed]
   var successCondition: SuccessCondition
   var initialCodeLog: LocalizedStringResource
+  /// "힌트 보기" 버튼을 탭했을 때 코드 패널에 일시적으로 보여줄 목표 코드 (정답을 자동 완성하지 않고 힌트만 제공)
+  var hintCode: LocalizedStringResource? = nil
 }

@@ -81,6 +81,15 @@ struct MemoryGridView: View {
       }
     }
     .toolbar {
+      if vm.currentLesson.blueprint.hintCode != nil {
+        ToolbarItem(placement: .topBarTrailing) {
+          Button {
+            vm.showHint()
+          } label: {
+            Image(systemName: "lightbulb")
+          }
+        }
+      }
       ToolbarItem(placement: .topBarTrailing) {
         Button {
           vm.reset()

@@ -180,6 +180,12 @@ final class MemoryGridVM: ObservableObject {
     print("역참조 성공! \(pointerAddr) -> \(targetAddr) (Value: \(slots[targetIndex].value ?? 0))")
     highlightSlot(for: targetIndex)
   }
+
+  /// "힌트 보기" 버튼 탭 시, 레슨에 정의된 목표 코드를 코드 패널에 일시적으로 보여준다
+  func showHint() {
+    guard let hintCode = currentLesson.blueprint.hintCode else { return }
+    codeLog = hintCode
+  }
   
   /// 에러 발생 시 시각적 피드백 (흔들림 + 빨간색)
   private func triggerError(for index: Int) {

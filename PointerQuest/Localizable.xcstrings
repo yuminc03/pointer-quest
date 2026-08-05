@@ -993,6 +993,22 @@
           }
         }
       }
+    },
+    "int **pp = &p; // p(0x7014)를 가리키는 이중 포인터" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int **pp = &p; // A double pointer pointing to p(0x7014)"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int **pp = &p; // p(0x7014)를 가리키는 이중 포인터"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
