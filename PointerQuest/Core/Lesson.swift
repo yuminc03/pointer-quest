@@ -44,7 +44,7 @@ struct LessonData {
           iconName: "arrow.triangle.merge",
           blueprint: .init(
             seeds: [
-              .init(index: 7, type: .value, value: 777, isLocked: true),
+              .init(index: 7, type: .value, value: 777, isReferenced: true),
               .init(index: 5, type: .pointer, pointingToIndex: 7),
               .init(index: 14, type: .pointer)
             ],
@@ -128,7 +128,8 @@ struct SlotSeed: Hashable {
   var value: Int? = nil
   /// 포인터일 때 초기에 가리켜야 할 대상 슬롯의 인덱스
   var pointingToIndex: Int? = nil
-  var isLocked: Bool = false
+  /// 다른 포인터가 이미 이 슬롯을 가리키고 있음을 나타내는 배지용 플래그 (접근 차단 없음)
+  var isReferenced: Bool = false
 }
 
 /// 레슨의 클리어 조건을 표현하는 판정 규칙

@@ -47,15 +47,15 @@ struct MemoryItem: View {
             )
         )
     )
-    .overlay(
-    Group {
-        if slot.isLocked {
-          Image(systemName: "lock.fill")
-            .font(.largeTitle)
-            .foregroundStyle(.gray.opacity(0.3))
-        }
+    .overlay(alignment: .topTrailing) {
+      if slot.isReferenced {
+        Image(systemName: "link")
+          .font(.caption2)
+          .foregroundStyle(.secondary)
+          .padding(6)
+          .accessibilityLabel(Text("참조됨"))
       }
-    )
+    }
     .overlay(
       RoundedRectangle(cornerRadius: 15)
         .stroke(

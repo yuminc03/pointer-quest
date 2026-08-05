@@ -210,7 +210,7 @@ final class MemoryGridVM: ObservableObject {
     for seed in level.blueprint.seeds {
       slots[seed.index].type = seed.type
       slots[seed.index].value = seed.value
-      slots[seed.index].isLocked = seed.isLocked
+      slots[seed.index].isReferenced = seed.isReferenced
       if let pointingToIndex = seed.pointingToIndex {
         slots[seed.index].pointingTo = slots[pointingToIndex].address
       }
