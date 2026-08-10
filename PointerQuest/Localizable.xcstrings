@@ -273,9 +273,6 @@
         }
       }
     },
-    "int target = %lld;\nint *p = &target;" : {
-
-    },
     "int target = %lld;\nint *p = &target;\n// p 자신도 메모리(%@)에 저장된 값(주소)입니다." : {
       "localizations" : {
         "en" : {
@@ -288,22 +285,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "int target = %lld;\nint *p = &target;\n// p 자신도 메모리(%@)에 저장된 값(주소)입니다."
-          }
-        }
-      }
-    },
-    "int target = %lld; // %@의 값\nint *p = &target; // 이 슬롯(%@)이 target을 가리킴" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "int target = %lld; // Value at %@\nint *p = &target; // This slot(%@) points to target"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "int target = %lld; // %@의 값\nint *p = &target; // 이 슬롯(%@)이 target을 가리킴"
           }
         }
       }
@@ -410,23 +391,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "printf(\"%%d\", *p); // 값: %lld"
-          }
-        }
-      }
-    },
-    "printf(\"%%p\", *p); // 이중 포인터 (대상도 포인터임)" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "printf(\"%%p\", *p); // Double Pointer (Target is also a pointer)"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "printf(\"%%p\", *p); // 이중 포인터 (대상도 포인터임)"
           }
         }
       }
