@@ -180,8 +180,13 @@ Task 9 병합 완료 후 사용자가 백로그 중 "레슨 2 참조 배지 가�
 - `TODO.md`에 Task 10 항목 등록 (백로그에 있던 항목을 Task로 승격, 관련 백로그 줄 제거)
 - `MemoryItem.swift`의 참조 배지 구현 변경: `Image(systemName: "link")`를 `.caption2` + `.secondary`(회색 line 아이콘)에서 `.caption` + `.bold` + `.white` 아이콘을 `Circle().fill(Color(.main))` 배경 위에 얹는 채워진 원형 배지로 교체. 기존 트리거 조건(`slot.isReferenced`)과 배지 위치(우상단 `.topTrailing`)는 Task 9 Task C에서 확정된 그대로 유지, 시각 스타일만 조정
 - `xcodebuild ... build` → BUILD SUCCEEDED 확인
+- 사용자가 시뮬레이터에서 직접 검증 완료: 참조 배지 표시, 에러(빨강)/하이라이트(노랑) 배경 위 대비, 다른 슬롯 콘텐츠와 겹침 없음, 접근성 라벨, 레슨 1·3/샌드박스 회귀 없음 6개 항목 모두 정상 확인 — Task 10 완료로 확정
+
+## Task 10 완료 (`feature/reference-badge-visibility`)
+
+레슨 2 참조 배지 가시성 개선 구현 및 사용자 검증까지 완료. 세부 구현 내역은 위 "Task 10 진행 상황" 참고. `develop` 병합 조건 충족, 병합 여부는 사용자 확인 후 진행 예정.
 
 ## 다음 작업
 
-- Task 10(레슨 2 참조 배지 가시성 개선) 구현 완료, 빌드 성공 확인 — 사용자의 시뮬레이터 수동 검증 대기 중
+- Task 10(레슨 2 참조 배지 가시성 개선) 구현·검증 완료 — `develop` 병합 대기
 - (참고) 이후 백로그(`그리드 블록에 코드 패널 변수명 표시`, `Chapter 2~5 실제 레슨 콘텐츠 저작`, `앱 이름/브랜딩/아이콘 재검토`, `App Store 심사 대비 항목 점검`)는 이후 순서 논의
