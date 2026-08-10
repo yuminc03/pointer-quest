@@ -40,16 +40,17 @@ struct LessonData {
         .init(
           id: 2,
           title: "징검다리 포인터",
-          description: "데이터가 잠금 장치로 보호되어 있습니다.\n직접 접근하는 대신 기존 '연결 포인터'를 통해 연결하세요.",
+          description: "이미 데이터를 가리키는 포인터가 있습니다.\n새 포인터로 그 포인터를 가리켜 이중 포인터를 만들어보세요.",
           iconName: "arrow.triangle.merge",
           blueprint: .init(
             seeds: [
-              .init(index: 7, type: .value, value: 777, isLocked: true),
+              .init(index: 7, type: .value, value: 777, isReferenced: true),
               .init(index: 5, type: .pointer, pointingToIndex: 7),
               .init(index: 14, type: .pointer)
             ],
             successCondition: .anyPointerPointsTo(index: 5),
-            initialCodeLog: "// 레슨 2: 데이터(0x701C)가 잠겨 있습니다. 직접 접근하지 말고 '이중 포인터'를 사용하세요."
+            initialCodeLog: "// 레슨 2: 0x701C를 직접 가리켜도 되지만, 이미 있는 포인터(0x7014)를 가리켜 이중 포인터를 만들어보세요.",
+            hintCode: "int **pp = &p; // p(0x7014)를 가리키는 이중 포인터"
           )
         ),
         .init(
@@ -128,7 +129,8 @@ struct SlotSeed: Hashable {
   var value: Int? = nil
   /// 포인터일 때 초기에 가리켜야 할 대상 슬롯의 인덱스
   var pointingToIndex: Int? = nil
-  var isLocked: Bool = false
+  /// 다른 포인터가 이미 이 슬롯을 가리키고 있음을 나타내는 배지용 플래그 (접근 차단 없음)
+  var isReferenced: Bool = false
 }
 
 /// 레슨의 클리어 조건을 표현하는 판정 규칙
@@ -146,4 +148,6 @@ struct LessonBlueprint {
   var seeds: [SlotSeed]
   var successCondition: SuccessCondition
   var initialCodeLog: LocalizedStringResource
+  /// "힌트 보기" 버튼을 탭했을 때 코드 패널에 일시적으로 보여줄 목표 코드 (정답을 자동 완성하지 않고 힌트만 제공)
+  var hintCode: LocalizedStringResource? = nil
 }

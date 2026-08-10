@@ -136,7 +136,40 @@ Task 3 당시 "`codeLog`는 C 코드 관례상 영어로 고정, 로컬라이즈
 - `develop`에 `--no-ff` 병합 완료 (병합 커밋 `1072d46`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
 - `origin/develop`에 push 완료 (`2da7f8c..1072d46`), 로컬 `feature/localization-source-swap` 브랜치 삭제
 
+## Task 9 진행 상황 (`feature/lesson-grid-ux-improvements`)
+
+2026-07-29 사용자가 "처음 앱을 써보는 사람" 시점에서 4가지 UX 우려(사용법을 모름/빨간 흔들림이 오답처럼 느껴짐/화살표만으론 포인터 개념 부족/코드 패널이 좁고 문법 강조 없음)를 제기해 착수. 세부 배경·진단·결정 근거는 `PLAN.md`의 "Task 9: 그리드 인터랙션 UX 개선" 참고, 실행 계획은 `/Users/chuyumin/.claude/plans/i-m-concerned-about-whether-hashed-pinwheel.md`에 저장.
+
+- 서브에이전트 3개로 온보딩/구조, 에러(`isError`) 트리거, 코드 패널 구현을 병렬 조사한 뒤 핵심 파일을 직접 읽어 확인
+- `AskUserQuestion`으로 방향 확정: 레슨 2 "Lock" 메커닉은 완전 제거(실제 C 시맨틱과 안 맞고 빨간 흔들림이 오답처럼 느껴지는 근본 원인이라는 사용자 판단) 후 논블로킹 힌트로 전환, 온보딩은 그리드 화면 내 실사용 맥락 힌트 추가, 포인터 이해도는 레슨 1 범위에서 "주소 vs 값" 구분 보강, 코드 패널은 마크다운 버그와 함께 개편
+- `develop`에서 `feature/lesson-grid-ux-improvements` 브랜치 분기
+- Task A 구현: `PointerQuest/DesignSystem/Component/CCodeHighlighter.swift` 신설(`//` 주석/C 키워드/문자열 리터럴 채색 유틸리티), `CodeFeedbackView.swift`에서 `Text(code)`를 `Text(CCodeHighlighter.highlight(String(localized: code)))`로 교체해 `LocalizedStringResource`의 자동 마크다운 파싱 경로를 우회. `.fixedSize(horizontal: false, vertical: true)` 추가로 여러 줄 표시 보장
+- `project.pbxproj`에 `CCodeHighlighter.swift` 등록 완료 — 이 프로젝트는 파일시스템 동기화 그룹을 쓰지 않는 구식 포맷이라 `PBXBuildFile`/`PBXFileReference`/`Component` 그룹 children/`Sources` 빌드 페이즈 4곳에 기존 `Arrow.swift`/`CodeFeedbackView.swift`와 동일한 패턴으로 수동 추가 (Task 3/5/6/7과 동일 절차). `plutil -lint`로 pbxproj 문법 확인, `xcodebuild -scheme PointerQuest -destination 'generic/platform=iOS Simulator' build` → BUILD SUCCEEDED 확인
+- 사용자가 시뮬레이터에서 직접 확인하는 과정에서 색상 대비 문제 2건 발견 및 수정: (1) 키워드가 아닌 일반 코드/기호(`*`, `;`, `=` 등)에 색을 지정하지 않았더니 `Text(AttributedString)`이 `.foregroundStyle(.white)` 뷰 수정자를 따르지 않고 시스템 라이트/다크 모드에 따라 바뀌는 기본 라벨 색(라이트 모드에서 검정)을 써서 고정 어두운 배경 위에서 텍스트가 안 보임 → `flushToken()`/구두점 처리에 명시적으로 `.white` 지정. (2) 주석 색으로 썼던 `.secondary`도 동일하게 시스템 모드에 따라 바뀌는 색이라 라이트 모드에서 잘 안 보임 → `.white.opacity(0.5)` 고정값으로 변경. `Color(.main)`(키워드 색)은 `Colors.xcassets/Main.colorset`에 라이트/다크 variant 없이 고정 RGB로 정의돼 있어 동일 문제 없음을 확인
+- 사용자 피드백으로 색상 2건 추가 조정: 주석 색을 `.white.opacity(0.5)` → `.green`(터미널 스타일)으로, `CodeFeedbackView`의 왼쪽 `chevron.right` 프롬프트 아이콘을 `Color(.green)` → `.white`로 변경
+- 사용자가 시뮬레이터에서 직접 검증(마크다운 버그 재현 안 됨, 문법 강조 정상 표시) 완료, `TODO.md`에 검증 완료 반영 (`5126cad`)
+- Task B 구현: `PointerQuest/Scene/Quest/Entity/GridInteractionHintOverlay.swift` 신설 — 소스 슬롯(index 8, 포인터) ↔ 타겟 슬롯(index 3, 값) 사이를 오가는 `hand.draw.fill` 아이콘 애니메이션(터치 통과)과 "이 슬롯을 드래그해서 저 주소 위에 놓아보세요" 안내 말풍선 + 닫기 버튼으로 구성. 코드 스타일은 사용자가 직접 `private extension` + 대문자 계산 프로퍼티(`HandIcon`/`CalloutBubble`) 형태로 정리(`OnboardingView`/`MainView` 등 기존 컨벤션과 동일)
+- `MemoryGridView.swift` 연동: `@AppStorage("hasSeenGridHint")`로 앱 전체 최초 1회만 노출. 기존 `ArrowDrawLayer`가 쓰던 `overlayPreferenceValue`/`GeometryReader` 블록의 `frames` 딕셔너리를 재사용해, 레슨 1이고 아직 힌트를 안 본 경우에만 오버레이 표시. `MemoryGridVM`에는 힌트 관련 로직을 섞지 않고, 뷰 레벨에서 `vm.slots[8].pointingTo`가 `nil → non-nil`로 바뀌는 순간(=첫 드래그 완료)을 `.onChange`로 감지해 자동 해제(iOS 16 배포 타겟이라 구버전 단일 파라미터 `onChange(of:perform:)` 사용), 닫기 버튼으로도 즉시 해제 가능
+- 커밋을 빌드 가능한 최소 단위 2개로 분리(사용자 요청): (1) 컴포넌트 신설 + `project.pbxproj` 등록 + `Localizable.xcstrings` 자동 추출분(신규 안내 문구 카탈로그 항목) — `5603171`, (2) `MemoryGridView` 연동 — `f2c88ec`. 각 커밋 전 `git stash push --keep-index`로 다음 단계 변경분을 격리한 상태에서 `xcodebuild ... build` → BUILD SUCCEEDED 확인. 이번 작업과 무관한 `.claude/settings.json` 변경은 커밋에서 제외하고 그대로 둠
+- 사용자가 시뮬레이터에서 직접 검증(힌트 노출, 드래그 후 자동 해제 등) 완료
+- Task C(Lock 제거) 구현: `MemorySlot`/`SlotSeed`의 `isLocked`(차단 의미)를 `isReferenced`(배지 의미, 접근 차단 없음)로 재정의하고, `MemoryGridVM.handleTap`/`handleDrop`의 잠금 차단 블록을 제거해 어떤 슬롯이든 직접 가리키는 것을 항상 허용. 자기참조 포인터 차단(`handleDrop` 자기 자신 검사)과 잘못된 역참조 에러(`dereference`)는 실제 C 오류이므로 그대로 유지 — 에러 트리거 지점이 3곳에서 2곳으로 감소. `MemoryItem`의 큼직한 `lock.fill` 오버레이를 우상단 `link` 아이콘 배지(`isReferenced`일 때만 표시)로 교체. 이미 참조된 슬롯(레슨 2의 0x701C)에 직접 연결해도 연결 자체는 정상 처리하되, `codeLog`를 에러가 아닌 이중 포인터 연습 유도 안내로 대체(`handleDrop`에 `isReferenced` 분기 추가). 레슨 2 `description`/`initialCodeLog`도 "잠금 장치" 문구를 논블로킹 톤으로 수정. `LessonBlueprint`에 `hintCode: LocalizedStringResource?` 필드를 추가하고 레슨 2에 목표 코드(`int **pp = &p;`)를 채운 뒤, `MemoryGridVM.showHint()`와 그리드 툴바의 "힌트 보기" 버튼(`hintCode`가 있는 레슨에서만 노출)으로 연결
+- 사용자 피드백으로 커밋 단위를 재검토: 최초 시도는 리네임+차단제거+UI+카피 변경을 한 커밋에 묶었는데, "커밋을 최소 단위로 쪼갰는지" 재확인 요청을 받아 `git reset`으로 되돌린 뒤 (1) 차단 로직 제거 (2) `isLocked`→`isReferenced` 리네임+배지 (3) 참조 슬롯 직접 연결 시 안내 메시지 (4) 레슨 2 카피 수정 (5) "힌트 보기" 버튼, 5개 커밋으로 재작성. 각 커밋 전 해당 범위만 남기고(`git checkout --`로 임시 되돌림) `xcodebuild ... build` → BUILD SUCCEEDED 확인 후 커밋
+- 시뮬레이터(iPhone 16) 설치 확인: 홈 화면에서 레슨 2 카드의 새 설명 문구("이미 데이터를 가리키는 포인터가 있습니다...")가 정상 렌더링되고 크래시 없음을 스크린샷으로 확인. 그리드 화면 진입에는 좌표 기반 GUI 자동화 도구가 없어(기존 한계와 동일) 실제 인터랙션 동작은 사용자의 수동 시뮬레이터 테스트로 확인하기로 함
+- 사용자가 시뮬레이터에서 직접 검증 (2026-08-05): 참조 배지 표시, 참조된 슬롯 직접 연결 시 안내 문구, 정상 클리어 경로, 힌트 보기 버튼, 기존 레슨/에러 회귀 등 테스트 항목 6개 모두 오류 없음. 다만 참조 배지(`link` 아이콘)가 너무 작아 잘 안 보인다는 피드백을 받아, 지금 당장 고치지 않고 `TODO.md` 백로그에 기록만 해둠 (크기/스타일 개선은 별도 작업) — Task C 완료로 확정
+- Task D(주소 vs 값 구분) 구현: `MemoryItem.swift`에서 포인터 슬롯이 가리키는 대상 주소 표시를 `Text(target)` → `Text("→ \(target)")`로 변경해 값 슬롯(숫자만 표시)과 시각적으로 구분(커밋 `aae8bce`). `MemoryGridVM.swift`의 `handleTap` Case A(일반 포인터 codeLog)와 `handleDrop`의 대상 슬롯 자동 초기화 codeLog에 "포인터 자신도 메모리에 저장된 값(주소)"이라는 설명을 한 줄씩 추가해, 화살표 애니메이션 하나에만 의존하지 않고 상호작용마다 텍스트로도 개념을 반복 강조(커밋 `93af209`). 두 커밋 모두 커밋 전 `xcodebuild ... build` → BUILD SUCCEEDED 확인
+- `Localizable.xcstrings`: 두 번째 커밋에서 CLI 빌드의 문자열 카탈로그 자동 추출이 지연되는 현상(Task 8 후속에서 발견한 것과 동일한 유형 — 컴파일러는 `.stringsdata`에 새 키를 정상 추출했으나, `xcodebuild build`를 여러 차례(증분/touch 재빌드/clean build) 반복해도 카탈로그 병합이 반영되지 않음을 확인)이 재현되어, 기존 항목과 동일한 JSON 형식으로 신규 키 2개(en/ko)를 직접 추가. `python3 -m json.tool`로 JSON 유효성 확인 후 빌드 재검증
+- 사용자가 시뮬레이터에서 직접 검증 완료: 포인터 슬롯 화살표 표시, codeLog 신규 설명 문구 노출 등 정상 동작 확인 — Task D 완료로 확정
+- `Localizable.xcstrings`가 Xcode 쪽에서 한 차례 더 자동 재동기화되어(사용되지 않게 된 옛 codeLog 키 정리) 별도 커밋(`e93bc47`)으로 반영
+
+## Task 9 완료 (`feature/lesson-grid-ux-improvements`)
+
+그리드 인터랙션 UX 개선(Task A/B/C/D) 구현 및 사용자 검증까지 모두 완료. 세부 구현 내역은 위 "Task 9 진행 상황" 참고.
+
+## 계획됨 (2026-07-30 제안, 미착수)
+
+Task 9 Task A 리뷰 도중 사용자가 제안한 아이디어: 코드 패널(`CodeFeedbackView`)에서 쓰이는 변수명(예: `p`, `target`)을 그리드의 해당 메모리 블록 옆에도 표시하면 코드와 그리드 사이의 매핑이 더 직접적으로 보일 것이라는 제안. 지금은 구현하지 않고 `TODO.md` 백로그·`PLAN.md` 백로그에 아이디어만 기록해둠 — 착수 시점은 추후 논의.
+
 ## 다음 작업
 
-- `codeLog` 마크다운 파싱 버그 수정을 위한 별도 브랜치 착수 예정 (`int *p = &target;` 등 포인터 기호 `*`/`**`가 포함된 문구 일부가 화면에서 사라지는 문제, 원인 추정은 `TODO.md` 백로그 참고)
-- (참고) 백로그(`Chapter 2~5 실제 레슨 콘텐츠 저작`, `앱 이름/브랜딩/아이콘 재검토`, `App Store 심사 대비 항목 점검`)는 이후 순서 논의
+- Task 9 Task A/B/C/D 모두 완료 (사용자 시뮬레이터 검증 및 커밋까지 완료) — `develop` 병합 조건 충족, 병합 여부는 사용자 확인 후 진행 예정
+- (참고) 백로그(`레슨 2 참조 배지 크기 개선`, `Chapter 2~5 실제 레슨 콘텐츠 저작`, `앱 이름/브랜딩/아이콘 재검토`, `App Store 심사 대비 항목 점검`, `그리드 블록에 변수명 표시`)는 이후 순서 논의

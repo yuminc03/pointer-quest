@@ -1,7 +1,9 @@
 {
   "sourceLanguage" : "ko",
   "strings" : {
-    "" : {},
+    "" : {
+
+    },
     " · " : {
       "localizations" : {
         "ko" : {
@@ -38,18 +40,18 @@
         }
       }
     },
-    "// 레슨 2: 데이터(0x701C)가 잠겨 있습니다. 직접 접근하지 말고 '이중 포인터'를 사용하세요." : {
+    "// 레슨 2: 0x701C를 직접 가리켜도 되지만, 이미 있는 포인터(0x7014)를 가리켜 이중 포인터를 만들어보세요." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "// Lesson 2: Data(0x701C) is locked. Do not access directly, use 'Double Pointer'."
+            "value" : "// Lesson 2: You can point directly at 0x701C, but try pointing at the existing pointer(0x7014) instead to create a double pointer."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "// 레슨 2: 데이터(0x701C)가 잠겨 있습니다. 직접 접근하지 말고 '이중 포인터'를 사용하세요."
+            "value" : "// 레슨 2: 0x701C를 직접 가리켜도 되지만, 이미 있는 포인터(0x7014)를 가리켜 이중 포인터를 만들어보세요."
           }
         }
       }
@@ -102,38 +104,6 @@
         }
       }
     },
-    "// 이 메모리는 잠겨 있습니다. 기존 포인터를 통해 간접적으로 접근하세요." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "// This memory is locked. Access it indirectly through an existing pointer."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "// 이 메모리는 잠겨 있습니다. 기존 포인터를 통해 간접적으로 접근하세요."
-          }
-        }
-      }
-    },
-    "// 이 메모리는 잠겨 있습니다. 직접 접근할 수 없으니 다른 포인터를 통해 연결하세요." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "// This memory is locked. Direct access isn't allowed — connect through another pointer instead."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "// 이 메모리는 잠겨 있습니다. 직접 접근할 수 없으니 다른 포인터를 통해 연결하세요."
-          }
-        }
-      }
-    },
     "// 잘했어요! 레슨 완료! 🎉" : {
       "localizations" : {
         "en" : {
@@ -162,6 +132,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "// 주소: %@"
+          }
+        }
+      }
+    },
+    "// 직접 연결도 가능하지만, 지금은 이중 포인터를 연습해봐요 — 이미 있는 포인터(%@)를 가리켜보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// A direct connection works too, but let's practice double pointers — try pointing at the existing pointer(%@) instead."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 직접 연결도 가능하지만, 지금은 이중 포인터를 연습해봐요 — 이미 있는 포인터(%@)를 가리켜보세요."
           }
         }
       }
@@ -198,7 +184,12 @@
         }
       }
     },
-    "%lld" : {},
+    "%lld" : {
+
+    },
+    "→ %@" : {
+
+    },
     "1. 블록을 길게 누르면 3D로 튀어나오는 모습을 볼 수 있어요." : {
       "localizations" : {
         "en" : {
@@ -247,7 +238,25 @@
         }
       }
     },
-    "int *p = %@;" : {},
+    "int **pp = &p; // p(0x7014)를 가리키는 이중 포인터" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int **pp = &p; // A double pointer pointing to p(0x7014)"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int **pp = &p; // p(0x7014)를 가리키는 이중 포인터"
+          }
+        }
+      }
+    },
+    "int *p = %@;" : {
+
+    },
     "int *ptr1 = %@; // %@\nint **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)" : {
       "localizations" : {
         "en" : {
@@ -264,19 +273,34 @@
         }
       }
     },
-    "int target = %lld;\nint *p = &target;" : {},
-    "int target = %lld; // %@의 값\nint *p = &target; // 이 슬롯(%@)이 target을 가리킴" : {
+    "int target = %lld;\nint *p = &target;\n// p 자신도 메모리(%@)에 저장된 값(주소)입니다." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "int target = %lld; // Value at %@\nint *p = &target; // This slot(%@) points to target"
+            "value" : "int target = %lld;\nint *p = &target;\n// p itself is also a value (an address) stored in memory(%@)."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "int target = %lld; // %@의 값\nint *p = &target; // 이 슬롯(%@)이 target을 가리킴"
+            "value" : "int target = %lld;\nint *p = &target;\n// p 자신도 메모리(%@)에 저장된 값(주소)입니다."
+          }
+        }
+      }
+    },
+    "int target = %lld; // %@의 값\nint *p = &target; // 이 슬롯(%@)이 target을 가리킴\n// p 자신도 메모리(%@)에 저장된 값(주소)입니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int target = %lld; // Value at %@\nint *p = &target; // This slot(%@) points to target\n// p itself is also a value (an address) stored in memory(%@)."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int target = %lld; // %@의 값\nint *p = &target; // 이 슬롯(%@)이 target을 가리킴\n// p 자신도 메모리(%@)에 저장된 값(주소)입니다."
           }
         }
       }
@@ -356,7 +380,6 @@
       }
     },
     "printf(\"%%d\", *p); // 값: %lld" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -372,24 +395,7 @@
         }
       }
     },
-    "printf(\"%%p\", *p); // 이중 포인터 (대상도 포인터임)" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "printf(\"%%p\", *p); // Double Pointer (Target is also a pointer)"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "printf(\"%%p\", *p); // 이중 포인터 (대상도 포인터임)"
-          }
-        }
-      }
-    },
     "printf(\"%%p\", *p); // 주소: %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -404,6 +410,9 @@
           }
         }
       }
+    },
+    "printf(\"%p\", *p); // 이중 포인터 (대상도 포인터임)" : {
+
     },
     "값이 아니라 '주소'가 중요합니다.\n포인터를 드래그해서 주소를 가리켜보세요." : {
       "localizations" : {
@@ -465,22 +474,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "다음 업데이트에서 만나볼 수 있어요."
-          }
-        }
-      }
-    },
-    "데이터가 잠금 장치로 보호되어 있습니다.\n직접 접근하는 대신 기존 '연결 포인터'를 통해 연결하세요." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Data is protected by a Lock system.\nConnect via the existing 'Link Pointer' instead of accessing directly."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "데이터가 잠금 장치로 보호되어 있습니다.\n직접 접근하는 대신 기존 '연결 포인터'를 통해 연결하세요."
           }
         }
       }
@@ -741,6 +734,9 @@
         }
       }
     },
+    "이 슬롯을 드래그해서 저 주소 위에 놓아보세요" : {
+
+    },
     "이 앱이 처음이신가요? 튜토리얼에서 사용법을 확인해보세요!" : {
       "localizations" : {
         "en" : {
@@ -769,6 +765,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "이 화면에서는 특정 값을 가진 블록을 다른 블록으로 참조(가리키게)할 수 있습니다."
+          }
+        }
+      }
+    },
+    "이미 데이터를 가리키는 포인터가 있습니다.\n새 포인터로 그 포인터를 가리켜 이중 포인터를 만들어보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There's already a pointer pointing to the data.\nPoint a new pointer at that pointer to create a double pointer."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이미 데이터를 가리키는 포인터가 있습니다.\n새 포인터로 그 포인터를 가리켜 이중 포인터를 만들어보세요."
           }
         }
       }
@@ -865,6 +877,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "징검다리 포인터"
+          }
+        }
+      }
+    },
+    "참조됨" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referenced"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "참조됨"
           }
         }
       }

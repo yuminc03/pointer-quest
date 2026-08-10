@@ -24,16 +24,7 @@ final class MemoryGridVM: ObservableObject {
   /// 슬롯 탭 처리
   func handleTap(_ slot: MemorySlot) {
     print("클릭된 메모리 주소: \(slot.address)")
-    
-    // Lesson 2: 잠긴 슬롯 탭 시 에러 피드백
-    if slot.isLocked {
-      codeLog = "// 이 메모리는 잠겨 있습니다. 기존 포인터를 통해 간접적으로 접근하세요."
-      if let index = slots.firstIndex(where: { $0.id == slot.id }) {
-        triggerError(for: index)
-      }
-      return
-    }
-    
+
     // 1. 포인터인 경우 (어딘가를 가리키고 있음)
     if let targetAddress = slot.pointingTo,
        let targetIndex = slots.firstIndex(where: { $0.address == targetAddress })
@@ -46,6 +37,7 @@ final class MemoryGridVM: ObservableObject {
         codeLog = """
         int target = \(targetValue); // \(targetAddress)의 값
         int *p = &target; // 이 슬롯(\(slot.address))이 target을 가리킴
+        // p 자신도 메모리(\(slot.address))에 저장된 값(주소)입니다.
         """
       }
       // Case B: 가리킨 곳도 포인터인 경우 (이중 포인터)
@@ -112,15 +104,6 @@ final class MemoryGridVM: ObservableObject {
       return
     }
     
-    // 잠긴 슬롯 직접 연결 시도 방지 (Security Check)
-    if let targetIndex = slots.firstIndex(where: { $0.address == destinationAddress }),
-       slots[targetIndex].isLocked
-    {
-      codeLog = "// 이 메모리는 잠겨 있습니다. 직접 접근할 수 없으니 다른 포인터를 통해 연결하세요."
-      triggerError(for: targetIndex)
-      return
-    }
-    
     // 2. 드래그한 슬롯을 pointer 타입으로 변경하고, 대상의 주소를 저장
     // C 언어의 `source = &destination;`과 같은 논리
     slots[sourceIndex].type = .pointer
@@ -138,10 +121,16 @@ final class MemoryGridVM: ObservableObject {
         slots[targetIndex].value = randomValue
         
         // 초기화된 사실을 로그에 자연스럽게 표현
-        codeLog = "int target = \(randomValue);\nint *p = &target;"
+        codeLog = "int target = \(randomValue);\nint *p = &target;\n// p 자신도 메모리(\(sourceAddress))에 저장된 값(주소)입니다."
         
         // 시각적 혼란을 줄이기 위해 타겟에도 하이라이트 효과
         highlightSlot(for: targetIndex)
+      } else if slots[targetIndex].isReferenced,
+                let existingPointerAddress = slots.first(where: {
+                  $0.pointingTo == destinationAddress && $0.address != sourceAddress
+                })?.address {
+        // 직접 연결 자체는 허용하되(실제 C에서도 가능한 연산), 이중 포인터 연습을 유도하는 안내로 대체
+        codeLog = "// 직접 연결도 가능하지만, 지금은 이중 포인터를 연습해봐요 — 이미 있는 포인터(\(existingPointerAddress))를 가리켜보세요."
       } else {
         codeLog = "int *p = \(destinationAddress);"
       }
@@ -191,9 +180,12 @@ final class MemoryGridVM: ObservableObject {
     // 3. 대상 슬롯 하이라이트 (포인터를 따라간 효과)
     print("역참조 성공! \(pointerAddr) -> \(targetAddr) (Value: \(slots[targetIndex].value ?? 0))")
     highlightSlot(for: targetIndex)
-    
-    // Lesson 2: 잠금 해제 로직 (제거됨 - 징검다리 포인터 미션으로 변경)
-    // if slots[targetIndex].isLocked { ... } -> 삭제
+  }
+
+  /// "힌트 보기" 버튼 탭 시, 레슨에 정의된 목표 코드를 코드 패널에 일시적으로 보여준다
+  func showHint() {
+    guard let hintCode = currentLesson.blueprint.hintCode else { return }
+    codeLog = hintCode
   }
   
   /// 에러 발생 시 시각적 피드백 (흔들림 + 빨간색)
@@ -231,7 +223,7 @@ final class MemoryGridVM: ObservableObject {
     for seed in level.blueprint.seeds {
       slots[seed.index].type = seed.type
       slots[seed.index].value = seed.value
-      slots[seed.index].isLocked = seed.isLocked
+      slots[seed.index].isReferenced = seed.isReferenced
       if let pointingToIndex = seed.pointingToIndex {
         slots[seed.index].pointingTo = slots[pointingToIndex].address
       }
