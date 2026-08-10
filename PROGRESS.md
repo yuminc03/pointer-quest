@@ -184,9 +184,16 @@ Task 9 병합 완료 후 사용자가 백로그 중 "레슨 2 참조 배지 가�
 
 ## Task 10 완료 (`feature/reference-badge-visibility`)
 
-레슨 2 참조 배지 가시성 개선 구현 및 사용자 검증까지 완료. 세부 구현 내역은 위 "Task 10 진행 상황" 참고. `develop` 병합 조건 충족, 병합 여부는 사용자 확인 후 진행 예정.
+레슨 2 참조 배지 가시성 개선 구현 및 사용자 검증까지 완료. 세부 구현 내역은 위 "Task 10 진행 상황" 참고.
+
+- `develop`에 `--no-ff` 병합 완료 (병합 커밋 `fc2d623`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
+- `origin/develop`에 push 완료 (`ee5c1da..fc2d623`), 로컬 `feature/reference-badge-visibility` 브랜치 삭제
 
 ## 다음 작업
 
-- Task 10(레슨 2 참조 배지 가시성 개선) 구현·검증 완료 — `develop` 병합 대기
-- (참고) 이후 백로그(`그리드 블록에 코드 패널 변수명 표시`, `Chapter 2~5 실제 레슨 콘텐츠 저작`, `앱 이름/브랜딩/아이콘 재검토`, `App Store 심사 대비 항목 점검`)는 이후 순서 논의
+- Task 10(레슨 2 참조 배지 가시성 개선) `develop` 병합·push까지 완료
+- 다음 Task는 아래 백로그 중 선택해 착수 예정 (사용자 확인 후 브랜치 분기)
+  - 그리드 블록에 코드 패널 변수명(`p`, `target` 등) 표시
+  - Chapter 2~5 실제 레슨 콘텐츠 저작
+  - 앱 이름/브랜딩/아이콘 재검토
+  - App Store 심사 대비 항목 점검 (개인정보처리방침, 스크린샷, 지원 언어 등)
