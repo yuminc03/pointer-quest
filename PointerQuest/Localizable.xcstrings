@@ -40,6 +40,22 @@
         }
       }
     },
+    "// 레슨 2: 0x701C를 직접 가리켜도 되지만, 이미 있는 포인터(0x7014)를 가리켜 이중 포인터를 만들어보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// Lesson 2: You can point directly at 0x701C, but try pointing at the existing pointer(0x7014) instead to create a double pointer."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 레슨 2: 0x701C를 직접 가리켜도 되지만, 이미 있는 포인터(0x7014)를 가리켜 이중 포인터를 만들어보세요."
+          }
+        }
+      }
+    },
     "// 레슨 3: Start(0x7000)에서 Treasure(0x703C)까지 체인을 만드세요." : {
       "localizations" : {
         "en" : {
@@ -120,6 +136,22 @@
         }
       }
     },
+    "// 직접 연결도 가능하지만, 지금은 이중 포인터를 연습해봐요 — 이미 있는 포인터(%@)를 가리켜보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// A direct connection works too, but let's practice double pointers — try pointing at the existing pointer(%@) instead."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 직접 연결도 가능하지만, 지금은 이중 포인터를 연습해봐요 — 이미 있는 포인터(%@)를 가리켜보세요."
+          }
+        }
+      }
+    },
     "// 포인터는 자기 자신을 가리킬 수 없습니다. 다른 주소를 선택해 연결하세요." : {
       "localizations" : {
         "en" : {
@@ -153,6 +185,9 @@
       }
     },
     "%lld" : {
+
+    },
+    "→ %@" : {
 
     },
     "1. 블록을 길게 누르면 3D로 튀어나오는 모습을 볼 수 있어요." : {
@@ -199,6 +234,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "3. 손가락을 떼면 두 블록이 연결됩니다."
+          }
+        }
+      }
+    },
+    "int **pp = &p; // p(0x7014)를 가리키는 이중 포인터" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int **pp = &p; // A double pointer pointing to p(0x7014)"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int **pp = &p; // p(0x7014)를 가리키는 이중 포인터"
           }
         }
       }
@@ -722,6 +773,22 @@
         }
       }
     },
+    "이미 데이터를 가리키는 포인터가 있습니다.\n새 포인터로 그 포인터를 가리켜 이중 포인터를 만들어보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There's already a pointer pointing to the data.\nPoint a new pointer at that pointer to create a double pointer."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이미 데이터를 가리키는 포인터가 있습니다.\n새 포인터로 그 포인터를 가리켜 이중 포인터를 만들어보세요."
+          }
+        }
+      }
+    },
     "이중 포인터 심화" : {
       "localizations" : {
         "en" : {
@@ -814,6 +881,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "징검다리 포인터"
+          }
+        }
+      }
+    },
+    "참조됨" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referenced"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "참조됨"
           }
         }
       }
@@ -926,86 +1009,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "환영합니다!"
-          }
-        }
-      }
-    },
-    "참조됨" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Referenced"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "참조됨"
-          }
-        }
-      }
-    },
-    "// 직접 연결도 가능하지만, 지금은 이중 포인터를 연습해봐요 — 이미 있는 포인터(%@)를 가리켜보세요." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "// A direct connection works too, but let's practice double pointers — try pointing at the existing pointer(%@) instead."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "// 직접 연결도 가능하지만, 지금은 이중 포인터를 연습해봐요 — 이미 있는 포인터(%@)를 가리켜보세요."
-          }
-        }
-      }
-    },
-    "이미 데이터를 가리키는 포인터가 있습니다.\n새 포인터로 그 포인터를 가리켜 이중 포인터를 만들어보세요." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "There's already a pointer pointing to the data.\nPoint a new pointer at that pointer to create a double pointer."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "이미 데이터를 가리키는 포인터가 있습니다.\n새 포인터로 그 포인터를 가리켜 이중 포인터를 만들어보세요."
-          }
-        }
-      }
-    },
-    "// 레슨 2: 0x701C를 직접 가리켜도 되지만, 이미 있는 포인터(0x7014)를 가리켜 이중 포인터를 만들어보세요." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "// Lesson 2: You can point directly at 0x701C, but try pointing at the existing pointer(0x7014) instead to create a double pointer."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "// 레슨 2: 0x701C를 직접 가리켜도 되지만, 이미 있는 포인터(0x7014)를 가리켜 이중 포인터를 만들어보세요."
-          }
-        }
-      }
-    },
-    "int **pp = &p; // p(0x7014)를 가리키는 이중 포인터" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "int **pp = &p; // A double pointer pointing to p(0x7014)"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "int **pp = &p; // p(0x7014)를 가리키는 이중 포인터"
           }
         }
       }

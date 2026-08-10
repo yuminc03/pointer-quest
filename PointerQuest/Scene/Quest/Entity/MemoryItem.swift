@@ -22,7 +22,7 @@ struct MemoryItem: View {
               .bold()
             )
         } else if let target = slot.pointingTo {
-          Text(target)
+          Text("→ \(target)")
             .font(.system(.caption, design: .monospaced))
             .foregroundStyle(Color(.main))
             .fontWeight(.bold)
