@@ -37,6 +37,7 @@ final class MemoryGridVM: ObservableObject {
         codeLog = """
         int target = \(targetValue); // \(targetAddress)의 값
         int *p = &target; // 이 슬롯(\(slot.address))이 target을 가리킴
+        // p 자신도 메모리(\(slot.address))에 저장된 값(주소)입니다.
         """
       }
       // Case B: 가리킨 곳도 포인터인 경우 (이중 포인터)
@@ -120,7 +121,7 @@ final class MemoryGridVM: ObservableObject {
         slots[targetIndex].value = randomValue
         
         // 초기화된 사실을 로그에 자연스럽게 표현
-        codeLog = "int target = \(randomValue);\nint *p = &target;"
+        codeLog = "int target = \(randomValue);\nint *p = &target;\n// p 자신도 메모리(\(sourceAddress))에 저장된 값(주소)입니다."
         
         // 시각적 혼란을 줄이기 위해 타겟에도 하이라이트 효과
         highlightSlot(for: targetIndex)
