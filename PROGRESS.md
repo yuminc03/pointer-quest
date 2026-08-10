@@ -172,12 +172,21 @@ Task 3 당시 "`codeLog`는 C 코드 관례상 영어로 고정, 로컬라이즈
 
 Task 9 Task A 리뷰 도중 사용자가 제안한 아이디어: 코드 패널(`CodeFeedbackView`)에서 쓰이는 변수명(예: `p`, `target`)을 그리드의 해당 메모리 블록 옆에도 표시하면 코드와 그리드 사이의 매핑이 더 직접적으로 보일 것이라는 제안. 지금은 구현하지 않고 `TODO.md` 백로그·`PLAN.md` 백로그에 아이디어만 기록해둠 — 착수 시점은 추후 논의.
 
+## Task 10 진행 상황 (`feature/reference-badge-visibility`)
+
+Task 9 병합 완료 후 사용자가 백로그 중 "레슨 2 참조 배지 가시성 개선"을 다음 착수 항목으로 선택. 배경·결정 근거는 `PLAN.md`의 "Task 10: 레슨 2 참조 배지 가시성 개선" 참고.
+
+- `develop`에서 `feature/reference-badge-visibility` 브랜치 분기
+- `TODO.md`에 Task 10 항목 등록 (백로그에 있던 항목을 Task로 승격, 관련 백로그 줄 제거)
+- `MemoryItem.swift`의 참조 배지 구현 변경: `Image(systemName: "link")`를 `.caption2` + `.secondary`(회색 line 아이콘)에서 `.caption` + `.bold` + `.white` 아이콘을 `Circle().fill(Color(.main))` 배경 위에 얹는 채워진 원형 배지로 교체. 기존 트리거 조건(`slot.isReferenced`)과 배지 위치(우상단 `.topTrailing`)는 Task 9 Task C에서 확정된 그대로 유지, 시각 스타일만 조정
+- `xcodebuild ... build` → BUILD SUCCEEDED 확인
+- 사용자가 시뮬레이터에서 직접 검증 완료: 참조 배지 표시, 에러(빨강)/하이라이트(노랑) 배경 위 대비, 다른 슬롯 콘텐츠와 겹침 없음, 접근성 라벨, 레슨 1·3/샌드박스 회귀 없음 6개 항목 모두 정상 확인 — Task 10 완료로 확정
+
+## Task 10 완료 (`feature/reference-badge-visibility`)
+
+레슨 2 참조 배지 가시성 개선 구현 및 사용자 검증까지 완료. 세부 구현 내역은 위 "Task 10 진행 상황" 참고. `develop` 병합 조건 충족, 병합 여부는 사용자 확인 후 진행 예정.
+
 ## 다음 작업
 
-- Task 9(그리드 인터랙션 UX 개선, Task A/B/C/D) `develop` 병합·push까지 완료
-- 다음 Task는 아래 백로그 중 선택해 착수 예정 (사용자 확인 후 브랜치 분기)
-  - 레슨 2 참조 배지(`link` 아이콘) 크기/스타일 개선
-  - 그리드 블록에 코드 패널 변수명(`p`, `target` 등) 표시
-  - Chapter 2~5 실제 레슨 콘텐츠 저작
-  - 앱 이름/브랜딩/아이콘 재검토
-  - App Store 심사 대비 항목 점검 (개인정보처리방침, 스크린샷, 지원 언어 등)
+- Task 10(레슨 2 참조 배지 가시성 개선) 구현·검증 완료 — `develop` 병합 대기
+- (참고) 이후 백로그(`그리드 블록에 코드 패널 변수명 표시`, `Chapter 2~5 실제 레슨 콘텐츠 저작`, `앱 이름/브랜딩/아이콘 재검토`, `App Store 심사 대비 항목 점검`)는 이후 순서 논의
