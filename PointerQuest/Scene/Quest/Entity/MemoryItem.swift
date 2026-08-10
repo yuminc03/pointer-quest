@@ -50,8 +50,11 @@ struct MemoryItem: View {
     .overlay(alignment: .topTrailing) {
       if slot.isReferenced {
         Image(systemName: "link")
-          .font(.caption2)
-          .foregroundStyle(.secondary)
+          .font(.caption)
+          .fontWeight(.bold)
+          .foregroundStyle(.white)
+          .padding(4)
+          .background(Circle().fill(Color(.main)))
           .padding(6)
           .accessibilityLabel(Text("참조됨"))
       }
