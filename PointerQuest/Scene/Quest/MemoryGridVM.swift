@@ -145,8 +145,14 @@ final class MemoryGridVM: ObservableObject {
         // 직접 연결 자체는 허용하되(실제 C에서도 가능한 연산), 이중 포인터 연습을 유도하는 안내로 대체
         codeLog = "// 직접 연결도 가능하지만, 지금은 이중 포인터를 연습해봐요 — 이미 있는 포인터(\(existingPointerAddress))를 가리켜보세요."
       } else {
+        // 목적지가 이미 이름을 가진 슬롯일 수 있으므로(레슨이 선언했거나 이전 상호작용에서 부여됨)
+        // 주소 리터럴 대신 &변수명으로 표현해 "가리킨다 = 주소를 담는다" 개념을 코드로도 드러낸다
         let pName = resolveVariableName(for: sourceIndex, fallback: makePointerName())
-        codeLog = "int *\(pName) = \(destinationAddress);"
+        let destName = resolveVariableName(
+          for: targetIndex,
+          fallback: slots[targetIndex].value != nil ? "target" : makePointerName()
+        )
+        codeLog = "int *\(pName) = &\(destName);"
       }
     } else {
       let pName = resolveVariableName(for: sourceIndex, fallback: makePointerName())
