@@ -254,101 +254,118 @@
         }
       }
     },
-    "int *p = %@;" : {
-
-    },
-    "int *ptr1 = %@; // %@\nint **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)" : {
+    "int *%@ = &%@;" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "int *ptr1 = %@; // %@\nint **ptr2 = &ptr1; // Double Pointer (This slot points to ptr1)"
-          }
-        },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "int *ptr1 = %@; // %@\nint **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)"
+            "state" : "new",
+            "value" : "int *%1$@ = &%2$@;"
           }
         }
       }
     },
-    "int target = %lld;\nint *p = &target;\n// p 자신도 메모리(%@)에 저장된 값(주소)입니다." : {
+    "int *%@ = %@;" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "int target = %lld;\nint *p = &target;\n// p itself is also a value (an address) stored in memory(%@)."
-          }
-        },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "int target = %lld;\nint *p = &target;\n// p 자신도 메모리(%@)에 저장된 값(주소)입니다."
+            "state" : "new",
+            "value" : "int *%1$@ = %2$@;"
           }
         }
       }
     },
-    "int target = %lld; // %@의 값\nint *p = &target; // 이 슬롯(%@)이 target을 가리킴\n// p 자신도 메모리(%@)에 저장된 값(주소)입니다." : {
+    "int *%@ = %@; // %@\nint **%@ = &%@; // 이중 포인터 (이 슬롯이 %@을 가리킴)" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "int target = %lld; // Value at %@\nint *p = &target; // This slot(%@) points to target\n// p itself is also a value (an address) stored in memory(%@)."
+            "value" : "int *%1$@ = %2$@; // %3$@\nint **%4$@ = &%5$@; // Double Pointer (This slot points to %6$@)"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "int target = %lld; // %@의 값\nint *p = &target; // 이 슬롯(%@)이 target을 가리킴\n// p 자신도 메모리(%@)에 저장된 값(주소)입니다."
+            "value" : "int *%1$@ = %2$@; // %3$@\nint **%4$@ = &%5$@; // 이중 포인터 (이 슬롯이 %6$@을 가리킴)"
           }
         }
       }
     },
-    "int unknown; // %@의 변수가 초기화되지 않음\nint *p = &unknown;\n// 경고: 'p'를 역참조하면 쓰레기 값이 반환됩니다." : {
+    "int %@ = %lld;\nint *%@ = &%@;\n// %@ 자신도 메모리(%@)에 저장된 값(주소)입니다." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "int unknown; // Variable at %@ is uninitialized\nint *p = &unknown;\n// Warning: Dereferencing 'p' yields garbage value."
+            "value" : "int %1$@ = %2$lld;\nint *%3$@ = &%4$@;\n// %5$@ itself is also a value (an address) stored in memory(%6$@)."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "int unknown; // %@의 변수가 초기화되지 않음\nint *p = &unknown;\n// 경고: 'p'를 역참조하면 쓰레기 값이 반환됩니다."
+            "value" : "int %1$@ = %2$lld;\nint *%3$@ = &%4$@;\n// %5$@ 자신도 메모리(%6$@)에 저장된 값(주소)입니다."
           }
         }
       }
     },
-    "int val = %lld; // %@의 값" : {
+    "int %@ = %lld; // %@의 값" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "int val = %lld; // Value at %@"
+            "value" : "int %1$@ = %2$lld; // Value at %3$@"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "int val = %lld; // %@의 값"
+            "value" : "int %1$@ = %2$lld; // %3$@의 값"
           }
         }
       }
     },
-    "int value = %lld; // %@의 값\nint *ptr1 = &value; // ptr1이 value를 가리킴\nint **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)" : {
+    "int %@ = %lld; // %@의 값\nint *%@ = &%@; // %@이 %@를 가리킴\nint **%@ = &%@; // 이중 포인터 (이 슬롯이 %@을 가리킴)" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "int value = %lld; // Value at %@\nint *ptr1 = &value; // Ptr1 points to value\nint **ptr2 = &ptr1; // Double Pointer (This slot points to ptr1)"
+            "value" : "int %1$@ = %2$lld; // Value at %3$@\nint *%4$@ = &%5$@; // %6$@ points to %7$@\nint **%8$@ = &%9$@; // Double Pointer (This slot points to %10$@)"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "int value = %lld; // %@의 값\nint *ptr1 = &value; // ptr1이 value를 가리킴\nint **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)"
+            "value" : "int %1$@ = %2$lld; // %3$@의 값\nint *%4$@ = &%5$@; // %6$@이 %7$@를 가리킴\nint **%8$@ = &%9$@; // 이중 포인터 (이 슬롯이 %10$@을 가리킴)"
+          }
+        }
+      }
+    },
+    "int %@ = %lld; // %@의 값\nint *%@ = &%@; // 이 슬롯(%@)이 %@을 가리킴\n// %@ 자신도 메모리(%@)에 저장된 값(주소)입니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@ = %2$lld; // Value at %3$@\nint *%4$@ = &%5$@; // This slot(%6$@) points to %7$@\n// %8$@ itself is also a value (an address) stored in memory(%9$@)."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@ = %2$lld; // %3$@의 값\nint *%4$@ = &%5$@; // 이 슬롯(%6$@)이 %7$@을 가리킴\n// %8$@ 자신도 메모리(%9$@)에 저장된 값(주소)입니다."
+          }
+        }
+      }
+    },
+    "int %@; // %@의 변수가 초기화되지 않음\nint *%@ = &%@;\n// 경고: '%@'를 역참조하면 쓰레기 값이 반환됩니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@; // Variable at %2$@ is uninitialized\nint *%3$@ = &%4$@;\n// Warning: Dereferencing '%5$@' yields garbage value."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@; // %2$@의 변수가 초기화되지 않음\nint *%3$@ = &%4$@;\n// 경고: '%5$@'를 역참조하면 쓰레기 값이 반환됩니다."
           }
         }
       }
@@ -379,40 +396,40 @@
         }
       }
     },
-    "printf(\"%%d\", *p); // 값: %lld" : {
+    "printf(\"%%d\", *%@); // 값: %lld" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "printf(\"%%d\", *p); // Value: %lld"
+            "value" : "printf(\"%%d\", *%1$@); // Value: %2$lld"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "printf(\"%%d\", *p); // 값: %lld"
+            "value" : "printf(\"%%d\", *%1$@); // 값: %2$lld"
           }
         }
       }
     },
-    "printf(\"%%p\", *p); // 주소: %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "printf(\"%%p\", *p); // Address: %@"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "printf(\"%%p\", *p); // 주소: %@"
-          }
-        }
-      }
-    },
-    "printf(\"%p\", *p); // 이중 포인터 (대상도 포인터임)" : {
+    "printf(\"%%p\", *%@); // 이중 포인터 (대상도 포인터임)" : {
 
+    },
+    "printf(\"%%p\", *%@); // 주소: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "printf(\"%%p\", *%1$@); // Address: %2$@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "printf(\"%%p\", *%1$@); // 주소: %2$@"
+          }
+        }
+      }
     },
     "값이 아니라 '주소'가 중요합니다.\n포인터를 드래그해서 주소를 가리켜보세요." : {
       "localizations" : {
