@@ -189,11 +189,21 @@ Task 9 병합 완료 후 사용자가 백로그 중 "레슨 2 참조 배지 가�
 - `develop`에 `--no-ff` 병합 완료 (병합 커밋 `fc2d623`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
 - `origin/develop`에 push 완료 (`ee5c1da..fc2d623`), 로컬 `feature/reference-badge-visibility` 브랜치 삭제
 
+## Task 11 진행 상황 (`feature/grid-variable-labels`)
+
+Task 10 병합 완료 후 사용자가 백로그 중 "그리드 블록에 코드 패널 변수명 표시"를 다음 착수 항목으로 선택. 라벨 동작 방식을 `AskUserQuestion`으로 확정: **누적 유지**(슬롯이 코드에서 특정 변수명으로 처음 등장하면 라벨을 부여하고, 이후 다른 슬롯을 조작해도 이미 부여된 라벨은 유지) 방식 채택. 배경·결정 근거는 `PLAN.md`의 "Task 11: 그리드 블록에 코드 패널 변수명 표시" 참고.
+
+- `develop`에서 `feature/grid-variable-labels` 브랜치 분기, `TODO.md`/`PLAN.md`에 Task 11 등록 (백로그에 있던 항목을 Task로 승격)
+- `MemorySlot.swift`: `var variableName: String? = nil` 필드 추가 (커밋 `7a48e74`)
+- `MemoryGridVM.swift`: `assignVariableName(_:to:)` private 헬퍼 추가 — 슬롯에 이미 이름이 있으면 덮어쓰지 않는 assign-once 방식. `handleTap`/`handleDrop`/`dereference`에서 `codeLog`를 갱신하는 각 지점마다 실제로 그 코드에 등장하는 이름(`p`/`target`/`ptr1`/`ptr2`/`value`/`unknown`/`val`)을 해당 슬롯에 매핑 (커밋 `96efc79`). 레슨 리셋 시 `setupLevel`이 슬롯 배열을 새로 생성하므로 누적된 라벨도 자연히 초기화됨
+- `MemoryItem.swift`: 주소 라벨 옆에 `slot.variableName`이 있을 때만 `Color(.main)` 강조색 캡션으로 표시 (커밋 `c243b7f`)
+- 매 커밋 전 `xcodebuild ... build` → BUILD SUCCEEDED 확인
+- 시뮬레이터 인터랙션 검증은 사용자가 직접 수행하기로 함 — 레슨 1/2/3 각 상호작용(탭/드래그/더블탭 역참조)마다 올바른 변수명이 부여되는지, 누적 유지가 의도대로 동작하는지(다른 슬롯 조작 후에도 라벨 유지), 레슨 리셋 시 라벨이 초기화되는지 확인 대기 중
+
 ## 다음 작업
 
-- Task 10(레슨 2 참조 배지 가시성 개선) `develop` 병합·push까지 완료
-- 다음 Task는 아래 백로그 중 선택해 착수 예정 (사용자 확인 후 브랜치 분기)
-  - 그리드 블록에 코드 패널 변수명(`p`, `target` 등) 표시
+- Task 11(그리드 블록에 코드 패널 변수명 표시) 구현 완료, 사용자 시뮬레이터 검증 대기 중
+- 이후 다음 Task는 아래 백로그 중 선택해 착수 예정 (사용자 확인 후 브랜치 분기)
   - Chapter 2~5 실제 레슨 콘텐츠 저작
   - 앱 이름/브랜딩/아이콘 재검토
   - App Store 심사 대비 항목 점검 (개인정보처리방침, 스크린샷, 지원 언어 등)
