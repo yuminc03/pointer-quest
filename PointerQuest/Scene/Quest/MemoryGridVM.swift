@@ -35,13 +35,13 @@ final class MemoryGridVM: ObservableObject {
 
       // Case A: 가리킨 곳에 값이 있는 경우 (일반 포인터)
       if let targetValue = targetSlot.value {
+        let targetName = resolveVariableName(for: targetIndex, fallback: "target")
+        let selfName = selfIndex.map { resolveVariableName(for: $0, fallback: makePointerName()) } ?? "p"
         codeLog = """
-        int target = \(targetValue); // \(targetAddress)의 값
-        int *p = &target; // 이 슬롯(\(slot.address))이 target을 가리킴
-        // p 자신도 메모리(\(slot.address))에 저장된 값(주소)입니다.
+        int \(targetName) = \(targetValue); // \(targetAddress)의 값
+        int *\(selfName) = &\(targetName); // 이 슬롯(\(slot.address))이 \(targetName)을 가리킴
+        // \(selfName) 자신도 메모리(\(slot.address))에 저장된 값(주소)입니다.
         """
-        assignVariableName("target", to: targetIndex)
-        if let selfIndex { assignVariableName("p", to: selfIndex) }
       }
       // Case B: 가리킨 곳도 포인터인 경우 (이중 포인터)
       else if targetSlot.type == .pointer {
@@ -49,33 +49,33 @@ final class MemoryGridVM: ObservableObject {
         if let ultimateAddr = targetSlot.pointingTo,
            let ultimateIndex = slots.firstIndex(where: { $0.address == ultimateAddr }),
            let ultimateValue = slots[ultimateIndex].value {
+          let ultimateName = resolveVariableName(for: ultimateIndex, fallback: "value")
+          let targetName = resolveVariableName(for: targetIndex, fallback: "ptr1")
+          let selfName = selfIndex.map { resolveVariableName(for: $0, fallback: "ptr2") } ?? "ptr2"
           codeLog = """
-          int value = \(ultimateValue); // \(ultimateAddr)의 값
-          int *ptr1 = &value; // ptr1이 value를 가리킴
-          int **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)
+          int \(ultimateName) = \(ultimateValue); // \(ultimateAddr)의 값
+          int *\(targetName) = &\(ultimateName); // \(targetName)이 \(ultimateName)를 가리킴
+          int **\(selfName) = &\(targetName); // 이중 포인터 (이 슬롯이 \(targetName)을 가리킴)
           """
-          assignVariableName("value", to: ultimateIndex)
-          assignVariableName("ptr1", to: targetIndex)
-          if let selfIndex { assignVariableName("ptr2", to: selfIndex) }
         } else {
           // 최종 대상이 없거나 값이 없는 경우 (단순 주소 표기)
+          let targetName = resolveVariableName(for: targetIndex, fallback: "ptr1")
+          let selfName = selfIndex.map { resolveVariableName(for: $0, fallback: "ptr2") } ?? "ptr2"
           codeLog = """
-          int *ptr1 = \(targetSlot.pointingTo ?? "NULL"); // \(targetAddress)
-          int **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)
+          int *\(targetName) = \(targetSlot.pointingTo ?? "NULL"); // \(targetAddress)
+          int **\(selfName) = &\(targetName); // 이중 포인터 (이 슬롯이 \(targetName)을 가리킴)
           """
-          assignVariableName("ptr1", to: targetIndex)
-          if let selfIndex { assignVariableName("ptr2", to: selfIndex) }
         }
       }
       // Case C: 가리킨 곳이 비어있는 경우
       else {
+        let targetName = resolveVariableName(for: targetIndex, fallback: "unknown")
+        let selfName = selfIndex.map { resolveVariableName(for: $0, fallback: makePointerName()) } ?? "p"
         codeLog = """
-        int unknown; // \(targetAddress)의 변수가 초기화되지 않음
-        int *p = &unknown;
-        // 경고: 'p'를 역참조하면 쓰레기 값이 반환됩니다.
+        int \(targetName); // \(targetAddress)의 변수가 초기화되지 않음
+        int *\(selfName) = &\(targetName);
+        // 경고: '\(selfName)'를 역참조하면 쓰레기 값이 반환됩니다.
         """
-        assignVariableName("unknown", to: targetIndex)
-        if let selfIndex { assignVariableName("p", to: selfIndex) }
       }
 
       // 시각적 효과: 가리키는 대상 깜빡임
@@ -85,8 +85,8 @@ final class MemoryGridVM: ObservableObject {
 
     // 2. 값을 가진 변수인 경우
     if let value = slot.value {
-      codeLog = "int val = \(value); // \(slot.address)의 값"
-      if let selfIndex { assignVariableName("val", to: selfIndex) }
+      let name = selfIndex.map { resolveVariableName(for: $0, fallback: "val") } ?? "val"
+      codeLog = "int \(name) = \(value); // \(slot.address)의 값"
     }
     // 3. 빈 슬롯인 경우
     else {
@@ -132,9 +132,9 @@ final class MemoryGridVM: ObservableObject {
         slots[targetIndex].value = randomValue
         
         // 초기화된 사실을 로그에 자연스럽게 표현
-        codeLog = "int target = \(randomValue);\nint *p = &target;\n// p 자신도 메모리(\(sourceAddress))에 저장된 값(주소)입니다."
-        assignVariableName("target", to: targetIndex)
-        assignVariableName("p", to: sourceIndex)
+        let targetName = resolveVariableName(for: targetIndex, fallback: "target")
+        let pName = resolveVariableName(for: sourceIndex, fallback: makePointerName())
+        codeLog = "int \(targetName) = \(randomValue);\nint *\(pName) = &\(targetName);\n// \(pName) 자신도 메모리(\(sourceAddress))에 저장된 값(주소)입니다."
 
         // 시각적 혼란을 줄이기 위해 타겟에도 하이라이트 효과
         highlightSlot(for: targetIndex)
@@ -145,12 +145,12 @@ final class MemoryGridVM: ObservableObject {
         // 직접 연결 자체는 허용하되(실제 C에서도 가능한 연산), 이중 포인터 연습을 유도하는 안내로 대체
         codeLog = "// 직접 연결도 가능하지만, 지금은 이중 포인터를 연습해봐요 — 이미 있는 포인터(\(existingPointerAddress))를 가리켜보세요."
       } else {
-        codeLog = "int *p = \(destinationAddress);"
-        assignVariableName("p", to: sourceIndex)
+        let pName = resolveVariableName(for: sourceIndex, fallback: makePointerName())
+        codeLog = "int *\(pName) = \(destinationAddress);"
       }
     } else {
-      codeLog = "int *p = \(destinationAddress);"
-      assignVariableName("p", to: sourceIndex)
+      let pName = resolveVariableName(for: sourceIndex, fallback: makePointerName())
+      codeLog = "int *\(pName) = \(destinationAddress);"
     }
     
     // 3. 시각적 피드백: 포인터 슬롯 강조
@@ -181,17 +181,17 @@ final class MemoryGridVM: ObservableObject {
       return
     }
 
-    assignVariableName("p", to: pointerIndex)
+    let pName = resolveVariableName(for: pointerIndex, fallback: makePointerName())
 
     // 로그 업데이트
     let targetSlot = slots[targetIndex]
     if let value = targetSlot.value {
-      codeLog = "printf(\"%d\", *p); // 값: \(value)"
+      codeLog = "printf(\"%d\", *\(pName)); // 값: \(value)"
     } else if targetSlot.type == .pointer {
       // 이중 포인터인 경우 더 명확한 로그 제공
-      codeLog = "printf(\"%p\", *p); // 이중 포인터 (대상도 포인터임)"
+      codeLog = "printf(\"%p\", *\(pName)); // 이중 포인터 (대상도 포인터임)"
     } else {
-      codeLog = "printf(\"%p\", *p); // 주소: \(targetAddr)"
+      codeLog = "printf(\"%p\", *\(pName)); // 주소: \(targetAddr)"
     }
     
     // 3. 대상 슬롯 하이라이트 (포인터를 따라간 효과)
@@ -205,11 +205,25 @@ final class MemoryGridVM: ObservableObject {
     codeLog = hintCode
   }
   
-  /// `codeLog`에 등장한 변수명을 슬롯에 부여한다. 이미 이름이 있는 슬롯은 덮어쓰지 않아
-  /// 상호작용을 거듭해도 라벨이 바뀌지 않고 누적되어 유지된다.
-  private func assignVariableName(_ name: String, to index: Int) {
-    guard slots[index].variableName == nil else { return }
+  /// 다음에 새로 부여할 범용 포인터 변수명(p1, p2, p3, ...)의 번호.
+  /// 같은 레슨 안에서 여러 포인터가 만들어질 때(ex: 체인 연결) 전부 "p"로 겹쳐 보이지 않도록 한다.
+  private var nextPointerNameIndex = 1
+
+  /// 슬롯에 표시할 변수명을 정하고 `codeLog`에서도 함께 쓸 수 있도록 반환한다.
+  /// 1) 슬롯에 이미 이름이 있으면 그대로 재사용한다 (누적 유지 — 상호작용을 거듭해도 라벨이 바뀌지 않음)
+  /// 2) 레슨 블루프린트가 이 슬롯에 이름을 선언해뒀다면(`SlotSeed.variableName`) 그 이름을 우선 사용한다
+  /// 3) 위 두 경우가 아니면 `fallback`(주로 범용 이름)을 사용한다
+  private func resolveVariableName(for index: Int, fallback: @autoclosure () -> String) -> String {
+    if let existing = slots[index].variableName { return existing }
+    let name = currentLesson.blueprint.seeds.first(where: { $0.index == index })?.variableName ?? fallback()
     slots[index].variableName = name
+    return name
+  }
+
+  /// 레슨이 이름을 선언하지 않은 슬롯에 붙일 범용 포인터 이름(p1, p2, ...)을 생성한다.
+  private func makePointerName() -> String {
+    defer { nextPointerNameIndex += 1 }
+    return "p\(nextPointerNameIndex)"
   }
 
   /// 에러 발생 시 시각적 피드백 (흔들림 + 빨간색)
@@ -255,6 +269,7 @@ final class MemoryGridVM: ObservableObject {
 
     codeLog = level.blueprint.initialCodeLog
     isSuccess = false
+    nextPointerNameIndex = 1
   }
   
   /// 현재 상태가 레슨의 클리어 조건(블루프린트의 `successCondition`)을 만족하는지 검사
