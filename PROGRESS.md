@@ -198,7 +198,11 @@ Task 10 병합 완료 후 사용자가 백로그 중 "그리드 블록에 코드
 - `MemoryGridVM.swift`: `assignVariableName(_:to:)` private 헬퍼 추가 — 슬롯에 이미 이름이 있으면 덮어쓰지 않는 assign-once 방식. `handleTap`/`handleDrop`/`dereference`에서 `codeLog`를 갱신하는 각 지점마다 실제로 그 코드에 등장하는 이름(`p`/`target`/`ptr1`/`ptr2`/`value`/`unknown`/`val`)을 해당 슬롯에 매핑 (커밋 `96efc79`). 레슨 리셋 시 `setupLevel`이 슬롯 배열을 새로 생성하므로 누적된 라벨도 자연히 초기화됨
 - `MemoryItem.swift`: 주소 라벨 옆에 `slot.variableName`이 있을 때만 `Color(.main)` 강조색 캡션으로 표시 (커밋 `c243b7f`)
 - 매 커밋 전 `xcodebuild ... build` → BUILD SUCCEEDED 확인
-- 시뮬레이터 인터랙션 검증은 사용자가 직접 수행하기로 함 — 레슨 1/2/3 각 상호작용(탭/드래그/더블탭 역참조)마다 올바른 변수명이 부여되는지, 누적 유지가 의도대로 동작하는지(다른 슬롯 조작 후에도 라벨 유지), 레슨 리셋 시 라벨이 초기화되는지 확인 대기 중
+- 1차 구현에 대한 사용자 시뮬레이터 검증(2026-08-11) 결과, 레슨 3(체인 연결)에서 여러 포인터 슬롯이 전부 동일하게 `p`로 표시되어 헷갈린다는 피드백을 받음. 두 가지 수정 방향(레슨별 의미 있는 변수명 선언 vs 범용 번호 매김만 적용)을 `AskUserQuestion`으로 확인해 **레슨별 의미 있는 변수명 선언**으로 확정
+- `Lesson.swift`: `SlotSeed`에 `variableName: String?` 필드 추가, 레슨 3의 4개 슬롯을 `start`/`nodeA`/`nodeB`/`treasure`로 명명 (커밋 `188f464`)
+- `MemoryGridVM.swift`: 기존 `assignVariableName(_:to:)`를 `resolveVariableName(for:fallback:)`으로 교체 — ①슬롯에 이미 이름이 있으면 재사용(누적 유지) ②레슨 블루프린트가 이름을 선언했다면 그 이름 사용 ③둘 다 없으면 `makePointerName()`으로 `p1`/`p2`/`p3`처럼 번호를 매겨 새로 생성. 이름을 선언하지 않은 레슨/샌드박스에서도 같은 상호작용 중 여러 포인터가 생기면 자동으로 번호가 구분되고, `codeLog` 텍스트도 항상 실제 부여된 이름을 그대로 사용하도록 통일해 코드 문구와 그리드 라벨이 어긋나던 부분(예: 레슨 1 Case A 재탭, 역참조)도 함께 해소 (커밋 `9b87535`)
+- `nextPointerNameIndex` 카운터는 `setupLevel`에서 함께 초기화되어 레슨 리셋 시 `p1`부터 다시 시작함
+- `TODO.md`에 체크리스트 항목 반영 완료, 2차 시뮬레이터 검증(레슨 3 라벨 구분, 레슨 1/2 회귀, 리셋 시 초기화) 대기 중
 
 ## 다음 작업
 

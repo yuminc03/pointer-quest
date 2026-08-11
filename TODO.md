@@ -89,9 +89,10 @@ Main 화면 카드 페이징 UI 개선 (Apple HIG 준수 + 반응형 대응)
 
 그리드 블록에 코드 패널(`CodeFeedbackView`)에서 쓰이는 변수명(예: `p`, `target`) 함께 표시. 2026-07-30 제안된 백로그 항목을 Task 10 병합 완료 후 다음 착수 항목으로 승격.
 
-- [ ] `MemorySlot`에 `variableName: String?` 필드 추가
-- [ ] `MemoryGridVM`의 각 인터랙션(`handleTap`/`handleDrop`/`dereference`)에서 `codeLog`에 등장하는 변수명을 해당 슬롯에 부여 — 슬롯에 이미 이름이 있으면 덮어쓰지 않고 유지(누적 방식으로 그리드 전체가 "주소 ↔ 변수명 지도"처럼 채워지도록 함), 레슨 리셋 시에는 `setupLevel`이 슬롯을 새로 생성하므로 자연히 초기화됨
-- [ ] `MemoryItem`에 변수명 라벨 표시
+- [x] `MemorySlot`에 `variableName: String?` 필드 추가 (커밋 `7a48e74`)
+- [x] `MemoryGridVM`의 각 인터랙션(`handleTap`/`handleDrop`/`dereference`)에서 `codeLog`에 등장하는 변수명을 해당 슬롯에 부여 — 슬롯에 이미 이름이 있으면 덮어쓰지 않고 유지(누적 방식으로 그리드 전체가 "주소 ↔ 변수명 지도"처럼 채워지도록 함), 레슨 리셋 시에는 `setupLevel`이 슬롯을 새로 생성하므로 자연히 초기화됨 (커밋 `96efc79`)
+- [x] `MemoryItem`에 변수명 라벨 표시 (커밋 `c243b7f`)
+- [x] (1차 사용자 검증 후속) 레슨 3(체인 연결)에서 여러 포인터 슬롯이 전부 `p`로 겹쳐 표시되는 문제 수정 — `SlotSeed.variableName`으로 레슨이 직접 의미 있는 이름(`start`/`nodeA`/`nodeB`/`treasure`)을 선언할 수 있게 하고, 선언이 없는 슬롯은 `p1`/`p2`/`p3`처럼 번호로 자동 구분. `codeLog` 텍스트도 항상 실제 부여된 이름을 쓰도록 통일해 코드 문구와 그리드 라벨 불일치도 함께 해소 (커밋 `188f464`, `9b87535`)
 
 ## 백로그
 
