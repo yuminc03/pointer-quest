@@ -21,7 +21,10 @@ let address: String
   var isError = false
   /// 다른 포인터가 이미 이 슬롯을 가리키고 있음을 나타내는 배지용 상태값 (접근을 차단하지 않음)
   var isReferenced = false
-  
+  /// 코드 패널(`codeLog`)에서 이 슬롯을 가리킬 때 쓰인 변수명 (ex: "p", "target")
+  /// 한 번 부여되면 다른 상호작용으로 덮어써지지 않고 유지된다
+  var variableName: String? = nil
+
   /// 메모리 슬롯의 역할
   enum SlotType {
     /// 일반 변수

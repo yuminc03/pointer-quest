@@ -189,11 +189,28 @@ Task 9 병합 완료 후 사용자가 백로그 중 "레슨 2 참조 배지 가�
 - `develop`에 `--no-ff` 병합 완료 (병합 커밋 `fc2d623`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
 - `origin/develop`에 push 완료 (`ee5c1da..fc2d623`), 로컬 `feature/reference-badge-visibility` 브랜치 삭제
 
+## Task 11 진행 상황 (`feature/grid-variable-labels`)
+
+Task 10 병합 완료 후 사용자가 백로그 중 "그리드 블록에 코드 패널 변수명 표시"를 다음 착수 항목으로 선택. 라벨 동작 방식을 `AskUserQuestion`으로 확정: **누적 유지**(슬롯이 코드에서 특정 변수명으로 처음 등장하면 라벨을 부여하고, 이후 다른 슬롯을 조작해도 이미 부여된 라벨은 유지) 방식 채택. 배경·결정 근거는 `PLAN.md`의 "Task 11: 그리드 블록에 코드 패널 변수명 표시" 참고.
+
+- `develop`에서 `feature/grid-variable-labels` 브랜치 분기, `TODO.md`/`PLAN.md`에 Task 11 등록 (백로그에 있던 항목을 Task로 승격)
+- `MemorySlot.swift`: `var variableName: String? = nil` 필드 추가 (커밋 `7a48e74`)
+- `MemoryGridVM.swift`: `assignVariableName(_:to:)` private 헬퍼 추가 — 슬롯에 이미 이름이 있으면 덮어쓰지 않는 assign-once 방식. `handleTap`/`handleDrop`/`dereference`에서 `codeLog`를 갱신하는 각 지점마다 실제로 그 코드에 등장하는 이름(`p`/`target`/`ptr1`/`ptr2`/`value`/`unknown`/`val`)을 해당 슬롯에 매핑 (커밋 `96efc79`). 레슨 리셋 시 `setupLevel`이 슬롯 배열을 새로 생성하므로 누적된 라벨도 자연히 초기화됨
+- `MemoryItem.swift`: 주소 라벨 옆에 `slot.variableName`이 있을 때만 `Color(.main)` 강조색 캡션으로 표시 (커밋 `c243b7f`)
+- 매 커밋 전 `xcodebuild ... build` → BUILD SUCCEEDED 확인
+- 1차 구현에 대한 사용자 시뮬레이터 검증(2026-08-11) 결과, 레슨 3(체인 연결)에서 여러 포인터 슬롯이 전부 동일하게 `p`로 표시되어 헷갈린다는 피드백을 받음. 두 가지 수정 방향(레슨별 의미 있는 변수명 선언 vs 범용 번호 매김만 적용)을 `AskUserQuestion`으로 확인해 **레슨별 의미 있는 변수명 선언**으로 확정
+- `Lesson.swift`: `SlotSeed`에 `variableName: String?` 필드 추가, 레슨 3의 4개 슬롯을 `start`/`nodeA`/`nodeB`/`treasure`로 명명 (커밋 `188f464`)
+- `MemoryGridVM.swift`: 기존 `assignVariableName(_:to:)`를 `resolveVariableName(for:fallback:)`으로 교체 — ①슬롯에 이미 이름이 있으면 재사용(누적 유지) ②레슨 블루프린트가 이름을 선언했다면 그 이름 사용 ③둘 다 없으면 `makePointerName()`으로 `p1`/`p2`/`p3`처럼 번호를 매겨 새로 생성. 이름을 선언하지 않은 레슨/샌드박스에서도 같은 상호작용 중 여러 포인터가 생기면 자동으로 번호가 구분되고, `codeLog` 텍스트도 항상 실제 부여된 이름을 그대로 사용하도록 통일해 코드 문구와 그리드 라벨이 어긋나던 부분(예: 레슨 1 Case A 재탭, 역참조)도 함께 해소 (커밋 `9b87535`)
+- `nextPointerNameIndex` 카운터는 `setupLevel`에서 함께 초기화되어 레슨 리셋 시 `p1`부터 다시 시작함
+- 2차 시뮬레이터 검증(2026-08-11)에서 두 가지 후속 문제 발견: (1) 레슨 3에서 이미 이름이 있는 슬롯(`nodeB` 등)을 연결해도 `int *nodeA = 0x702C;`처럼 숫자 주소로 표시됨 (2) 레슨 1에서 연결 직후 목적지 라벨이 상호작용 순서에 따라 `val`/`target`으로 들쭉날쭉함. 원인은 동일: `handleDrop`의 일반 연결 분기(`else`)가 소스(포인터) 이름만 부여하고 목적지 슬롯은 이름을 정하지 않은 채 주소 리터럴을 그대로 코드에 넣고 있었음
+- `resolveVariableName`으로 목적지 이름도 연결 시점에 즉시 확정하고 `"int *p = 0x702C;"` 대신 `"int *p = &destName;"` 형태로 바꿔 두 문제를 함께 해결 (커밋 `1cca04d`)
+- `TODO.md`에 체크리스트 항목 반영 완료
+- 3차 사용자 시뮬레이터 검증(2026-08-11) 완료: 레슨 3 연결 코드가 `&nodeB` 형태로 정상 표시, 레슨 1 연결 직후 라벨 일관성, 리셋 시 `p1`부터 재시작 모두 정상 확인 — Task 11 완료로 확정
+
 ## 다음 작업
 
-- Task 10(레슨 2 참조 배지 가시성 개선) `develop` 병합·push까지 완료
-- 다음 Task는 아래 백로그 중 선택해 착수 예정 (사용자 확인 후 브랜치 분기)
-  - 그리드 블록에 코드 패널 변수명(`p`, `target` 등) 표시
+- Task 11(그리드 블록에 코드 패널 변수명 표시) 구현 완료, 사용자 시뮬레이터 검증 대기 중
+- 이후 다음 Task는 아래 백로그 중 선택해 착수 예정 (사용자 확인 후 브랜치 분기)
   - Chapter 2~5 실제 레슨 콘텐츠 저작
   - 앱 이름/브랜딩/아이콘 재검토
   - App Store 심사 대비 항목 점검 (개인정보처리방침, 스크린샷, 지원 언어 등)

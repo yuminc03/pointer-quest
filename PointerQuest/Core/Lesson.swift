@@ -60,10 +60,10 @@ struct LessonData {
           iconName: "link",
           blueprint: .init(
             seeds: [
-              .init(index: 15, type: .value, value: 999),
-              .init(index: 11, type: .pointer),
-              .init(index: 5, type: .pointer),
-              .init(index: 0, type: .pointer)
+              .init(index: 15, type: .value, value: 999, variableName: "treasure"),
+              .init(index: 11, type: .pointer, variableName: "nodeB"),
+              .init(index: 5, type: .pointer, variableName: "nodeA"),
+              .init(index: 0, type: .pointer, variableName: "start")
             ],
             successCondition: .chain(indices: [0, 5, 11, 15]),
             initialCodeLog: "// 레슨 3: Start(0x7000)에서 Treasure(0x703C)까지 체인을 만드세요."
@@ -131,6 +131,9 @@ struct SlotSeed: Hashable {
   var pointingToIndex: Int? = nil
   /// 다른 포인터가 이미 이 슬롯을 가리키고 있음을 나타내는 배지용 플래그 (접근 차단 없음)
   var isReferenced: Bool = false
+  /// 이 슬롯이 코드 상에서 쓰이길 원하는 변수명 (ex: 체인 레슨의 "start"/"nodeA"/"nodeB"/"treasure")
+  /// 지정하지 않으면 `MemoryGridVM`이 범용 이름(target/p1/p2/... 등)을 자동으로 부여한다
+  var variableName: String? = nil
 }
 
 /// 레슨의 클리어 조건을 표현하는 판정 규칙

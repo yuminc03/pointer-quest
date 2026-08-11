@@ -7,10 +7,19 @@ struct MemoryItem: View {
   
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
-      Text(slot.address)
-        .font(.system(.caption, design: .monospaced))
-        .foregroundStyle(.secondary)
-      
+      HStack(spacing: 4) {
+        Text(slot.address)
+          .font(.system(.caption, design: .monospaced))
+          .foregroundStyle(.secondary)
+
+        if let variableName = slot.variableName {
+          Text(variableName)
+            .font(.system(.caption2, design: .monospaced))
+            .fontWeight(.bold)
+            .foregroundStyle(Color(.main))
+        }
+      }
+
       Spacer()
       
       HStack {
