@@ -24,14 +24,15 @@ final class MemoryGridVM: ObservableObject {
   /// 슬롯 탭 처리
   func handleTap(_ slot: MemorySlot) {
     print("클릭된 메모리 주소: \(slot.address)")
+    let selfIndex = slots.firstIndex(where: { $0.address == slot.address })
 
     // 1. 포인터인 경우 (어딘가를 가리키고 있음)
     if let targetAddress = slot.pointingTo,
        let targetIndex = slots.firstIndex(where: { $0.address == targetAddress })
     {
-      
+
       let targetSlot = slots[targetIndex]
-      
+
       // Case A: 가리킨 곳에 값이 있는 경우 (일반 포인터)
       if let targetValue = targetSlot.value {
         codeLog = """
@@ -39,6 +40,8 @@ final class MemoryGridVM: ObservableObject {
         int *p = &target; // 이 슬롯(\(slot.address))이 target을 가리킴
         // p 자신도 메모리(\(slot.address))에 저장된 값(주소)입니다.
         """
+        assignVariableName("target", to: targetIndex)
+        if let selfIndex { assignVariableName("p", to: selfIndex) }
       }
       // Case B: 가리킨 곳도 포인터인 경우 (이중 포인터)
       else if targetSlot.type == .pointer {
@@ -51,12 +54,17 @@ final class MemoryGridVM: ObservableObject {
           int *ptr1 = &value; // ptr1이 value를 가리킴
           int **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)
           """
+          assignVariableName("value", to: ultimateIndex)
+          assignVariableName("ptr1", to: targetIndex)
+          if let selfIndex { assignVariableName("ptr2", to: selfIndex) }
         } else {
           // 최종 대상이 없거나 값이 없는 경우 (단순 주소 표기)
           codeLog = """
           int *ptr1 = \(targetSlot.pointingTo ?? "NULL"); // \(targetAddress)
           int **ptr2 = &ptr1; // 이중 포인터 (이 슬롯이 ptr1을 가리킴)
           """
+          assignVariableName("ptr1", to: targetIndex)
+          if let selfIndex { assignVariableName("ptr2", to: selfIndex) }
         }
       }
       // Case C: 가리킨 곳이 비어있는 경우
@@ -66,16 +74,19 @@ final class MemoryGridVM: ObservableObject {
         int *p = &unknown;
         // 경고: 'p'를 역참조하면 쓰레기 값이 반환됩니다.
         """
+        assignVariableName("unknown", to: targetIndex)
+        if let selfIndex { assignVariableName("p", to: selfIndex) }
       }
-      
+
       // 시각적 효과: 가리키는 대상 깜빡임
       highlightSlot(for: targetIndex)
       return
     }
-    
+
     // 2. 값을 가진 변수인 경우
     if let value = slot.value {
       codeLog = "int val = \(value); // \(slot.address)의 값"
+      if let selfIndex { assignVariableName("val", to: selfIndex) }
     }
     // 3. 빈 슬롯인 경우
     else {
@@ -122,7 +133,9 @@ final class MemoryGridVM: ObservableObject {
         
         // 초기화된 사실을 로그에 자연스럽게 표현
         codeLog = "int target = \(randomValue);\nint *p = &target;\n// p 자신도 메모리(\(sourceAddress))에 저장된 값(주소)입니다."
-        
+        assignVariableName("target", to: targetIndex)
+        assignVariableName("p", to: sourceIndex)
+
         // 시각적 혼란을 줄이기 위해 타겟에도 하이라이트 효과
         highlightSlot(for: targetIndex)
       } else if slots[targetIndex].isReferenced,
@@ -133,9 +146,11 @@ final class MemoryGridVM: ObservableObject {
         codeLog = "// 직접 연결도 가능하지만, 지금은 이중 포인터를 연습해봐요 — 이미 있는 포인터(\(existingPointerAddress))를 가리켜보세요."
       } else {
         codeLog = "int *p = \(destinationAddress);"
+        assignVariableName("p", to: sourceIndex)
       }
     } else {
       codeLog = "int *p = \(destinationAddress);"
+      assignVariableName("p", to: sourceIndex)
     }
     
     // 3. 시각적 피드백: 포인터 슬롯 강조
@@ -165,7 +180,9 @@ final class MemoryGridVM: ObservableObject {
       triggerError(for: pointerIndex)
       return
     }
-    
+
+    assignVariableName("p", to: pointerIndex)
+
     // 로그 업데이트
     let targetSlot = slots[targetIndex]
     if let value = targetSlot.value {
@@ -188,6 +205,13 @@ final class MemoryGridVM: ObservableObject {
     codeLog = hintCode
   }
   
+  /// `codeLog`에 등장한 변수명을 슬롯에 부여한다. 이미 이름이 있는 슬롯은 덮어쓰지 않아
+  /// 상호작용을 거듭해도 라벨이 바뀌지 않고 누적되어 유지된다.
+  private func assignVariableName(_ name: String, to index: Int) {
+    guard slots[index].variableName == nil else { return }
+    slots[index].variableName = name
+  }
+
   /// 에러 발생 시 시각적 피드백 (흔들림 + 빨간색)
   private func triggerError(for index: Int) {
     slots[index].isError = true
