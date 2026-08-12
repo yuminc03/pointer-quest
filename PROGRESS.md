@@ -231,7 +231,7 @@ Task 11 병합 완료 후 사용자가 백로그 중 "SwiftUI 코드를 사용�
   - 모델에 종속된 enum은 타입 안에 중첩 + case별 `///`, 정적 데이터는 `static let` 배열 + `.init(...)` 축약
   - 모든 View 파일 하단에 `#Preview`
 - `STYLE_GUIDE.md` 신설 — 위 관례를 11개 항목으로 문서화(로컬라이제이션 규칙은 Task 3~9에서 반복 발견한 함정(`Text(String)` 비-로컬라이즈 오버로드, `.uppercased()` 대신 `.textCase(.uppercase)`)까지 포함) (커밋 `f49c84a`)
-- `TODO.md`에 Task 12 등록 (백로그 항목 승격) (커밋 `646819d`)
+- `TODO.md`에 Task 12 등록 (백로그 항목 승격) (커밋 `646819d`), `PLAN.md`에 Task 12 섹션(배경/진단/변경 방향/Non-goals) 추가 (커밋 `fa4202d`)
 - 자동 포매터 도입은 범위에서 제외 — 대문자 계산 프로퍼티 같은 이 프로젝트 고유 관례를 표준 포매터가 존중하지 않음
 
 ### 초벌 진단 (코드 정리 착수 전 확인한 차이)
@@ -244,9 +244,8 @@ Claude가 신설한 파일들(`CCodeHighlighter.swift`, `LessonProgressStore.swi
 
 ## 다음 작업 (2026-08-13 재개 지점)
 
-현재 브랜치 `feature/swiftui-style-cleanup`, 워킹 트리 클린. 커밋 3개(`f49c84a`, `646819d`, 이 문서 커밋) 모두 문서 변경만이라 Swift 코드는 `develop` 병합 시점(`6a80e39`) 상태 그대로다.
+현재 브랜치 `feature/swiftui-style-cleanup`. 커밋 4개(`f49c84a`, `646819d`, `fa4202d`, 이 문서 커밋) 모두 문서 변경만이라 Swift 코드는 `develop` 병합 시점(`6a80e39`) 상태 그대로이고, 브랜치 상태로 `xcodebuild ... build` → BUILD SUCCEEDED 확인해 두었다. 아직 `origin`에는 푸시하지 않았다.
 
-- `PLAN.md`에 Task 12 섹션(배경/진단/변경 방향/Non-goals) 추가 — 작성했으나 사용자가 커밋 전 중단을 요청해 반영하지 않았음. 재개 시 다시 작성 필요
 - `STYLE_GUIDE.md` 기준으로 코드 정리 착수. 대상 파일 후보(Task 1~11 신설·대폭 수정분)
   - `DesignSystem/Component/CCodeHighlighter.swift` (Task 9 신설)
   - `Scene/Quest/Entity/GridInteractionHintOverlay.swift` (Task 9 신설)
