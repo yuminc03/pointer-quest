@@ -215,10 +215,53 @@ Task 10 병합 완료 후 사용자가 백로그 중 "그리드 블록에 코드
 - 병합 과정에서 `codeLog` 문자열 리터럴 변경으로 `Localizable.xcstrings`에 새 카탈로그 키가 자동 추출된 것을 확인 — 자연어(한국어 주석)를 포함한 8개 키에 `en` 번역을 채워 별도 커밋 (`a5eefc4`)
 - `origin/develop`에 push 완료, 로컬 `feature/grid-variable-labels` 브랜치 삭제
 
-## 다음 작업
+## Task 12 진행 상황 (`feature/swiftui-style-cleanup`)
 
-- Task 11(그리드 블록에 코드 패널 변수명 표시) `develop` 병합·push까지 완료
-- 다음 Task는 아래 백로그 중 선택해 착수 예정 (사용자 확인 후 브랜치 분기)
-  - Chapter 2~5 실제 레슨 콘텐츠 저작
-  - 앱 이름/브랜딩/아이콘 재검토
-  - App Store 심사 대비 항목 점검 (개인정보처리방침, 스크린샷, 지원 언어 등)
+Task 11 병합 완료 후 사용자가 백로그 중 "SwiftUI 코드를 사용자 코딩 스타일에 맞게 정리"를 다음 착수 항목으로 선택. 정리 범위는 `AskUserQuestion`으로 **Task 1~11에서 Claude가 신설·대폭 수정한 파일 위주**로 확정(전체 25개 파일 일괄 정리는 diff·회귀 검증 부담이 커 제외), 스타일 기준은 **가이드 문서를 이 참에 함께 작성**하는 방향으로 확정.
+
+- `develop`에서 `feature/swiftui-style-cleanup` 브랜치 분기
+- 선행 조건 확인: 리포에 스타일 가이드 문서도, `.swiftlint.yml`/`.swift-format` 등 포매터 설정도 없음을 확인 — 스타일이 전적으로 저자의 암묵적 관례로만 존재했던 상태
+- git tag `1.0`(`a85ba75`, 2026-02-14, 당시엔 `.swiftpm` 패키지 구조) 전체 Swift 소스를 읽어 실제 반복되는 관례를 추출
+  - 들여쓰기 2 space, `import` 뒤 빈 줄 한 개
+  - 타입·주요 프로퍼티에 `///` 한국어 문서 주석, 흐름 설명은 `//` 한국어
+  - View 내부 선언 순서: 프로퍼티 래퍼 → 주입 `let` → `init` → `private let` 상수 → `body` → `private func` 헬퍼
+  - 서브뷰는 `private extension` 안에 파라미터 없으면 **대문자 계산 프로퍼티**(`Title`/`Cards`/`ContinueButton`), 있으면 소문자 함수
+  - 스택 자식 뷰 사이에 빈 줄(특히 `Spacer()` 앞뒤), 모디파이어 체인 중간에는 빈 줄 없음
+  - 인자가 길면 한 줄에 하나씩 개행, 트레일링 클로저(`Button { } label: { }`) 사용
+  - 모델에 종속된 enum은 타입 안에 중첩 + case별 `///`, 정적 데이터는 `static let` 배열 + `.init(...)` 축약
+  - 모든 View 파일 하단에 `#Preview`
+- `STYLE_GUIDE.md` 신설 — 위 관례를 11개 항목으로 문서화(로컬라이제이션 규칙은 Task 3~9에서 반복 발견한 함정(`Text(String)` 비-로컬라이즈 오버로드, `.uppercased()` 대신 `.textCase(.uppercase)`)까지 포함) (커밋 `f49c84a`)
+- `TODO.md`에 Task 12 등록 (백로그 항목 승격) (커밋 `646819d`)
+- 자동 포매터 도입은 범위에서 제외 — 대문자 계산 프로퍼티 같은 이 프로젝트 고유 관례를 표준 포매터가 존중하지 않음
+
+### 초벌 진단 (코드 정리 착수 전 확인한 차이)
+
+Claude가 신설한 파일들(`CCodeHighlighter.swift`, `LessonProgressStore.swift`, `AppLanguage.swift`, `GridInteractionHintOverlay.swift`, `LessonRow.swift` 등)은 2-space·한국어 `///` 주석은 지켰으나 다음이 원본 관례와 어긋난다.
+
+- 뷰 본문/함수 본문의 **빈 줄이 원본보다 적어 밀도가 높음** (원본은 스택 자식마다 빈 줄로 띄움)
+- `guard let ... else { return }`을 한 줄로 붙여 쓴 곳이 많음 (원본은 조건이 길면 `else`를 다음 줄로 내림)
+- 신규 View 파일의 `#Preview` 누락 여부는 아직 정밀 확인하지 않음
+
+## 다음 작업 (2026-08-13 재개 지점)
+
+현재 브랜치 `feature/swiftui-style-cleanup`, 워킹 트리 클린. 커밋 3개(`f49c84a`, `646819d`, 이 문서 커밋) 모두 문서 변경만이라 Swift 코드는 `develop` 병합 시점(`6a80e39`) 상태 그대로다.
+
+- `PLAN.md`에 Task 12 섹션(배경/진단/변경 방향/Non-goals) 추가 — 작성했으나 사용자가 커밋 전 중단을 요청해 반영하지 않았음. 재개 시 다시 작성 필요
+- `STYLE_GUIDE.md` 기준으로 코드 정리 착수. 대상 파일 후보(Task 1~11 신설·대폭 수정분)
+  - `DesignSystem/Component/CCodeHighlighter.swift` (Task 9 신설)
+  - `Scene/Quest/Entity/GridInteractionHintOverlay.swift` (Task 9 신설)
+  - `Core/LessonProgressStore.swift` (Task 5 신설)
+  - `App/AppLanguage.swift` (Task 3 신설)
+  - `Scene/Main/Entity/LessonRow.swift` (Task 7 전면 재작성)
+  - `Scene/Main/MainView.swift` (Task 7 전면 재작성)
+  - `Scene/Quest/MemoryGridVM.swift` (Task 2/9/11에서 대폭 수정, 파일 최대)
+  - `Core/Lesson.swift` (Task 1/6/9/11에서 대폭 수정)
+  - `Scene/Quest/Entity/MemoryItem.swift` (Task 9/10/11에서 수정)
+- 정리는 **순수 스타일 변경만** 수행하고 동작은 바꾸지 않는다. 커밋은 파일/규칙 단위 최소 단위로 나누고 매 커밋마다 `xcodebuild ... build` → BUILD SUCCEEDED 확인 (Task 4~11과 동일한 `git stash push --keep-index` 격리 패턴)
+- 코드 정리 완료 후 사용자 시뮬레이터 회귀 검증 → `develop` `--no-ff` 병합 → push → 로컬 브랜치 삭제
+
+이후 남은 백로그는 다음과 같다.
+
+- Chapter 2~5 실제 레슨 콘텐츠 저작
+- 앱 이름/브랜딩/아이콘 재검토
+- App Store 심사 대비 항목 점검 (개인정보처리방침, 스크린샷, 지원 언어 등)
