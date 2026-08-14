@@ -4,7 +4,7 @@ struct MainView: View {
   private let chapterColorPalette: [[Color]] = [
     [Color(.main), Color(.lightBlue)],
     [Color(.green), Color(.lightGreen)],
-    [Color(.red), Color(.lightRed)],
+    [Color(.red), Color(.lightRed)]
   ]
 
   var body: some View {
@@ -19,7 +19,10 @@ struct MainView: View {
           ForEach(Array(LessonData.chapters.enumerated()), id: \.element.id) { index, chapter in
             Section {
               ForEach(chapter.lessons) { lesson in
-                lessonRow(lesson: lesson, colors: chapterColorPalette[index % chapterColorPalette.count])
+                lessonRow(
+                  lesson: lesson,
+                  colors: chapterColorPalette[index % chapterColorPalette.count]
+                )
               }
             } header: {
               Text("챕터 \(chapter.id)") + Text(" · ") + Text(chapter.title)

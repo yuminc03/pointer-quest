@@ -215,10 +215,58 @@ Task 10 병합 완료 후 사용자가 백로그 중 "그리드 블록에 코드
 - 병합 과정에서 `codeLog` 문자열 리터럴 변경으로 `Localizable.xcstrings`에 새 카탈로그 키가 자동 추출된 것을 확인 — 자연어(한국어 주석)를 포함한 8개 키에 `en` 번역을 채워 별도 커밋 (`a5eefc4`)
 - `origin/develop`에 push 완료, 로컬 `feature/grid-variable-labels` 브랜치 삭제
 
+## Task 12 진행 상황 (`feature/swiftui-style-cleanup`)
+
+Task 11 병합 완료 후 사용자가 백로그 중 "SwiftUI 코드를 사용자 코딩 스타일에 맞게 정리"를 다음 착수 항목으로 선택. 정리 범위는 `AskUserQuestion`으로 **Task 1~11에서 Claude가 신설·대폭 수정한 파일 위주**로 확정(전체 25개 파일 일괄 정리는 diff·회귀 검증 부담이 커 제외), 스타일 기준은 **가이드 문서를 이 참에 함께 작성**하는 방향으로 확정.
+
+- `develop`에서 `feature/swiftui-style-cleanup` 브랜치 분기
+- 선행 조건 확인: 리포에 스타일 가이드 문서도, `.swiftlint.yml`/`.swift-format` 등 포매터 설정도 없음을 확인 — 스타일이 전적으로 저자의 암묵적 관례로만 존재했던 상태
+- git tag `1.0`(`a85ba75`, 2026-02-14, 당시엔 `.swiftpm` 패키지 구조) 전체 Swift 소스를 읽어 실제 반복되는 관례를 추출
+  - 들여쓰기 2 space, `import` 뒤 빈 줄 한 개
+  - 타입·주요 프로퍼티에 `///` 한국어 문서 주석, 흐름 설명은 `//` 한국어
+  - View 내부 선언 순서: 프로퍼티 래퍼 → 주입 `let` → `init` → `private let` 상수 → `body` → `private func` 헬퍼
+  - 서브뷰는 `private extension` 안에 파라미터 없으면 **대문자 계산 프로퍼티**(`Title`/`Cards`/`ContinueButton`), 있으면 소문자 함수
+  - 스택 자식 뷰 사이에 빈 줄(특히 `Spacer()` 앞뒤), 모디파이어 체인 중간에는 빈 줄 없음
+  - 인자가 길면 한 줄에 하나씩 개행, 트레일링 클로저(`Button { } label: { }`) 사용
+  - 모델에 종속된 enum은 타입 안에 중첩 + case별 `///`, 정적 데이터는 `static let` 배열 + `.init(...)` 축약
+  - 모든 View 파일 하단에 `#Preview`
+- `STYLE_GUIDE.md` 신설 — 위 관례를 11개 항목으로 문서화(로컬라이제이션 규칙은 Task 3~9에서 반복 발견한 함정(`Text(String)` 비-로컬라이즈 오버로드, `.uppercased()` 대신 `.textCase(.uppercase)`)까지 포함) (커밋 `f49c84a`)
+- `TODO.md`에 Task 12 등록 (백로그 항목 승격) (커밋 `646819d`), `PLAN.md`에 Task 12 섹션(배경/진단/변경 방향/Non-goals) 추가 (커밋 `fa4202d`)
+- 자동 포매터 도입은 범위에서 제외 — 대문자 계산 프로퍼티 같은 이 프로젝트 고유 관례를 표준 포매터가 존중하지 않음
+
+### 진단 (실측 완료)
+
+Claude가 신설한 파일들(`CCodeHighlighter.swift`, `LessonProgressStore.swift`, `AppLanguage.swift`, `GridInteractionHintOverlay.swift`, `LessonRow.swift` 등)은 2-space·한국어 `///` 주석은 지켰다. 착수 전 초벌 진단에서는 이탈 후보를 3가지로 봤으나, 전체 소스를 실측한 결과 **2가지는 이탈이 아니었고 실제 이탈은 1가지로 좁혀졌다**.
+
+- **실제 이탈** — 뷰 본문/함수 본문의 **빈 줄이 원본보다 적어 밀도가 높음** (원본은 스택 자식마다, 특히 `Spacer()` 앞뒤로 빈 줄을 둠)
+- **이탈 아님(초벌 진단 철회)** — `guard let ... else { return }` 한 줄 표기. tag `1.0` 원본도 조건 하나짜리는 한 줄이 기본형이었고(`PagingCardsScrollView.swift:125`, `MemoryGridVM.swift:166`), 줄을 나눈 경우는 조건이 여러 개이거나 길 때뿐이었다. 특히 현재 `MemoryGridVM.swift:175`의 한 줄 `guard`는 원본 `1.0`의 `:166`과 **동일한 줄**이다. 이에 맞춰 `STYLE_GUIDE.md` §7 서술도 정정 (커밋 `7ad90d5`)
+- **이탈 아님(초벌 진단 철회)** — `#Preview` 누락. View 타입 전체를 스캔한 결과 누락은 `ArrowDrawLayer.swift` 하나뿐인데 tag `1.0` 원본에도 없었다(상위 뷰의 좌표 정보를 받아야만 그려지는 보조 레이어라 단독 프리뷰가 무의미). `STYLE_GUIDE.md` §10에 예외로 명시 (커밋 `7ad90d5`)
+
+### 코드 정리 결과
+
+대상 후보 9개 파일을 `STYLE_GUIDE.md`와 대조해 실제 이탈이 있던 5개 파일만 수정했다. 커밋은 파일·규칙 단위로 6개로 나눴고, 문자열 리터럴은 한 곳도 건드리지 않아 `Localizable.xcstrings` 키에는 영향이 없다.
+
+- `App/AppLanguage.swift`: `private static let` 키 2개가 `displayName`과 메서드 사이에 끼어 있던 것을 case 선언 바로 아래로 이동 (커밋 `cdf0c29`)
+- `Scene/Quest/Entity/GridInteractionHintOverlay.swift`: 단일 표현식 계산 프로퍼티 2곳의 명시적 `return` 제거(tag `1.0`의 `Image+.swift`/`ShakeEffect`가 쓰는 암시적 반환과 통일), `HandIcon` 설명 주석을 `//` → `///`로 변경 (커밋 `aedfea5`)
+- `Scene/Main/MainView.swift`: `chapterColorPalette` 배열의 끝 쉼표 제거, 100자를 넘던 `lessonRow` 호출을 인자별 개행 (커밋 `c2f1cfb`)
+- `Core/Lesson.swift`: 옵셔널 프로퍼티의 불필요한 `= nil` 4곳과 `Bool` 타입 표기 2곳 제거(`1.0`의 `MemorySlot` 표기와 통일), 챕터 2~5의 `.init` 한 줄 선언(최대 107자)을 인자별 개행 (커밋 `f049201`, `0af91d0`)
+- `Scene/Quest/MemoryGridVM.swift`: `nextPointerNameIndex`가 `showHint`와 `resolveVariableName` 사이에 선언돼 있던 것을 `@Published` 프로퍼티 아래·`init` 앞으로 이동 (커밋 `0f2d33a`)
+- 무수정 4개 파일: `Core/LessonProgressStore.swift`, `DesignSystem/Component/CCodeHighlighter.swift`, `Scene/Quest/Entity/MemoryItem.swift`, `Scene/Quest/Entity/ArrowDrawLayer.swift` — 대조 결과 이탈 없음. 특히 `MemoryItem`은 Task 9~11에서 추가된 변수명 라벨 `HStack`·참조 배지 오버레이가 이미 원본 여백 관례를 따르고 있었다
+- 앞 3개 커밋(`cdf0c29`, `74aa686` 이전까지)은 커밋 전 `xcodebuild ... build` → BUILD SUCCEEDED 확인. 이후 4개 커밋(`c2f1cfb`, `f049201`, `0af91d0`, `0f2d33a`)은 사용자가 빌드·시뮬레이터 검증을 직접 수행하기로 해 CLI 빌드를 생략했고, 사용자 검증 완료로 확정
+
+### 작업 중 되돌린 변경과 가이드 정정
+
+정리를 진행하며 `STYLE_GUIDE.md` 자체가 원본과 어긋난 규칙 4건을 담고 있던 것이 드러나, 코드를 고치는 대신 가이드를 고쳤다. 가이드를 tag `1.0`에서 추출할 때 일부 규칙을 실측 없이 일반적인 Swift 관례로 적어버린 것이 원인이다.
+
+- guard 줄바꿈: "조건이 길면 `else`를 내린다"고 적었으나 원본도 조건 하나짜리는 한 줄이 기본형이었고, 현재 `MemoryGridVM.swift:175`의 한 줄 `guard`는 원본 `1.0`의 `:166`과 동일한 줄이었다 → §7 정정 (커밋 `7ad90d5`)
+- `#Preview`: "모든 View 파일에 둔다"고 적었으나 누락은 `ArrowDrawLayer` 하나뿐이고 원본에도 없었다(상위 뷰 좌표를 받아야 그려지는 보조 레이어) → §10에 예외 명시 (커밋 `7ad90d5`)
+- 줄 끝 공백: "남기지 않는다"고 적었으나 원본은 빈 줄에 들여쓰기 공백이 남는 Xcode 기본 동작을 그대로 따르고 있었다(`MainView.swift` 기준 공백만 10줄 / 완전 빈 줄 3줄) → 일부러 넣지도 일괄로 지우지도 않는 방침으로 §1 정정 (커밋 `be9a073`)
+- View 프로퍼티 선언 순서: "프로퍼티 래퍼 → 주입 `let`"으로 적었으나 원본 `MemoryItem`은 `let slot` 다음에 `@ObservedObject var vm`을 두는 반대 순서였다. 이 잘못된 규칙에 맞춰 `LessonRow`의 `@ObservedObject`를 위로 올리는 커밋을 만들었다가, 원본에서 오히려 멀어지는 변경임을 확인하고 `git reset`으로 되돌린 뒤 가이드 §3을 정정 (커밋 `74aa686`)
+
 ## 다음 작업
 
-- Task 11(그리드 블록에 코드 패널 변수명 표시) `develop` 병합·push까지 완료
-- 다음 Task는 아래 백로그 중 선택해 착수 예정 (사용자 확인 후 브랜치 분기)
+- Task 12 코드 정리 및 사용자 시뮬레이터 검증까지 완료. 남은 절차는 `develop` `--no-ff` 병합 → push → 로컬 브랜치 삭제
+- 이후 다음 Task는 아래 백로그 중 선택해 착수 예정 (사용자 확인 후 브랜치 분기)
   - Chapter 2~5 실제 레슨 콘텐츠 저작
   - 앱 이름/브랜딩/아이콘 재검토
   - App Store 심사 대비 항목 점검 (개인정보처리방침, 스크린샷, 지원 언어 등)

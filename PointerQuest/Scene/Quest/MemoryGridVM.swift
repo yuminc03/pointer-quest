@@ -11,6 +11,10 @@ final class MemoryGridVM: ObservableObject {
   /// 미션 성공 여부
   @Published var isSuccess = false
 
+  /// 다음에 새로 부여할 범용 포인터 변수명(p1, p2, p3, ...)의 번호.
+  /// 같은 레슨 안에서 여러 포인터가 만들어질 때(ex: 체인 연결) 전부 "p"로 겹쳐 보이지 않도록 한다.
+  private var nextPointerNameIndex = 1
+
   init(lesson: Lesson = LessonData.lessons[0]) {
     self.currentLesson = lesson
     self.setupLevel(level: lesson)
@@ -211,10 +215,6 @@ final class MemoryGridVM: ObservableObject {
     codeLog = hintCode
   }
   
-  /// 다음에 새로 부여할 범용 포인터 변수명(p1, p2, p3, ...)의 번호.
-  /// 같은 레슨 안에서 여러 포인터가 만들어질 때(ex: 체인 연결) 전부 "p"로 겹쳐 보이지 않도록 한다.
-  private var nextPointerNameIndex = 1
-
   /// 슬롯에 표시할 변수명을 정하고 `codeLog`에서도 함께 쓸 수 있도록 반환한다.
   /// 1) 슬롯에 이미 이름이 있으면 그대로 재사용한다 (누적 유지 — 상호작용을 거듭해도 라벨이 바뀌지 않음)
   /// 2) 레슨 블루프린트가 이 슬롯에 이름을 선언해뒀다면(`SlotSeed.variableName`) 그 이름을 우선 사용한다

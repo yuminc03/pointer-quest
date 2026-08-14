@@ -71,10 +71,26 @@ struct LessonData {
         )
       ]
     ),
-    .init(id: 2, title: "이중 포인터 심화", lessons: [comingSoonLesson(id: 4, title: "이중 포인터 심화")]),
-    .init(id: 3, title: "배열과 포인터 연산", lessons: [comingSoonLesson(id: 5, title: "배열과 포인터 연산")]),
-    .init(id: 4, title: "구조체와 포인터", lessons: [comingSoonLesson(id: 6, title: "구조체와 포인터")]),
-    .init(id: 5, title: "malloc·free와 스택 vs 힙", lessons: [comingSoonLesson(id: 7, title: "malloc·free와 스택 vs 힙")])
+    .init(
+      id: 2,
+      title: "이중 포인터 심화",
+      lessons: [comingSoonLesson(id: 4, title: "이중 포인터 심화")]
+    ),
+    .init(
+      id: 3,
+      title: "배열과 포인터 연산",
+      lessons: [comingSoonLesson(id: 5, title: "배열과 포인터 연산")]
+    ),
+    .init(
+      id: 4,
+      title: "구조체와 포인터",
+      lessons: [comingSoonLesson(id: 6, title: "구조체와 포인터")]
+    ),
+    .init(
+      id: 5,
+      title: "malloc·free와 스택 vs 힙",
+      lessons: [comingSoonLesson(id: 7, title: "malloc·free와 스택 vs 힙")]
+    )
   ]
 
   /// 아직 콘텐츠가 저작되지 않은 챕터를 나타내는 "Coming Soon" placeholder 레슨
@@ -114,7 +130,7 @@ struct Lesson: Identifiable, Hashable {
   /// 레슨의 초기 배치와 클리어 조건
   let blueprint: LessonBlueprint
   /// 아직 콘텐츠가 저작되지 않아 "Coming Soon"으로만 표시되는 레슨인지 여부
-  var isComingSoon: Bool = false
+  var isComingSoon = false
 
   // `LocalizedStringResource`는 synthesized Hashable 대상이 아니므로 `id` 기준으로 직접 구현한다.
   static func == (lhs: Lesson, rhs: Lesson) -> Bool { lhs.id == rhs.id }
@@ -126,14 +142,14 @@ struct SlotSeed: Hashable {
   /// 4x4 그리드에서의 슬롯 인덱스 (0..<16)
   let index: Int
   var type: MemorySlot.SlotType
-  var value: Int? = nil
+  var value: Int?
   /// 포인터일 때 초기에 가리켜야 할 대상 슬롯의 인덱스
-  var pointingToIndex: Int? = nil
+  var pointingToIndex: Int?
   /// 다른 포인터가 이미 이 슬롯을 가리키고 있음을 나타내는 배지용 플래그 (접근 차단 없음)
-  var isReferenced: Bool = false
+  var isReferenced = false
   /// 이 슬롯이 코드 상에서 쓰이길 원하는 변수명 (ex: 체인 레슨의 "start"/"nodeA"/"nodeB"/"treasure")
   /// 지정하지 않으면 `MemoryGridVM`이 범용 이름(target/p1/p2/... 등)을 자동으로 부여한다
-  var variableName: String? = nil
+  var variableName: String?
 }
 
 /// 레슨의 클리어 조건을 표현하는 판정 규칙
@@ -152,5 +168,5 @@ struct LessonBlueprint {
   var successCondition: SuccessCondition
   var initialCodeLog: LocalizedStringResource
   /// "힌트 보기" 버튼을 탭했을 때 코드 패널에 일시적으로 보여줄 목표 코드 (정답을 자동 완성하지 않고 힌트만 제공)
-  var hintCode: LocalizedStringResource? = nil
+  var hintCode: LocalizedStringResource?
 }
