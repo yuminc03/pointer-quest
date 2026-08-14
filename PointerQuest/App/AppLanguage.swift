@@ -5,6 +5,9 @@ enum AppLanguage: String, CaseIterable, Identifiable {
   case korean = "ko"
   case english = "en"
 
+  private static let appleLanguagesKey = "AppleLanguages"
+  private static let hasSetInitialLanguageKey = "hasSetInitialLanguage"
+
   var id: String { rawValue }
 
   var displayName: String {
@@ -13,9 +16,6 @@ enum AppLanguage: String, CaseIterable, Identifiable {
     case .english: "English"
     }
   }
-
-  private static let appleLanguagesKey = "AppleLanguages"
-  private static let hasSetInitialLanguageKey = "hasSetInitialLanguage"
 
   /// 사용자가 언어를 선택한 적이 없다면(최초 실행) 기기 시스템 언어와 무관하게 한국어를 기본값으로 적용
   static func applyInitialLanguageIfNeeded() {
