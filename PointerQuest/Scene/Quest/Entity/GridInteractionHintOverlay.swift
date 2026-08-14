@@ -11,11 +11,11 @@ struct GridInteractionHintOverlay: View {
   @State private var isAnimating = false
   
   private var sourceCenter: CGPoint {
-    return .init(x: sourceRect.midX, y: sourceRect.midY)
+    .init(x: sourceRect.midX, y: sourceRect.midY)
   }
-  
+
   private var targetCenter: CGPoint {
-    return .init(x: targetRect.midX, y: targetRect.midY)
+    .init(x: targetRect.midX, y: targetRect.midY)
   }
   
   var body: some View {
@@ -30,8 +30,8 @@ struct GridInteractionHintOverlay: View {
 }
 
 private extension GridInteractionHintOverlay {
-  // 소스 -> 타겟을 오가며 드래그 동작을 암시하는 반복 애니메이션 아이콘
-  // 터치 이벤트를 막지 않도록 hitTesting을 통과시킨다 (ArrowDrawLayer와 동일한 패턴)
+  /// 소스 -> 타겟을 오가며 드래그 동작을 암시하는 반복 애니메이션 아이콘
+  /// 터치 이벤트를 막지 않도록 hitTesting을 통과시킨다 (ArrowDrawLayer와 동일한 패턴)
   var HandIcon: some View {
     Image(systemName: "hand.draw.fill")
       .font(.title)
