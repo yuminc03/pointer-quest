@@ -2,7 +2,14 @@
 
 세부 작업 항목은 [TODO.md](./TODO.md), 전체 방향은 [PLAN.md](./PLAN.md) 참고.
 
-## 현재 상태
+## 현재 상태 (2026-08-14 기준)
+
+- Task 1~12 모두 구현·사용자 검증·`develop` 병합 완료 (최신 병합 커밋 `efe3119`), `origin/develop` 푸시 완료
+- 병합 완료된 로컬 feature 브랜치는 매번 삭제 완료
+- 다음 착수 항목은 미확정 — 아래 "다음 작업" 및 `PLAN.md`의 출시 로드맵 참고
+- Task별 상세 내역은 이 문서의 각 "Task N 진행 상황/완료" 섹션 참고
+
+## Task 1~2 완료 및 초기 검증
 
 - `feature/lesson-data-model` (Task 1), `feature/blueprint-driven-vm` (Task 2), `feature/learning-tone-copy` (Task 3), `feature/sandbox-mode` (Task 4), `feature/lesson-progress-tracking` (Task 5) 모두 `develop`에 병합 완료 (병합 커밋 `42efd7b`, `37ba5ce`, `41d01af`, `fc06f24`), `origin/develop`에 푸시 완료
 - 병합 완료된 로컬 feature 브랜치는 매번 삭제 완료
@@ -270,6 +277,11 @@ SwiftUI 코드 스타일 정리 및 사용자 빌드·시뮬레이터 검증까�
 - 브랜치 커밋 18개(코드 6 + 문서 12), `develop`에 `--no-ff` 병합 완료 (병합 커밋 `efe3119`)
 - 빌드·시뮬레이터 회귀 검증은 사용자가 직접 수행 완료 후 병합
 - `origin/develop`에 push 완료 (`ba6a327..efe3119`), 로컬 `feature/swiftui-style-cleanup` 브랜치 삭제
+
+## 문서 정합성 점검 (2026-08-14)
+
+- 이 문서 맨 위 "현재 상태" 섹션이 Task 5 시점(다음은 Task 6 착수 예정)에 멈춰 있던 것을 발견 — Task 6 이후로는 Task별 섹션만 아래에 추가되고 요약이 갱신되지 않았다. Task 1~12 병합 완료 상태로 갱신하고, 기존 내용은 "Task 1~2 완료 및 초기 검증" 섹션으로 분리해 보존
+- 그 외 Task 1~12의 TODO/PLAN/PROGRESS 기록은 실제 커밋 이력과 일치함을 확인
 
 ## 다음 작업
 
