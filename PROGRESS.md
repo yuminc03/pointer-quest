@@ -263,10 +263,17 @@ Claude가 신설한 파일들(`CCodeHighlighter.swift`, `LessonProgressStore.swi
 - 줄 끝 공백: "남기지 않는다"고 적었으나 원본은 빈 줄에 들여쓰기 공백이 남는 Xcode 기본 동작을 그대로 따르고 있었다(`MainView.swift` 기준 공백만 10줄 / 완전 빈 줄 3줄) → 일부러 넣지도 일괄로 지우지도 않는 방침으로 §1 정정 (커밋 `be9a073`)
 - View 프로퍼티 선언 순서: "프로퍼티 래퍼 → 주입 `let`"으로 적었으나 원본 `MemoryItem`은 `let slot` 다음에 `@ObservedObject var vm`을 두는 반대 순서였다. 이 잘못된 규칙에 맞춰 `LessonRow`의 `@ObservedObject`를 위로 올리는 커밋을 만들었다가, 원본에서 오히려 멀어지는 변경임을 확인하고 `git reset`으로 되돌린 뒤 가이드 §3을 정정 (커밋 `74aa686`)
 
+## Task 12 완료 (`feature/swiftui-style-cleanup`)
+
+SwiftUI 코드 스타일 정리 및 사용자 빌드·시뮬레이터 검증까지 완료. 세부 구현 내역은 위 "Task 12 진행 상황" 참고. 이번 Task의 산출물은 코드 변경보다 `STYLE_GUIDE.md`(이후 모든 SwiftUI 작업의 기준 문서)와, 가이드를 실측으로 검증하며 잡아낸 규칙 오류 4건의 정정이다.
+
+- 브랜치 커밋 18개(코드 6 + 문서 12), `develop`에 `--no-ff` 병합 완료 (병합 커밋 `efe3119`)
+- 빌드·시뮬레이터 회귀 검증은 사용자가 직접 수행 완료 후 병합
+- `origin/develop`에 push 완료 (`ba6a327..efe3119`), 로컬 `feature/swiftui-style-cleanup` 브랜치 삭제
+
 ## 다음 작업
 
-- Task 12 코드 정리 및 사용자 시뮬레이터 검증까지 완료. 남은 절차는 `develop` `--no-ff` 병합 → push → 로컬 브랜치 삭제
-- 이후 다음 Task는 아래 백로그 중 선택해 착수 예정 (사용자 확인 후 브랜치 분기)
+- 다음 Task는 아래 백로그 중 선택해 착수 예정 (사용자 확인 후 브랜치 분기)
   - Chapter 2~5 실제 레슨 콘텐츠 저작
   - 앱 이름/브랜딩/아이콘 재검토
   - App Store 심사 대비 항목 점검 (개인정보처리방침, 스크린샷, 지원 언어 등)
