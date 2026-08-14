@@ -129,9 +129,14 @@ Button {
 
 ## 7. guard / 조기 반환
 
-- `guard`의 조건이 길면 `else`를 다음 줄로 내린다. 조건이 짧으면 한 줄로 붙여 쓴다.
+- 조건이 하나이고 짧으면 `guard ... else { return }`을 **한 줄로 붙여 쓴다**. 이것이 기본형이다.
+- 조건이 여러 개이거나 한 줄이 길어지면 `else`를 다음 줄로 내린다.
 
 ```swift
+// 기본형 — 조건 하나, 짧음
+guard maxIndex > 0 else { return 0 }
+
+// 길거나 조건이 여러 개일 때
 guard let draggedAddress = droppedAddresses.first
 else { return false }
 ```
@@ -165,8 +170,9 @@ struct MemorySlot: Identifiable, Hashable {
 
 ## 10. 프리뷰
 
-- 모든 View 파일 하단에 `#Preview`를 둔다. 위에 빈 줄을 하나 둔다.
+- View 파일 하단에 `#Preview`를 둔다. 위에 빈 줄을 하나 둔다.
 - 프리뷰에 필요한 모델은 `LessonData`의 실제 데이터를 쓰거나, `.init(...)`으로 최소한의 더미를 만든다.
+- 단독으로 띄워도 의미가 없는 보조 레이어는 예외다. `ArrowDrawLayer`처럼 상위 뷰의 좌표 정보를 받아야만 그려지는 오버레이 뷰에는 `#Preview`를 두지 않는다.
 
 ```swift
 #Preview {
