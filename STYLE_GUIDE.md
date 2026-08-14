@@ -32,12 +32,14 @@ struct MemorySlot: Identifiable, Hashable {
 
 View 타입 안에서는 다음 순서를 지킨다.
 
-1. 프로퍼티 래퍼가 붙은 상태 프로퍼티 (`@StateObject`, `@ObservedObject`, `@AppStorage`, `@State`)
-2. 외부에서 주입받는 `let` 프로퍼티
+1. 외부에서 주입받는 `let` 프로퍼티
+2. 프로퍼티 래퍼가 붙은 상태 프로퍼티 (`@StateObject`, `@ObservedObject`, `@AppStorage`, `@State`)
 3. `init` (커스텀 초기화가 필요한 경우에만)
 4. `private let` 상수 (레이아웃 상수 등)
 5. `var body: some View`
 6. `private func` 헬퍼
+
+주입 `let`이 상태 프로퍼티보다 먼저 온다. `MemoryItem`이 `let slot` 다음에 `@ObservedObject var vm`을 두는 순서가 기준이다. 주입받는 값이 없으면 상태 프로퍼티가 그대로 맨 위에 온다(`MemoryGridView`, `AppView`).
 
 `body` 앞뒤로는 빈 줄을 하나 둔다.
 
