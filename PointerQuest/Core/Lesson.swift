@@ -71,10 +71,26 @@ struct LessonData {
         )
       ]
     ),
-    .init(id: 2, title: "이중 포인터 심화", lessons: [comingSoonLesson(id: 4, title: "이중 포인터 심화")]),
-    .init(id: 3, title: "배열과 포인터 연산", lessons: [comingSoonLesson(id: 5, title: "배열과 포인터 연산")]),
-    .init(id: 4, title: "구조체와 포인터", lessons: [comingSoonLesson(id: 6, title: "구조체와 포인터")]),
-    .init(id: 5, title: "malloc·free와 스택 vs 힙", lessons: [comingSoonLesson(id: 7, title: "malloc·free와 스택 vs 힙")])
+    .init(
+      id: 2,
+      title: "이중 포인터 심화",
+      lessons: [comingSoonLesson(id: 4, title: "이중 포인터 심화")]
+    ),
+    .init(
+      id: 3,
+      title: "배열과 포인터 연산",
+      lessons: [comingSoonLesson(id: 5, title: "배열과 포인터 연산")]
+    ),
+    .init(
+      id: 4,
+      title: "구조체와 포인터",
+      lessons: [comingSoonLesson(id: 6, title: "구조체와 포인터")]
+    ),
+    .init(
+      id: 5,
+      title: "malloc·free와 스택 vs 힙",
+      lessons: [comingSoonLesson(id: 7, title: "malloc·free와 스택 vs 힙")]
+    )
   ]
 
   /// 아직 콘텐츠가 저작되지 않은 챕터를 나타내는 "Coming Soon" placeholder 레슨
