@@ -234,13 +234,13 @@ Task 11 병합 완료 후 사용자가 백로그 중 "SwiftUI 코드를 사용�
 - `TODO.md`에 Task 12 등록 (백로그 항목 승격) (커밋 `646819d`), `PLAN.md`에 Task 12 섹션(배경/진단/변경 방향/Non-goals) 추가 (커밋 `fa4202d`)
 - 자동 포매터 도입은 범위에서 제외 — 대문자 계산 프로퍼티 같은 이 프로젝트 고유 관례를 표준 포매터가 존중하지 않음
 
-### 초벌 진단 (코드 정리 착수 전 확인한 차이)
+### 진단 (실측 완료)
 
-Claude가 신설한 파일들(`CCodeHighlighter.swift`, `LessonProgressStore.swift`, `AppLanguage.swift`, `GridInteractionHintOverlay.swift`, `LessonRow.swift` 등)은 2-space·한국어 `///` 주석은 지켰으나 다음이 원본 관례와 어긋난다.
+Claude가 신설한 파일들(`CCodeHighlighter.swift`, `LessonProgressStore.swift`, `AppLanguage.swift`, `GridInteractionHintOverlay.swift`, `LessonRow.swift` 등)은 2-space·한국어 `///` 주석은 지켰다. 착수 전 초벌 진단에서는 이탈 후보를 3가지로 봤으나, 전체 소스를 실측한 결과 **2가지는 이탈이 아니었고 실제 이탈은 1가지로 좁혀졌다**.
 
-- 뷰 본문/함수 본문의 **빈 줄이 원본보다 적어 밀도가 높음** (원본은 스택 자식마다 빈 줄로 띄움)
-- `guard let ... else { return }`을 한 줄로 붙여 쓴 곳이 많음 (원본은 조건이 길면 `else`를 다음 줄로 내림)
-- 신규 View 파일의 `#Preview` 누락 여부는 아직 정밀 확인하지 않음
+- **실제 이탈** — 뷰 본문/함수 본문의 **빈 줄이 원본보다 적어 밀도가 높음** (원본은 스택 자식마다, 특히 `Spacer()` 앞뒤로 빈 줄을 둠)
+- **이탈 아님(초벌 진단 철회)** — `guard let ... else { return }` 한 줄 표기. tag `1.0` 원본도 조건 하나짜리는 한 줄이 기본형이었고(`PagingCardsScrollView.swift:125`, `MemoryGridVM.swift:166`), 줄을 나눈 경우는 조건이 여러 개이거나 길 때뿐이었다. 특히 현재 `MemoryGridVM.swift:175`의 한 줄 `guard`는 원본 `1.0`의 `:166`과 **동일한 줄**이다. 이에 맞춰 `STYLE_GUIDE.md` §7 서술도 정정 (커밋 `7ad90d5`)
+- **이탈 아님(초벌 진단 철회)** — `#Preview` 누락. View 타입 전체를 스캔한 결과 누락은 `ArrowDrawLayer.swift` 하나뿐인데 tag `1.0` 원본에도 없었다(상위 뷰의 좌표 정보를 받아야만 그려지는 보조 레이어라 단독 프리뷰가 무의미). `STYLE_GUIDE.md` §10에 예외로 명시 (커밋 `7ad90d5`)
 
 ## 다음 작업 (2026-08-13 재개 지점)
 
