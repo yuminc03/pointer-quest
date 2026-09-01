@@ -22,6 +22,7 @@ targets:
       path: PointerQuest/Info.plist
       properties:
         UILaunchScreen: {}
+        UIPrefersShowingLanguageSettings: true
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
         UISupportedInterfaceOrientations~ipad:
