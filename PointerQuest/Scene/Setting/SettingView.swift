@@ -2,8 +2,6 @@ import SwiftUI
 
 struct SettingView: View {
   @State private var isOnboardingPresented = false
-  @State private var selectedLanguage = AppLanguage.current
-  @State private var isRestartAlertPresented = false
 
   var body: some View {
     NavigationStack {
@@ -17,44 +15,46 @@ struct SettingView: View {
         }
 
         Section {
-          ForEach(AppLanguage.allCases) { language in
-            Button {
-              selectLanguage(language)
-            } label: {
-              HStack {
-                Text(language.displayName)
-                  .foregroundStyle(.primary)
-
-                Spacer()
-
-                if selectedLanguage == language {
-                  Image(systemName: "checkmark")
-                    .foregroundStyle(Color(.main))
-                }
-              }
-            }
-          }
+          LanguageRow
         } header: {
           Text("언어")
+        } footer: {
+          Text("설정에서 언어를 바꾸면 앱이 다시 시작됩니다.")
         }
       }
       .navigationTitle("설정")
       .sheet(isPresented: $isOnboardingPresented) {
         OnboardingView()
       }
-      .alert("재시작 필요", isPresented: $isRestartAlertPresented) {
-        Button("확인", role: .cancel) { }
-      } message: {
-        Text("언어 변경 사항을 적용하려면 앱을 재시작해주세요.")
-      }
     }
   }
 
-  private func selectLanguage(_ language: AppLanguage) {
-    guard language != selectedLanguage else { return }
-    selectedLanguage = language
-    AppLanguage.apply(language)
-    isRestartAlertPresented = true
+  /// iOS 설정 앱의 이 앱 페이지(앱별 언어 설정이 있는 곳)로 이동
+  private func openAppSettings() {
+    guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+    UIApplication.shared.open(url)
+  }
+}
+
+private extension SettingView {
+  var LanguageRow: some View {
+    Button {
+      openAppSettings()
+    } label: {
+      HStack {
+        Text("표시 언어")
+          .foregroundStyle(.primary)
+
+        Spacer()
+
+        Text(AppLanguage.current.displayName)
+          .foregroundStyle(.secondary)
+
+        Image(systemName: "chevron.right")
+          .font(.footnote.bold())
+          .foregroundStyle(.tertiary)
+      }
+    }
   }
 }
 
