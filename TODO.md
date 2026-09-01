@@ -108,11 +108,11 @@ SwiftUI 코드를 사용자 코딩 스타일에 맞게 정리. 백로그 항목�
 
 언어 변경 방식 개선. 1.0 착수 순서 1번 항목을 백로그에서 Task로 승격. 상세 배경·방향은 [PLAN.md](./PLAN.md)의 "백로그 A" 참고.
 
-- [ ] `SettingView`의 언어 Section을 선택 목록에서 **현재 적용된 언어를 표시하는 행 하나**로 교체하고, 탭하면 `UIApplication.openSettingsURLString`으로 iOS 설정 앱의 앱별 언어 설정으로 이동
-- [ ] "재시작 필요" 알럿 제거 — 시스템 설정에서 언어를 바꾸면 iOS가 앱을 종료시키므로 안내가 불필요해짐. 대신 Section footer로 "설정에서 언어를 바꾸면 앱이 다시 시작됩니다"를 미리 안내
-- [ ] (확인 결과 반영) 최초 실행 시 한국어 강제 로직(`AppLanguage.applyInitialLanguageIfNeeded`) 제거 — `AppleLanguages`는 iOS 앱별 언어 설정과 **같은 저장소**라 비공식 직접 쓰기를 남겨둘 이유가 없다고 판단. 기기 언어가 그대로 적용되며, `ko`/`en` 외 언어 기기는 `developmentRegion`(`ko`) 폴백으로 한국어가 되어 기존 의도도 대부분 유지된다. `MyApp.init()`의 호출도 함께 제거
-- [ ] `AppLanguage.current`를 `UserDefaults`의 `AppleLanguages` 읽기에서 `Bundle.main.preferredLocalizations` 기준으로 변경 — 실제로 앱에 적용된 로컬라이제이션을 표시
-- [ ] `Localizable.xcstrings`에 신규 문구 `en` 번역 추가
+- [x] `SettingView`의 언어 Section을 선택 목록에서 **현재 적용된 언어를 표시하는 행 하나**로 교체하고, 탭하면 `UIApplication.openSettingsURLString`으로 iOS 설정 앱의 앱별 언어 설정으로 이동 (커밋 `ade7318`)
+- [x] "재시작 필요" 알럿 제거 — 시스템 설정에서 언어를 바꾸면 iOS가 앱을 종료시키므로 안내가 불필요해짐. 대신 Section footer로 "설정에서 언어를 바꾸면 앱이 다시 시작됩니다"를 미리 안내 (커밋 `ade7318`)
+- [x] (확인 결과 반영) 최초 실행 시 한국어 강제 로직(`AppLanguage.applyInitialLanguageIfNeeded`) 제거 (커밋 `de33dc2`, `aa8a712`) — `AppleLanguages`는 iOS 앱별 언어 설정과 **같은 저장소**라 비공식 직접 쓰기를 남겨둘 이유가 없다고 판단. 기기 언어가 그대로 적용되며, `ko`/`en` 외 언어 기기는 `developmentRegion`(`ko`) 폴백으로 한국어가 되어 기존 의도도 대부분 유지된다. `MyApp.init()`의 호출도 함께 제거
+- [x] `AppLanguage.current`를 `UserDefaults`의 `AppleLanguages` 읽기에서 `Bundle.main.preferredLocalizations` 기준으로 변경 — 실제로 앱에 적용된 로컬라이제이션을 표시 (커밋 `aa8a712`)
+- [x] `Localizable.xcstrings`에 신규 문구 `en` 번역 추가 및 제거된 재시작 알럿 문구 2개 삭제 (커밋 `7894242`)
 - [ ] 시뮬레이터 검증 — 설정 앱에 앱별 언어 항목이 실제로 노출되는지, 언어 변경 후 복귀 시 새 언어로 재실행되는지, 설정 화면의 현재 언어 표시가 일치하는지
 
 ## 백로그
