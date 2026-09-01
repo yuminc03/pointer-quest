@@ -319,7 +319,12 @@ Task 12 병합 완료 후 사용자와 남은 항목의 순서를 정리했다. 
 - `Localizable.xcstrings`: 이번에는 CLI 빌드의 자동 추출이 정상 동작해 신규 문구 2개("표시 언어", 설정 이동 안내)가 빈 항목으로 생성되고 제거된 알럿 문구 2개가 `extractionState: "stale"`로 표시된 것을 확인. 신규 항목에 `en` 번역을 채우고 stale 항목 2개는 삭제, `python3 -m json.tool`로 JSON 유효성 확인 (커밋 `7894242`)
 - 매 커밋 전 `xcodebuild -scheme PointerQuest -destination 'generic/platform=iOS Simulator' build` → BUILD SUCCEEDED 확인. 커밋은 빌드 가능한 최소 단위 5개(문서 1 + 코드 3 + 카탈로그 1)로 분리했고, `SettingView` → `MyApp` → `AppLanguage` 순서로 진행해 중간 커밋에서도 참조가 깨지지 않도록 함
 - 기존 사용자 기기에 남아 있는 `hasSetInitialLanguage`/`AppleLanguages` 값은 앱이 더 이상 읽지 않으므로 무해하다 (별도 마이그레이션 없음)
-- **사용자 시뮬레이터 검증 대기 중** — 설정 앱에 앱별 언어 항목 노출 여부, 언어 변경 후 복귀 시 새 언어로 재실행되는지, 설정 화면의 현재 언어 표시 일치 여부
+- 1차 사용자 시뮬레이터 검증(2026-09-02): 설정 화면의 언어 행을 탭하면 설정 앱의 Pointer Quest 페이지로 이동하는 것까지는 정상이나, **그 페이지에 "언어" 항목이 나타나지 않는 문제** 발견
+  - 원인 조사: 빌드된 `.app` 번들을 확인한 결과 `en.lproj`/`ko.lproj`가 각각 `Localizable.strings`를 담고 있고 `CFBundleDevelopmentRegion`도 `ko`로, PLAN에서 확인 항목으로 적어둔 "2개 이상 로컬라이제이션" 조건은 이미 충족돼 있었다. 즉 앱 번들 문제가 아니었다
+  - 실제 조건은 기기 쪽에 있었다 — iOS는 **기기의 선호하는 언어(설정 > 일반 > 언어 및 지역)가 2개 이상일 때만** 앱별 언어 항목을 노출한다. 언어가 하나뿐인 기본 시뮬레이터에서는 항목 자체가 숨겨진다
+  - `Info.plist`에 `UIPrefersShowingLanguageSettings = YES`를 추가해 기기 언어 개수와 무관하게 항상 노출되도록 수정, `project.yml`에도 동일하게 반영. `plutil -lint` 통과 및 빌드된 번들의 `Info.plist`에 키가 실제로 포함됐는지 확인 (커밋 `a0e967f`)
+  - 이 키가 없으면 언어가 하나인 기기에서 설정 화면의 언어 행이 막다른 길이 된다 — 앱 내 선택 UI를 없앤 이번 설계에서는 필수 조건이다
+- **사용자 시뮬레이터 재검증 대기 중** — `Info.plist` 변경은 재설치가 필요하므로 앱 삭제 후 재설치해서 확인 필요. 설정 앱의 언어 항목 노출 여부, 언어 변경 후 복귀 시 새 언어로 재실행되는지, 설정 화면의 현재 언어 표시 일치 여부
 
 ## 다음 작업
 
