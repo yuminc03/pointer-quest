@@ -2,11 +2,12 @@
 
 세부 작업 항목은 [TODO.md](./TODO.md), 전체 방향은 [PLAN.md](./PLAN.md) 참고.
 
-## 현재 상태 (2026-08-14 기준)
+## 현재 상태 (2026-09-02 기준)
 
-- Task 1~12 모두 구현·사용자 검증·`develop` 병합 완료 (최신 병합 커밋 `efe3119`), `origin/develop` 푸시 완료
+- Task 1~12 모두 구현·사용자 검증·`develop` 병합 완료 (최신 병합 커밋 `efe3119`)
+- Task 13(언어 변경 방식 개선)까지 구현·실기기 검증·`develop` 병합 완료
 - 병합 완료된 로컬 feature 브랜치는 매번 삭제 완료
-- 다음 착수 항목은 미확정 — 아래 "다음 작업" 및 `PLAN.md`의 출시 로드맵 참고
+- 다음 착수 항목은 1.0 순서 2번 "브랜딩·비주얼 언어 확정" (`PLAN.md` 백로그 C)
 - Task별 상세 내역은 이 문서의 각 "Task N 진행 상황/완료" 섹션 참고
 
 ## Task 1~2 완료 및 초기 검증
@@ -307,9 +308,38 @@ Task 12 병합 완료 후 사용자와 남은 항목의 순서를 정리했다. 
 - 이 문서 맨 위 "현재 상태" 섹션이 Task 5 시점(다음은 Task 6 착수 예정)에 멈춰 있던 것을 발견 — Task 6 이후로는 Task별 섹션만 아래에 추가되고 요약이 갱신되지 않았다. Task 1~12 병합 완료 상태로 갱신하고, 기존 내용은 "Task 1~2 완료 및 초기 검증" 섹션으로 분리해 보존
 - 그 외 Task 1~12의 TODO/PLAN/PROGRESS 기록은 실제 커밋 이력과 일치함을 확인
 
+## Task 13 진행 상황 (`feature/app-language-settings-link`)
+
+1.0 착수 순서 1번 "언어 변경 방식 개선"을 백로그에서 Task로 승격해 착수. 배경·변경 방향은 `PLAN.md`의 "백로그 A" 참고.
+
+- 착수 전 확인 사항 판단: `AppLanguage.applyInitialLanguageIfNeeded()`의 `AppleLanguages` 쓰기가 iOS 앱별 언어 설정과 **같은 저장소**를 공유함을 확인. `hasSetInitialLanguage` 플래그로 1회만 실행되므로 시스템 선택을 되덮어쓰지는 않지만, 이번 작업 목적(비공식 직접 쓰기 제거)과 어긋나는 코드가 남는다고 판단해 `AskUserQuestion`으로 **강제 로직 제거** 확정. `ko`/`en` 외 언어 기기는 `developmentRegion`(`ko`) 폴백으로 한국어가 되어 "기본 한국어" 의도도 대부분 유지된다
+- `SettingView.swift`: 언어 Section의 `ForEach(AppLanguage.allCases)` 선택 목록과 "재시작 필요" 알럿, `selectLanguage(_:)`/`selectedLanguage`/`isRestartAlertPresented` 상태를 모두 제거. 현재 언어를 표시하는 행 하나(`LanguageRow`)로 교체하고 탭 시 `UIApplication.openSettingsURLString`으로 설정 앱 이동, Section footer로 "설정에서 언어를 바꾸면 앱이 다시 시작됩니다." 안내 (커밋 `ade7318`). `STYLE_GUIDE.md` §3/§4에 맞춰 `openAppSettings()`는 `body` 아래 `private func`로, `LanguageRow`는 `private extension`의 대문자 계산 프로퍼티로 배치
+- `MyApp.swift`: `init()`의 `AppLanguage.applyInitialLanguageIfNeeded()` 호출 제거, 본문이 비어 `init` 자체를 삭제 (커밋 `de33dc2`)
+- `AppLanguage.swift`: `apply(_:)`/`applyInitialLanguageIfNeeded()`와 `appleLanguagesKey`/`hasSetInitialLanguageKey` 상수를 제거해 `UserDefaults` 의존을 완전히 끊고, `current`를 `Bundle.main.preferredLocalizations.first` 기준으로 변경. 선택 목록이 없어져 불필요해진 `CaseIterable`/`Identifiable`/`id`도 제거 (커밋 `aa8a712`)
+- `Localizable.xcstrings`: 이번에는 CLI 빌드의 자동 추출이 정상 동작해 신규 문구 2개("표시 언어", 설정 이동 안내)가 빈 항목으로 생성되고 제거된 알럿 문구 2개가 `extractionState: "stale"`로 표시된 것을 확인. 신규 항목에 `en` 번역을 채우고 stale 항목 2개는 삭제, `python3 -m json.tool`로 JSON 유효성 확인 (커밋 `7894242`)
+- 매 커밋 전 `xcodebuild -scheme PointerQuest -destination 'generic/platform=iOS Simulator' build` → BUILD SUCCEEDED 확인. 커밋은 빌드 가능한 최소 단위 5개(문서 1 + 코드 3 + 카탈로그 1)로 분리했고, `SettingView` → `MyApp` → `AppLanguage` 순서로 진행해 중간 커밋에서도 참조가 깨지지 않도록 함
+- 기존 사용자 기기에 남아 있는 `hasSetInitialLanguage`/`AppleLanguages` 값은 앱이 더 이상 읽지 않으므로 무해하다 (별도 마이그레이션 없음)
+- 1차 사용자 시뮬레이터 검증(2026-09-02): 설정 화면의 언어 행을 탭하면 설정 앱의 Pointer Quest 페이지로 이동하는 것까지는 정상이나, **그 페이지에 "언어" 항목이 나타나지 않는 문제** 발견
+  - 원인 조사: 빌드된 `.app` 번들을 확인한 결과 `en.lproj`/`ko.lproj`가 각각 `Localizable.strings`를 담고 있고 `CFBundleDevelopmentRegion`도 `ko`로, PLAN에서 확인 항목으로 적어둔 "2개 이상 로컬라이제이션" 조건은 이미 충족돼 있었다. 즉 앱 번들 문제가 아니었다
+  - 실제 조건은 기기 쪽에 있었다 — iOS는 **기기의 선호하는 언어(설정 > 일반 > 언어 및 지역)가 2개 이상일 때만** 앱별 언어 항목을 노출한다. 언어가 하나뿐인 기본 시뮬레이터에서는 항목 자체가 숨겨진다
+  - `Info.plist`에 `UIPrefersShowingLanguageSettings = YES`를 추가해 기기 언어 개수와 무관하게 항상 노출되도록 수정, `project.yml`에도 동일하게 반영. `plutil -lint` 통과 및 빌드된 번들의 `Info.plist`에 키가 실제로 포함됐는지 확인 (커밋 `a0e967f`)
+  - 이 키가 없으면 언어가 하나인 기기에서 설정 화면의 언어 행이 막다른 길이 된다 — 앱 내 선택 UI를 없앤 이번 설계에서는 필수 조건이다
+- 2차 검증(2026-09-02): 앱 삭제 후 재설치하니 설정 앱의 Pointer Quest 페이지에 "언어" 항목이 정상 노출됨 — `UIPrefersShowingLanguageSettings` 수정이 유효함을 확인
+- 3차 검증에서 남은 증상 하나: 시뮬레이터(iPhone 17, iOS 26.5)에서 앱 내 "표시 언어" 행을 탭하면 설정 앱이 **최상단만 열리고 Pointer Quest 페이지까지 들어가지 못함**
+  - 설정 앱 프로세스가 떠 있지도 않은 상태(`simctl terminate` → no such process)에서 콜드 스타트로도 재현돼, 설정 앱의 화면 상태 캐시 문제는 아님을 확인
+  - `UIApplication.openSettingsURLString`은 앱 설정 페이지로 가는 유일한 공식 API이고(`App-prefs:` 계열 비공식 URL은 iOS 18에서 대부분 차단됨) 코드 쪽에 바꿀 여지가 없어, 원인을 시뮬레이터 한계와 iOS 18+ 설정 앱 재편 두 가지로 좁힌 뒤 **실기기 확인을 판별법으로 제시**
+  - **사용자가 실기기에서 앱 언어 변경이 정상 동작함을 확인 완료** — 시뮬레이터 한계로 확정, 코드 변경 없이 마무리. 검토했던 보완안(footer에 설정 경로 명시, 경로 안내 알럿)은 채택하지 않음
+
+## Task 13 완료 (`feature/app-language-settings-link`)
+
+언어 변경 방식 개선 구현 및 실기기 검증까지 완료. 세부 구현 내역은 위 "Task 13 진행 상황" 참고. 앱에서 `AppleLanguages`를 직접 읽고 쓰던 코드가 완전히 사라졌고(grep 0건), 언어 변경은 iOS 앱별 언어 설정에 위임된다.
+
+- 검증 과정에서 발견한 핵심 사항: 앱별 언어 항목은 앱이 2개 이상 로컬라이제이션을 갖는 것만으로는 부족하고 **기기의 선호하는 언어가 2개 이상이어야** 노출된다. 앱 내 선택 UI를 없앤 이번 설계에서는 `UIPrefersShowingLanguageSettings`가 필수 조건이다
+- 시뮬레이터에서는 설정 앱 딥링크가 앱 페이지까지 도달하지 못하므로, 이후 이 동선을 다룰 때는 실기기로 검증해야 한다
+
 ## 다음 작업
 
-- 다음 Task는 `PLAN.md`의 "1.0 (출시 전)" 항목 중 선택해 착수 예정 (사용자 확인 후 `develop`에서 브랜치 분기)
+- `PLAN.md`의 "1.0 (출시 전)" 2번 항목 **브랜딩·비주얼 언어 확정**(백로그 C) 착수 예정 — 앱 이름/부제/아이콘/색 팔레트와, 학습 효과 보강(B-2/B-1)의 선행 조건인 **도식 표기 규칙**까지 확정한다. 착수 시 별도 Task로 승격
   - 학습 효과 보강 — B-2(레슨 0 "변수와 메모리")부터 착수. 별도 Task로 승격 시 세부 실행 계획 확정 필요
   - 언어 변경 방식 개선
   - 앱 이름/브랜딩/아이콘 재검토

@@ -1,14 +1,9 @@
 import Foundation
 
-/// 앱이 지원하는 표시 언어와 "재시작 필요" 방식의 전환 로직을 담당
-enum AppLanguage: String, CaseIterable, Identifiable {
+/// 앱에 현재 적용된 표시 언어. 언어 변경 자체는 iOS 앱별 언어 설정에 위임한다
+enum AppLanguage: String {
   case korean = "ko"
   case english = "en"
-
-  private static let appleLanguagesKey = "AppleLanguages"
-  private static let hasSetInitialLanguageKey = "hasSetInitialLanguage"
-
-  var id: String { rawValue }
 
   var displayName: String {
     switch self {
@@ -17,23 +12,10 @@ enum AppLanguage: String, CaseIterable, Identifiable {
     }
   }
 
-  /// 사용자가 언어를 선택한 적이 없다면(최초 실행) 기기 시스템 언어와 무관하게 한국어를 기본값으로 적용
-  static func applyInitialLanguageIfNeeded() {
-    guard !UserDefaults.standard.bool(forKey: hasSetInitialLanguageKey) else { return }
-    apply(.korean)
-  }
-
-  /// 사용자가 명시적으로 언어를 선택했을 때 호출. 적용에는 앱 재시작이 필요하다
-  static func apply(_ language: AppLanguage) {
-    UserDefaults.standard.set([language.rawValue], forKey: appleLanguagesKey)
-    UserDefaults.standard.set(true, forKey: hasSetInitialLanguageKey)
-  }
-
+  /// 번들이 실제로 로드한 로컬라이제이션 기준의 현재 언어
+  /// 지원 목록에 없는 값이면 개발 지역(`ko`)이 적용된 것으로 본다
   static var current: AppLanguage {
-    let languages = UserDefaults.standard.stringArray(forKey: appleLanguagesKey) ?? []
-    guard let first = languages.first, let language = AppLanguage(rawValue: first) else {
-      return .korean
-    }
-    return language
+    let code = Bundle.main.preferredLocalizations.first ?? ""
+    return AppLanguage(rawValue: code) ?? .korean
   }
 }
