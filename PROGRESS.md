@@ -1,9 +1,7 @@
 # PROGRESS
-
 세부 작업 항목은 [TODO.md](./TODO.md), 전체 방향은 [PLAN.md](./PLAN.md) 참고.
 
 ## 현재 상태 (2026-09-02 기준)
-
 - Task 1~12 모두 구현·사용자 검증·`develop` 병합 완료 (최신 병합 커밋 `efe3119`)
 - Task 13(언어 변경 방식 개선)까지 구현·실기기 검증·`develop` 병합 완료
 - 병합 완료된 로컬 feature 브랜치는 매번 삭제 완료
@@ -11,7 +9,6 @@
 - Task별 상세 내역은 이 문서의 각 "Task N 진행 상황/완료" 섹션 참고
 
 ## Task 1~2 완료 및 초기 검증
-
 - `feature/lesson-data-model` (Task 1), `feature/blueprint-driven-vm` (Task 2), `feature/learning-tone-copy` (Task 3), `feature/sandbox-mode` (Task 4), `feature/lesson-progress-tracking` (Task 5) 모두 `develop`에 병합 완료 (병합 커밋 `42efd7b`, `37ba5ce`, `41d01af`, `fc06f24`), `origin/develop`에 푸시 완료
 - 병합 완료된 로컬 feature 브랜치는 매번 삭제 완료
 - 다음은 `develop`에서 `feature/chapter-placeholders` (Task 6) 브랜치를 분기해 착수 예정
@@ -28,7 +25,6 @@
 - 시뮬레이터(iPhone 16) 설치·실행 확인: 앱이 크래시 없이 정상 구동되고 홈 화면·Lesson 1 카드가 정상 렌더링됨을 스크린샷으로 확인. 단, 이 환경에서는 좌표 기반 GUI 자동화 도구(idb/XCUITest 등)가 없어 드래그 기반 인터랙션(포인터 연결)의 자동 재현은 수행하지 못함 — 코드 레벨 검증으로 논리적 동일성은 확보했으나, 실제 드래그 조작 검증은 사용자의 수동 플레이 테스트를 권장
 
 ## Task 3 완료 (`feature/learning-tone-copy`)
-
 게임 카피 → 학습 도구 카피 전환 + 로컬라이제이션(한국어 기본/영어 선택) 도입 완료. 세부 계획은 `TODO.md`/`PLAN.md` 참고.
 
 - `Core/Lesson.swift`의 `initialCodeLog` "Level 1/2/3" → "Lesson 1/2/3" 텍스트 수정
@@ -45,7 +41,6 @@
   - `SWIFT_EMIT_LOC_STRINGS` 빌드 설정이 꺼져 있어 Xcode가 컴파일러 기반 정밀 추출 대신 약한 휴리스틱 스캔을 쓰면서 "Lesson %@" 같은 잘못된 포맷 스펙 항목이 생성된 것을 확인, 타깃 Debug/Release 설정에 `SWIFT_EMIT_LOC_STRINGS = YES` 추가로 근본 원인 해결
 
 ## Task 4 진행 상황 (`feature/sandbox-mode`)
-
 샌드박스(Playground) 모드의 핵심 3개 체크리스트 항목 구현 완료. 기존 블루프린트 기반 아키텍처(`Lesson`/`SuccessCondition`)를 그대로 재사용하는 최소 변경 방식으로 설계 — `MemoryGridVM`/`MemoryGridView`의 드래그·역참조·에러 로직은 전혀 수정하지 않았다.
 
 - `SuccessCondition`에 `.sandbox` 케이스 추가, `MemoryGridVM.checkSuccess()`가 해당 케이스에서는 클리어 판정을 하지 않도록 처리 (커밋 `d423e21`)
@@ -60,14 +55,12 @@
 - 클린 빌드 검증 과정에서 `OnboardingView.section(text:)`가 `String` 파라미터를 받아 `Text(String)` 비-로컬라이즈 오버로드를 타던 버그를 추가로 발견, `LocalizedStringKey`로 변경해 수정 (`LessonCard`/`LessonHeaderView`에서 Task 3 때 발견한 것과 동일 유형의 버그, 커밋 `5428a85`). 온보딩 3개 문구의 `extractionState: "stale"`도 재추출로 해소됨을 확인
 
 ## Task 4 완료 (`feature/sandbox-mode`)
-
 샌드박스(Playground) 모드 구현 및 후속 검증까지 완료. 세부 구현 내역은 위 "Task 4 진행 상황" 참고. 사용자 수동 검증(클린 빌드 STALE 배지 해소, 시뮬레이터 언어 표시, Playground 드래그 인터랙션) 완료로 `develop` 병합 조건 충족.
 
 - `develop`에 `--no-ff` 병합 완료 (병합 커밋 `41d01af`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
 - `origin/develop`에 push 완료 (`37ba5ce..41d01af`), 로컬 `feature/sandbox-mode` 브랜치 삭제
 
 ## Task 5 진행 상황 (`feature/lesson-progress-tracking`)
-
 레슨 완료 진행 상황 저장 및 카드 체크마크 표시 핵심 2개 체크리스트 항목 구현 완료. 기존 `MemoryGridVM.finishLevel()`/`LessonCard` 흐름에 최소 변경만 추가하는 방식으로 설계.
 
 - `Core/LessonProgressStore.swift` 신설: `@MainActor final class LessonProgressStore: ObservableObject`, `UserDefaults` 키 `completedLessonIds`에 `[Int]`로 저장하고 내부적으로 `Set<Int>`(`@Published private(set) var completedLessonIds`)로 관리. `AppLanguage.swift`와 달리 View가 완료 상태 변경을 실시간으로 관찰해야 해서(카드 체크마크 즉시 갱신) `ObservableObject` + 싱글턴(`.shared`)으로 설계
@@ -78,14 +71,12 @@
 - `xcodebuild ... build` → BUILD SUCCEEDED 확인
 
 ## Task 5 완료 (`feature/lesson-progress-tracking`)
-
 레슨 완료 진행 상황 저장 및 카드 체크마크 표시 구현 및 검증까지 완료. 세부 구현 내역은 위 "Task 5 진행 상황" 참고. 사용자가 시뮬레이터에서 직접 검증(레슨 클리어 후 카드 체크마크 표시, 앱 재실행 후에도 완료 상태 유지) 완료로 `develop` 병합 조건 충족.
 
 - `develop`에 `--no-ff` 병합 완료 (병합 커밋 `fc06f24`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
 - `origin/develop`에 push 완료 (`41d01af..fc06f24`), 로컬 `feature/lesson-progress-tracking` 브랜치 삭제
 
 ## Task 6 진행 상황 (`feature/chapter-placeholders`)
-
 Chapter 2~5 placeholder 등록 및 Coming Soon UI 핵심 2개 체크리스트 항목 구현 완료. Task 4(샌드박스 모드)에서 검증한 "새 타입을 만들지 않고 기존 `Lesson`에 필드를 추가해 재사용"하는 최소 변경 패턴을 그대로 따랐다.
 
 - `Core/Lesson.swift`: `Lesson`에 `var isComingSoon: Bool = false` 필드 추가(기존 4개 `Lesson.init` 호출부는 기본값 덕분에 무수정), `chapters`에 Chapter 2~5(이중 포인터 심화/배열과 포인터 연산/구조체와 포인터/malloc·free와 스택 vs 힙) 추가. 각 챕터에는 `comingSoonLesson(id:title:)` 헬퍼로 만든 placeholder 레슨 1개씩 포함(`id` 4~7, 기존 1~3과 전역 유일성 유지). `successCondition`은 실제로 열람되지 않으므로 새 케이스 없이 기존 `.sandbox`를 재사용 (커밋 `c5f390d`)
@@ -98,14 +89,12 @@ Chapter 2~5 placeholder 등록 및 Coming Soon UI 핵심 2개 체크리스트 �
 - 사용자가 이후로는 시뮬레이터 인터랙션 테스트(카드 스와이프, Coming Soon 버튼 탭 등)를 직접 수행하고 결과를 공유하기로 함 — Coming Soon 카드/비활성 버튼의 실제 동작 확인은 사용자의 수동 테스트 대기 중
 
 ## Task 6 완료 (`feature/chapter-placeholders`)
-
 Chapter 2~5 placeholder 등록 및 Coming Soon UI 구현 및 검증까지 완료. 세부 구현 내역은 위 "Task 6 진행 상황" 참고. 사용자가 시뮬레이터에서 직접 검증(Coming Soon 카드 7개 정상 렌더링, 비활성 Continue 버튼 동작, 기존 레슨 1~3/Playground 회귀 없음) 완료로 `develop` 병합 조건 충족.
 
 - `develop`에 `--no-ff` 병합 완료 (병합 커밋 `31b4b85`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
 - `origin/develop`에 push 완료 (`850b0ef..31b4b85`), 로컬 `feature/chapter-placeholders` 브랜치 삭제
 
 ## Task 7 진행 상황 (`feature/card-paging-redesign`)
-
 조사 결과 원래 범위(치수 하드코딩 반응형 수정)보다 근본 문제가 컸다: `PagingCardsScrollView`가 `TabView(.page)`가 아니라 `GeometryReader` + `LazyHStack` + 커스텀 `DragGesture`로 관성/스프링 애니메이션까지 직접 구현한 캐러셀이었고, 카드 너비/높이가 `screenWidth - 100`, `cardWidth / 2.5 * 3.5` 등으로 하드코딩되어 있었다. Chapter 2~5 placeholder로 카드가 3장 → 7장이 되었고 백로그상 계속 늘어날 예정이라, Apple HIG가 권장하는 대로(가로 페이징은 소수의 동등 항목용, 계층적 콘텐츠는 세로 리스트용) **가로 캐러셀을 걷어내고 챕터 섹션으로 그룹핑한 세로 `List`로 전면 재설계**하기로 사용자와 합의(`AskUserQuestion`으로 방향 확정: 챕터별 세로 리스트, iPad는 "깨지지만 않게" 수준). 계획은 `/Users/chuyumin/.claude/plans/todo-md-plan-md-snappy-dusk.md`에 저장.
 
 - `PointerQuest/Scene/Main/Entity/PagingCardsScrollView.swift` 삭제 (커스텀 드래그 캐러셀 전체 제거)
@@ -118,7 +107,6 @@ Chapter 2~5 placeholder 등록 및 Coming Soon UI 구현 및 검증까지 완료
 - 시뮬레이터 인터랙션·반응형 레이아웃(iPhone SE~Pro Max) 검증은 사용자가 Xcode/시뮬레이터에서 직접 수행하기로 함
 
 ## Task 7 완료 (`feature/card-paging-redesign`)
-
 카드 페이징 → 챕터별 세로 리스트 재설계 구현 및 검증까지 완료. 세부 구현 내역은 위 "Task 7 진행 상황" 참고. 사용자가 iPhone 17 시뮬레이터에서 직접 검증(레이아웃 정상 표시, 이상 없음) 완료로 `develop` 병합 조건 충족.
 
 - `TODO.md` Task 7 체크리스트 2개 항목을 완료로 반영 (원래 "HIG 재검토/반응형 처리"였던 범위가 조사 과정에서 "가로 캐러셀 → 세로 리스트 전면 재설계"로 확장되었음을 체크리스트에 함께 기록)
@@ -126,7 +114,6 @@ Chapter 2~5 placeholder 등록 및 Coming Soon UI 구현 및 검증까지 완료
 - `origin/develop`에 push 완료 (`7ad05b4..a9e83e0`), 로컬 `feature/card-paging-redesign` 브랜치 삭제
 
 ## Task 8 후속 (`codeLog` 실제 로컬라이즈 전환)
-
 Task 3 당시 "`codeLog`는 C 코드 관례상 영어로 고정, 로컬라이즈 제외"로 결정했던 부분을 사용자 요청으로 재검토. 처음에는 `//` 주석만 한국어 리터럴로 바꿨으나, `codeLog`가 `Text(String)`으로 렌더링되고 있어 `Localizable.xcstrings`에 전혀 걸리지 않는다는 점(=번역을 채워도 적용 안 됨, 앱 언어 설정과 무관하게 항상 같은 문구로 고정)을 사용자가 지적. 확인 후 실제로 앱 언어를 따르도록 구조를 바꾸는 방향으로 재작업.
 
 - `Core/Lesson.swift`: `LessonBlueprint.initialCodeLog` 타입을 `String` → `LocalizedStringResource`로 변경 (`Lesson.title`/`description`과 동일한 방식). `LessonBlueprint`는 이 변경으로 `Hashable` 자동 합성이 깨졌는데(`LocalizedStringResource`가 `Hashable` 미준수), 실제로는 `Lesson`(자체 `id` 기준 수동 `Hashable`)의 저장 프로퍼티로만 쓰이고 `Hashable` conformance가 어디서도 요구되지 않아 `LessonBlueprint`에서 `Hashable` 자체를 제거
@@ -138,14 +125,12 @@ Task 3 당시 "`codeLog`는 C 코드 관례상 영어로 고정, 로컬라이즈
 - 사용자가 시뮬레이터에서 직접 검증 (2026-07-29): `printf %d/%p` 깨짐 등은 재현되지 않았으나, 새로운 문제 발견 — `int *p = &target;`처럼 포인터 기호 `*`가 포함된 codeLog 일부에서 `&target` 같은 뒷부분 텍스트가 화면에 표시되지 않음. `codeLog`가 `LocalizedStringResource`로 바뀌며 `Text`가 마크다운을 파싱하게 됐는데, C 코드의 `*`/`**`(포인터 선언·역참조 기호)가 마크다운 강조 구문(`*이탤릭*`, `**볼드**`)으로 오인됐을 가능성이 유력함. 사용자 요청에 따라 지금 당장 수정하지 않고 `TODO.md` 백로그에 기록만 해둠 — 원인 조사·수정은 별도 작업으로 진행 예정
 
 ## Task 8 완료 (`feature/localization-source-swap`)
-
 로컬라이제이션 소스 언어 한국어 전환 + `codeLog` 실제 로컬라이즈 전환까지 완료. `codeLog` 마크다운 파싱 버그(위 "Task 8 후속" 참고)는 미해결 상태이지만, 사용자 판단으로 우선 병합하고 별도 브랜치에서 후속 수정하기로 함.
 
 - `develop`에 `--no-ff` 병합 완료 (병합 커밋 `1072d46`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
 - `origin/develop`에 push 완료 (`2da7f8c..1072d46`), 로컬 `feature/localization-source-swap` 브랜치 삭제
 
 ## Task 9 진행 상황 (`feature/lesson-grid-ux-improvements`)
-
 2026-07-29 사용자가 "처음 앱을 써보는 사람" 시점에서 4가지 UX 우려(사용법을 모름/빨간 흔들림이 오답처럼 느껴짐/화살표만으론 포인터 개념 부족/코드 패널이 좁고 문법 강조 없음)를 제기해 착수. 세부 배경·진단·결정 근거는 `PLAN.md`의 "Task 9: 그리드 인터랙션 UX 개선" 참고, 실행 계획은 `/Users/chuyumin/.claude/plans/i-m-concerned-about-whether-hashed-pinwheel.md`에 저장.
 
 - 서브에이전트 3개로 온보딩/구조, 에러(`isError`) 트리거, 코드 패널 구현을 병렬 조사한 뒤 핵심 파일을 직접 읽어 확인
@@ -170,18 +155,15 @@ Task 3 당시 "`codeLog`는 C 코드 관례상 영어로 고정, 로컬라이즈
 - `Localizable.xcstrings`가 Xcode 쪽에서 한 차례 더 자동 재동기화되어(사용되지 않게 된 옛 codeLog 키 정리) 별도 커밋(`e93bc47`)으로 반영
 
 ## Task 9 완료 (`feature/lesson-grid-ux-improvements`)
-
 그리드 인터랙션 UX 개선(Task A/B/C/D) 구현 및 사용자 검증까지 모두 완료. 세부 구현 내역은 위 "Task 9 진행 상황" 참고.
 
 - `develop`에 `--no-ff` 병합 완료 (병합 커밋 `8ac2944`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
 - `origin/develop`에 push 완료 (`5fca169..8ac2944`), 로컬 `feature/lesson-grid-ux-improvements` 브랜치 삭제
 
 ## 계획됨 (2026-07-30 제안, 미착수)
-
 Task 9 Task A 리뷰 도중 사용자가 제안한 아이디어: 코드 패널(`CodeFeedbackView`)에서 쓰이는 변수명(예: `p`, `target`)을 그리드의 해당 메모리 블록 옆에도 표시하면 코드와 그리드 사이의 매핑이 더 직접적으로 보일 것이라는 제안. 지금은 구현하지 않고 `TODO.md` 백로그·`PLAN.md` 백로그에 아이디어만 기록해둠 — 착수 시점은 추후 논의.
 
 ## Task 10 진행 상황 (`feature/reference-badge-visibility`)
-
 Task 9 병합 완료 후 사용자가 백로그 중 "레슨 2 참조 배지 가시성 개선"을 다음 착수 항목으로 선택. 배경·결정 근거는 `PLAN.md`의 "Task 10: 레슨 2 참조 배지 가시성 개선" 참고.
 
 - `develop`에서 `feature/reference-badge-visibility` 브랜치 분기
@@ -191,14 +173,12 @@ Task 9 병합 완료 후 사용자가 백로그 중 "레슨 2 참조 배지 가�
 - 사용자가 시뮬레이터에서 직접 검증 완료: 참조 배지 표시, 에러(빨강)/하이라이트(노랑) 배경 위 대비, 다른 슬롯 콘텐츠와 겹침 없음, 접근성 라벨, 레슨 1·3/샌드박스 회귀 없음 6개 항목 모두 정상 확인 — Task 10 완료로 확정
 
 ## Task 10 완료 (`feature/reference-badge-visibility`)
-
 레슨 2 참조 배지 가시성 개선 구현 및 사용자 검증까지 완료. 세부 구현 내역은 위 "Task 10 진행 상황" 참고.
 
 - `develop`에 `--no-ff` 병합 완료 (병합 커밋 `fc2d623`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
 - `origin/develop`에 push 완료 (`ee5c1da..fc2d623`), 로컬 `feature/reference-badge-visibility` 브랜치 삭제
 
 ## Task 11 진행 상황 (`feature/grid-variable-labels`)
-
 Task 10 병합 완료 후 사용자가 백로그 중 "그리드 블록에 코드 패널 변수명 표시"를 다음 착수 항목으로 선택. 라벨 동작 방식을 `AskUserQuestion`으로 확정: **누적 유지**(슬롯이 코드에서 특정 변수명으로 처음 등장하면 라벨을 부여하고, 이후 다른 슬롯을 조작해도 이미 부여된 라벨은 유지) 방식 채택. 배경·결정 근거는 `PLAN.md`의 "Task 11: 그리드 블록에 코드 패널 변수명 표시" 참고.
 
 - `develop`에서 `feature/grid-variable-labels` 브랜치 분기, `TODO.md`/`PLAN.md`에 Task 11 등록 (백로그에 있던 항목을 Task로 승격)
@@ -216,7 +196,6 @@ Task 10 병합 완료 후 사용자가 백로그 중 "그리드 블록에 코드
 - 3차 사용자 시뮬레이터 검증(2026-08-11) 완료: 레슨 3 연결 코드가 `&nodeB` 형태로 정상 표시, 레슨 1 연결 직후 라벨 일관성, 리셋 시 `p1`부터 재시작 모두 정상 확인 — Task 11 완료로 확정
 
 ## Task 11 완료 (`feature/grid-variable-labels`)
-
 그리드 블록에 코드 패널 변수명 표시 구현 및 3차에 걸친 사용자 시뮬레이터 검증까지 완료. 세부 구현 내역은 위 "Task 11 진행 상황" 참고. 1차 구현(누적 유지 라벨) 이후 사용자 검증 과정에서 발견된 두 가지 후속 문제(레슨 3 중복 `p` 라벨, `handleDrop` 목적지 미명명)를 각각 블루프린트 선언 이름/번호 매김, `&destName` 표기로 수정하며 반복적으로 다듬었다.
 
 - `develop`에 `--no-ff` 병합 완료 (병합 커밋 `6a80e39`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증
@@ -224,7 +203,6 @@ Task 10 병합 완료 후 사용자가 백로그 중 "그리드 블록에 코드
 - `origin/develop`에 push 완료, 로컬 `feature/grid-variable-labels` 브랜치 삭제
 
 ## Task 12 진행 상황 (`feature/swiftui-style-cleanup`)
-
 Task 11 병합 완료 후 사용자가 백로그 중 "SwiftUI 코드를 사용자 코딩 스타일에 맞게 정리"를 다음 착수 항목으로 선택. 정리 범위는 `AskUserQuestion`으로 **Task 1~11에서 Claude가 신설·대폭 수정한 파일 위주**로 확정(전체 25개 파일 일괄 정리는 diff·회귀 검증 부담이 커 제외), 스타일 기준은 **가이드 문서를 이 참에 함께 작성**하는 방향으로 확정.
 
 - `develop`에서 `feature/swiftui-style-cleanup` 브랜치 분기
@@ -243,7 +221,6 @@ Task 11 병합 완료 후 사용자가 백로그 중 "SwiftUI 코드를 사용�
 - 자동 포매터 도입은 범위에서 제외 — 대문자 계산 프로퍼티 같은 이 프로젝트 고유 관례를 표준 포매터가 존중하지 않음
 
 ### 진단 (실측 완료)
-
 Claude가 신설한 파일들(`CCodeHighlighter.swift`, `LessonProgressStore.swift`, `AppLanguage.swift`, `GridInteractionHintOverlay.swift`, `LessonRow.swift` 등)은 2-space·한국어 `///` 주석은 지켰다. 착수 전 초벌 진단에서는 이탈 후보를 3가지로 봤으나, 전체 소스를 실측한 결과 **2가지는 이탈이 아니었고 실제 이탈은 1가지로 좁혀졌다**.
 
 - **실제 이탈** — 뷰 본문/함수 본문의 **빈 줄이 원본보다 적어 밀도가 높음** (원본은 스택 자식마다, 특히 `Spacer()` 앞뒤로 빈 줄을 둠)
@@ -251,7 +228,6 @@ Claude가 신설한 파일들(`CCodeHighlighter.swift`, `LessonProgressStore.swi
 - **이탈 아님(초벌 진단 철회)** — `#Preview` 누락. View 타입 전체를 스캔한 결과 누락은 `ArrowDrawLayer.swift` 하나뿐인데 tag `1.0` 원본에도 없었다(상위 뷰의 좌표 정보를 받아야만 그려지는 보조 레이어라 단독 프리뷰가 무의미). `STYLE_GUIDE.md` §10에 예외로 명시 (커밋 `7ad90d5`)
 
 ### 코드 정리 결과
-
 대상 후보 9개 파일을 `STYLE_GUIDE.md`와 대조해 실제 이탈이 있던 5개 파일만 수정했다. 커밋은 파일·규칙 단위로 6개로 나눴고, 문자열 리터럴은 한 곳도 건드리지 않아 `Localizable.xcstrings` 키에는 영향이 없다.
 
 - `App/AppLanguage.swift`: `private static let` 키 2개가 `displayName`과 메서드 사이에 끼어 있던 것을 case 선언 바로 아래로 이동 (커밋 `cdf0c29`)
@@ -263,7 +239,6 @@ Claude가 신설한 파일들(`CCodeHighlighter.swift`, `LessonProgressStore.swi
 - 앞 3개 커밋(`cdf0c29`, `74aa686` 이전까지)은 커밋 전 `xcodebuild ... build` → BUILD SUCCEEDED 확인. 이후 4개 커밋(`c2f1cfb`, `f049201`, `0af91d0`, `0f2d33a`)은 사용자가 빌드·시뮬레이터 검증을 직접 수행하기로 해 CLI 빌드를 생략했고, 사용자 검증 완료로 확정
 
 ### 작업 중 되돌린 변경과 가이드 정정
-
 정리를 진행하며 `STYLE_GUIDE.md` 자체가 원본과 어긋난 규칙 4건을 담고 있던 것이 드러나, 코드를 고치는 대신 가이드를 고쳤다. 가이드를 tag `1.0`에서 추출할 때 일부 규칙을 실측 없이 일반적인 Swift 관례로 적어버린 것이 원인이다.
 
 - guard 줄바꿈: "조건이 길면 `else`를 내린다"고 적었으나 원본도 조건 하나짜리는 한 줄이 기본형이었고, 현재 `MemoryGridVM.swift:175`의 한 줄 `guard`는 원본 `1.0`의 `:166`과 동일한 줄이었다 → §7 정정 (커밋 `7ad90d5`)
@@ -272,7 +247,6 @@ Claude가 신설한 파일들(`CCodeHighlighter.swift`, `LessonProgressStore.swi
 - View 프로퍼티 선언 순서: "프로퍼티 래퍼 → 주입 `let`"으로 적었으나 원본 `MemoryItem`은 `let slot` 다음에 `@ObservedObject var vm`을 두는 반대 순서였다. 이 잘못된 규칙에 맞춰 `LessonRow`의 `@ObservedObject`를 위로 올리는 커밋을 만들었다가, 원본에서 오히려 멀어지는 변경임을 확인하고 `git reset`으로 되돌린 뒤 가이드 §3을 정정 (커밋 `74aa686`)
 
 ## Task 12 완료 (`feature/swiftui-style-cleanup`)
-
 SwiftUI 코드 스타일 정리 및 사용자 빌드·시뮬레이터 검증까지 완료. 세부 구현 내역은 위 "Task 12 진행 상황" 참고. 이번 Task의 산출물은 코드 변경보다 `STYLE_GUIDE.md`(이후 모든 SwiftUI 작업의 기준 문서)와, 가이드를 실측으로 검증하며 잡아낸 규칙 오류 4건의 정정이다.
 
 - 브랜치 커밋 18개(코드 6 + 문서 12), `develop`에 `--no-ff` 병합 완료 (병합 커밋 `efe3119`)
@@ -280,7 +254,6 @@ SwiftUI 코드 스타일 정리 및 사용자 빌드·시뮬레이터 검증까�
 - `origin/develop`에 push 완료 (`ba6a327..efe3119`), 로컬 `feature/swiftui-style-cleanup` 브랜치 삭제
 
 ## 로드맵 정리 (2026-08-14)
-
 Task 12 병합 완료 후 사용자와 남은 항목의 순서를 정리했다. 세부 내용은 `PLAN.md`의 "출시 로드맵", "백로그 A", "백로그 B" 참고.
 
 - **Chapter 2~5 콘텐츠 저작을 1.0 이후 업데이트로 확정** — 분량이 가장 크고, Chapter 1(레슨 3개) + 플레이그라운드만으로 학습 루프가 완결되므로 출시를 막을 이유가 없다는 판단. 남은 백로그 중 가장 마지막 순서
@@ -293,7 +266,6 @@ Task 12 병합 완료 후 사용자와 남은 항목의 순서를 정리했다. 
   - 각 항목은 실제 착수 시점에 별도 Task로 승격하고, 그때 세부 실행 계획을 확정한다
 
 ## 1.0 착수 순서 확정 (2026-08-14)
-
 사용자가 "학습 효과 보강을 시작하기 전에 브랜딩을 먼저 정리해야 나중에 디자인을 다시 고치지 않는 것 아닌가"라고 제기해, 1.0 항목의 착수 순서를 **언어 → 브랜딩 → 학습 효과 보강 → 심사 준비**로 확정했다.
 
 - 판단 근거를 위해 색상 사용 현황을 실측: SwiftUI 하드코딩 색상(`Color.red` 등) **0건**, 전부 자산 참조(`Color(.main)` 등)로 통일돼 있고 색상 자산은 10개(`Main`이 13회로 최다 참조). 앱 이름 노출도 `MainView`의 `Text` 두 줄뿐
@@ -304,12 +276,10 @@ Task 12 병합 완료 후 사용자와 남은 항목의 순서를 정리했다. 
 - 함께 제기된 "다른 교재·앱은 CS 개념을 어떻게 설명하는가, 책은 결국 일러스트뿐인데"라는 질문에 대해 조사 결과를 `PLAN.md` 백로그 B의 "참고 사례와 설계 원칙" 절에 정리 — 책의 일러스트는 매체의 한계지 이상적 방법이 아니므로 흉내 낼 필요가 없고, 가져올 것은 표기 규칙의 일관성과 구체→추상 순서라는 결론. notional machine 개념, 선행 사례 4건(Python Tutor / Pointer Fun with Binky / Execute Program / Brilliant), 포인터의 알려진 오개념 3가지를 B-2/B-1 설계 기준으로 기록
 
 ## 문서 정합성 점검 (2026-08-14)
-
 - 이 문서 맨 위 "현재 상태" 섹션이 Task 5 시점(다음은 Task 6 착수 예정)에 멈춰 있던 것을 발견 — Task 6 이후로는 Task별 섹션만 아래에 추가되고 요약이 갱신되지 않았다. Task 1~12 병합 완료 상태로 갱신하고, 기존 내용은 "Task 1~2 완료 및 초기 검증" 섹션으로 분리해 보존
 - 그 외 Task 1~12의 TODO/PLAN/PROGRESS 기록은 실제 커밋 이력과 일치함을 확인
 
 ## Task 13 진행 상황 (`feature/app-language-settings-link`)
-
 1.0 착수 순서 1번 "언어 변경 방식 개선"을 백로그에서 Task로 승격해 착수. 배경·변경 방향은 `PLAN.md`의 "백로그 A" 참고.
 
 - 착수 전 확인 사항 판단: `AppLanguage.applyInitialLanguageIfNeeded()`의 `AppleLanguages` 쓰기가 iOS 앱별 언어 설정과 **같은 저장소**를 공유함을 확인. `hasSetInitialLanguage` 플래그로 1회만 실행되므로 시스템 선택을 되덮어쓰지는 않지만, 이번 작업 목적(비공식 직접 쓰기 제거)과 어긋나는 코드가 남는다고 판단해 `AskUserQuestion`으로 **강제 로직 제거** 확정. `ko`/`en` 외 언어 기기는 `developmentRegion`(`ko`) 폴백으로 한국어가 되어 "기본 한국어" 의도도 대부분 유지된다
@@ -331,7 +301,6 @@ Task 12 병합 완료 후 사용자와 남은 항목의 순서를 정리했다. 
   - **사용자가 실기기에서 앱 언어 변경이 정상 동작함을 확인 완료** — 시뮬레이터 한계로 확정, 코드 변경 없이 마무리. 검토했던 보완안(footer에 설정 경로 명시, 경로 안내 알럿)은 채택하지 않음
 
 ## Task 13 완료 (`feature/app-language-settings-link`)
-
 언어 변경 방식 개선 구현 및 실기기 검증까지 완료. 세부 구현 내역은 위 "Task 13 진행 상황" 참고. 앱에서 `AppleLanguages`를 직접 읽고 쓰던 코드가 완전히 사라졌고(grep 0건), 언어 변경은 iOS 앱별 언어 설정에 위임된다.
 
 - 검증 과정에서 발견한 핵심 사항: 앱별 언어 항목은 앱이 2개 이상 로컬라이제이션을 갖는 것만으로는 부족하고 **기기의 선호하는 언어가 2개 이상이어야** 노출된다. 앱 내 선택 UI를 없앤 이번 설계에서는 `UIPrefersShowingLanguageSettings`가 필수 조건이다
@@ -340,7 +309,6 @@ Task 12 병합 완료 후 사용자와 남은 항목의 순서를 정리했다. 
 - `origin/develop`에 push 완료 (`1e0229c..03933a9`) — 2026-08-14 로드맵 정리 문서 커밋 6개도 이때 함께 푸시됨. 로컬 `feature/app-language-settings-link` 브랜치 삭제
 
 ## 리포 정리 (2026-09-02)
-
 Task 13 병합 후 작업 트리에 남아 있던 변경을 정리했다. 앱 동작에는 영향이 없고, 매번 작업 트리가 더러워지는 것을 막기 위한 정리다.
 
 - Xcode가 `project.pbxproj`의 `PBXBuildFile` 항목을 알파벳순으로 재정렬한 변경(9줄 이동, 내용 동일)을 커밋 — Task 1~11에서 파일 참조를 수동 추가하며 순서가 어긋나 있던 것을 Xcode가 정규화한 결과다 (커밋 `774b7e1`)
@@ -349,7 +317,6 @@ Task 13 병합 후 작업 트리에 남아 있던 변경을 정리했다. 앱 �
 - 정리 후 재빌드해 작업 트리가 깨끗하게 유지됨을 확인, `origin/develop` 푸시 완료 (`03933a9..d262958`)
 
 ## 다음 작업
-
 - `PLAN.md`의 "1.0 (출시 전)" 2번 항목 **브랜딩·비주얼 언어 확정**(백로그 C) 착수 예정 — 앱 이름/부제/아이콘/색 팔레트와, 학습 효과 보강(B-2/B-1)의 선행 조건인 **도식 표기 규칙**까지 확정한다. 착수 시 별도 Task로 승격
   - 학습 효과 보강 — B-2(레슨 0 "변수와 메모리")부터 착수. 별도 Task로 승격 시 세부 실행 계획 확정 필요
   - 언어 변경 방식 개선
