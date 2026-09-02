@@ -337,8 +337,16 @@ Task 13 병합 후 작업 트리에 남아 있던 변경을 정리했다. 앱 �
 - 미사용 자산 2개(`LightBlown`/`Text1`)
 - **PLAN.md의 2026-08-14 실측 "하드코딩 색상 0건" 정정** — 그 이후 Task 9에서 추가된 파일들이 `.green`/`.orange`/`.white`/`Color(white: 0.15)`/`.gray`를 직접 쓴다. 코드 패널 것은 의도된 예외로 규정했고, `LessonRow`의 `.green`만 실제 이탈
 
+## Task 14 완료 (`feature/branding-visual-language`)
+브랜딩·비주얼 언어 확정 완료. 세부 내역은 위 "Task 14 진행 상황" 참고. 백로그 B(B-2/B-1)가 도식을 만들 때 참조할 표기 규칙이 `VISUAL_LANGUAGE.md` 하나로 고정됐다.
+
+- 이번 Task는 **문서만 변경**되어 코드 변경이 0건이다. 따라서 빌드·시뮬레이터 검증 대상이 없었다
+- 커밋 5개 — 포매팅 1(`6d33122`) + 문서 4(`c533c12` PLAN / `3ae0e5b` VISUAL_LANGUAGE 신설 / `77b75e2` TODO / `0e66f62` PROGRESS). `develop`에 `--no-ff` 병합(병합 커밋 `ee55329`) 후 `origin/develop` 푸시(`126a86f..ee55329`), 로컬 브랜치 삭제 완료
+- 작업 중 발견해 함께 처리한 것 — `CLAUDE.md`의 마크다운 규칙("헤더 뒤에 빈 행을 두지 않는다")이 기존 문서 4개에 적용돼 있지 않았다. PLAN 52곳·PROGRESS 33곳·TODO 17곳·STYLE_GUIDE 12곳을 정리했고, **포매팅만 담은 커밋을 먼저 쌓고 그 위에 내용 커밋을 얹어** 내용 diff에 공백 변경이 섞이지 않게 했다(`git diff --ignore-blank-lines` 결과 0으로 확인). `PROPOSAL.md`는 SSC 제출 시점의 기록 문서라 제외
+- 1.0 출시 전 항목 4개 중 2개(1. 언어 변경 방식 개선 / 2. 브랜딩·비주얼 언어 확정) 완료
+
 ## 다음 작업
-- Task 14 문서 검토 후 `develop`에 병합. 이번 Task는 **문서만 변경**되어 코드 변경이 없으므로 빌드·시뮬레이터 검증 대상이 없다
-- 이어서 `PLAN.md`의 "1.0 (출시 전)" 3번 항목 **학습 효과 보강** 착수 — **B-2(레슨 0 "변수와 메모리")** 부터. 확정된 `VISUAL_LANGUAGE.md`의 표기 규칙과 새 도식 체크리스트를 기준으로 삼는다. 착수 시 별도 Task로 승격하며 세부 실행 계획(문구·도식·화면 전환 방식) 확정 필요
+- `PLAN.md`의 "1.0 (출시 전)" 3번 항목 **학습 효과 보강** 착수 — **B-2(레슨 0 "변수와 메모리")** 부터. `develop`에서 `feature/lesson-zero-variables`를 새로 판다. 확정된 `VISUAL_LANGUAGE.md`의 표기 규칙과 새 도식 체크리스트를 기준으로 삼으며, 착수 시 별도 Task로 승격하고 세부 실행 계획(문구·도식·화면 전환 방식)을 확정한다
+- B-2 착수 전 판단할 3건은 `TODO.md`의 "다음 단계 > B-2 착수 전 확인 사항"에 실측해 기록해 두었다 — **레슨 id 0을 `sandboxLesson`이 이미 점유**(`Lesson.swift:10`, `LessonProgressStore`의 `UserDefaults` 저장값과의 충돌 여부 포함), **`SuccessCondition` 3개 케이스가 모두 포인터 연결을 전제**해 B-2에 맞는 조건이 없음(`Lesson.swift:156`), 재사용할 `SlotSeed.variableName` 경로
 - 그 다음 B-1(레슨별 개념 카드) → B-4(레슨 마무리 요약)
 - 마지막으로 1.0 4번 **App Store 심사 대비 항목 점검** (개인정보처리방침, 스크린샷, 지원 언어, **앱 아이콘**)
