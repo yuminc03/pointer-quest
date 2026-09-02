@@ -1,9 +1,22 @@
 # TODO
-
 작업 순서와 브랜치 전략은 [PLAN.md](./PLAN.md)를 따른다. Task마다 `develop`에서 새 feature 브랜치를 파고, 완료 후 병합 여부를 확인한 뒤 다음 Task 브랜치를 새로 판다.
 
-## Task 1 — `feature/lesson-data-model`
+## 다음 단계 (2026-09-02 기준)
+작업을 다시 이어받을 때 이 절부터 읽는다. 세부 내용은 각 Task 절과 [PLAN.md](./PLAN.md)를 참고한다.
 
+- **현재 위치** — Task 14(브랜딩·비주얼 언어 확정) 문서 작업 완료. `feature/branding-visual-language` 브랜치에서 사용자 검토 후 `develop` 병합 대기. 코드 변경이 없어 빌드·시뮬레이터 검증 대상 없음
+- **바로 다음 Task** — 학습 효과 보강 **B-2: 레슨 0 "변수와 메모리"**. `feature/lesson-zero-variables`로 승격 예정. 착수 시 아래 "B-2 착수 전 확인 사항"을 먼저 판단한다
+- **그 다음** — B-1(레슨별 개념 카드) → B-4(레슨 마무리 요약) → 1.0 4번(App Store 심사 대비: 개인정보처리방침, 스크린샷, 지원 언어, **앱 아이콘**)
+- **미뤄둔 수정** — Task 14 실측에서 나온 이탈 6건. 아래 "Task 14에서 발견한 이탈" 절과 [VISUAL_LANGUAGE.md](./VISUAL_LANGUAGE.md) §7에 목록으로만 남겨 두었다. 지금은 고치지 않으며, 별도 Task로 승격할 시점을 따로 정한다
+
+### B-2 착수 전 확인 사항
+실측으로 미리 확인해 둔 항목이다. 착수 시 이 셋을 먼저 결정해야 코드를 만지기 시작할 수 있다.
+
+- **레슨 id 0이 이미 점유돼 있다** — `LessonData.sandboxLesson`이 `id: 0`을 쓴다(`Lesson.swift:10`). "레슨 0"을 문자 그대로 id 0으로 만들 수 없으므로, (가) 샌드박스 id를 다른 값으로 옮기거나 (나) 표시 이름만 "레슨 0"으로 두고 내부 id는 다른 값을 쓰는 방식 중 하나를 골라야 한다. `LessonProgressStore`가 완료 id를 `UserDefaults`에 저장하므로 **기존 사용자의 저장값과 충돌하지 않는지** 함께 판단한다
+- **성공 조건에 맞는 케이스가 없다** — 현재 `SuccessCondition`은 `anyPointerPointsTo`/`chain`/`sandbox` 셋뿐이고(`Lesson.swift:156`), 모두 **포인터 연결**을 전제한다. B-2는 포인터가 등장하기 전 "변수 = 이름표 붙은 상자 / 주소 = 상자 번호"를 가르치는 레슨이라 연결이 아닌 다른 성공 조건(예: 값 슬롯을 탭해 주소를 확인)이 필요할 수 있다. 새 케이스를 추가할지, 기존 케이스로 우회할지 결정한다
+- **재사용할 자산** — `SlotSeed.variableName`(Task 11)이 이미 레슨이 직접 변수명을 선언하는 경로를 제공한다(`Lesson.swift:63-66`의 레슨 3이 선례). 도식 표기는 [VISUAL_LANGUAGE.md](./VISUAL_LANGUAGE.md) §2·§8의 체크리스트를 그대로 따르고, 개념 카드용 새 모양을 만들지 않는다
+
+## Task 1 — `feature/lesson-data-model`
 `Lesson`/`LessonBlueprint`/`SuccessCondition`/`Chapter` 데이터 모델 정의 (기존 3레벨 데이터를 새 구조로 마이그레이션)
 
 - [x] `Level.swift` → `Lesson.swift` 리네임 및 타입명 변경 (`Level` → `Lesson`, `LevelData` → `LessonData`, `LevelCard` → `LessonCard`)
@@ -11,14 +24,12 @@
 - [x] `Chapter` 타입 추가 및 기존 3레벨을 Chapter 1로 마이그레이션
 
 ## Task 2 — `feature/blueprint-driven-vm`
-
 `MemoryGridVM`을 블루프린트 기반 범용 로직으로 리팩터링 (기존 3레벨 동작 동일성 확인)
 
 - [x] 블루프린트 기반 `setupLevel` 교체
 - [x] 블루프린트 기반 `checkSuccess` 교체 및 기존 switch 제거
 
 ## Task 3 — `feature/learning-tone-copy`
-
 게임 카피 → 학습 도구 카피 전환 + 로컬라이제이션(한국어 기본/영어 선택) 도입
 
 - [x] "Mission" → "Lesson" 등 문구 조정 (`MissionHeaderView` → `LessonHeaderView` 컴포넌트명 포함)
@@ -31,7 +42,6 @@
 - [x] `SettingView`에 언어 선택(한국어/English) UI 및 재시작 안내 추가
 
 ## Task 4 — `feature/sandbox-mode`
-
 샌드박스 모드 추가
 
 - [x] `MemoryGridVM` sandbox 초기화 경로 추가
@@ -42,28 +52,24 @@
 - [x] Playground 화면 수동 드래그 테스트 (포인터 연결/해제/리셋, "Lesson Complete" 알림 미표시) 확인
 
 ## Task 5 — `feature/lesson-progress-tracking`
-
 레슨 완료 진행 상황 저장 및 카드 체크마크 표시
 
 - [x] 완료 레슨 id `UserDefaults` 저장
 - [x] `LessonCard` 체크마크 표시
 
 ## Task 6 — `feature/chapter-placeholders`
-
 Chapter 2~5 placeholder 등록 (Coming Soon UI)
 
 - [x] Chapter 2~5 데이터 등록
 - [x] Coming Soon 카드 UI
 
 ## Task 7 — `feature/card-paging-redesign`
-
 Main 화면 카드 페이징 UI 개선 (Apple HIG 준수 + 반응형 대응)
 
 - [x] `PagingCardsScrollView`/`LessonCard` 레이아웃을 Apple Human Interface Guidelines 기준(여백, 타이포그래피, 터치 타겟 크기 등)으로 재검토 → 조사 결과 가로 캐러셀 자체가 계층적 콘텐츠에 부적합하다고 판단, 챕터별 `Section`을 가진 세로 `List`(insetGrouped)로 전면 재설계
 - [x] iPhone SE~Pro Max 등 다양한 화면 크기에서 카드가 잘리거나 깨지지 않도록 반응형 처리 (현재 `screenWidth - 100`, `cardWidth / 2.5 * 3.5` 등 특정 화면 크기를 가정한 하드코딩 치수 점검) → 커스텀 치수 계산을 제거하고 시스템 `List`에 위임해 모든 화면 크기에서 자동 대응 (iPhone 17에서 사용자 검증 완료)
 
 ## Task 8 — `feature/localization-source-swap`
-
 로컬라이제이션 소스 언어를 한국어로 전환
 
 - [x] 앱 전체 `Text()`/`Lesson`·`Chapter`의 `title`/`description` 등 사용자 노출 문구의 코드 리터럴을 한국어로 전환
@@ -71,7 +77,6 @@ Main 화면 카드 페이징 UI 개선 (Apple HIG 준수 + 반응형 대응)
 - [x] `codeLog`(하단 C 코드 로그 영역)를 실제 로컬라이즈 대상으로 전환 — `String` → `LocalizedStringResource`로 타입 변경, `//` 주석은 한국어 소스로 작성하고 `Localizable.xcstrings`에 `en` 번역 추가 (`int`/`printf` 등 C 코드 구문 자체는 두 언어 공통으로 영어 유지)
 
 ## Task 9 — `feature/lesson-grid-ux-improvements`
-
 2026-07-29 사용자 UX 리뷰(처음 써보는 사람 시점) 반영. 계획 상세는 `/Users/chuyumin/.claude/plans/i-m-concerned-about-whether-hashed-pinwheel.md` 참고.
 
 - [x] Task A: 코드 패널(`CodeFeedbackView`) 개편 — `codeLog` 마크다운 오인식 버그 수정(`String(localized:)` 리졸브 후 `CCodeHighlighter`로 직접 채색해 `Text`의 마크다운 파싱 경로 우회) + C 키워드/문자열/주석 문법 강조 + 여러 줄 표시 레이아웃 개선. `CCodeHighlighter.swift` 신설·`CodeFeedbackView.swift` 수정·`project.pbxproj` 등록까지 완료, `xcodebuild` 빌드 성공 확인 — 시뮬레이터 수동 검증(마크다운 버그 재현 안 됨, 문법 강조 정상 표시) 완료
@@ -80,13 +85,11 @@ Main 화면 카드 페이징 UI 개선 (Apple HIG 준수 + 반응형 대응)
 - [x] Task D: 레슨 1 포인터 슬롯에 "주소 vs 값" 구분 보강 — 대상 주소 앞에 화살표 접두어(`→`) 표시 + `codeLog` 설명 문구에 "포인터 자신도 메모리에 저장된 값(주소)"이라는 점을 한 줄 추가해, 화살표 애니메이션 하나에만 의존하지 않도록 함. `MemoryItem.swift`/`MemoryGridVM.swift` 수정 완료(커밋 `aae8bce`, `93af209`), 빌드 성공 확인. 사용자가 시뮬레이터에서 직접 검증 완료
 
 ## Task 10 — `feature/reference-badge-visibility`
-
 레슨 2 참조 배지(`link` 아이콘) 가시성 개선. Task 9 Task C 사용자 검증(2026-08-05) 도중 발견된 후속 항목.
 
 - [x] `MemoryItem.swift`의 참조 배지(`link` SF Symbol) 크기/스타일 개선 — 카드 배경색(빨강/노랑/기본 회색)과 무관하게 눈에 띄도록 색이 채워진 원형 배지 형태로 변경. 구현 완료(커밋 `1924fe4`), 빌드 성공 확인. 사용자가 시뮬레이터에서 직접 검증 완료(배지 표시, 에러/하이라이트 배경 위 대비, 다른 콘텐츠와 겹침 없음, 접근성 라벨, 레슨 1·3/샌드박스 회귀 없음 등 6개 항목 모두 정상)
 
 ## Task 11 — `feature/grid-variable-labels`
-
 그리드 블록에 코드 패널(`CodeFeedbackView`)에서 쓰이는 변수명(예: `p`, `target`) 함께 표시. 2026-07-30 제안된 백로그 항목을 Task 10 병합 완료 후 다음 착수 항목으로 승격.
 
 - [x] `MemorySlot`에 `variableName: String?` 필드 추가 (커밋 `7a48e74`)
@@ -96,7 +99,6 @@ Main 화면 카드 페이징 UI 개선 (Apple HIG 준수 + 반응형 대응)
 - [x] (2차 사용자 검증 후속) `handleDrop`의 일반 연결 분기가 목적지 슬롯 이름을 정하지 않고 주소 리터럴을 그대로 코드에 넣던 문제 수정 — 연결 시점에 목적지 이름도 함께 확정하고 `int *p = 0x702C;` 대신 `int *p = &destName;` 형태로 표시 (커밋 `1cca04d`). 사용자가 시뮬레이터에서 직접 검증 완료(레슨 3 연결 코드가 이름으로 표시, 레슨 1 라벨 일관성, 리셋 시 `p1`부터 재시작 등 정상 확인)
 
 ## Task 12 — `feature/swiftui-style-cleanup`
-
 SwiftUI 코드를 사용자 코딩 스타일에 맞게 정리. 백로그 항목을 Task 11 병합 완료 후 다음 착수 항목으로 승격.
 
 - [x] 기준 확인 — 리포에 스타일 가이드 문서나 린터 설정(`.swiftlint.yml`/`.swift-format`)이 없음을 확인하고, git tag `1.0`(`a85ba75`, 사용자가 직접 작성한 원본) 전체 소스에서 실제 반복되는 관례를 추출
@@ -105,7 +107,6 @@ SwiftUI 코드를 사용자 코딩 스타일에 맞게 정리. 백로그 항목�
 - [x] (작업 중 발견) 실측 결과 가이드 자체가 원본과 어긋난 규칙 4건을 정정 — guard 줄바꿈, `#Preview` 예외, 줄 끝 공백, View 프로퍼티 선언 순서 (`7ad90d5`, `be9a073`, `74aa686`)
 
 ## Task 13 — `feature/app-language-settings-link`
-
 언어 변경 방식 개선. 1.0 착수 순서 1번 항목을 백로그에서 Task로 승격. 상세 배경·방향은 [PLAN.md](./PLAN.md)의 "백로그 A" 참고.
 
 - [x] `SettingView`의 언어 Section을 선택 목록에서 **현재 적용된 언어를 표시하는 행 하나**로 교체하고, 탭하면 `UIApplication.openSettingsURLString`으로 iOS 설정 앱의 앱별 언어 설정으로 이동 (커밋 `ade7318`)
@@ -116,16 +117,33 @@ SwiftUI 코드를 사용자 코딩 스타일에 맞게 정리. 백로그 항목�
 - [x] (1차 검증 후속) 설정 앱에 언어 항목이 노출되지 않던 문제 수정 — iOS는 **기기의 선호하는 언어가 2개 이상일 때만** 앱별 언어 항목을 표시한다. 앱 번들은 `en.lproj`/`ko.lproj` 2개 로컬라이제이션 조건을 이미 충족했으므로 원인은 앱이 아닌 기기 설정 쪽이었고, `Info.plist`에 `UIPrefersShowingLanguageSettings = YES`를 추가해 언어가 하나뿐인 기기에서도 항상 노출되도록 함 (커밋 `a0e967f`)
 - [x] 검증 완료 — 설정 앱의 언어 항목 노출, 언어 변경 후 복귀 시 새 언어 적용 모두 **실기기에서 정상 확인**. 시뮬레이터에서는 앱 내 "표시 언어" 행이 설정 최상단만 열고 앱 페이지까지 들어가지 못하는데, `UIApplication.openSettingsURLString`의 알려진 시뮬레이터 한계이며 실기기에서는 정상 동작함을 확인했다 (코드 변경 불필요)
 
-## 백로그
+## Task 14 — `feature/branding-visual-language`
+브랜딩·비주얼 언어 확정. 1.0 착수 순서 2번 항목을 백로그에서 Task로 승격. 상세 배경·방향은 [PLAN.md](./PLAN.md)의 "백로그 C" 참고. 착수 시점(2026-09-02) 사용자 결정으로 범위를 **도식 표기 규칙 문서화 + 색 의미 정리**로 좁혔다 (앱 이름 현행 유지, 색 자산 리네임 제외).
 
+- [x] `VISUAL_LANGUAGE.md` 신설 — 이미 화면에 구현된 표기를 실측해 규칙으로 승격. 슬롯 3종 표기, 화살표 표기, 라벨·배지, 색 대응표, 코드 패널 예외, 이탈 목록, 새 도식 체크리스트
+- [x] 색 의미 축 분리 확정 — **테두리 색 = 종류(값/포인터/빈칸), 배경 색 = 상태(에러/강조)**. 같은 색을 두 축에 걸쳐 쓰지 않는다는 규칙을 명문화
+- [x] 앱 이름/부제 확정 — `Pointer Quest` / `메모리의 미로` 현행 유지 (SSC 제출명 `Pointer Quest: The Memory Maze`는 폐기). 앱 아이콘은 1.0 4번(App Store 심사 대비)으로 이관
+- [x] 색 자산 이름은 유지하고 의미만 정의 — 리네임은 참조 지점이 여러 파일에 걸쳐 회귀 부담이 있고, 도식 규칙 확정에 필요한 것은 이름이 아니라 의미 정의라고 판단
+- [ ] 사용자 검토 — 확정된 표기 규칙이 의도와 맞는지 확인 (문서만 변경되므로 빌드·시뮬레이터 검증 대상 없음)
+
+### Task 14에서 발견한 이탈 (수정은 별도 Task)
+백로그 C의 Non-goal("규칙에 어긋나는 곳을 목록으로만 남긴다")에 따라 수정하지 않고 기록만 한다. 상세는 `VISUAL_LANGUAGE.md` §7 참고.
+
+- [ ] `MemoryItem.swift:74` — 에러 시 테두리가 `Red`로 덮여 값/포인터 구분이 사라짐. 축 분리를 어기는 유일한 지점
+- [ ] `MainView.swift:5-7` — 챕터 그라데이션이 상태 색(`Green`/`Red`)을 장식으로 재사용
+- [ ] `LessonRow.swift:40` — 완료 체크마크가 자산이 아닌 시스템 `.green` 하드코딩
+- [ ] 색 자산 10개 중 9개가 다크 모드 대응 없음 (light appearance만 정의). 상태 배경 30%의 다크 대비 미확인
+- [ ] 미사용 자산 `LightBlown`/`Text1` 정리
+- [ ] 색 자산 의미 기반 리네임 (이번 Task에서 보류)
+
+## 백로그
 2026-08-14 기준으로 1.0 출시 전 항목과 출시 후 업데이트 항목을 구분했다. 상세 배경·방향은 [PLAN.md](./PLAN.md)의 "출시 로드맵" 참고.
 
 ### 1.0 (출시 전)
-
 착수 순서는 아래 번호 순으로 확정했다 (2026-08-14). 근거는 `PLAN.md`의 "출시 로드맵" 참고.
 
 - [x] **1. 언어 변경 방식 개선** — Task 13으로 완료. 앱 내 언어 선택 목록을 없애고, 현재 적용된 언어만 표시한 뒤 탭하면 iOS 설정 앱의 앱별 언어 설정으로 이동시킨다. 시스템 설정에서 언어를 바꾸면 iOS가 앱을 종료시키므로 돌아왔을 때 자동으로 새 언어가 적용되어, 기존의 "재시작해주세요" 알럿이 불필요해진다 (상세는 `PLAN.md`의 "백로그 A")
-- [ ] **2. 브랜딩·비주얼 언어 확정** — 앱 이름/부제/아이콘/색 팔레트에 더해, 학습 효과 보강의 선행 조건인 **도식 표기 규칙**(값 vs 포인터 구분, 화살표 표기, 색이 의미하는 것)까지 확정한다. 색 팔레트 교체 자체는 하드코딩 색상이 0건이라 비용이 거의 없고, 이 항목을 먼저 두는 실익은 도식 표기 규칙에 있다 (상세는 `PLAN.md`의 "백로그 C")
+- [x] **2. 브랜딩·비주얼 언어 확정** — Task 14로 완료. 앱 이름/부제/아이콘/색 팔레트에 더해, 학습 효과 보강의 선행 조건인 **도식 표기 규칙**(값 vs 포인터 구분, 화살표 표기, 색이 의미하는 것)까지 확정한다. 색 팔레트 교체 자체는 하드코딩 색상이 0건이라 비용이 거의 없고, 이 항목을 먼저 두는 실익은 도식 표기 규칙에 있다 (상세는 `PLAN.md`의 "백로그 C")
 - [ ] **3. 학습 효과 보강** — 포인터 개념을 모르는 사용자에게 실제 학습 효과가 있는지에 대한 우려에서 출발. 후보안 6개 중 1.0 범위를 아래 3개로 확정했다 (별도 이론 화면은 만들지 않고 레슨 흐름 안에 개념 설명을 녹이는 방향). 상세는 `PLAN.md`의 "백로그 B" 참고
   - [ ] B-2: 레슨 0 "변수와 메모리" 추가 — 레슨 1이 전제하는 "변수 = 이름표 붙은 상자 / 주소 = 상자 번호"를 기존 그리드로 먼저 보여준다 (Task 11의 `SlotSeed.variableName` 재사용)
   - [ ] B-1: 레슨별 개념 카드 — 그리드 진입 직전 3~5문장 + 도식 1개, 그리드 상단 `(i)` 버튼으로 재열람
@@ -133,6 +151,5 @@ SwiftUI 코드를 사용자 코딩 스타일에 맞게 정리. 백로그 항목�
 - [ ] **4. App Store 심사 대비 항목 점검** (개인정보처리방침, 스크린샷, 지원 언어 등)
 
 ### 1.x (출시 후 업데이트)
-
 - [ ] 학습 효과 보강 중 1.0에서 제외한 항목 — B-3(예측→확인 단계), B-5(용어집 화면), B-6(오개념 지목형 피드백)
 - [ ] Chapter 2~5 실제 레슨 콘텐츠 저작 — 분량이 가장 크고 출시를 막을 이유가 없어 1.0 이후 업데이트로 분리. 남은 백로그 중 **가장 마지막** 순서로 진행
