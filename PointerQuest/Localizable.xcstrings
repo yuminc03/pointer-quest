@@ -24,6 +24,22 @@
         }
       }
     },
+    "// 레슨 0: 메모리의 모든 칸에는 번호(주소)가 있어요. 값이 든 상자 3개를 눌러 확인해 보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// Lesson 0: Every cell in memory has a number (an address). Tap the 3 boxes holding a value to inspect them."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 레슨 0: 메모리의 모든 칸에는 번호(주소)가 있어요. 값이 든 상자 3개를 눌러 확인해 보세요."
+          }
+        }
+      }
+    },
     "// 레슨 1: 포인터를 드래그해서 0x700C 주소를 가리키세요." : {
       "localizations" : {
         "en" : {
@@ -354,6 +370,38 @@
         }
       }
     },
+    "int %@ = %lld; // 이름 %@, 주소 %@, 값 %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@ = %2$lld; // name %3$@, address %4$@, value %5$lld"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@ = %2$lld; // 이름 %3$@, 주소 %4$@, 값 %5$lld"
+          }
+        }
+      }
+    },
+    "int %@ = %lld; // 이름 %@, 주소 %@, 값 %lld\n// 아직 열어보지 않은 상자가 %lld개 남았어요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@ = %2$lld; // name %3$@, address %4$@, value %5$lld\n// %6$lld more box(es) left to open."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@ = %2$lld; // 이름 %3$@, 주소 %4$@, 값 %5$lld\n// 아직 열어보지 않은 상자가 %6$lld개 남았어요."
+          }
+        }
+      }
+    },
     "int %@; // %@의 변수가 초기화되지 않음\nint *%@ = &%@;\n// 경고: '%@'를 역참조하면 쓰레기 값이 반환됩니다." : {
       "localizations" : {
         "en" : {
@@ -575,6 +623,22 @@
         }
       }
     },
+    "메모리는 번호가 붙은 상자들입니다.\n값이 들어 있는 상자를 눌러 이름·번호·내용을 확인해 보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memory is a set of numbered boxes.\nTap a box that holds a value to check its name, number, and contents."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "메모리는 번호가 붙은 상자들입니다.\n값이 들어 있는 상자를 눌러 이름·번호·내용을 확인해 보세요."
+          }
+        }
+      }
+    },
     "메모리의 미로" : {
       "localizations" : {
         "en" : {
@@ -619,6 +683,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "배열과 포인터 연산"
+          }
+        }
+      }
+    },
+    "변수와 메모리" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Variables and Memory"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "변수와 메모리"
           }
         }
       }
