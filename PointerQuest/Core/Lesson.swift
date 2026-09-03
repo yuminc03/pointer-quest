@@ -6,8 +6,12 @@ struct LessonData {
 
   /// 클리어 조건 없이 자유롭게 포인터를 연결/해제할 수 있는 샌드박스(Playground) 레슨
   /// `chapters`/`lessons`에는 포함하지 않고, Main 화면의 별도 진입점에서만 참조한다
+  ///
+  /// id는 챕터 밖 예약 번호대(100~)를 쓴다. `Lesson`은 `id` 기준으로 `Hashable`이고
+  /// `MainView`가 값 기반 내비게이션(`navigationDestination(for: Lesson.self)`)을 쓰므로
+  /// 실제 레슨과 id가 겹치면 안 된다 (레슨 0 추가로 id 0이 실제 레슨에 넘어갔다)
   static let sandboxLesson = Lesson(
-    id: 0,
+    id: 100,
     title: "플레이그라운드",
     description: "여기서는 자유롭게 포인터를 연결하고 해제할 수 있어요.\n미션도 정답도 없으니 마음껏 탐험해 보세요.",
     iconName: "wand.and.stars",
