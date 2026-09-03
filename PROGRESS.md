@@ -373,7 +373,19 @@ Task 13 병합 후 작업 트리에 남아 있던 변경을 정리했다. 앱 �
   - 진단 `print` 2개는 제거하고 재빌드해 잔여 0건·BUILD SUCCEEDED 확인
   - 교훈: 증상 보고가 "리셋을 누르면"이었지만 실제 트리거는 "리셋 후 재확인"이었다. **코드 경로로 설명되지 않는 증상은 고치기 전에 로그로 트리거를 먼저 확정한다** — 여기서 추측으로 `finishLevel`에 1회 제한 플래그를 넣었다면 없는 버그를 위해 정상 동작(재클리어)을 막는 코드가 남았을 것이다
 
+## Task 15 완료 (`feature/lesson-zero-variables`)
+B-2 레슨 0 "변수와 메모리" 구현·검증·병합 완료. 세부 내역은 위 "Task 15 진행 상황" 참고. 레슨 1이 전제하던 "변수 = 이름표 붙은 상자 / 주소 = 상자 번호"가 이제 앱 안에서 먼저 채워진다.
+
+- 커밋 5개 — `f58ad9d` 샌드박스 id 이동 / `743530d` 성공 조건 `.inspectedAll` + VM 관찰 경로 / `2306ad2` 레슨 0 데이터 / `d9ec7b8` 로컬라이제이션 / `6cec4aa` 문서. `Lesson.swift` 한 파일의 변경을 **hunk 단위로 3개 커밋에 나눠** 담아, 각 커밋이 하나의 논리 단위이자 빌드 가능한 상태가 되도록 했다(`git apply --cached`로 hunk 분리)
+- `develop`에 `--no-ff` 병합(병합 커밋 `8ca55c9`), 병합 직후 `xcodebuild ... build` → BUILD SUCCEEDED 재검증, `origin/develop` 푸시(`842bd00..8ca55c9`), 로컬 브랜치 삭제 완료
+- **코드 변경은 3개 파일뿐이다** — `Lesson.swift`(+24), `MemoryGridVM.swift`(+40), `Localizable.xcstrings`(+80). 새 View 파일이 0건이라 `project.pbxproj`를 건드릴 일도 없었다. Task 11의 `SlotSeed.variableName`과 `VISUAL_LANGUAGE.md` §2의 값 슬롯 표기가 이미 있어 도식·라벨을 새로 만들지 않은 결과다
+- 1.0 출시 전 항목 3번(학습 효과 보강)의 3개 중 **B-2 완료**, B-1·B-4가 남았다
+
 ## 다음 작업
-- **Task 15 커밋·병합** — 검증까지 끝났으므로 커밋 5개를 쌓고 `develop`에 `--no-ff` 병합
-- 그 다음 B-1(레슨별 개념 카드) → B-4(레슨 마무리 요약)
+- 학습 효과 보강 **B-1(레슨별 개념 카드)** 착수 — `develop`에서 `feature/lesson-concept-cards`를 새로 판다. 착수 전 판단할 4건은 `TODO.md`의 "다음 단계 > B-1 착수 전 확인 사항"에 실측해 기록해 두었다
+  - 개념 카드 내용을 `LessonBlueprint`가 아니라 `Lesson`에 둘지(배치가 아니라 설명이므로)
+  - **도식을 정적 이미지로 그릴지, 실제 `MemoryItem`/`Arrow` 뷰를 축소 재사용할지** — B-1의 최대 결정. 후자가 `VISUAL_LANGUAGE.md` §8과 맞지만 `MemoryItem`이 `vm`을 요구하고 `.draggable`이 붙어 있어 표시 전용 경로 분리가 필요하다
+  - 노출 방식은 앱에 이미 있는 `.sheet` 패턴(Welcome/Onboarding/앱 사용법)이 유일한 선례다
+  - `.topBarTrailing`에 이미 힌트·리셋이 있어 `(i)` 추가 시 3개가 된다. 레슨 0에도 카드를 붙일지 함께 판단
+- 그 다음 B-4(레슨 마무리 요약)
 - 마지막으로 1.0 4번 **App Store 심사 대비 항목 점검** (개인정보처리방침, 스크린샷, 지원 언어, **앱 아이콘**)

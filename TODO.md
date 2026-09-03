@@ -4,17 +4,18 @@
 ## 다음 단계 (2026-09-03 기준)
 작업을 다시 이어받을 때 이 절부터 읽는다. 세부 내용은 각 Task 절과 [PLAN.md](./PLAN.md)를 참고한다.
 
-- **현재 위치** — Task 15(B-2 레슨 0 "변수와 메모리") 구현 및 사용자 시뮬레이터 검증 완료. `feature/lesson-zero-variables` 브랜치에서 **커밋·병합 대기 중**
-- **바로 다음** — `develop`에 `--no-ff` 병합 → 학습 효과 보강 **B-1(레슨별 개념 카드)**
+- **현재 위치** — Task 15(B-2 레슨 0 "변수와 메모리") 완료. `develop`에 `--no-ff` 병합(병합 커밋 `8ca55c9`) 후 `origin/develop` 푸시 완료. 1.0 출시 전 항목 3번(학습 효과 보강)의 3개 중 첫 항목이 끝났다
+- **바로 다음 Task** — 학습 효과 보강 **B-1: 레슨별 개념 카드**. `develop`에서 `feature/lesson-concept-cards`를 새로 판다. 착수 시 아래 "B-1 착수 전 확인 사항"을 먼저 판단한다
 - **그 다음** — B-4(레슨 마무리 요약) → 1.0 4번(App Store 심사 대비: 개인정보처리방침, 스크린샷, 지원 언어, **앱 아이콘**)
 - **미뤄둔 수정** — Task 14 실측에서 나온 이탈 6건. 아래 "Task 14에서 발견한 이탈" 절과 [VISUAL_LANGUAGE.md](./VISUAL_LANGUAGE.md) §7에 목록으로만 남겨 두었다. 지금은 고치지 않으며, 별도 Task로 승격할 시점을 따로 정한다
 
-### B-2 착수 전 확인 사항 (Task 15 착수 시 판단 완료)
-실측으로 미리 확인해 둔 항목이며, 2026-09-03 착수 시점에 사용자 결정으로 셋 다 마무리했다.
+### B-1 착수 전 확인 사항
+2026-09-03 실측해 둔 항목이다. 착수 시 아래 넷을 먼저 결정해야 코드를 만지기 시작할 수 있다.
 
-- **레슨 id 0이 이미 점유돼 있다** — `LessonData.sandboxLesson`이 `id: 0`을 썼다. **결정: 샌드박스 id를 챕터 밖 예약 번호대인 `100`으로 옮기고 레슨 0이 id 0을 갖는다.** `UserDefaults` 충돌은 없다 — 샌드박스의 성공 조건은 `.sandbox`이고 `checkSuccess`가 이 케이스에서 `break`하므로 `finishLevel()`이 호출된 적이 없어 완료 id에 `0`이 저장될 수 없었다. 실제 제약은 저장소가 아니라 `Lesson`이 `id` 기준 `Hashable`이고 `MainView`가 값 기반 내비게이션을 쓴다는 점이었다
-- **성공 조건에 맞는 케이스가 없다** — **결정: 새 케이스 `.inspectedAll(indices:)`를 추가한다.** 지정된 슬롯을 모두 탭해 확인하면 클리어되며, 연결이 아니라 관찰이 목표인 레슨을 표현한다. `.sandbox` 재사용은 클리어 판정이 없어 완료 체크마크가 붙지 않으므로 채택하지 않았다
-- **재사용할 자산** — `SlotSeed.variableName`(Task 11)으로 세 상자에 `age`/`score`/`level` 이름을 직접 선언했다. 도식은 [VISUAL_LANGUAGE.md](./VISUAL_LANGUAGE.md) §2의 값 슬롯 표기를 그대로 쓰고 새 모양을 만들지 않았다
+- **개념 카드 내용을 어디에 둘지** — 현재 `LessonBlueprint`는 배치(`seeds`)와 판정(`successCondition`), 코드 로그 문구만 담는다(`Lesson.swift`). 개념 카드는 배치가 아니라 **설명**이므로 `LessonBlueprint`가 아니라 `Lesson`에 `conceptCard` 같은 필드를 새로 두는 편이 축이 맞는다. 문장 3~5개를 `[LocalizedStringResource]`로 둘지 한 덩어리로 둘지 함께 정한다
+- **도식을 무엇으로 그릴지** — 이것이 B-1의 최대 결정이다. `OnboardingView`는 정적 이미지 4장(`onboarding1~4`, `Images.xcassets`)을 쓰지만, [PLAN.md](./PLAN.md) 백로그 B의 조사 결론은 *"책이 일러스트만 쓰는 것은 매체의 한계지 이상적인 방법이 아니다"* 였다. 새 PNG를 그리는 대신 **실제 `MemoryItem`/`Arrow` 뷰를 작은 크기로 재사용해 도식을 조립**하는 방향이 [VISUAL_LANGUAGE.md](./VISUAL_LANGUAGE.md) §8("개념 카드용으로 새 모양을 만들지 않는다")과 맞는다. 다만 `MemoryItem`은 `@ObservedObject var vm`을 요구하고 `.draggable`/`.dropDestination`이 붙어 있어 **그대로 쓰면 도식에서도 드래그가 된다** — 표시 전용 경로를 분리할지 판단한다
+- **노출 방식** — `MainView`의 `navigationDestination`이 곧바로 `MemoryGridView`를 띄우므로 "그리드 진입 직전"에 끼울 지점이 없다. 앱에 이미 있는 패턴은 `.sheet`뿐이고(`AppView`의 Welcome/Onboarding, `SettingView`의 앱 사용법) 전용 화면 전환은 없다. 그리드 진입 시 시트로 띄우고 `(i)` 버튼으로 같은 시트를 다시 여는 방식이 기존 관례에 가장 가깝다
+- **툴바 자리** — `MemoryGridView`의 `.topBarTrailing`에는 이미 힌트(조건부)와 리셋이 있다. `(i)`를 더하면 최대 3개가 되므로 배치를 확인한다. 레슨 0에도 카드를 붙일지(이미 레슨 자체가 개념 설명이라 중복일 수 있다) 함께 정한다
 
 ## Task 1 — `feature/lesson-data-model`
 `Lesson`/`LessonBlueprint`/`SuccessCondition`/`Chapter` 데이터 모델 정의 (기존 3레벨 데이터를 새 구조로 마이그레이션)
@@ -147,6 +148,7 @@ SwiftUI 코드를 사용자 코딩 스타일에 맞게 정리. 백로그 항목�
 - [x] `Localizable.xcstrings`에 신규 문구 5개의 `en` 번역 추가 — 빌드 산출물의 `.stringsdata`(소스가 실제로 방출한 키)와 `en.lproj/Localizable.strings`(카탈로그가 컴파일한 키)를 대조해 5개 모두 일치함을 확인(STALE 없음)
 - [x] 사용자 시뮬레이터 검증 — 레슨 0 행 노출, 상자 3개 탭 시 코드 패널 문구와 남은 개수, 3개 모두 확인 시 완료 알럿·체크마크 모두 정상 확인
 - [x] (검증 중 제기) "리셋을 누르면 완료 팝업이 다시 뜨는 것이 맞는가" 확인 — **정상 동작으로 확정.** 임시 `print`를 넣고 `simctl launch --console-pty`로 로그를 받아 판별했다. 리셋 시점 로그는 `isSuccess: false -> false`이고 그 직후 `finishLevel()`이 찍히지 않는다. 팝업은 리셋 **이후 상자 3개를 다시 확인했을 때** 뜨며, 이는 레슨 1~3에서 리셋 후 포인터를 다시 연결하면 완료 알럿이 다시 뜨는 것과 같은 재클리어 동작이다. 진단 `print`는 제거하고 재빌드해 잔여 0건 확인
+- [x] `develop` 병합 — 커밋 5개(`f58ad9d` 샌드박스 id / `743530d` 성공 조건·VM / `2306ad2` 레슨 데이터 / `d9ec7b8` 로컬라이제이션 / `6cec4aa` 문서)를 `--no-ff`로 병합(`8ca55c9`), 병합 직후 빌드 성공 재확인, `origin/develop` 푸시(`842bd00..8ca55c9`) 및 로컬 브랜치 삭제 완료
 
 ## 백로그
 2026-08-14 기준으로 1.0 출시 전 항목과 출시 후 업데이트 항목을 구분했다. 상세 배경·방향은 [PLAN.md](./PLAN.md)의 "출시 로드맵" 참고.
