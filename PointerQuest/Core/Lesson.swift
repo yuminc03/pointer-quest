@@ -28,6 +28,21 @@ struct LessonData {
       title: "주소와 포인터",
       lessons: [
         .init(
+          id: 0,
+          title: "변수와 메모리",
+          description: "메모리는 번호가 붙은 상자들입니다.\n값이 들어 있는 상자를 눌러 이름·번호·내용을 확인해 보세요.",
+          iconName: "shippingbox",
+          blueprint: .init(
+            seeds: [
+              .init(index: 1, type: .value, value: 20, variableName: "age"),
+              .init(index: 6, type: .value, value: 100, variableName: "score"),
+              .init(index: 10, type: .value, value: 7, variableName: "level")
+            ],
+            successCondition: .inspectedAll(indices: [1, 6, 10]),
+            initialCodeLog: "// 레슨 0: 메모리의 모든 칸에는 번호(주소)가 있어요. 값이 든 상자 3개를 눌러 확인해 보세요."
+          )
+        ),
+        .init(
           id: 1,
           title: "주소가 중요한 이유",
           description: "값이 아니라 '주소'가 중요합니다.\n포인터를 드래그해서 주소를 가리켜보세요.",
