@@ -15,6 +15,10 @@ final class MemoryGridVM: ObservableObject {
   /// 같은 레슨 안에서 여러 포인터가 만들어질 때(ex: 체인 연결) 전부 "p"로 겹쳐 보이지 않도록 한다.
   private var nextPointerNameIndex = 1
 
+  /// 관찰형 레슨(`.inspectedAll`)에서 사용자가 탭해 내용을 확인한 슬롯의 인덱스.
+  /// 레슨을 초기화하면 함께 비워진다
+  private var inspectedIndices = Set<Int>()
+
   init(lesson: Lesson = LessonData.lessons[0]) {
     self.currentLesson = lesson
     self.setupLevel(level: lesson)
@@ -89,6 +93,9 @@ final class MemoryGridVM: ObservableObject {
 
     // 2. 값을 가진 변수인 경우
     if let value = slot.value {
+      // 관찰형 레슨(레슨 0)에서는 이 탭 자체가 "상자를 열어 확인하는" 행동이므로 코드 로그도 그쪽에서 채운다
+      if let selfIndex, recordInspection(of: selfIndex) { return }
+
       let name = selfIndex.map { resolveVariableName(for: $0, fallback: "val") } ?? "val"
       codeLog = "int \(name) = \(value); // \(slot.address)의 값"
     }
@@ -226,6 +233,34 @@ final class MemoryGridVM: ObservableObject {
     return name
   }
 
+  /// 관찰형 레슨(`.inspectedAll`)에서 탭한 슬롯을 "확인함"으로 기록하고 코드 로그를 채운다.
+  /// 성공 조건이 다르거나 확인 대상 슬롯이 아니면 아무 일도 하지 않고 `false`를 반환해 기본 로그가 그대로 쓰이게 한다
+  /// - Returns: 이 탭을 관찰 행동으로 처리했는지 여부
+  private func recordInspection(of index: Int) -> Bool {
+    guard case .inspectedAll(let targets) = currentLesson.blueprint.successCondition,
+          targets.contains(index),
+          let value = slots[index].value
+    else { return false }
+
+    let isFirstInspection = inspectedIndices.insert(index).inserted
+    let name = resolveVariableName(for: index, fallback: "val")
+    let address = slots[index].address
+    let remaining = targets.count - inspectedIndices.count
+
+    if remaining > 0 {
+      codeLog = """
+      int \(name) = \(value); // 이름 \(name), 주소 \(address), 값 \(value)
+      // 아직 열어보지 않은 상자가 \(remaining)개 남았어요.
+      """
+    } else {
+      codeLog = "int \(name) = \(value); // 이름 \(name), 주소 \(address), 값 \(value)"
+    }
+
+    // 이미 확인한 슬롯을 다시 탭했을 때 완료 알럿이 다시 뜨지 않도록 처음 확인한 경우에만 판정한다
+    if isFirstInspection { checkSuccess() }
+    return true
+  }
+
   /// 레슨이 이름을 선언하지 않은 슬롯에 붙일 범용 포인터 이름(p1, p2, ...)을 생성한다.
   private func makePointerName() -> String {
     defer { nextPointerNameIndex += 1 }
@@ -276,6 +311,7 @@ final class MemoryGridVM: ObservableObject {
     codeLog = level.blueprint.initialCodeLog
     isSuccess = false
     nextPointerNameIndex = 1
+    inspectedIndices.removeAll()
   }
   
   /// 현재 상태가 레슨의 클리어 조건(블루프린트의 `successCondition`)을 만족하는지 검사
@@ -295,6 +331,10 @@ final class MemoryGridVM: ObservableObject {
         slots[current].pointingTo == slots[next].address
       }
       if isConnected { finishLevel() }
+
+    case .inspectedAll(let indices):
+      // 지정된 슬롯을 모두 탭해 확인했으면 성공
+      if indices.allSatisfy(inspectedIndices.contains) { finishLevel() }
 
     case .sandbox:
       // 샌드박스 모드는 클리어 조건이 없어 항상 자유롭게 탐험 가능

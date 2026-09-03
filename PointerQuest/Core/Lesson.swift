@@ -6,8 +6,12 @@ struct LessonData {
 
   /// 클리어 조건 없이 자유롭게 포인터를 연결/해제할 수 있는 샌드박스(Playground) 레슨
   /// `chapters`/`lessons`에는 포함하지 않고, Main 화면의 별도 진입점에서만 참조한다
+  ///
+  /// id는 챕터 밖 예약 번호대(100~)를 쓴다. `Lesson`은 `id` 기준으로 `Hashable`이고
+  /// `MainView`가 값 기반 내비게이션(`navigationDestination(for: Lesson.self)`)을 쓰므로
+  /// 실제 레슨과 id가 겹치면 안 된다 (레슨 0 추가로 id 0이 실제 레슨에 넘어갔다)
   static let sandboxLesson = Lesson(
-    id: 0,
+    id: 100,
     title: "플레이그라운드",
     description: "여기서는 자유롭게 포인터를 연결하고 해제할 수 있어요.\n미션도 정답도 없으니 마음껏 탐험해 보세요.",
     iconName: "wand.and.stars",
@@ -23,6 +27,21 @@ struct LessonData {
       id: 1,
       title: "주소와 포인터",
       lessons: [
+        .init(
+          id: 0,
+          title: "변수와 메모리",
+          description: "메모리는 번호가 붙은 상자들입니다.\n값이 들어 있는 상자를 눌러 이름·번호·내용을 확인해 보세요.",
+          iconName: "shippingbox",
+          blueprint: .init(
+            seeds: [
+              .init(index: 1, type: .value, value: 20, variableName: "age"),
+              .init(index: 6, type: .value, value: 100, variableName: "score"),
+              .init(index: 10, type: .value, value: 7, variableName: "level")
+            ],
+            successCondition: .inspectedAll(indices: [1, 6, 10]),
+            initialCodeLog: "// 레슨 0: 메모리의 모든 칸에는 번호(주소)가 있어요. 값이 든 상자 3개를 눌러 확인해 보세요."
+          )
+        ),
         .init(
           id: 1,
           title: "주소가 중요한 이유",
@@ -158,6 +177,9 @@ enum SuccessCondition: Hashable {
   case anyPointerPointsTo(index: Int)
   /// `indices`가 순서대로 서로를 가리키는 체인이 완성되면 클리어 (마지막 원소는 값 슬롯)
   case chain(indices: [Int])
+  /// `indices`의 슬롯을 모두 탭해 내용을 확인하면 클리어
+  /// 포인터가 등장하기 전 단계(레슨 0)처럼 "연결"이 아니라 "관찰"이 목표인 레슨에서 쓴다
+  case inspectedAll(indices: [Int])
   /// 클리어 조건 없이 자유롭게 탐험하는 샌드박스 모드
   case sandbox
 }
