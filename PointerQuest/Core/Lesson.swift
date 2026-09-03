@@ -162,6 +162,9 @@ enum SuccessCondition: Hashable {
   case anyPointerPointsTo(index: Int)
   /// `indices`가 순서대로 서로를 가리키는 체인이 완성되면 클리어 (마지막 원소는 값 슬롯)
   case chain(indices: [Int])
+  /// `indices`의 슬롯을 모두 탭해 내용을 확인하면 클리어
+  /// 포인터가 등장하기 전 단계(레슨 0)처럼 "연결"이 아니라 "관찰"이 목표인 레슨에서 쓴다
+  case inspectedAll(indices: [Int])
   /// 클리어 조건 없이 자유롭게 탐험하는 샌드박스 모드
   case sandbox
 }
