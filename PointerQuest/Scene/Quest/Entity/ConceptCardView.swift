@@ -163,15 +163,13 @@ private extension ConceptCardView {
 }
 
 #Preview {
-  ConceptCardView(
-    title: "징검다리 포인터",
-    card: .init(
-      sentences: [
-        "포인터도 결국 메모리에 저장된 값입니다.",
-        "그래서 포인터가 있는 칸의 주소를 다른 포인터에 담을 수 있습니다."
-      ],
-      diagram: .pointerToPointer
-    ),
-    isPresented: .constant(true)
-  )
+  let lesson = LessonData.lessons[2]
+
+  if let conceptCard = lesson.conceptCard {
+    ConceptCardView(
+      title: lesson.title,
+      card: conceptCard,
+      isPresented: .constant(true)
+    )
+  }
 }
