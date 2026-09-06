@@ -5,6 +5,7 @@ struct MemoryGridView: View {
   @StateObject private var vm: MemoryGridVM
   /// 레슨 1 그리드 힌트를 이미 확인했는지 여부 (앱 전체에서 최초 1회만 노출)
   @AppStorage("hasSeenGridHint") private var hasSeenGridHint = false
+  @State private var isConceptCardPresented = false
 
   init(lesson: Lesson = LessonData.lessons[0]) {
     _vm = StateObject(wrappedValue: MemoryGridVM(lesson: lesson))
@@ -81,6 +82,15 @@ struct MemoryGridView: View {
       }
     }
     .toolbar {
+      if vm.currentLesson.conceptCard != nil {
+        ToolbarItem(placement: .topBarTrailing) {
+          Button {
+            isConceptCardPresented = true
+          } label: {
+            Image(systemName: "info.circle")
+          }
+        }
+      }
       if vm.currentLesson.blueprint.hintCode != nil {
         ToolbarItem(placement: .topBarTrailing) {
           Button {
@@ -106,6 +116,30 @@ struct MemoryGridView: View {
     .alert("레슨 완료! 🎉", isPresented: $vm.isSuccess) {
       Button("확인", role: .cancel) { }
     }
+    .sheet(isPresented: $isConceptCardPresented) {
+      if let conceptCard = vm.currentLesson.conceptCard {
+        ConceptCardView(
+          title: vm.currentLesson.title,
+          card: conceptCard,
+          isPresented: $isConceptCardPresented
+        )
+      }
+    }
+    .onAppear {
+      presentConceptCardIfNeeded()
+    }
+  }
+
+  /// 개념 카드가 있는 레슨에 처음 들어왔을 때만 카드를 자동으로 띄운다.
+  /// 재진입 시에는 뜨지 않으며, 그때는 툴바의 `(i)` 버튼으로 다시 연다
+  private func presentConceptCardIfNeeded() {
+    let lessonId = vm.currentLesson.id
+    guard vm.currentLesson.conceptCard != nil,
+          !LessonProgressStore.shared.hasSeenConceptCard(lessonId)
+    else { return }
+
+    LessonProgressStore.shared.markConceptCardSeen(lessonId)
+    isConceptCardPresented = true
   }
   
   // Anchor를 CGRect로 변환하는 헬퍼 함수
