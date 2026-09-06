@@ -7,6 +7,8 @@ struct MemorySlotView: View {
 
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
+      // 주소와 변수명은 칸 폭보다 길어질 수 있다(ex: 0x703C + treasure).
+      // 말줄임표로 잘리면 학습에 필요한 정보가 사라지므로 줄이지 않고 글자 크기를 줄여 맞춘다
       HStack(spacing: 4) {
         Text(slot.address)
           .font(.system(.caption, design: .monospaced))
@@ -19,6 +21,8 @@ struct MemorySlotView: View {
             .foregroundStyle(Color(.main))
         }
       }
+      .lineLimit(1)
+      .minimumScaleFactor(0.6)
 
       Spacer()
 

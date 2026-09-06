@@ -78,57 +78,44 @@ private extension ConceptCardView {
     switch card.diagram {
     case .pointerToValue:
       // 레슨 1: 포인터 p1(0x7020)이 값 target(0x700C)을 가리킨다
-      diagram(
-        slots: [
-          .init(address: "0x7020", type: .pointer, pointingTo: "0x700C", variableName: "p1"),
-          .init(address: "0x700C", value: 100, type: .value, variableName: "target")
-        ],
-        columns: 2,
-        slotWidth: 110
-      )
+      diagram(slots: [
+        .init(address: "0x7020", type: .pointer, pointingTo: "0x700C", variableName: "p1"),
+        .init(address: "0x700C", value: 100, type: .value, variableName: "target")
+      ])
 
     case .pointerToPointer:
       // 레슨 2: 이중 포인터 p1(0x7038) -> 포인터 ptr1(0x7014) -> 값 target(0x701C)
-      diagram(
-        slots: [
-          .init(address: "0x7038", type: .pointer, pointingTo: "0x7014", variableName: "p1"),
-          .init(
-            address: "0x7014",
-            type: .pointer,
-            pointingTo: "0x701C",
-            isReferenced: true,
-            variableName: "ptr1"
-          ),
-          .init(address: "0x701C", value: 777, type: .value, variableName: "target")
-        ],
-        columns: 3,
-        slotWidth: 84
-      )
+      diagram(slots: [
+        .init(address: "0x7038", type: .pointer, pointingTo: "0x7014", variableName: "p1"),
+        .init(
+          address: "0x7014",
+          type: .pointer,
+          pointingTo: "0x701C",
+          isReferenced: true,
+          variableName: "ptr1"
+        ),
+        .init(address: "0x701C", value: 777, type: .value, variableName: "target")
+      ])
 
     case .pointerChain:
-      // 레슨 3: start -> nodeA -> nodeB -> treasure. 한 줄에 넣으면 칸이 너무 좁아져 2행으로 배치한다
-      diagram(
-        slots: [
-          .init(address: "0x7000", type: .pointer, pointingTo: "0x7014", variableName: "start"),
-          .init(address: "0x7014", type: .pointer, pointingTo: "0x702C", variableName: "nodeA"),
-          .init(address: "0x702C", type: .pointer, pointingTo: "0x703C", variableName: "nodeB"),
-          .init(address: "0x703C", value: 999, type: .value, variableName: "treasure")
-        ],
-        columns: 2,
-        slotWidth: 110
-      )
+      // 레슨 3: start -> nodeA -> nodeB -> treasure
+      diagram(slots: [
+        .init(address: "0x7000", type: .pointer, pointingTo: "0x7014", variableName: "start"),
+        .init(address: "0x7014", type: .pointer, pointingTo: "0x702C", variableName: "nodeA"),
+        .init(address: "0x702C", type: .pointer, pointingTo: "0x703C", variableName: "nodeB"),
+        .init(address: "0x703C", value: 999, type: .value, variableName: "treasure")
+      ])
     }
   }
 
-  /// 슬롯들을 격자로 배치하고, 포인터가 가리키는 관계를 화살표로 겹쳐 그린다.
+  /// 슬롯들을 2열 격자로 배치하고, 포인터가 가리키는 관계를 화살표로 겹쳐 그린다.
   /// 화살표 좌표는 그리드 화면과 같은 방식(`BoundsPreferenceKey` + `overlayPreferenceValue`)으로 실제 배치에서 얻는다
-  func diagram(
-    slots: [MemorySlot],
-    columns: Int,
-    slotWidth: CGFloat
-  ) -> some View {
+  ///
+  /// 열 수를 2로 고정한 이유는 폭이다. 3열로 만들면 칸 하나가 90pt 아래로 내려가
+  /// `0x703C`+`treasure` 같은 조합이 말줄임표로 잘린다
+  func diagram(slots: [MemorySlot]) -> some View {
     LazyVGrid(
-      columns: Array(repeating: GridItem(.fixed(slotWidth), spacing: 24), count: columns),
+      columns: Array(repeating: GridItem(.flexible(maximum: 150), spacing: 24), count: 2),
       spacing: 24
     ) {
       ForEach(slots) { slot in
