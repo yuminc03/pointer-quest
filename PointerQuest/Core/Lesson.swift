@@ -54,6 +54,16 @@ struct LessonData {
             ],
             successCondition: .anyPointerPointsTo(index: 3),
             initialCodeLog: "// 레슨 1: 포인터를 드래그해서 0x700C 주소를 가리키세요."
+          ),
+          conceptCard: .init(
+            sentences: [
+              "레슨 0에서 본 상자에는 저마다 번호가 붙어 있었습니다. 그 번호를 주소라고 부릅니다.",
+              "포인터는 값을 복사해 오는 상자가 아니라, 그 값이 어디에 있는지를 적어 두는 상자입니다.",
+              "그래서 포인터 칸에는 숫자 대신 `→ 0x700C`처럼 다른 칸의 번호가 들어갑니다.",
+              "C로 쓰면 `int *p1 = &target;` 입니다. `*`는 이 상자에 주소가 들어간다는 표시이고, `&`는 주소를 알려 달라는 뜻입니다.",
+              "값을 복사하지 않기 때문에, 같은 값을 여러 곳에서 함께 보고 함께 고칠 수 있습니다. 주소를 쓰는 이유가 여기에 있습니다."
+            ],
+            diagram: .pointerToValue
           )
         ),
         .init(
@@ -69,7 +79,16 @@ struct LessonData {
             ],
             successCondition: .anyPointerPointsTo(index: 5),
             initialCodeLog: "// 레슨 2: 0x701C를 직접 가리켜도 되지만, 이미 있는 포인터(0x7014)를 가리켜 이중 포인터를 만들어보세요.",
-            hintCode: "int **pp = &p; // p(0x7014)를 가리키는 이중 포인터"
+            hintCode: "int **p1 = &ptr1; // ptr1(0x7014)을 가리키는 이중 포인터"
+          ),
+          conceptCard: .init(
+            sentences: [
+              "포인터도 메모리 한 칸을 차지합니다. 값이 든 상자와 똑같이 자기 주소를 가집니다.",
+              "주소가 있다는 것은, 다른 포인터가 이 칸도 가리킬 수 있다는 뜻입니다.",
+              "`ptr1`이 값을 가리키고 `p1`이 `ptr1`을 가리키면, `p1`은 이중 포인터입니다.",
+              "C로 쓰면 `int **p1 = &ptr1;` 입니다. `*`가 하나 늘어날 때마다 값에 닿기까지 한 번 더 따라가야 합니다."
+            ],
+            diagram: .pointerToPointer
           )
         ),
         .init(
@@ -86,6 +105,15 @@ struct LessonData {
             ],
             successCondition: .chain(indices: [0, 5, 11, 15]),
             initialCodeLog: "// 레슨 3: Start(0x7000)에서 Treasure(0x703C)까지 체인을 만드세요."
+          ),
+          conceptCard: .init(
+            sentences: [
+              "포인터가 포인터를 가리킬 수 있으니, 이어 붙이면 길이 됩니다.",
+              "`start`에서 출발해 `nodeA`, `nodeB`를 거쳐야 `treasure`에 닿습니다.",
+              "각 칸은 다음 칸이 어디에 있는지만 알고 있습니다. 실제 값은 마지막 칸에만 있습니다.",
+              "이렇게 이어진 구조를 연결 리스트라고 부릅니다. 이름은 지금 외우지 않아도 괜찮습니다."
+            ],
+            diagram: .pointerChain
           )
         )
       ]
