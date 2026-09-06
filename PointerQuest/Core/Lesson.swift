@@ -148,6 +148,9 @@ struct Lesson: Identifiable, Hashable {
   let iconName: String
   /// 레슨의 초기 배치와 클리어 조건
   let blueprint: LessonBlueprint
+  /// 그리드에 들어가기 전에 보여줄 개념 카드
+  /// 값이 없으면 카드를 띄우지 않는다 (레슨 0은 레슨 자체가 개념 설명이라 카드를 두지 않는다)
+  var conceptCard: ConceptCard?
   /// 아직 콘텐츠가 저작되지 않아 "Coming Soon"으로만 표시되는 레슨인지 여부
   var isComingSoon = false
 
@@ -182,6 +185,28 @@ enum SuccessCondition: Hashable {
   case inspectedAll(indices: [Int])
   /// 클리어 조건 없이 자유롭게 탐험하는 샌드박스 모드
   case sandbox
+}
+
+/// 레슨이 전제하는 개념을 그리드에 들어가기 전에 설명하는 카드
+/// 배치·판정을 담는 `LessonBlueprint`와 달리 "설명"만 담는다
+struct ConceptCard {
+  /// 카드 본문. 문장 하나가 한 문단으로 표시된다 (3~5개)
+  let sentences: [LocalizedStringResource]
+  /// 본문 위에 그릴 도식
+  let diagram: Diagram
+
+  /// 개념 카드에 그릴 도식의 종류
+  /// 도식은 새 이미지가 아니라 그리드와 같은 슬롯·화살표 표기로 조립한다 (`VISUAL_LANGUAGE.md` §8)
+  enum Diagram {
+    /// 값 슬롯 하나와, 그 주소를 담아 가리키는 포인터 슬롯 하나
+    /// C 언어의 `int *p = &a;`
+    case pointerToValue
+    /// 값을 가리키는 포인터와, 그 포인터를 다시 가리키는 이중 포인터
+    /// C 언어의 `int **pp = &p;`
+    case pointerToPointer
+    /// 포인터 여러 개가 값까지 순서대로 이어지는 체인
+    case pointerChain
+  }
 }
 
 /// 레슨의 초기 배치와 클리어 조건을 데이터로 표현
