@@ -381,11 +381,37 @@ B-2 레슨 0 "변수와 메모리" 구현·검증·병합 완료. 세부 내역�
 - **코드 변경은 3개 파일뿐이다** — `Lesson.swift`(+24), `MemoryGridVM.swift`(+40), `Localizable.xcstrings`(+80). 새 View 파일이 0건이라 `project.pbxproj`를 건드릴 일도 없었다. Task 11의 `SlotSeed.variableName`과 `VISUAL_LANGUAGE.md` §2의 값 슬롯 표기가 이미 있어 도식·라벨을 새로 만들지 않은 결과다
 - 1.0 출시 전 항목 3번(학습 효과 보강)의 3개 중 **B-2 완료**, B-1·B-4가 남았다
 
+## Task 16 진행 상황 (`feature/lesson-concept-cards`)
+1.0 착수 순서 3번 "학습 효과 보강"의 두 번째 항목인 **B-1 레슨별 개념 카드**를 Task로 승격해 착수(2026-09-06). 배경은 `PLAN.md`의 "백로그 B" 참고.
+
+### 착수 전 확인 사항 4건의 결정
+2026-09-03에 실측해 둔 4건을 착수 시점에 사용자 결정으로 확정했다. 결정문은 `TODO.md` Task 16 절에도 같은 내용으로 남겼다.
+
+- **내용 위치 → `Lesson.conceptCard`.** `LessonBlueprint`는 배치·판정의 축이고 개념 카드는 설명이라 축이 다르다
+- **도식 → 기존 뷰 재사용.** 새 PNG를 그리지 않는다. 착수 후 실측에서 이 결정의 비용이 예상보다 작다는 것이 확인됐다(아래)
+- **노출 → 레슨 최초 진입 시 자동 시트 + 툴바 `(i)`로 재열람.** 재진입 시에는 자동으로 뜨지 않아 반복 플레이를 막지 않는다
+- **툴바·레슨 0 → `(i)` 추가, 레슨 0은 카드 없음.** `conceptCard`를 옵셔널로 두면 레슨 0 제외가 데이터 한 곳으로 표현되고 뷰에는 조건문이 늘지 않는다
+
+### 착수 후 실측에서 바뀐 것
+- **`MemoryItem` 분리 비용이 예상보다 작았다.** TODO에는 "`.draggable`/`.dropDestination`이 붙어 있어 도식에서도 드래그가 된다"고만 적혀 있었으나, 실제로는 탭·더블탭 제스처가 `MemoryItem`이 아니라 `MemoryGridView`(`:36-44`)에 붙어 있어 떼어낼 상호작용이 두 개뿐이었다. `vm`을 쓰는 곳도 `.dropDestination` 클로저 한 곳이다
+- **화살표 추출이 계획에 없던 단위로 추가됐다.** 도식에도 화살표가 필요한데 `ArrowDrawLayer`는 `vm`에 묶여 있어 그대로 쓸 수 없다. 선/머리 수치(`VISUAL_LANGUAGE.md` §3)를 카드가 복사해 갖게 두는 대신 `PointerArrow`로 뽑아 양쪽이 같은 표기를 공유하게 했다
+- **열람 기록에 새 저장소가 필요 없다.** `LessonProgressStore`가 이미 `Set<Int>`를 `UserDefaults`에 넣고 `@Published`로 알리는 패턴을 갖고 있어 여기에 필드를 더한다(4번 예정)
+
+### 구현 (커밋 1~5)
+- `Lesson`에 옵셔널 `conceptCard`와 `ConceptCard` 타입 추가 (`160efda`). `var` 옵셔널이라 memberwise init에서 기본값 `nil`이 생겨 **기존 레슨 5개의 선언은 한 글자도 바뀌지 않았다.** 도식은 그림 파일이 아니라 그리는 관계(`Diagram`: `pointerToValue`/`pointerToPointer`/`pointerChain`)로 표현했다
+- `MemoryItem`에서 표시 전용 `MemorySlotView` 분리 (`2c5cbf3`). `slot` 하나만 받아 `vm` 없이 그릴 수 있고, `MemoryItem`은 `.draggable`/`.dropDestination`만 얹는다. **`.shadow`는 `draggable` 뒤에 붙는 기존 순서를 유지**해 드래그 프리뷰 스냅샷이 달라지지 않게 했다(그림자는 §2의 슬롯 표기에 없는 그리드 전용 요소이기도 하다)
+- 화살표 표기를 `PointerArrow`로 추출 (`f7ee54c`). `ArrowDrawLayer`는 좌표 계산과 `spring` 애니메이션만 남기고 그리기를 위임한다
+- 개념 카드 시트 `ConceptCardView` 신설 (`c51f3a0`). 그래버·버튼 스타일은 `OnboardingView`/`WelcomeView`의 기존 시트 관례를 따랐고, 서브뷰는 `STYLE_GUIDE.md` §4대로 `private extension`의 대문자 계산 프로퍼티로 뺐다
+  - 도식의 화살표 좌표를 그리드 화면과 **같은 방식**(`BoundsPreferenceKey` + `overlayPreferenceValue`)으로 실제 배치에서 얻는다. 열 수나 칸 너비를 바꿔도 화살표가 따라온다
+  - 도식의 주소·변수명은 `MemoryGridVM.resolveVariableName`이 실제로 부여하는 값과 맞췄다 — 레슨 1 `p1(0x7020) → target(0x700C)`, 레슨 2 `p1(0x7038) → ptr1(0x7014) → target(0x701C)`, 레슨 3 `start → nodeA → nodeB → treasure`
+  - 레슨 3만 4칸이라 한 줄에 넣으면 칸이 좁아져 2행으로 배치했다
+- 커밋마다 `xcodebuild ... build` → 전부 **BUILD SUCCEEDED**. 새 파일 3개는 `project.pbxproj` 4곳(`PBXBuildFile`/`PBXFileReference`/그룹 children/Sources)에 수동 등록하고 `plutil -lint`로 검증했으며, **빌드 산출물에 `*.stringsdata`가 생겼는지로 실제 컴파일 대상 포함 여부까지 확인**했다 — 등록이 누락되면 빌드는 통과하면서 파일만 조용히 빠진다
+- `PointerArrow`와 `ConceptCardView`는 `project.pbxproj` 변경이 한 파일에 섞여 있어, ConceptCardView 관련 4줄을 일시적으로 덜어낸 상태로 앞 커밋을 만들고 되돌린 뒤 뒤 커밋을 만들어 **두 커밋 모두 그 자체로 빌드 가능**하게 나눴다
+
+### 발견한 이탈 (5번에서 처리)
+- 레슨 2의 `hintCode`는 `int **pp = &p;`로 `p`/`pp`를 쓰는데 그리드가 실제로 붙이는 라벨은 `ptr1`/`p1`이다. 도식은 화면에 보이는 쪽에 맞췄고, 힌트 문구와의 불일치는 레슨별 문구 작성(5번) 때 함께 정리한다
+
 ## 다음 작업
-- 학습 효과 보강 **B-1(레슨별 개념 카드)** 착수 — `develop`에서 `feature/lesson-concept-cards`를 새로 판다. 착수 전 판단할 4건은 `TODO.md`의 "다음 단계 > B-1 착수 전 확인 사항"에 실측해 기록해 두었다
-  - 개념 카드 내용을 `LessonBlueprint`가 아니라 `Lesson`에 둘지(배치가 아니라 설명이므로)
-  - **도식을 정적 이미지로 그릴지, 실제 `MemoryItem`/`Arrow` 뷰를 축소 재사용할지** — B-1의 최대 결정. 후자가 `VISUAL_LANGUAGE.md` §8과 맞지만 `MemoryItem`이 `vm`을 요구하고 `.draggable`이 붙어 있어 표시 전용 경로 분리가 필요하다
-  - 노출 방식은 앱에 이미 있는 `.sheet` 패턴(Welcome/Onboarding/앱 사용법)이 유일한 선례다
-  - `.topBarTrailing`에 이미 힌트·리셋이 있어 `(i)` 추가 시 3개가 된다. 레슨 0에도 카드를 붙일지 함께 판단
+- Task 16의 남은 단위 — 4번 `MemoryGridView` 연동(`LessonProgressStore`에 열람 기록 추가, 최초 진입 자동 시트, `(i)` 버튼) → 5번 레슨 1~3 문구·도식 등록 → 6번 로컬라이제이션 → 사용자 시뮬레이터 검증 후 `develop` 병합
 - 그 다음 B-4(레슨 마무리 요약)
 - 마지막으로 1.0 4번 **App Store 심사 대비 항목 점검** (개인정보처리방침, 스크린샷, 지원 언어, **앱 아이콘**)
