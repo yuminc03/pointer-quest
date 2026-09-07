@@ -105,21 +105,13 @@ final class MemoryGridVM: ObservableObject {
     }
   }
   
-  /// 드래그 앤 드롭 작업이 완료되었을 때 호출
+  /// 드래그 앤 드롭 작업이 완료되었을 때 호출.
+  /// 자기 자신에게 드롭한 경우는 호출부(`MemoryItem`)가 걸러내므로 두 주소는 항상 다르다
   /// - Parameters:
   ///   - sourceAddress: 드래그를 시작한 슬롯(포인터가 될 슬롯)의 주소
   ///   - destinationAddress: 드롭된 위치의 슬롯(가리킴을 당할 대상)의 주소
   func handleDrop(sourceAddress: String, destinationAddress: String) {
     // 1. 드래그한 슬롯(Source)의 인덱스를 찾기
-    // 자기 자신을 가리키는 것은 방지 (Self-reference Prevention)
-    if sourceAddress == destinationAddress {
-      codeLog = "// 포인터는 자기 자신을 가리킬 수 없습니다. 다른 주소를 선택해 연결하세요."
-      if let sourceIndex = slots.firstIndex(where: { $0.address == sourceAddress }) {
-        triggerError(for: sourceIndex)
-      }
-      return
-    }
-    
     guard let sourceIndex = slots.firstIndex(
       where: { $0.address == sourceAddress }
     ) else {
