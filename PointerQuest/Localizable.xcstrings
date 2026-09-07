@@ -168,22 +168,6 @@
         }
       }
     },
-    "// 포인터는 자기 자신을 가리킬 수 없습니다. 다른 주소를 선택해 연결하세요." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "// A pointer can't point to itself. Choose a different address to connect to."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "// 포인터는 자기 자신을 가리킬 수 없습니다. 다른 주소를 선택해 연결하세요."
-          }
-        }
-      }
-    },
     "// 플레이그라운드: 자유롭게 포인터를 연결해보세요. 여기선 아무것도 망가지지 않아요." : {
       "localizations" : {
         "en" : {
