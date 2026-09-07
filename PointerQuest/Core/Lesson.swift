@@ -54,6 +54,16 @@ struct LessonData {
             ],
             successCondition: .anyPointerPointsTo(index: 3),
             initialCodeLog: "// 레슨 1: 포인터를 드래그해서 0x700C 주소를 가리키세요."
+          ),
+          conceptCard: .init(
+            sentences: [
+              "레슨 0에서 본 상자에는 저마다 번호가 붙어 있었습니다. 그 번호를 주소라고 부릅니다.",
+              "포인터는 값을 복사해 오는 상자가 아니라, 그 값이 어디에 있는지를 적어 두는 상자입니다.",
+              "그래서 포인터 칸에는 숫자 대신 `→ 0x700C`처럼 다른 칸의 번호가 들어갑니다.",
+              "C로 쓰면 `int *p1 = &target;` 입니다. `*`는 이 상자에 주소가 들어간다는 표시이고, `&`는 주소를 알려 달라는 뜻입니다.",
+              "값을 복사하지 않기 때문에, 같은 값을 여러 곳에서 함께 보고 함께 고칠 수 있습니다. 주소를 쓰는 이유가 여기에 있습니다."
+            ],
+            diagram: .pointerToValue
           )
         ),
         .init(
@@ -69,7 +79,16 @@ struct LessonData {
             ],
             successCondition: .anyPointerPointsTo(index: 5),
             initialCodeLog: "// 레슨 2: 0x701C를 직접 가리켜도 되지만, 이미 있는 포인터(0x7014)를 가리켜 이중 포인터를 만들어보세요.",
-            hintCode: "int **pp = &p; // p(0x7014)를 가리키는 이중 포인터"
+            hintCode: "int **p1 = &ptr1; // ptr1(0x7014)을 가리키는 이중 포인터"
+          ),
+          conceptCard: .init(
+            sentences: [
+              "포인터도 메모리 한 칸을 차지합니다. 값이 든 상자와 똑같이 자기 주소를 가집니다.",
+              "주소가 있다는 것은, 다른 포인터가 이 칸도 가리킬 수 있다는 뜻입니다.",
+              "`ptr1`이 값을 가리키고 `p1`이 `ptr1`을 가리키면, `p1`은 이중 포인터입니다.",
+              "C로 쓰면 `int **p1 = &ptr1;` 입니다. `*`가 하나 늘어날 때마다 값에 닿기까지 한 번 더 따라가야 합니다."
+            ],
+            diagram: .pointerToPointer
           )
         ),
         .init(
@@ -86,6 +105,15 @@ struct LessonData {
             ],
             successCondition: .chain(indices: [0, 5, 11, 15]),
             initialCodeLog: "// 레슨 3: Start(0x7000)에서 Treasure(0x703C)까지 체인을 만드세요."
+          ),
+          conceptCard: .init(
+            sentences: [
+              "포인터가 포인터를 가리킬 수 있으니, 이어 붙이면 길이 됩니다.",
+              "`start`에서 출발해 `nodeA`, `nodeB`를 거쳐야 `treasure`에 닿습니다.",
+              "각 칸은 다음 칸이 어디에 있는지만 알고 있습니다. 실제 값은 마지막 칸에만 있습니다.",
+              "이렇게 이어진 구조를 연결 리스트라고 부릅니다. 이름은 지금 외우지 않아도 괜찮습니다."
+            ],
+            diagram: .pointerChain
           )
         )
       ]
@@ -148,6 +176,9 @@ struct Lesson: Identifiable, Hashable {
   let iconName: String
   /// 레슨의 초기 배치와 클리어 조건
   let blueprint: LessonBlueprint
+  /// 그리드에 들어가기 전에 보여줄 개념 카드
+  /// 값이 없으면 카드를 띄우지 않는다 (레슨 0은 레슨 자체가 개념 설명이라 카드를 두지 않는다)
+  var conceptCard: ConceptCard?
   /// 아직 콘텐츠가 저작되지 않아 "Coming Soon"으로만 표시되는 레슨인지 여부
   var isComingSoon = false
 
@@ -182,6 +213,28 @@ enum SuccessCondition: Hashable {
   case inspectedAll(indices: [Int])
   /// 클리어 조건 없이 자유롭게 탐험하는 샌드박스 모드
   case sandbox
+}
+
+/// 레슨이 전제하는 개념을 그리드에 들어가기 전에 설명하는 카드
+/// 배치·판정을 담는 `LessonBlueprint`와 달리 "설명"만 담는다
+struct ConceptCard {
+  /// 카드 본문. 문장 하나가 한 문단으로 표시된다 (3~5개)
+  let sentences: [LocalizedStringResource]
+  /// 본문 위에 그릴 도식
+  let diagram: Diagram
+
+  /// 개념 카드에 그릴 도식의 종류
+  /// 도식은 새 이미지가 아니라 그리드와 같은 슬롯·화살표 표기로 조립한다 (`VISUAL_LANGUAGE.md` §8)
+  enum Diagram {
+    /// 값 슬롯 하나와, 그 주소를 담아 가리키는 포인터 슬롯 하나
+    /// C 언어의 `int *p = &a;`
+    case pointerToValue
+    /// 값을 가리키는 포인터와, 그 포인터를 다시 가리키는 이중 포인터
+    /// C 언어의 `int **pp = &p;`
+    case pointerToPointer
+    /// 포인터 여러 개가 값까지 순서대로 이어지는 체인
+    case pointerChain
+  }
 }
 
 /// 레슨의 초기 배치와 클리어 조건을 데이터로 표현
