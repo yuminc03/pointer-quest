@@ -186,12 +186,19 @@ final class MemoryGridVM: ObservableObject {
     guard let pointerIndex = slots.firstIndex(where: { $0.address == pointerAddr }) else { return }
     let pointerSlot = slots[pointerIndex]
     
-    // 2. 해당 슬롯이 포인터 타입인지 확인
+    // 2. 빈 칸은 역참조할 대상 자체가 없다.
+    // 학습자가 무언가를 잘못한 것이 아니므로 에러(빨간 배경 + 흔들림)로 다루지 않고 아무 일도 하지 않는다.
+    // `codeLog`도 여기서 건드리지 않는다 — 같은 탭에 `handleTap`이 함께 반응해 주소 한 줄(`// 주소: ...`)을
+    // 이미 남기므로, 여기서 또 쓰면 두 문구가 순서에 따라 엇갈린다
+    guard pointerSlot.type != .empty else { return }
+
+    // 3. 해당 슬롯이 포인터 타입인지 확인
     guard pointerSlot.type == .pointer,
           let targetAddr = pointerSlot.pointingTo,
           let targetIndex = slots.firstIndex(where: { $0.address == targetAddr })
     else {
-      // 포인터가 아니거나 가리키는 대상이 없는 경우
+      // 값 칸(`*a`는 실제 C 컴파일 에러)이거나, 아직 아무 곳도 가리키지 않는 포인터인 경우.
+      // 둘 다 실제 C에서 오류이므로 에러 피드백을 유지한다
       print("역참조 실패: 유효한 포인터가 아닙니다.")
       codeLog = "// 오류: 유효하지 않은 포인터입니다."
       triggerError(for: pointerIndex)
@@ -211,7 +218,7 @@ final class MemoryGridVM: ObservableObject {
       codeLog = "printf(\"%p\", *\(pName)); // 주소: \(targetAddr)"
     }
     
-    // 3. 대상 슬롯 하이라이트 (포인터를 따라간 효과)
+    // 4. 대상 슬롯 하이라이트 (포인터를 따라간 효과)
     print("역참조 성공! \(pointerAddr) -> \(targetAddr) (Value: \(slots[targetIndex].value ?? 0))")
     highlightSlot(for: targetIndex)
   }
