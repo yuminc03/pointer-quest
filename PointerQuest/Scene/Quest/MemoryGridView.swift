@@ -115,6 +115,11 @@ struct MemoryGridView: View {
     }
     .alert("레슨 완료! 🎉", isPresented: $vm.isSuccess) {
       Button("확인", role: .cancel) { }
+    } message: {
+      // 요약이 없는 레슨(샌드박스·Coming Soon)에서는 본문 없이 제목만 나온다
+      if let summary = vm.currentLesson.summary {
+        Text(summary)
+      }
     }
     .sheet(isPresented: $isConceptCardPresented) {
       if let conceptCard = vm.currentLesson.conceptCard {
