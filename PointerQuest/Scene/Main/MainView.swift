@@ -44,6 +44,10 @@ struct MainView: View {
       .navigationDestination(for: Lesson.self) { lesson in
         MemoryGridView(lesson: lesson, path: $path)
           .navigationBarTitleDisplayMode(.inline)
+          // "다음 레슨"은 스택의 마지막 원소를 교체하므로 화면 위치가 그대로다.
+          // id를 주지 않으면 SwiftUI가 같은 뷰로 보고 @StateObject를 유지해
+          // init이 다시 불리지 않는다 — 레슨을 바꿔도 이전 레슨의 VM이 남는다
+          .id(lesson.id)
       }
     }
   }
