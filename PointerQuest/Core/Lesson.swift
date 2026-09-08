@@ -144,6 +144,24 @@ struct LessonData {
     )
   ]
 
+  /// `lesson`이 속한 챕터 (샌드박스처럼 `chapters` 밖의 레슨이면 `nil`)
+  static func chapter(of lesson: Lesson) -> Chapter? {
+    chapters.first { $0.lessons.contains(lesson) }
+  }
+
+  /// `lesson` 다음에 이어서 풀 수 있는 레슨
+  /// 마지막 레슨이거나 다음이 아직 저작되지 않은 Coming Soon이면 `nil`을 돌려준다.
+  /// 샌드박스는 `lessons`에 없으므로 여기서도 자동으로 제외된다
+  static func nextLesson(after lesson: Lesson) -> Lesson? {
+    guard let currentIndex = lessons.firstIndex(of: lesson) else { return nil }
+
+    let nextIndex = currentIndex + 1
+    guard lessons.indices.contains(nextIndex) else { return nil }
+
+    let next = lessons[nextIndex]
+    return next.isComingSoon ? nil : next
+  }
+
   /// 아직 콘텐츠가 저작되지 않은 챕터를 나타내는 "Coming Soon" placeholder 레슨
   /// `successCondition`은 실제로 열람되지 않으므로(Main 화면에서 진입 자체를 막음) 새 케이스 없이 `.sandbox`를 재사용한다
   private static func comingSoonLesson(id: Int, title: LocalizedStringResource) -> Lesson {

@@ -26,6 +26,11 @@ struct MemoryGridView: View {
   private var showGridHint: Bool {
     vm.currentLesson.id == 1 && !hasSeenGridHint
   }
+
+  /// 이어서 풀 수 있는 다음 레슨. 없으면 완료 알럿에 "다음 레슨" 버튼을 그리지 않는다
+  private var nextLesson: Lesson? {
+    LessonData.nextLesson(after: vm.currentLesson)
+  }
   
   var body: some View {
     ScrollView {
@@ -122,10 +127,22 @@ struct MemoryGridView: View {
     }
     .alert("레슨 완료! 🎉", isPresented: $vm.isSuccess) {
       Button("확인", role: .cancel) { }
+
+      if let nextLesson {
+        Button("다음 레슨") {
+          moveToNextLesson(nextLesson)
+        }
+      }
     } message: {
       // 요약이 없는 레슨(샌드박스·Coming Soon)에서는 본문 없이 제목만 나온다
       if let summary = vm.currentLesson.summary {
-        Text(summary)
+        if let chapterId = LessonData.chapter(of: vm.currentLesson)?.id, nextLesson == nil {
+          // 이어서 풀 레슨이 없으면 여기서 챕터가 끝난다는 것을 함께 알린다
+          // 줄바꿈은 번역 대상이 아니므로 verbatim으로 두어 카탈로그에 키가 생기지 않게 한다
+          Text(summary) + Text(verbatim: "\n\n") + Text("여기까지가 챕터 \(chapterId)입니다.")
+        } else {
+          Text(summary)
+        }
       }
     }
     .sheet(isPresented: $isConceptCardPresented) {
@@ -152,6 +169,14 @@ struct MemoryGridView: View {
 
     LessonProgressStore.shared.markConceptCardSeen(lessonId)
     isConceptCardPresented = true
+  }
+
+  /// 스택의 마지막 원소를 교체해 다음 레슨으로 넘어간다.
+  /// 새 화면을 쌓지 않으므로 몇 개를 이어서 풀어도 뒤로가기 한 번이면 레슨 목록으로 돌아온다
+  private func moveToNextLesson(_ lesson: Lesson) {
+    guard !path.isEmpty else { return }
+
+    path[path.count - 1] = lesson
   }
   
   // Anchor를 CGRect로 변환하는 헬퍼 함수
