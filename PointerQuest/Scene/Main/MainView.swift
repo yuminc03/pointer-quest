@@ -1,6 +1,11 @@
 import SwiftUI
 
 struct MainView: View {
+  /// 현재 열려 있는 레슨 스택
+  /// 완료 알럿의 "다음 레슨"이 마지막 원소를 교체하는 방식으로 이동하기 때문에,
+  /// 레슨을 몇 개나 이어서 풀어도 뒤로가기 한 번이면 이 목록으로 돌아온다
+  @State private var path = [Lesson]()
+
   private let chapterColorPalette: [[Color]] = [
     [Color(.main), Color(.lightBlue)],
     [Color(.green), Color(.lightGreen)],
@@ -8,7 +13,7 @@ struct MainView: View {
   ]
 
   var body: some View {
-    NavigationStack {
+    NavigationStack(path: $path) {
       VStack(spacing: 0) {
         Title
           .padding(.horizontal, 20)
@@ -37,7 +42,7 @@ struct MainView: View {
       }
       .background(Color(.systemGroupedBackground))
       .navigationDestination(for: Lesson.self) { lesson in
-        MemoryGridView(lesson: lesson)
+        MemoryGridView(lesson: lesson, path: $path)
           .navigationBarTitleDisplayMode(.inline)
       }
     }

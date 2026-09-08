@@ -6,9 +6,16 @@ struct MemoryGridView: View {
   /// 레슨 1 그리드 힌트를 이미 확인했는지 여부 (앱 전체에서 최초 1회만 노출)
   @AppStorage("hasSeenGridHint") private var hasSeenGridHint = false
   @State private var isConceptCardPresented = false
+  /// `MainView`가 들고 있는 레슨 스택
+  /// "다음 레슨"으로 이동할 때 마지막 원소를 교체하는 데만 쓴다
+  @Binding private var path: [Lesson]
 
-  init(lesson: Lesson = LessonData.lessons[0]) {
+  init(
+    lesson: Lesson = LessonData.lessons[0],
+    path: Binding<[Lesson]> = .constant([])
+  ) {
     _vm = StateObject(wrappedValue: MemoryGridVM(lesson: lesson))
+    _path = path
   }
 
   private let columns: [GridItem] = [
