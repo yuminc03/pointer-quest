@@ -40,7 +40,8 @@ struct LessonData {
             ],
             successCondition: .inspectedAll(indices: [1, 6, 10]),
             initialCodeLog: "// 레슨 0: 메모리의 모든 칸에는 번호(주소)가 있어요. 값이 든 상자 3개를 눌러 확인해 보세요."
-          )
+          ),
+          summary: "변수는 이름표가 붙은 상자이고, 그 상자에는 값과 별개로 자기만의 번호(주소)가 있습니다."
         ),
         .init(
           id: 1,
@@ -64,7 +65,8 @@ struct LessonData {
               "값을 복사하지 않기 때문에, 같은 값을 여러 곳에서 함께 보고 함께 고칠 수 있습니다. 주소를 쓰는 이유가 여기에 있습니다."
             ],
             diagram: .pointerToValue
-          )
+          ),
+          summary: "포인터는 값을 복사해 담는 상자가 아니라, 값이 있는 곳의 번호를 담는 상자입니다."
         ),
         .init(
           id: 2,
@@ -89,7 +91,8 @@ struct LessonData {
               "C로 쓰면 `int **p1 = &ptr1;` 입니다. `*`가 하나 늘어날 때마다 값에 닿기까지 한 번 더 따라가야 합니다."
             ],
             diagram: .pointerToPointer
-          )
+          ),
+          summary: "포인터도 자기 주소를 가지기 때문에, 다른 포인터가 그 포인터를 가리켜 이중 포인터가 됩니다."
         ),
         .init(
           id: 3,
@@ -114,7 +117,8 @@ struct LessonData {
               "이렇게 이어진 구조를 연결 리스트라고 부릅니다. 이름은 지금 외우지 않아도 괜찮습니다."
             ],
             diagram: .pointerChain
-          )
+          ),
+          summary: "각 칸이 다음 칸의 번호만 알고 있어도, 이어 붙이면 값까지 가는 하나의 길이 됩니다."
         )
       ]
     ),
@@ -179,6 +183,10 @@ struct Lesson: Identifiable, Hashable {
   /// 그리드에 들어가기 전에 보여줄 개념 카드
   /// 값이 없으면 카드를 띄우지 않는다 (레슨 0은 레슨 자체가 개념 설명이라 카드를 두지 않는다)
   var conceptCard: ConceptCard?
+  /// 클리어 알럿에 보여줄 "이번에 배운 것" 한 문장
+  /// 개념 카드가 진입 전에 "무엇을 배울 것인가"를 말한다면, 이 문장은 방금 한 조작과 개념을 잇는다.
+  /// 값이 없으면 알럿에 본문 없이 제목만 나온다 (샌드박스·Coming Soon 레슨)
+  var summary: LocalizedStringResource?
   /// 아직 콘텐츠가 저작되지 않아 "Coming Soon"으로만 표시되는 레슨인지 여부
   var isComingSoon = false
 
