@@ -1313,6 +1313,102 @@
           }
         }
       }
+    },
+    "변수는 이름표가 붙은 상자이고, 그 상자에는 값과 별개로 자기만의 번호(주소)가 있습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A variable is a box with a name tag, and apart from the value inside, the box has a number of its own — its address."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "변수는 이름표가 붙은 상자이고, 그 상자에는 값과 별개로 자기만의 번호(주소)가 있습니다."
+          }
+        }
+      }
+    },
+    "포인터는 값을 복사해 담는 상자가 아니라, 값이 있는 곳의 번호를 담는 상자입니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A pointer is not a box that holds a copy of the value. It is a box that holds the number of the place where the value is."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "포인터는 값을 복사해 담는 상자가 아니라, 값이 있는 곳의 번호를 담는 상자입니다."
+          }
+        }
+      }
+    },
+    "포인터도 자기 주소를 가지기 때문에, 다른 포인터가 그 포인터를 가리켜 이중 포인터가 됩니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A pointer has an address of its own, so another pointer can point at it. That makes a pointer to a pointer."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "포인터도 자기 주소를 가지기 때문에, 다른 포인터가 그 포인터를 가리켜 이중 포인터가 됩니다."
+          }
+        }
+      }
+    },
+    "각 칸이 다음 칸의 번호만 알고 있어도, 이어 붙이면 값까지 가는 하나의 길이 됩니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Each box only knows the number of the next one, but linked together they become a single path to the value."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "각 칸이 다음 칸의 번호만 알고 있어도, 이어 붙이면 값까지 가는 하나의 길이 됩니다."
+          }
+        }
+      }
+    },
+    "다음 레슨" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next Lesson"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다음 레슨"
+          }
+        }
+      }
+    },
+    "여기까지가 챕터 %lld입니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "That is the end of Chapter %lld."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "여기까지가 챕터 %lld입니다."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
