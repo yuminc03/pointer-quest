@@ -429,7 +429,14 @@
       }
     },
     "printf(\"%%p\", *%@); // 이중 포인터 (대상도 포인터임)" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "printf(\"%%p\", *%@); // Double Pointer (the target is a pointer too)"
+          }
+        }
+      }
     },
     "printf(\"%%p\", *%@); // 주소: %@" : {
       "localizations" : {
@@ -800,7 +807,14 @@
       }
     },
     "이 슬롯을 드래그해서 저 주소 위에 놓아보세요" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drag this slot and drop it onto that address"
+          }
+        }
+      }
     },
     "이 앱이 처음이신가요? 튜토리얼에서 사용법을 확인해보세요!" : {
       "localizations" : {
