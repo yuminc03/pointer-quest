@@ -2,13 +2,15 @@
 
 1.0 제출에 필요한 항목을 한곳에 모은다. Task 24(스크린샷·메타데이터)에서 이 문서를 보고 그대로 입력한다. 문구는 한국어·영어 둘 다 등록한다.
 
-## 아직 정해지지 않은 것
-아래 두 주소가 확정되어야 제출할 수 있다. 사용자가 Notion 페이지를 만들면 채운다.
+## 등록할 주소 (2026-09-09 확정)
+사용자가 Notion 페이지를 만들어 아래 두 주소로 확정했다. 원문 대조는 [privacy-policy.md](./privacy-policy.md)·[support.md](./support.md)를 쓴다.
 
-- `Privacy Policy URL` — 원문은 [privacy-policy.md](./privacy-policy.md)
-- `Support URL` — 원문은 [support.md](./support.md)
+| 항목 | 주소 |
+|---|---|
+| `Privacy Policy URL` | `https://lonalia.notion.site/Privacy-Policy-3d6e9fb9ac1880349b48d322882e2e14` |
+| `Support URL` | `https://lonalia.notion.site/Pointer-Quest-3d6e9fb9ac1880c4aae6e40d8963fcd2` |
 
-**두 주소는 `notion.site` 형식이어야 한다.** 상세는 아래 "주소 형식 주의" 참고.
+사용자가 준 주소는 `app.notion.com/p/...` 형식이었고, 같은 페이지를 가리키는 `notion.site` 주소로 바꿔 적었다. 상세는 아래 "주소 형식 주의" 참고.
 
 ## 앱 정보 (App Information)
 언어와 무관한 항목이다.
@@ -161,17 +163,24 @@ Task 24에서 찍는다. 기기 축을 iPhone 하나로 줄였으므로 6.9인�
 5. 플레이그라운드
 
 ## 제출 전 확인할 것
-- [ ] `Privacy Policy URL` — `notion.site` 주소로 등록
-- [ ] `Support URL` — `notion.site` 주소로 등록
-- [ ] 앱 안 방침 링크(`SettingView`)를 같은 주소로 교체
+- [ ] `Privacy Policy URL` — 위 표의 `notion.site` 주소로 등록
+- [ ] `Support URL` — 위 표의 `notion.site` 주소로 등록
+- [x] 앱 안 방침 링크(`SettingView`)를 같은 주소로 교체
 - [ ] App Privacy — **"Data Not Collected"** 선택. 네트워크 코드가 0건이고 저장은 `UserDefaults` 두 키뿐이라 수집 항목이 없다
 - [ ] 수출 규정 — 암호화를 쓰지 않으므로 `ITSAppUsesNonExemptEncryption`을 `false`로 `Info.plist`에 넣어 매 업로드마다 묻지 않게 한다
 - [ ] 심사 메모(App Review Information) — 계정이 없으므로 로그인 정보 불필요. "챕터 2 이후는 준비 중 표시이며 의도된 상태"라고 적어 두면 오해를 막는다
 
-## 주소 형식 주의
-**`app.notion.com/p/...` 주소는 App Store Connect에 넣으면 안 된다.**
+## 제출 전 Notion 쪽에서 마무리할 것
+2026-09-09 두 페이지를 실측해 확인한 항목이다. 둘 다 Notion에서만 고칠 수 있어 코드 변경 대상이 아니다.
 
-- 참고로 주신 주소(`https://app.notion.com/p/lonalia/Privacy-Policy-...`)를 로그인 없이 가져와 보니 본문이 오지 않고 앱 껍데기만 왔다. `app.notion.com`은 로그인한 사용자의 작업 공간을 여는 주소다
-- 공개 게시 주소는 Notion 페이지 우상단 **공유 > 웹에 게시**를 켰을 때 나오는 `https://lonalia.notion.site/...` 형식이다
+- [ ] **두 페이지 본문이 비어 있다.** 제목만 있고 그 아래는 빈 문단 하나뿐이다. [privacy-policy.md](./privacy-policy.md)·[support.md](./support.md)의 원문을 붙여넣어야 한다
+- [ ] **링크를 가진 사람이 편집할 수 있다.** 공개 권한이 `read_and_write`로 열려 있어, 주소를 아는 누구나 방침 문구를 고칠 수 있다. 공유 설정을 **읽기 허용**으로 낮춘다
+
+## 주소 형식 주의
+**`app.notion.com/p/...` 주소는 App Store Connect에 넣지 않는다.**
+
+- 두 페이지 모두 **로그인 없이 읽히는 것은 확인했다.** Notion 공개 페이지 정보에 `requireLogin: false`가 오고, 계정 없이 보낸 본문 요청에도 페이지가 그대로 왔다
+- 그럼에도 `app.notion.com`은 로그인한 사용자의 작업 공간을 여는 주소다. 계정이 없는 심사자에게 보여줄 자리에는 같은 페이지를 가리키는 `https://lonalia.notion.site/...`를 쓴다
+- `notion.site` 주소는 페이지 우상단 **공유**에서 얻는다. 주소 끝의 32자리 식별자가 같으면 같은 페이지다
 - 심사자는 계정 없이 방침을 읽을 수 있어야 한다. 열리지 않으면 이 사유만으로 반려된다
 - 다른 앱에 이미 등록해 둔 주소도 같은 형식인지 다시 확인할 값어치가 있다
