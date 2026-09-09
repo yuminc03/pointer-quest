@@ -459,7 +459,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "It's not the value, but the 'Address' that matters.\nDrag the pointer to point to address."
+            "value" : "It's not the value, but the 'Address' that matters.\nDrag the pointer to point at an address."
           }
         },
         "ko" : {
@@ -699,7 +699,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Setting"
+            "value" : "Settings"
           }
         },
         "ko" : {
@@ -885,7 +885,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Importance of Address"
+            "value" : "The Importance of Addresses"
           }
         },
         "ko" : {
@@ -997,7 +997,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You can check the tutorial again in Setting > How to use the app."
+            "value" : "You can check the tutorial again in Settings > How to use the app."
           }
         },
         "ko" : {
