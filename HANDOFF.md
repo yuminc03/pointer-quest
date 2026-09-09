@@ -3,29 +3,20 @@
 새 대화에서 작업을 이어받을 때 **이 문서를 먼저 읽는다.** 여기 적힌 것은 2026-09-09 시점의 스냅샷이고, 항목별 상세는 [TODO.md](./TODO.md) · [PLAN.md](./PLAN.md) · [PROGRESS.md](./PROGRESS.md)가 정본이다. 이 문서와 어긋나면 그쪽을 따른다.
 
 ## 한 줄 요약
-1.0 출시 전 항목 1~3번이 끝났고, 마지막 4번(App Store 심사 대비)을 Task 20~26으로 쪼개 진행 중이다. **Task 20·21·22·26은 병합 완료, Task 23은 주소가 확정되어 병합 대기 상태다.**
+1.0 출시 전 항목 1~3번이 끝났고, 마지막 4번(App Store 심사 대비)을 Task 20~26으로 쪼개 진행 중이다. **Task 20·21·22·23·26이 병합 완료이고, 남은 것은 Task 25(런치스크린)와 Task 24(스크린샷·메타데이터) 둘뿐이다.**
 
 ## 지금 상태
 | 항목 | 값 |
 |---|---|
-| 현재 브랜치 | `feature/privacy-policy` (미병합, 커밋 5개) |
-| `develop` | `2f7db5b`, `origin/develop`과 일치 |
+| 현재 브랜치 | `develop` |
+| `develop` | `5a5b498`, `origin/develop`과 일치 |
 | 작업 트리 | 깨끗함 |
+| 로컬 feature 브랜치 | 없음 |
 | 원격 feature 브랜치 | 만들지 않는다 (기존 관례) |
 
-`feature/privacy-policy`의 미병합 커밋이다.
-
-```
-95b435a docs: Task 23 등록 및 호스팅 변경 반영
-3b0e6ba docs: App Store Connect 등록 정보 정리
-c445bf2 docs: 방침 호스팅을 Notion으로 바꾸고 지원 페이지 원문 추가
-c103b39 feat: 설정 화면에 개인정보처리방침 링크 추가
-60b97f2 docs: 개인정보처리방침 페이지 추가
-```
-
 ## 새 대화에서 바로 할 일
-### 1. Task 23 — 주소는 확정됐다
-2026-09-09 사용자가 Notion 페이지 2개를 만들어 주소를 줬고, `SettingView`의 상수와 [docs/app-store-connect.md](./docs/app-store-connect.md)에 반영했다. 등록 주소는 아래 두 개다.
+### 1. Task 23 — 병합까지 끝났다
+2026-09-09 사용자가 Notion 페이지 2개를 만들어 주소를 줬고, `SettingView`의 상수와 [docs/app-store-connect.md](./docs/app-store-connect.md)에 반영한 뒤 병합(`5a5b498`)했다. 등록 주소는 아래 두 개다.
 
 - 방침 — `https://lonalia.notion.site/Privacy-Policy-3d6e9fb9ac1880349b48d322882e2e14`
 - 지원 — `https://lonalia.notion.site/Pointer-Quest-3d6e9fb9ac1880c4aae6e40d8963fcd2`
@@ -35,10 +26,9 @@ c103b39 feat: 설정 화면에 개인정보처리방침 링크 추가
 ### 2. 남은 사용자 작업 — Notion에서만 가능
 - **두 페이지 본문이 비어 있다.** [docs/privacy-policy.md](./docs/privacy-policy.md)·[docs/support.md](./docs/support.md)의 원문을 붙여넣어야 한다
 - **공개 권한이 편집 가능(`read_and_write`)으로 열려 있다.** 주소를 아는 누구나 방침을 고칠 수 있어 읽기 허용으로 낮춰야 한다
-- 둘 다 코드 변경 대상이 아니라 병합을 막지 않는다
+- 둘 다 코드 변경 대상이 아니라 병합을 막지 않았다. 제출 전까지 끝내면 된다
 
 ### 3. 이어지는 순서
-- **Task 23 병합** — 빌드 확인 후 `develop`에 `--no-ff` 병합 → 푸시 → 로컬 브랜치 삭제
 - **Task 25 런치스크린** — `Info.plist`의 `UILaunchScreen`이 빈 딕셔너리라 지금은 시스템 기본 단색 화면이 뜬다
 - **Task 24 스크린샷·메타데이터** — **반드시 마지막.** Task 25가 스크린샷에 찍히는 화면을 바꾼다. 등록 정보는 이미 [docs/app-store-connect.md](./docs/app-store-connect.md)에 정리해 뒀다
 
