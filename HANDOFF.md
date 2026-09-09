@@ -3,7 +3,7 @@
 새 대화에서 작업을 이어받을 때 **이 문서를 먼저 읽는다.** 여기 적힌 것은 2026-09-09 시점의 스냅샷이고, 항목별 상세는 [TODO.md](./TODO.md) · [PLAN.md](./PLAN.md) · [PROGRESS.md](./PROGRESS.md)가 정본이다. 이 문서와 어긋나면 그쪽을 따른다.
 
 ## 한 줄 요약
-1.0 출시 전 항목 1~3번이 끝났고, 마지막 4번(App Store 심사 대비)을 Task 20~26으로 쪼개 진행 중이다. **Task 20·21·22·26은 병합 완료, Task 23은 사용자의 Notion 페이지 생성을 기다리며 막혀 있다.**
+1.0 출시 전 항목 1~3번이 끝났고, 마지막 4번(App Store 심사 대비)을 Task 20~26으로 쪼개 진행 중이다. **Task 20·21·22·26은 병합 완료, Task 23은 주소가 확정되어 병합 대기 상태다.**
 
 ## 지금 상태
 | 항목 | 값 |
@@ -24,20 +24,21 @@ c103b39 feat: 설정 화면에 개인정보처리방침 링크 추가
 ```
 
 ## 새 대화에서 바로 할 일
-### 1. Task 23을 막고 있는 것 — 사용자 작업
-사용자가 Notion에 페이지 **2개**를 만들고 주소를 알려줘야 한다. 붙여넣을 원문은 저장소에 있다.
+### 1. Task 23 — 주소는 확정됐다
+2026-09-09 사용자가 Notion 페이지 2개를 만들어 주소를 줬고, `SettingView`의 상수와 [docs/app-store-connect.md](./docs/app-store-connect.md)에 반영했다. 등록 주소는 아래 두 개다.
 
-- 개인정보처리방침 — [docs/privacy-policy.md](./docs/privacy-policy.md)
-- 지원 페이지 — [docs/support.md](./docs/support.md)
+- 방침 — `https://lonalia.notion.site/Privacy-Policy-3d6e9fb9ac1880349b48d322882e2e14`
+- 지원 — `https://lonalia.notion.site/Pointer-Quest-3d6e9fb9ac1880c4aae6e40d8963fcd2`
 
-**주소는 `lonalia.notion.site/...` 형식이어야 한다.** Notion 페이지의 공유 > 웹에 게시를 켜야 나온다. 사용자가 참고로 준 `app.notion.com/p/...` 주소는 로그인 없이 가져오면 본문이 오지 않고 앱 껍데기만 온다 — 심사자는 계정 없이 방침을 읽을 수 있어야 하고, 열리지 않으면 그 사유만으로 반려된다. **이미 출시한 다른 앱의 등록 주소도 같은 문제가 있을 수 있다고 알렸다.**
+**사용자가 준 것은 `app.notion.com/p/...` 형식이라 같은 페이지를 가리키는 `notion.site` 주소로 바꿔 넣었다.** 주소 끝 32자리 식별자가 같으면 같은 페이지다.
 
-### 2. 주소를 받으면
-- `SettingView.swift:50`의 `privacyPolicyURL` 상수를 교체한다. **지금은 쓰지 않기로 한 GitHub Pages 주소가 그대로 남아 있다** — 이 상태로 병합하면 존재하지 않는 주소가 앱에 들어간다
-- [docs/app-store-connect.md](./docs/app-store-connect.md)의 "아직 정해지지 않은 것" 절에 두 주소를 채운다
-- 빌드 확인 후 `develop`에 `--no-ff` 병합 → 푸시 → 로컬 브랜치 삭제
+### 2. 남은 사용자 작업 — Notion에서만 가능
+- **두 페이지 본문이 비어 있다.** [docs/privacy-policy.md](./docs/privacy-policy.md)·[docs/support.md](./docs/support.md)의 원문을 붙여넣어야 한다
+- **공개 권한이 편집 가능(`read_and_write`)으로 열려 있다.** 주소를 아는 누구나 방침을 고칠 수 있어 읽기 허용으로 낮춰야 한다
+- 둘 다 코드 변경 대상이 아니라 병합을 막지 않는다
 
 ### 3. 이어지는 순서
+- **Task 23 병합** — 빌드 확인 후 `develop`에 `--no-ff` 병합 → 푸시 → 로컬 브랜치 삭제
 - **Task 25 런치스크린** — `Info.plist`의 `UILaunchScreen`이 빈 딕셔너리라 지금은 시스템 기본 단색 화면이 뜬다
 - **Task 24 스크린샷·메타데이터** — **반드시 마지막.** Task 25가 스크린샷에 찍히는 화면을 바꾼다. 등록 정보는 이미 [docs/app-store-connect.md](./docs/app-store-connect.md)에 정리해 뒀다
 
