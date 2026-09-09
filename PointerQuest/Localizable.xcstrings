@@ -470,6 +470,22 @@
         }
       }
     },
+    "개인정보처리방침" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy Policy"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "개인정보처리방침"
+          }
+        }
+      }
+    },
     "구조체와 포인터" : {
       "localizations" : {
         "en" : {
@@ -812,6 +828,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Drag this slot and drop it onto that address"
+          }
+        }
+      }
+    },
+    "이 앱은 개인정보를 수집하지 않습니다. 학습 진행 상황은 기기에만 저장됩니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This app does not collect personal data. Your progress is stored only on your device."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 앱은 개인정보를 수집하지 않습니다. 학습 진행 상황은 기기에만 저장됩니다."
           }
         }
       }

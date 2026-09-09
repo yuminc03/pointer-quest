@@ -21,6 +21,12 @@ struct SettingView: View {
         } footer: {
           Text("설정에서 언어를 바꾸면 앱이 다시 시작됩니다.")
         }
+
+        Section {
+          PrivacyPolicyRow
+        } footer: {
+          Text("이 앱은 개인정보를 수집하지 않습니다. 학습 진행 상황은 기기에만 저장됩니다.")
+        }
       }
       .navigationTitle("설정")
       .sheet(isPresented: $isOnboardingPresented) {
@@ -37,6 +43,35 @@ struct SettingView: View {
 }
 
 private extension SettingView {
+  /// 개인정보처리방침 페이지 주소
+  ///
+  /// App Store Connect에 등록하는 주소와 같은 것을 쓴다. 앱 안에 방침 전문을 두지 않는 이유는
+  /// 방침이 바뀔 때마다 앱을 새로 심사받게 되기 때문이다 — 웹 페이지는 고쳐서 바로 반영된다
+  ///
+  /// `app.notion.com/p/...`가 아니라 `notion.site` 주소를 쓴다. 같은 페이지를 가리키지만 앞의 것은
+  /// 로그인한 사용자의 작업 공간을 여는 주소라, 계정이 없는 사람에게 보여줄 자리에 맞지 않는다
+  static let privacyPolicyURL = URL(string: "https://lonalia.notion.site/Privacy-Policy-3d6e9fb9ac1880349b48d322882e2e14")
+}
+
+private extension SettingView {
+  var PrivacyPolicyRow: some View {
+    Button {
+      guard let url = Self.privacyPolicyURL else { return }
+      UIApplication.shared.open(url)
+    } label: {
+      HStack {
+        Text("개인정보처리방침")
+          .foregroundStyle(.primary)
+
+        Spacer()
+
+        Image(systemName: "arrow.up.right.square")
+          .font(.footnote.bold())
+          .foregroundStyle(.tertiary)
+      }
+    }
+  }
+
   var LanguageRow: some View {
     Button {
       openAppSettings()
