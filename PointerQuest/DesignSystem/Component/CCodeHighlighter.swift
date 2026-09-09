@@ -38,6 +38,10 @@ enum CCodeHighlighter {
   }
 
   /// 주석을 제외한 코드 부분에서 키워드와 문자열 리터럴에 색을 입힌다
+  ///
+  /// 키워드는 `Main`이 아니라 `CodeKeyword`를 쓴다. 코드 패널은 시스템 모드와 무관하게
+  /// 항상 어두운 배경(`Color(white: 0.15)`)이라, 라이트 배경 기준으로 어두워진 `Main`을
+  /// 그대로 쓰면 대비가 나오지 않는다 — 에디터 팔레트는 별도 축이다(`VISUAL_LANGUAGE.md` §6)
   private static func highlightCode(_ code: String) -> AttributedString {
     var result = AttributedString()
     var token = ""
@@ -46,7 +50,7 @@ enum CCodeHighlighter {
     func flushToken() {
       guard !token.isEmpty else { return }
       var attributed = AttributedString(token)
-      attributed.foregroundColor = keywords.contains(token) ? Color(.main) : .white
+      attributed.foregroundColor = keywords.contains(token) ? Color(.codeKeyword) : .white
       result += attributed
       token = ""
     }
