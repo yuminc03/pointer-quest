@@ -6,11 +6,11 @@ struct MainView: View {
   /// 레슨을 몇 개나 이어서 풀어도 뒤로가기 한 번이면 이 목록으로 돌아온다
   @State private var path = [Lesson]()
 
-  private let chapterColorPalette: [[Color]] = [
-    [Color(.main), Color(.lightBlue)],
-    [Color(.green), Color(.lightGreen)],
-    [Color(.red), Color(.lightRed)]
-  ]
+  /// 챕터 아이콘 칩의 그라데이션
+  ///
+  /// 챕터마다 다른 색을 주면 그 색이 `Green`(값)·`Red`(에러)와 겹쳐, 목록 화면의 장식이
+  /// 그리드 화면의 종류·상태와 같은 색을 쓰게 된다. 챕터 구분은 색이 아니라 심볼이 한다
+  private let chapterIconColors = [Color(.main), Color(.lightBlue)]
 
   var body: some View {
     NavigationStack(path: $path) {
@@ -21,13 +21,10 @@ struct MainView: View {
           .padding(.bottom, 8)
 
         List {
-          ForEach(Array(LessonData.chapters.enumerated()), id: \.element.id) { index, chapter in
+          ForEach(LessonData.chapters) { chapter in
             Section {
               ForEach(chapter.lessons) { lesson in
-                lessonRow(
-                  lesson: lesson,
-                  colors: chapterColorPalette[index % chapterColorPalette.count]
-                )
+                lessonRow(lesson: lesson, colors: chapterIconColors)
               }
             } header: {
               Text("챕터 \(chapter.id)") + Text(" · ") + Text(chapter.title)
@@ -88,7 +85,7 @@ private extension MainView {
           .frame(width: 44, height: 44)
           .background(
             Circle().fill(LinearGradient(
-              colors: [Color(.yellow), Color(.lightYellow)],
+              colors: [Color(.deco), Color(.lightDeco)],
               startPoint: .bottomLeading,
               endPoint: .topTrailing
             ))
