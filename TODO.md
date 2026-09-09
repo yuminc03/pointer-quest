@@ -330,6 +330,21 @@ B-4 레슨 마무리 요약. 완료 알럿에 "이번에 배운 것" 한 문장�
 - 같은 더블 탭이라도 **빈 칸은 에러로 다루지 않는다.** 역참조할 대상 자체가 없는 것이지 학습자가 잘못한 것이 아니기 때문이다
 - 다만 깜빡이는 동안 초록 테두리가 빨강으로 덮인다. 이것은 `VISUAL_LANGUAGE.md` §7에 **남아 있는 이탈**로 기록돼 있다 — 에러인 동안 그 칸이 값인지 포인터인지 알 수 없어진다. 색 값이 아니라 조건식을 고쳐야 하는 항목이라 Task 20 범위 밖으로 두었다
 
+## Task 21 — `feature/iphone-only-target`
+1.0 지원 기기를 iPhone 전용으로 축소. App Store 심사 대비의 두 번째 Task이며 다른 Task와 의존이 없다.
+
+### 배경
+- `TARGETED_DEVICE_FAMILY`가 `1,2`인 유니버설 앱인데 **iPad 대응 분기(`horizontalSizeClass` 등)는 코드에 0건이다.** 세로 고정만 걸려 있어 iPad에서는 iPhone 레이아웃이 늘어난 화면이 나온다
+- 유니버설로 두면 심사에 iPad 스크린샷이 따로 필요하고, 레이아웃 검수 Task도 하나 늘어난다. **대응하지 않은 기기를 지원 목록에 올려 둔 상태**였다
+
+### 작업 항목
+- [x] `project.yml`·`Info.plist`·`project.pbxproj`의 기기 범위를 `1`로 축소 — 커밋 `ca7ae62`. 쓰임이 사라진 `UISupportedInterfaceOrientations~ipad`도 함께 뺐다
+- [x] 빌드 설정 실측 — `xcodebuild -showBuildSettings`로 `TARGETED_DEVICE_FAMILY = 1` 확인, 빌드 성공
+- [ ] `develop` 병합
+
+### pbxproj를 재생성하지 않은 이유
+`project.pbxproj`는 `project.yml`에서 xcodegen이 만들지만, **재생성하면 파일 참조 UUID를 새로 뽑아 파일 전체가 바뀐다.** 값 두 개를 바꾸려고 전면 재작성 diff를 남길 이유가 없다. 대신 저장소 사본에서 xcodegen을 돌려 생성 결과와 손으로 고친 값이 일치하는지 대조했고, `Info.plist`는 생성 결과와 바이트 단위로 같다.
+
 ## 백로그
 2026-08-14 기준으로 1.0 출시 전 항목과 출시 후 업데이트 항목을 구분했다. 상세 배경·방향은 [PLAN.md](./PLAN.md)의 "출시 로드맵" 참고.
 

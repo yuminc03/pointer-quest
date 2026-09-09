@@ -591,6 +591,20 @@ Task 19까지의 로컬 문서 커밋 3개를 `origin/develop`에 푸시하고(`
 - **문서 커밋을 로컬에 남기지 않았다.** Task 18·19에서 지난 Task의 문서 커밋이 로컬에 남아 다음 푸시에 딸려 올라간 일이 반복됐는데, 이번에는 병합 전에 `git status -sb`로 확인하고 넘어갔다
 - **App Store 심사 대비의 선행 Task가 닫혔다.** 아이콘·색이 확정됐으므로 스크린샷을 두 번 찍을 이유가 사라졌다
 
+## Task 21 진행 상황 (`feature/iphone-only-target`)
+1.0 지원 기기를 iPhone 전용으로 축소(2026-09-09). 배경은 `TODO.md` Task 21 절 참고.
+
+### 구현 (커밋 1개)
+- **기기 범위 축소**(`ca7ae62`) — `project.yml`·`Info.plist`·`project.pbxproj` 세 곳의 `TARGETED_DEVICE_FAMILY`를 `1`로 맞추고, 쓰임이 사라진 `UISupportedInterfaceOrientations~ipad`를 뺐다. 코드 변경은 0건이다
+
+### pbxproj를 손으로 고친 이유
+`project.pbxproj`는 xcodegen이 `project.yml`에서 생성하지만 **재생성하면 파일 참조 UUID를 새로 뽑아 파일 전체가 바뀐다.** 값 두 개 때문에 전면 재작성 diff를 남길 이유가 없어 손으로 맞췄다. 대신 저장소 사본에서 xcodegen을 돌려 대조했고, 생성된 pbxproj의 해당 값과 `Info.plist` 전체가 일치했다.
+
+### 검증
+- `xcodebuild -showBuildSettings`에서 `TARGETED_DEVICE_FAMILY = 1` 확인. **설정 파일만 고치는 작업이라 파일을 읽어 확인하는 것으로는 부족하고, 빌드가 실제로 어떤 값을 쓰는지 봐야 한다**
+- `xcodebuild ... build` → BUILD SUCCEEDED
+
 ## 다음 작업
-- Task 21(iPhone 전용 축소) → Task 22(영어 환경 점검) → Task 23(개인정보처리방침) → Task 24(스크린샷·메타데이터) → Task 25(런치스크린)
-- Task 21~25는 서로 의존이 거의 없다. 다만 **Task 24 스크린샷은 20~23이 모두 닫힌 뒤에 찍는다**
+- Task 21 `develop` 병합
+- 이어서 Task 22(영어 환경 점검) → Task 23(개인정보처리방침) → Task 24(스크린샷·메타데이터) → Task 25(런치스크린)
+- 남은 Task는 서로 의존이 거의 없다. 다만 **Task 24 스크린샷은 20~23이 모두 닫힌 뒤에 찍는다**
