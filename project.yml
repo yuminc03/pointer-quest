@@ -10,6 +10,9 @@ settings:
     DEVELOPMENT_TEAM: GMHUACJXLZ
     SWIFT_VERSION: "6.0"
     ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    # 강조색을 뷰가 아니라 빌드 설정으로 지정한다.
+    # SwiftUI의 .tint는 시트로 전파되지 않아 온보딩·개념 카드 안이 시스템 파랑으로 남는다
+    ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: Main
 
 targets:
   PointerQuest:
