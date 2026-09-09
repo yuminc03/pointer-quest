@@ -37,7 +37,7 @@ struct LessonRow: View {
           .foregroundStyle(.secondary)
       } else if progressStore.isCompleted(lesson.id) {
         Image(systemName: "checkmark.circle.fill")
-          .foregroundStyle(.green)
+          .foregroundStyle(Color(.green))
           .accessibilityLabel(Text("완료"))
       }
     }
