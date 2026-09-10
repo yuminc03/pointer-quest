@@ -29,6 +29,9 @@ targets:
         # 목록 화면(systemGroupedBackground, #F2F2F7)으로 넘어갈 때 흰색이 한 번 튄다
         UILaunchScreen:
           UIColorName: LaunchBackground
+        # 암호화를 쓰지 않는다. 네트워크 코드가 0건이고 저장은 UserDefaults 두 키뿐이다.
+        # 이 값을 넣지 않으면 업로드마다 수출 규정을 묻는다
+        ITSAppUsesNonExemptEncryption: false
         UIPrefersShowingLanguageSettings: true
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait

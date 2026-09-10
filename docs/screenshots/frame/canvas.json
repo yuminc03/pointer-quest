@@ -1,0 +1,19 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "title": "1 · 레슨 목록", "x": 0, "y": 0, "w": 1320, "h": 2868 },
+    { "file": "Concept.dc.html", "title": "2 · 개념 카드", "x": 1480, "y": 0, "w": 1320, "h": 2868 },
+    { "file": "Lesson.dc.html", "title": "3 · 레슨 1 연결", "x": 2960, "y": 0, "w": 1320, "h": 2868 },
+    { "file": "Playground.dc.html", "title": "4 · 플레이그라운드", "x": 4440, "y": 0, "w": 1320, "h": 2868 },
+    { "file": "Complete.dc.html", "title": "5 · 레슨 완료", "x": 5920, "y": 0, "w": 1320, "h": 2868 }
+  ],
+  "annotations": [
+    {
+      "id": "spec-note",
+      "x": 0,
+      "y": -300,
+      "w": 900,
+      "text": "6.9인치 세로 1320 x 2868 · 아트보드 하나가 스크린샷 한 장입니다.\n내보낸 PNG는 알파 채널이 붙으므로 업로드 전에 제거해야 합니다."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}
