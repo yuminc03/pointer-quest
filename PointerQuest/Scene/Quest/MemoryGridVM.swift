@@ -66,13 +66,33 @@ final class MemoryGridVM: ObservableObject {
           int **\(selfName) = &\(targetName); // 이중 포인터 (이 슬롯이 \(targetName)을 가리킴)
           """
         } else {
-          // 최종 대상이 없거나 값이 없는 경우 (단순 주소 표기)
+          // 최종 대상에 아직 값이 없는 경우. 체인이 세 칸 이상이거나(레슨 3의 start) 대상이
+          // 아무 곳도 가리키지 않을 때 여기로 온다.
+          //
+          // **별 개수를 `int *`로 고정하면 안 된다.** 포인터를 가리키는 포인터가 값을 가리키는
+          // 것처럼 보인다. 주소 리터럴을 그대로 넣는 것도 안 된다 — `int *p = 0x702C;`는
+          // 형변환 없이 컴파일되지 않는다. 둘 다 실제 체인 깊이와 이름으로 대신한다
           let targetName = resolveVariableName(for: targetIndex, fallback: "ptr1")
           let selfName = selfIndex.map { resolveVariableName(for: $0, fallback: "ptr2") } ?? "ptr2"
-          codeLog = """
-          int *\(targetName) = \(targetSlot.pointingTo ?? "NULL"); // \(targetAddress)
-          int **\(selfName) = &\(targetName); // 이중 포인터 (이 슬롯이 \(targetName)을 가리킴)
-          """
+          let targetStars = pointerStars(for: targetIndex)
+          let selfStars = selfIndex.map { pointerStars(for: $0) } ?? "**"
+
+          if let ultimateAddr = targetSlot.pointingTo,
+             let ultimateIndex = slots.firstIndex(where: { $0.address == ultimateAddr }) {
+            let ultimateName = resolveVariableName(
+              for: ultimateIndex,
+              fallback: slots[ultimateIndex].type == .pointer ? makePointerName() : "target"
+            )
+            codeLog = """
+            int \(targetStars)\(targetName) = &\(ultimateName); // \(targetName)이 \(ultimateName)을 가리킴
+            int \(selfStars)\(selfName) = &\(targetName); // 이 슬롯이 \(targetName)을 가리킴
+            """
+          } else {
+            codeLog = """
+            int \(targetStars)\(targetName) = NULL; // \(targetAddress)는 아직 아무 곳도 가리키지 않습니다
+            int \(selfStars)\(selfName) = &\(targetName); // 이 슬롯이 \(targetName)을 가리킴
+            """
+          }
         }
       }
       // Case C: 가리킨 곳이 비어있는 경우
@@ -289,6 +309,34 @@ final class MemoryGridVM: ObservableObject {
 
   private func isNameTaken(_ name: String) -> Bool {
     slots.contains { $0.variableName == name }
+  }
+
+  /// 이 슬롯을 C로 선언할 때 `int`와 이름 사이에 들어갈 `*` 문자열을 만든다.
+  ///
+  /// 값 칸은 별이 없고(`int treasure`), 값을 가리키는 포인터는 하나(`int *nodeB`),
+  /// 그 포인터를 가리키는 포인터는 둘(`int **nodeA`)이다. 체인을 실제로 따라가 세므로
+  /// 레슨 3처럼 세 칸을 건너뛰는 연결에서도 타입이 맞는다
+  private func pointerStars(for index: Int) -> String {
+    String(repeating: "*", count: pointerDepth(of: index))
+  }
+
+  /// 체인을 따라가며 포인터를 몇 번 거치는지 센다.
+  /// 플레이그라운드는 `A -> B -> A` 같은 순환도 만들 수 있으므로 지나온 칸을 기억해 멈춘다
+  private func pointerDepth(of index: Int) -> Int {
+    var depth = 0
+    var visited = Set<Int>()
+    var current = index
+
+    while slots[current].type == .pointer {
+      guard visited.insert(current).inserted else { break }
+      depth += 1
+      guard let next = slots[current].pointingTo,
+            let nextIndex = slots.firstIndex(where: { $0.address == next })
+      else { break }
+      current = nextIndex
+    }
+
+    return depth
   }
 
   /// 에러 발생 시 시각적 피드백 (흔들림 + 빨간색)
