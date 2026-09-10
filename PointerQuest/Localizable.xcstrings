@@ -258,22 +258,6 @@
         }
       }
     },
-    "int *%@ = %@; // %@\nint **%@ = &%@; // 이중 포인터 (이 슬롯이 %@을 가리킴)" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "int *%1$@ = %2$@; // %3$@\nint **%4$@ = &%5$@; // Double Pointer (This slot points to %6$@)"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "int *%1$@ = %2$@; // %3$@\nint **%4$@ = &%5$@; // 이중 포인터 (이 슬롯이 %6$@을 가리킴)"
-          }
-        }
-      }
-    },
     "int %@ = %lld;\nint *%@ = &%@;\n// %@ 자신도 메모리(%@)에 저장된 값(주소)입니다." : {
       "localizations" : {
         "en" : {
@@ -366,6 +350,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "int %1$@ = %2$lld; // 이름 %3$@, 주소 %4$@, 값 %5$lld\n// 아직 열어보지 않은 상자가 %6$lld개 남았어요."
+          }
+        }
+      }
+    },
+    "int %@%@ = &%@; // %@이 %@을 가리킴\nint %@%@ = &%@; // 이 슬롯이 %@을 가리킴" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@%2$@ = &%3$@; // %4$@ points to %5$@\nint %6$@%7$@ = &%8$@; // This slot points to %9$@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@%2$@ = &%3$@; // %4$@이 %5$@을 가리킴\nint %6$@%7$@ = &%8$@; // 이 슬롯이 %9$@을 가리킴"
+          }
+        }
+      }
+    },
+    "int %@%@ = NULL; // %@는 아직 아무 곳도 가리키지 않습니다\nint %@%@ = &%@; // 이 슬롯이 %@을 가리킴" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@%2$@ = NULL; // %3$@ does not point anywhere yet\nint %4$@%5$@ = &%6$@; // This slot points to %7$@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@%2$@ = NULL; // %3$@는 아직 아무 곳도 가리키지 않습니다\nint %4$@%5$@ = &%6$@; // 이 슬롯이 %7$@을 가리킴"
           }
         }
       }
