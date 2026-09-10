@@ -225,9 +225,14 @@ final class MemoryGridVM: ObservableObject {
   /// 1) 슬롯에 이미 이름이 있으면 그대로 재사용한다 (누적 유지 — 상호작용을 거듭해도 라벨이 바뀌지 않음)
   /// 2) 레슨 블루프린트가 이 슬롯에 이름을 선언해뒀다면(`SlotSeed.variableName`) 그 이름을 우선 사용한다
   /// 3) 위 두 경우가 아니면 `fallback`(주로 범용 이름)을 사용한다
+  ///
+  /// 어느 경우든 `uniqueName`을 거쳐 **다른 슬롯과 이름이 겹치지 않는 것을 보장한다.**
+  /// `fallback`은 `"target"`처럼 번호가 없는 문자열이라 여러 슬롯이 같은 이름을 받을 수 있고,
+  /// 그러면 코드 패널에 컴파일되지 않는 C가 찍힌다
   private func resolveVariableName(for index: Int, fallback: @autoclosure () -> String) -> String {
     if let existing = slots[index].variableName { return existing }
-    let name = currentLesson.blueprint.seeds.first(where: { $0.index == index })?.variableName ?? fallback()
+    let declared = currentLesson.blueprint.seeds.first(where: { $0.index == index })?.variableName
+    let name = uniqueName(declared ?? fallback())
     slots[index].variableName = name
     return name
   }
@@ -261,9 +266,29 @@ final class MemoryGridVM: ObservableObject {
   }
 
   /// 레슨이 이름을 선언하지 않은 슬롯에 붙일 범용 포인터 이름(p1, p2, ...)을 생성한다.
+  /// 이미 쓰이고 있는 번호는 건너뛴다 — 레슨이 `p2` 같은 이름을 직접 선언했을 때 겹치지 않게 한다
   private func makePointerName() -> String {
-    defer { nextPointerNameIndex += 1 }
-    return "p\(nextPointerNameIndex)"
+    while true {
+      let name = "p\(nextPointerNameIndex)"
+      nextPointerNameIndex += 1
+      if !isNameTaken(name) { return name }
+    }
+  }
+
+  /// 다른 슬롯이 이미 쓰고 있는 이름이면 뒤에 번호를 붙여 겹치지 않게 한다 (target, target2, ...).
+  ///
+  /// 겹친 이름을 그대로 두면 코드 패널에 실제 C에서 컴파일되지 않는 문장이 찍힌다.
+  /// 예를 들어 빈 칸에 연결할 때마다 목적지가 전부 `target`이 되면, 그중 하나가 다시 포인터가 되는 순간
+  /// `int *target = &target;`이 나온다 — 자기 자신의 주소를 담는 선언이라 C가 거부한다
+  private func uniqueName(_ base: String) -> String {
+    guard isNameTaken(base) else { return base }
+    var suffix = 2
+    while isNameTaken("\(base)\(suffix)") { suffix += 1 }
+    return "\(base)\(suffix)"
+  }
+
+  private func isNameTaken(_ name: String) -> Bool {
+    slots.contains { $0.variableName == name }
   }
 
   /// 에러 발생 시 시각적 피드백 (흔들림 + 빨간색)
