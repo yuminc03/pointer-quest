@@ -3,7 +3,8 @@
 이 파일은 **Notion에 붙여넣어 게시할 원문**이다. App Store Connect의 `Support URL`은 필수 항목이며, 방침 페이지와는 **다른 주소**여야 한다.
 
 - 게시 위치: Notion
-- 게시 주소: (사용자가 페이지 생성 후 확정)
+- 게시 주소: `https://lonalia.notion.site/Pointer-Quest-3d6e9fb9ac1880c4aae6e40d8963fcd2`
+- 게시 완료: 2026-09-10. 본문 붙여넣기와 공유 권한 낮추기까지 끝났다
 - App Store Connect의 `Support URL`에 같은 주소를 넣는다
 
 ---

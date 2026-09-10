@@ -3,7 +3,8 @@
 이 파일은 **Notion에 붙여넣어 게시할 원문**이다. 게시본이 정본이고 이 파일은 버전 관리용 사본이다. 내용을 고칠 때는 두 곳을 함께 고친다.
 
 - 게시 위치: Notion (2026-09-09 결정, 상세는 `PLAN.md` 백로그 D)
-- 게시 주소: (사용자가 페이지 생성 후 확정)
+- 게시 주소: `https://lonalia.notion.site/Privacy-Policy-3d6e9fb9ac1880349b48d322882e2e14`
+- 게시 완료: 2026-09-10. 본문 붙여넣기와 공유 권한 낮추기까지 끝났다
 - App Store Connect의 `Privacy Policy URL`에 같은 주소를 넣는다
 
 ---
