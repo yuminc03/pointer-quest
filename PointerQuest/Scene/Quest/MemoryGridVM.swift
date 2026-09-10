@@ -77,7 +77,24 @@ final class MemoryGridVM: ObservableObject {
           let targetStars = pointerStars(for: targetIndex)
           let selfStars = selfIndex.map { pointerStars(for: $0) } ?? "**"
 
-          if let ultimateAddr = targetSlot.pointingTo,
+          // 세 칸 이상을 건너뛰는 자리에서는 타입을 적지 않고 연결만 적는다.
+          //
+          // `int ***`는 문법상 옳지만 이 앱이 어디서도 설명하지 않은 표기다. 실제 C에서
+          // 이 표기를 볼 일이 없는 것은 **연결 리스트가 칸을 구조체로 묶어 `*`가 늘어나지
+          // 않게 만들기 때문**이고, 구조체는 챕터 4의 주제라 지금 꺼낼 수 없다.
+          //
+          // 그렇다고 별 개수를 낮추면 타입이 틀려져 Task 27에서 고친 문제로 돌아간다.
+          // 대신 **선언을 빼고 연결만 남긴 뒤, 별이 몇 개 붙는지를 주석으로 설명한다** —
+          // 레슨 2가 가르친 "`*`가 하나 늘어날 때마다 한 번 더 따라간다"와 이어진다
+          if selfStars.count >= 3, let selfIndex {
+            let path = chainNames(from: selfIndex).joined(separator: " -> ")
+            codeLog = """
+            // \(path)
+            \(selfName) = &\(targetName); // \(selfName)는 \(targetName)의 주소만 담습니다
+            // 끝까지 따라가려면 여기서 \(selfStars.count)번을 거칩니다. 거치는 횟수만큼 타입에 *가 붙습니다.
+            // 실제 C는 칸을 구조체로 묶어 *가 늘어나지 않게 만듭니다. 그건 나중에 다룹니다.
+            """
+          } else if let ultimateAddr = targetSlot.pointingTo,
              let ultimateIndex = slots.firstIndex(where: { $0.address == ultimateAddr }) {
             let ultimateName = resolveVariableName(
               for: ultimateIndex,
@@ -318,6 +335,36 @@ final class MemoryGridVM: ObservableObject {
   /// 레슨 3처럼 세 칸을 건너뛰는 연결에서도 타입이 맞는다
   private func pointerStars(for index: Int) -> String {
     String(repeating: "*", count: pointerDepth(of: index))
+  }
+
+  /// 이 슬롯에서 시작해 체인을 따라가며 지나는 칸의 이름을 순서대로 모은다.
+  ///
+  /// 세 칸 이상을 건너뛸 때 `start -> nodeA -> nodeB -> treasure`처럼 경로 전체를 보여주기
+  /// 위한 것이다. 타입을 적지 않는 대신 이 줄이 "어디를 거쳐 어디에 닿는지"를 대신 말한다.
+  /// 이름 부여 규칙은 코드 패널의 다른 분기와 같고, `pointerDepth(of:)`와 같은 방식으로 순환을 막는다
+  private func chainNames(from index: Int) -> [String] {
+    var names: [String] = []
+    var visited = Set<Int>()
+    var current = index
+
+    while visited.insert(current).inserted {
+      let slot = slots[current]
+      let isPointer = slot.type == .pointer
+      names.append(
+        resolveVariableName(
+          for: current,
+          fallback: isPointer ? makePointerName() : (slot.value != nil ? "target" : "unknown")
+        )
+      )
+
+      guard isPointer,
+            let next = slot.pointingTo,
+            let nextIndex = slots.firstIndex(where: { $0.address == next })
+      else { break }
+      current = nextIndex
+    }
+
+    return names
   }
 
   /// 체인을 따라가며 포인터를 몇 번 거치는지 센다.
