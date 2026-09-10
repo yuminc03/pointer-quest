@@ -24,7 +24,11 @@ targets:
     info:
       path: PointerQuest/Info.plist
       properties:
-        UILaunchScreen: {}
+        # 런치스크린은 브랜딩 자리가 아니라 첫 화면의 빈 판이다.
+        # 빈 딕셔너리로 두면 기본값이 systemBackground(라이트 #FFFFFF)라
+        # 목록 화면(systemGroupedBackground, #F2F2F7)으로 넘어갈 때 흰색이 한 번 튄다
+        UILaunchScreen:
+          UIColorName: LaunchBackground
         UIPrefersShowingLanguageSettings: true
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
