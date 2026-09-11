@@ -24,6 +24,22 @@
         }
       }
     },
+    "// %@\n%@ = &%@; // %@는 %@의 주소만 담습니다\n// 끝까지 따라가려면 여기서 %lld번을 거칩니다. 거치는 횟수만큼 타입에 *가 붙습니다.\n// 실제 C는 칸을 구조체로 묶어 *가 늘어나지 않게 만듭니다. 그건 나중에 다룹니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// %1$@\n%2$@ = &%3$@; // %4$@ only stores the address of %5$@\n// Following it to the end goes through %6$lld hops. The type gains one * per hop.\n// Real C wraps each cell in a struct so the *s never pile up. We will get to that later."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// %1$@\n%2$@ = &%3$@; // %4$@는 %5$@의 주소만 담습니다\n// 끝까지 따라가려면 여기서 %6$lld번을 거칩니다. 거치는 횟수만큼 타입에 *가 붙습니다.\n// 실제 C는 칸을 구조체로 묶어 *가 늘어나지 않게 만듭니다. 그건 나중에 다룹니다."
+          }
+        }
+      }
+    },
     "// 레슨 0: 메모리의 모든 칸에는 번호(주소)가 있어요. 값이 든 상자 3개를 눌러 확인해 보세요." : {
       "localizations" : {
         "en" : {
