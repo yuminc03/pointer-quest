@@ -24,6 +24,11 @@ targets:
     info:
       path: PointerQuest/Info.plist
       properties:
+        # 홈 화면에 뜨는 이름이다. CFBundleName은 $(PRODUCT_NAME)이라 띄어쓰기가 없는
+        # PointerQuest가 되므로, 확정된 앱 이름을 쓰려면 이 키가 따로 있어야 한다.
+        # 빌드 설정 INFOPLIST_KEY_CFBundleDisplayName은 여기서 아무 일도 하지 않는다 —
+        # 그 값은 Xcode가 Info.plist를 생성할 때만 주입되는데 이 타깃은 실제 파일을 쓴다
+        CFBundleDisplayName: Pointer Quest
         # 런치스크린은 브랜딩 자리가 아니라 첫 화면의 빈 판이다.
         # 빈 딕셔너리로 두면 기본값이 systemBackground(라이트 #FFFFFF)라
         # 목록 화면(systemGroupedBackground, #F2F2F7)으로 넘어갈 때 흰색이 한 번 튄다
