@@ -18,9 +18,9 @@
 		5608BEB4B6E972BB5F39B737 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283DDC3FB03D740A93C567BB /* Triangle.swift */; };
 		5EE9AC49CDD50581CAFAD60D /* Image+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1759D1212E75B1561252689 /* Image+.swift */; };
 		5F0C3A7D91B4E28D6A35C114 /* MemorySlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2D18F7C45B3E09D7182B60 /* MemorySlotView.swift */; };
+		604B47BAFDFC0F8B8EB39748 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BA92FF8284B239EC902AAD /* Lesson.swift */; };
 		62E7B10D45A3C89F27D0164B /* PointerArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C9E5A2B18D306FA4E27C51 /* PointerArrow.swift */; };
 		66F3A81C50D2749BE31A0C87 /* ConceptCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4D62E0A9C185F3D4062B19 /* ConceptCardView.swift */; };
-		604B47BAFDFC0F8B8EB39748 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BA92FF8284B239EC902AAD /* Lesson.swift */; };
 		767AE67A5CD16B7F4C56E362 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85712ED8A8C53D03EE913BB8 /* Images.xcassets */; };
 		81BA0A206D188D45EE6D1C20 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A0494125FE4A491C101B68 /* SettingView.swift */; };
 		87E475371748E3BCB04DD8A7 /* MyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A9A1E558B7D028B4E61223 /* MyApp.swift */; };

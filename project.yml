@@ -55,3 +55,9 @@ targets:
         SUPPORTS_MACCATALYST: "NO"
         SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: "NO"
         SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: "NO"
+        # 소스가 로컬라이즈 키를 방출하게 한다. 이 값이 없으면 .stringsdata가 비고,
+        # 문자열 카탈로그를 방출 키와 대조하는 작업 전체가 조용히 멈춘다
+        SWIFT_EMIT_LOC_STRINGS: "YES"
+        # 프로젝트 기본값(settings.base)은 GMHUACJXLZ이지만 타깃에서 덮어써 왔다.
+        # 서명에 실제로 쓰이는 값은 이쪽이다
+        DEVELOPMENT_TEAM: 6S73VSPTS8
