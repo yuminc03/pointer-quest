@@ -52,10 +52,10 @@ private extension WelcomeView {
   
   var Cotents: some View {
     VStack(spacing: 20) {
-      Text("Welcome!")
+      Text("환영합니다!")
         .fontWeight(.bold)
-      
-      Text("New to the app? Check out the tutorial to learn how to use it!")
+
+      Text("이 앱이 처음이신가요? 튜토리얼에서 사용법을 확인해보세요!")
         .multilineTextAlignment(.center)
     }
     .font(.callout)
@@ -67,7 +67,7 @@ private extension WelcomeView {
         isOnboardingPresented = true
         isPresented = false
       } label: {
-        Text("Yes, show me the tutorial.")
+        Text("네, 튜토리얼 보여주세요.")
           .foregroundStyle(.white)
           .font(.body)
           .fontWeight(.bold)
@@ -83,7 +83,7 @@ private extension WelcomeView {
         isAlertPresented = true
         isPresented = false
       } label: {
-        Text("No, I'm good.")
+        Text("아니요, 괜찮아요.")
           .font(.body)
           .fontWeight(.bold)
           .padding(.vertical, 16)

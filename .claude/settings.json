@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git checkout *)",
+      "Bash(cd /Users/chuyumin/Documents/github/pointer-quest *)"
+    ],
+    "additionalDirectories": [
+      "/Users/chuyumin/Documents/github/pointer-quest"
+    ]
+  }
+}

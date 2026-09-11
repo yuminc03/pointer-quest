@@ -10,6 +10,9 @@ settings:
     DEVELOPMENT_TEAM: GMHUACJXLZ
     SWIFT_VERSION: "6.0"
     ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    # 강조색을 뷰가 아니라 빌드 설정으로 지정한다.
+    # SwiftUI의 .tint는 시트로 전파되지 않아 온보딩·개념 카드 안이 시스템 파랑으로 남는다
+    ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: Main
 
 targets:
   PointerQuest:
@@ -21,10 +24,21 @@ targets:
     info:
       path: PointerQuest/Info.plist
       properties:
-        UILaunchScreen: {}
+        # 홈 화면에 뜨는 이름이다. CFBundleName은 $(PRODUCT_NAME)이라 띄어쓰기가 없는
+        # PointerQuest가 되므로, 확정된 앱 이름을 쓰려면 이 키가 따로 있어야 한다.
+        # 빌드 설정 INFOPLIST_KEY_CFBundleDisplayName은 여기서 아무 일도 하지 않는다 —
+        # 그 값은 Xcode가 Info.plist를 생성할 때만 주입되는데 이 타깃은 실제 파일을 쓴다
+        CFBundleDisplayName: Pointer Quest
+        # 런치스크린은 브랜딩 자리가 아니라 첫 화면의 빈 판이다.
+        # 빈 딕셔너리로 두면 기본값이 systemBackground(라이트 #FFFFFF)라
+        # 목록 화면(systemGroupedBackground, #F2F2F7)으로 넘어갈 때 흰색이 한 번 튄다
+        UILaunchScreen:
+          UIColorName: LaunchBackground
+        # 암호화를 쓰지 않는다. 네트워크 코드가 0건이고 저장은 UserDefaults 두 키뿐이다.
+        # 이 값을 넣지 않으면 업로드마다 수출 규정을 묻는다
+        ITSAppUsesNonExemptEncryption: false
+        UIPrefersShowingLanguageSettings: true
         UISupportedInterfaceOrientations:
-          - UIInterfaceOrientationPortrait
-        UISupportedInterfaceOrientations~ipad:
           - UIInterfaceOrientationPortrait
         UIRequiredDeviceCapabilities:
           - arm64
@@ -33,4 +47,17 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.lonalia.PointerQuest
         MARKETING_VERSION: "1.0"
         CURRENT_PROJECT_VERSION: "1"
-        TARGETED_DEVICE_FAMILY: "1,2"
+        TARGETED_DEVICE_FAMILY: "1"
+        # TARGETED_DEVICE_FAMILY만으로는 iPhone 전용이 되지 않는다.
+        # iPhone 앱은 기본적으로 Apple Silicon Mac과 Vision Pro 스토어에 함께 올라가고,
+        # 그 축은 아래 세 값이 따로 막는다. 레이아웃을 손본 적이 없는 기기라 내려받을 수 없게 한다
+        SUPPORTED_PLATFORMS: "iphoneos iphonesimulator"
+        SUPPORTS_MACCATALYST: "NO"
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: "NO"
+        SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: "NO"
+        # 소스가 로컬라이즈 키를 방출하게 한다. 이 값이 없으면 .stringsdata가 비고,
+        # 문자열 카탈로그를 방출 키와 대조하는 작업 전체가 조용히 멈춘다
+        SWIFT_EMIT_LOC_STRINGS: "YES"
+        # 프로젝트 기본값(settings.base)은 GMHUACJXLZ이지만 타깃에서 덮어써 왔다.
+        # 서명에 실제로 쓰이는 값은 이쪽이다
+        DEVELOPMENT_TEAM: 6S73VSPTS8

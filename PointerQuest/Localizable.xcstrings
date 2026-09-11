@@ -1,0 +1,1493 @@
+{
+  "sourceLanguage" : "ko",
+  "strings" : {
+    "" : {
+
+    },
+    " · " : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " · "
+          }
+        }
+      }
+    },
+    "-" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        }
+      }
+    },
+    "// %@\n%@ = &%@; // %@는 %@의 주소만 담습니다\n// 끝까지 따라가려면 여기서 %lld번을 거칩니다. 거치는 횟수만큼 타입에 *가 붙습니다.\n// 실제 C는 칸을 구조체로 묶어 *가 늘어나지 않게 만듭니다. 그건 나중에 다룹니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// %1$@\n%2$@ = &%3$@; // %4$@ only stores the address of %5$@\n// Following it to the end goes through %6$lld hops. The type gains one * per hop.\n// Real C wraps each cell in a struct so the *s never pile up. We will get to that later."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// %1$@\n%2$@ = &%3$@; // %4$@는 %5$@의 주소만 담습니다\n// 끝까지 따라가려면 여기서 %6$lld번을 거칩니다. 거치는 횟수만큼 타입에 *가 붙습니다.\n// 실제 C는 칸을 구조체로 묶어 *가 늘어나지 않게 만듭니다. 그건 나중에 다룹니다."
+          }
+        }
+      }
+    },
+    "// 레슨 0: 메모리의 모든 칸에는 번호(주소)가 있어요. 값이 든 상자 3개를 눌러 확인해 보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// Lesson 0: Every cell in memory has a number (an address). Tap the 3 boxes holding a value to inspect them."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 레슨 0: 메모리의 모든 칸에는 번호(주소)가 있어요. 값이 든 상자 3개를 눌러 확인해 보세요."
+          }
+        }
+      }
+    },
+    "// 레슨 1: 포인터를 드래그해서 0x700C 주소를 가리키세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// Lesson 1: Drag the pointer to point to address 0x700C."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 레슨 1: 포인터를 드래그해서 0x700C 주소를 가리키세요."
+          }
+        }
+      }
+    },
+    "// 레슨 2: 0x701C를 직접 가리켜도 되지만, 이미 있는 포인터(0x7014)를 가리켜 이중 포인터를 만들어보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// Lesson 2: You can point directly at 0x701C, but try pointing at the existing pointer(0x7014) instead to create a double pointer."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 레슨 2: 0x701C를 직접 가리켜도 되지만, 이미 있는 포인터(0x7014)를 가리켜 이중 포인터를 만들어보세요."
+          }
+        }
+      }
+    },
+    "// 레슨 3: Start(0x7000)에서 Treasure(0x703C)까지 체인을 만드세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// Lesson 3: Create a chain from Start(0x7000) to Treasure(0x703C)."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 레슨 3: Start(0x7000)에서 Treasure(0x703C)까지 체인을 만드세요."
+          }
+        }
+      }
+    },
+    "// 실행된 연산을 C 언어 코드로 표현합니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// The executed operation is represented as C language code."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 실행된 연산을 C 언어 코드로 표현합니다."
+          }
+        }
+      }
+    },
+    "// 오류: 유효하지 않은 포인터입니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// Error: Invalid pointer."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 오류: 유효하지 않은 포인터입니다."
+          }
+        }
+      }
+    },
+    "// 잘했어요! 레슨 완료! 🎉" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// Well done! Lesson Complete! 🎉"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 잘했어요! 레슨 완료! 🎉"
+          }
+        }
+      }
+    },
+    "// 주소: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// Address: %@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 주소: %@"
+          }
+        }
+      }
+    },
+    "// 직접 연결도 가능하지만, 지금은 이중 포인터를 연습해봐요 — 이미 있는 포인터(%@)를 가리켜보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// A direct connection works too, but let's practice double pointers — try pointing at the existing pointer(%@) instead."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 직접 연결도 가능하지만, 지금은 이중 포인터를 연습해봐요 — 이미 있는 포인터(%@)를 가리켜보세요."
+          }
+        }
+      }
+    },
+    "// 플레이그라운드: 자유롭게 포인터를 연결해보세요. 여기선 아무것도 망가지지 않아요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// Playground: Freely connect pointers. Nothing to break here."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "// 플레이그라운드: 자유롭게 포인터를 연결해보세요. 여기선 아무것도 망가지지 않아요."
+          }
+        }
+      }
+    },
+    "%lld" : {
+
+    },
+    "→ %@" : {
+
+    },
+    "1. 블록을 길게 누르면 3D로 튀어나오는 모습을 볼 수 있어요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Long press a block to see it pop out in 3D."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. 블록을 길게 누르면 3D로 튀어나오는 모습을 볼 수 있어요."
+          }
+        }
+      }
+    },
+    "2. 다른 블록 가까이로 드래그하세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. Drag it close to another block."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. 다른 블록 가까이로 드래그하세요."
+          }
+        }
+      }
+    },
+    "3. 손가락을 떼면 두 블록이 연결됩니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3. Release your finger to connect the two blocks."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3. 손가락을 떼면 두 블록이 연결됩니다."
+          }
+        }
+      }
+    },
+    "int *%@ = &%@;" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "int *%1$@ = &%2$@;"
+          }
+        }
+      }
+    },
+    "int *%@ = %@;" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "int *%1$@ = %2$@;"
+          }
+        }
+      }
+    },
+    "int %@ = %lld;\nint *%@ = &%@;\n// %@ 자신도 메모리(%@)에 저장된 값(주소)입니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@ = %2$lld;\nint *%3$@ = &%4$@;\n// %5$@ itself is also a value (an address) stored in memory(%6$@)."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@ = %2$lld;\nint *%3$@ = &%4$@;\n// %5$@ 자신도 메모리(%6$@)에 저장된 값(주소)입니다."
+          }
+        }
+      }
+    },
+    "int %@ = %lld; // %@의 값" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@ = %2$lld; // Value at %3$@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@ = %2$lld; // %3$@의 값"
+          }
+        }
+      }
+    },
+    "int %@ = %lld; // %@의 값\nint *%@ = &%@; // %@이 %@를 가리킴\nint **%@ = &%@; // 이중 포인터 (이 슬롯이 %@을 가리킴)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@ = %2$lld; // Value at %3$@\nint *%4$@ = &%5$@; // %6$@ points to %7$@\nint **%8$@ = &%9$@; // Double Pointer (This slot points to %10$@)"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@ = %2$lld; // %3$@의 값\nint *%4$@ = &%5$@; // %6$@이 %7$@를 가리킴\nint **%8$@ = &%9$@; // 이중 포인터 (이 슬롯이 %10$@을 가리킴)"
+          }
+        }
+      }
+    },
+    "int %@ = %lld; // %@의 값\nint *%@ = &%@; // 이 슬롯(%@)이 %@을 가리킴\n// %@ 자신도 메모리(%@)에 저장된 값(주소)입니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@ = %2$lld; // Value at %3$@\nint *%4$@ = &%5$@; // This slot(%6$@) points to %7$@\n// %8$@ itself is also a value (an address) stored in memory(%9$@)."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@ = %2$lld; // %3$@의 값\nint *%4$@ = &%5$@; // 이 슬롯(%6$@)이 %7$@을 가리킴\n// %8$@ 자신도 메모리(%9$@)에 저장된 값(주소)입니다."
+          }
+        }
+      }
+    },
+    "int %@ = %lld; // 이름 %@, 주소 %@, 값 %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@ = %2$lld; // name %3$@, address %4$@, value %5$lld"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@ = %2$lld; // 이름 %3$@, 주소 %4$@, 값 %5$lld"
+          }
+        }
+      }
+    },
+    "int %@ = %lld; // 이름 %@, 주소 %@, 값 %lld\n// 아직 열어보지 않은 상자가 %lld개 남았어요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@ = %2$lld; // name %3$@, address %4$@, value %5$lld\n// %6$lld more box(es) left to open."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@ = %2$lld; // 이름 %3$@, 주소 %4$@, 값 %5$lld\n// 아직 열어보지 않은 상자가 %6$lld개 남았어요."
+          }
+        }
+      }
+    },
+    "int %@%@ = &%@; // %@이 %@을 가리킴\nint %@%@ = &%@; // 이 슬롯이 %@을 가리킴" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@%2$@ = &%3$@; // %4$@ points to %5$@\nint %6$@%7$@ = &%8$@; // This slot points to %9$@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@%2$@ = &%3$@; // %4$@이 %5$@을 가리킴\nint %6$@%7$@ = &%8$@; // 이 슬롯이 %9$@을 가리킴"
+          }
+        }
+      }
+    },
+    "int %@%@ = NULL; // %@는 아직 아무 곳도 가리키지 않습니다\nint %@%@ = &%@; // 이 슬롯이 %@을 가리킴" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@%2$@ = NULL; // %3$@ does not point anywhere yet\nint %4$@%5$@ = &%6$@; // This slot points to %7$@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@%2$@ = NULL; // %3$@는 아직 아무 곳도 가리키지 않습니다\nint %4$@%5$@ = &%6$@; // 이 슬롯이 %7$@을 가리킴"
+          }
+        }
+      }
+    },
+    "int %@; // %@의 변수가 초기화되지 않음\nint *%@ = &%@;\n// 경고: '%@'를 역참조하면 쓰레기 값이 반환됩니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@; // Variable at %2$@ is uninitialized\nint *%3$@ = &%4$@;\n// Warning: Dereferencing '%5$@' yields garbage value."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int %1$@; // %2$@의 변수가 초기화되지 않음\nint *%3$@ = &%4$@;\n// 경고: '%5$@'를 역참조하면 쓰레기 값이 반환됩니다."
+          }
+        }
+      }
+    },
+    "malloc·free와 스택 vs 힙" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "malloc/free & Stack vs Heap"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "malloc·free와 스택 vs 힙"
+          }
+        }
+      }
+    },
+    "Pointer Quest" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pointer Quest"
+          }
+        }
+      }
+    },
+    "printf(\"%%d\", *%@); // 값: %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "printf(\"%%d\", *%1$@); // Value: %2$lld"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "printf(\"%%d\", *%1$@); // 값: %2$lld"
+          }
+        }
+      }
+    },
+    "printf(\"%%p\", *%@); // 이중 포인터 (대상도 포인터임)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "printf(\"%%p\", *%@); // Double Pointer (the target is a pointer too)"
+          }
+        }
+      }
+    },
+    "printf(\"%%p\", *%@); // 주소: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "printf(\"%%p\", *%1$@); // Address: %2$@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "printf(\"%%p\", *%1$@); // 주소: %2$@"
+          }
+        }
+      }
+    },
+    "값이 아니라 '주소'가 중요합니다.\n포인터를 드래그해서 주소를 가리켜보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It's not the value, but the 'Address' that matters.\nDrag the pointer to point at an address."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "값이 아니라 '주소'가 중요합니다.\n포인터를 드래그해서 주소를 가리켜보세요."
+          }
+        }
+      }
+    },
+    "개인정보처리방침" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy Policy"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "개인정보처리방침"
+          }
+        }
+      }
+    },
+    "구조체와 포인터" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Structs & Pointers"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "구조체와 포인터"
+          }
+        }
+      }
+    },
+    "네, 튜토리얼 보여주세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes, show me the tutorial."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "네, 튜토리얼 보여주세요."
+          }
+        }
+      }
+    },
+    "다음 업데이트에서 만나볼 수 있어요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coming soon in a future update."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다음 업데이트에서 만나볼 수 있어요."
+          }
+        }
+      }
+    },
+    "데이터에 도달하는 경로를 만드세요.\n순서대로 연결하세요: 시작 -> 노드 A -> 노드 B -> 보물." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a path to reach the data.\nConnect in order: Start -> Node A -> Node B -> Treasure."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "데이터에 도달하는 경로를 만드세요.\n순서대로 연결하세요: 시작 -> 노드 A -> 노드 B -> 보물."
+          }
+        }
+      }
+    },
+    "레슨" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lesson"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "레슨"
+          }
+        }
+      }
+    },
+    "레슨 %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lesson %lld"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "레슨 %lld"
+          }
+        }
+      }
+    },
+    "레슨 완료! 🎉" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lesson Complete! 🎉"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "레슨 완료! 🎉"
+          }
+        }
+      }
+    },
+    "레슨을 선택해 다음 화면으로 이동하면, 격자 모양으로 배치된 블록 화면을 보게 됩니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When you select a Lesson and enter the next screen, you will see a screen with blocks arranged in a grid."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "레슨을 선택해 다음 화면으로 이동하면, 격자 모양으로 배치된 블록 화면을 보게 됩니다."
+          }
+        }
+      }
+    },
+    "메모리는 번호가 붙은 상자들입니다.\n값이 들어 있는 상자를 눌러 이름·번호·내용을 확인해 보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memory is a set of numbered boxes.\nTap a box that holds a value to check its name, number, and contents."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "메모리는 번호가 붙은 상자들입니다.\n값이 들어 있는 상자를 눌러 이름·번호·내용을 확인해 보세요."
+          }
+        }
+      }
+    },
+    "메모리의 미로" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Memory Maze"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "메모리의 미로"
+          }
+        }
+      }
+    },
+    "목표 없이 자유롭게 탐험해 보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No objective. Just explore."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "목표 없이 자유롭게 탐험해 보세요."
+          }
+        }
+      }
+    },
+    "배열과 포인터 연산" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrays & Pointer Arithmetic"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "배열과 포인터 연산"
+          }
+        }
+      }
+    },
+    "변수와 메모리" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Variables and Memory"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "변수와 메모리"
+          }
+        }
+      }
+    },
+    "사용 방법" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How to use"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용 방법"
+          }
+        }
+      }
+    },
+    "설정" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정"
+          }
+        }
+      }
+    },
+    "설정에서 언어를 바꾸면 앱이 다시 시작됩니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changing the language in Settings restarts the app."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정에서 언어를 바꾸면 앱이 다시 시작됩니다."
+          }
+        }
+      }
+    },
+    "아니요, 괜찮아요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No, I'm good."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아니요, 괜찮아요."
+          }
+        }
+      }
+    },
+    "앱 사용법" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How to use the app"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "앱 사용법"
+          }
+        }
+      }
+    },
+    "언어" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Language"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "언어"
+          }
+        }
+      }
+    },
+    "여기서는 자유롭게 포인터를 연결하고 해제할 수 있어요.\n미션도 정답도 없으니 마음껏 탐험해 보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Freely connect and disconnect pointers here.\nThere's no mission or wrong answer — just explore."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "여기서는 자유롭게 포인터를 연결하고 해제할 수 있어요.\n미션도 정답도 없으니 마음껏 탐험해 보세요."
+          }
+        }
+      }
+    },
+    "완료" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completed"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "완료"
+          }
+        }
+      }
+    },
+    "이 슬롯을 드래그해서 저 주소 위에 놓아보세요" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drag this slot and drop it onto that address"
+          }
+        }
+      }
+    },
+    "이 앱은 개인정보를 수집하지 않습니다. 학습 진행 상황은 기기에만 저장됩니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This app does not collect personal data. Your progress is stored only on your device."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 앱은 개인정보를 수집하지 않습니다. 학습 진행 상황은 기기에만 저장됩니다."
+          }
+        }
+      }
+    },
+    "이 앱이 처음이신가요? 튜토리얼에서 사용법을 확인해보세요!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New to the app? Check out the tutorial to learn how to use it!"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 앱이 처음이신가요? 튜토리얼에서 사용법을 확인해보세요!"
+          }
+        }
+      }
+    },
+    "이 화면에서는 특정 값을 가진 블록을 다른 블록으로 참조(가리키게)할 수 있습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In this screen, you can reference a block containing a specific value with another block."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 화면에서는 특정 값을 가진 블록을 다른 블록으로 참조(가리키게)할 수 있습니다."
+          }
+        }
+      }
+    },
+    "이미 데이터를 가리키는 포인터가 있습니다.\n새 포인터로 그 포인터를 가리켜 이중 포인터를 만들어보세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There's already a pointer pointing to the data.\nPoint a new pointer at that pointer to create a double pointer."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이미 데이터를 가리키는 포인터가 있습니다.\n새 포인터로 그 포인터를 가리켜 이중 포인터를 만들어보세요."
+          }
+        }
+      }
+    },
+    "이중 포인터 심화" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced Double Pointers"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이중 포인터 심화"
+          }
+        }
+      }
+    },
+    "주소가 중요한 이유" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Importance of Addresses"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "주소가 중요한 이유"
+          }
+        }
+      }
+    },
+    "주소와 포인터" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Address & Pointers"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "주소와 포인터"
+          }
+        }
+      }
+    },
+    "준비 중" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coming Soon"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "준비 중"
+          }
+        }
+      }
+    },
+    "징검다리 포인터" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stepping Stone Pointer"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "징검다리 포인터"
+          }
+        }
+      }
+    },
+    "참조됨" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referenced"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "참조됨"
+          }
+        }
+      }
+    },
+    "챕터 %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chapter %lld"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "챕터 %lld"
+          }
+        }
+      }
+    },
+    "체인 연결" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chain Connection"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "체인 연결"
+          }
+        }
+      }
+    },
+    "튜토리얼은 설정 > 앱 사용법에서 다시 확인할 수 있습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can check the tutorial again in Settings > How to use the app."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "튜토리얼은 설정 > 앱 사용법에서 다시 확인할 수 있습니다."
+          }
+        }
+      }
+    },
+    "표시 언어" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Display Language"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "표시 언어"
+          }
+        }
+      }
+    },
+    "플레이그라운드" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Playground"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "플레이그라운드"
+          }
+        }
+      }
+    },
+    "홈" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "홈"
+          }
+        }
+      }
+    },
+    "확인" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "확인"
+          }
+        }
+      }
+    },
+    "환영합니다!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome!"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "환영합니다!"
+          }
+        }
+      }
+    },
+    "레슨 0에서 본 상자에는 저마다 번호가 붙어 있었습니다. 그 번호를 주소라고 부릅니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every box you saw in Lesson 0 has its own number. That number is called an address."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "레슨 0에서 본 상자에는 저마다 번호가 붙어 있었습니다. 그 번호를 주소라고 부릅니다."
+          }
+        }
+      }
+    },
+    "포인터는 값을 복사해 오는 상자가 아니라, 그 값이 어디에 있는지를 적어 두는 상자입니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A pointer is not a box that copies a value. It is a box that writes down where the value is."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "포인터는 값을 복사해 오는 상자가 아니라, 그 값이 어디에 있는지를 적어 두는 상자입니다."
+          }
+        }
+      }
+    },
+    "그래서 포인터 칸에는 숫자 대신 `→ 0x700C`처럼 다른 칸의 번호가 들어갑니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "So a pointer cell holds another cell's number, like `→ 0x700C`, instead of a plain number."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "그래서 포인터 칸에는 숫자 대신 `→ 0x700C`처럼 다른 칸의 번호가 들어갑니다."
+          }
+        }
+      }
+    },
+    "C로 쓰면 `int *p1 = &target;` 입니다. `*`는 이 상자에 주소가 들어간다는 표시이고, `&`는 주소를 알려 달라는 뜻입니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In C you write `int *p1 = &target;`. The `*` marks a box that holds an address, and the `&` asks for the address of something."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "C로 쓰면 `int *p1 = &target;` 입니다. `*`는 이 상자에 주소가 들어간다는 표시이고, `&`는 주소를 알려 달라는 뜻입니다."
+          }
+        }
+      }
+    },
+    "값을 복사하지 않기 때문에, 같은 값을 여러 곳에서 함께 보고 함께 고칠 수 있습니다. 주소를 쓰는 이유가 여기에 있습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Because nothing is copied, many places can look at the same value and change it together. That is why addresses matter."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "값을 복사하지 않기 때문에, 같은 값을 여러 곳에서 함께 보고 함께 고칠 수 있습니다. 주소를 쓰는 이유가 여기에 있습니다."
+          }
+        }
+      }
+    },
+    "포인터도 메모리 한 칸을 차지합니다. 값이 든 상자와 똑같이 자기 주소를 가집니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A pointer takes up a cell in memory too. Just like a box holding a value, it has an address of its own."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "포인터도 메모리 한 칸을 차지합니다. 값이 든 상자와 똑같이 자기 주소를 가집니다."
+          }
+        }
+      }
+    },
+    "주소가 있다는 것은, 다른 포인터가 이 칸도 가리킬 수 있다는 뜻입니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Having an address means another pointer can point at this cell as well."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "주소가 있다는 것은, 다른 포인터가 이 칸도 가리킬 수 있다는 뜻입니다."
+          }
+        }
+      }
+    },
+    "`ptr1`이 값을 가리키고 `p1`이 `ptr1`을 가리키면, `p1`은 이중 포인터입니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If `ptr1` points to a value and `p1` points to `ptr1`, then `p1` is a pointer to a pointer."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ptr1`이 값을 가리키고 `p1`이 `ptr1`을 가리키면, `p1`은 이중 포인터입니다."
+          }
+        }
+      }
+    },
+    "C로 쓰면 `int **p1 = &ptr1;` 입니다. `*`가 하나 늘어날 때마다 값에 닿기까지 한 번 더 따라가야 합니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In C you write `int **p1 = &ptr1;`. Each extra `*` means one more step to follow before you reach the value."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "C로 쓰면 `int **p1 = &ptr1;` 입니다. `*`가 하나 늘어날 때마다 값에 닿기까지 한 번 더 따라가야 합니다."
+          }
+        }
+      }
+    },
+    "포인터가 포인터를 가리킬 수 있으니, 이어 붙이면 길이 됩니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Since a pointer can point to a pointer, chaining them makes a path."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "포인터가 포인터를 가리킬 수 있으니, 이어 붙이면 길이 됩니다."
+          }
+        }
+      }
+    },
+    "`start`에서 출발해 `nodeA`, `nodeB`를 거쳐야 `treasure`에 닿습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You start at `start`, pass through `nodeA` and `nodeB`, and then reach `treasure`."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`start`에서 출발해 `nodeA`, `nodeB`를 거쳐야 `treasure`에 닿습니다."
+          }
+        }
+      }
+    },
+    "각 칸은 다음 칸이 어디에 있는지만 알고 있습니다. 실제 값은 마지막 칸에만 있습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Each cell only knows where the next cell is. The actual value lives only in the last cell."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "각 칸은 다음 칸이 어디에 있는지만 알고 있습니다. 실제 값은 마지막 칸에만 있습니다."
+          }
+        }
+      }
+    },
+    "이렇게 이어진 구조를 연결 리스트라고 부릅니다. 이름은 지금 외우지 않아도 괜찮습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A structure linked like this is called a linked list. You do not have to memorize the name yet."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이렇게 이어진 구조를 연결 리스트라고 부릅니다. 이름은 지금 외우지 않아도 괜찮습니다."
+          }
+        }
+      }
+    },
+    "시작하기" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "시작하기"
+          }
+        }
+      }
+    },
+    "int **p1 = &ptr1; // ptr1(0x7014)을 가리키는 이중 포인터" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int **p1 = &ptr1; // A double pointer pointing to ptr1(0x7014)"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "int **p1 = &ptr1; // ptr1(0x7014)을 가리키는 이중 포인터"
+          }
+        }
+      }
+    },
+    "변수는 이름표가 붙은 상자이고, 그 상자에는 값과 별개로 자기만의 번호(주소)가 있습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A variable is a box with a name tag, and apart from the value inside, the box has a number of its own — its address."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "변수는 이름표가 붙은 상자이고, 그 상자에는 값과 별개로 자기만의 번호(주소)가 있습니다."
+          }
+        }
+      }
+    },
+    "포인터는 값을 복사해 담는 상자가 아니라, 값이 있는 곳의 번호를 담는 상자입니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A pointer is not a box that holds a copy of the value. It is a box that holds the number of the place where the value is."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "포인터는 값을 복사해 담는 상자가 아니라, 값이 있는 곳의 번호를 담는 상자입니다."
+          }
+        }
+      }
+    },
+    "포인터도 자기 주소를 가지기 때문에, 다른 포인터가 그 포인터를 가리켜 이중 포인터가 됩니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A pointer has an address of its own, so another pointer can point at it. That makes a pointer to a pointer."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "포인터도 자기 주소를 가지기 때문에, 다른 포인터가 그 포인터를 가리켜 이중 포인터가 됩니다."
+          }
+        }
+      }
+    },
+    "각 칸이 다음 칸의 번호만 알고 있어도, 이어 붙이면 값까지 가는 하나의 길이 됩니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Each box only knows the number of the next one, but linked together they become a single path to the value."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "각 칸이 다음 칸의 번호만 알고 있어도, 이어 붙이면 값까지 가는 하나의 길이 됩니다."
+          }
+        }
+      }
+    },
+    "다음 레슨" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next Lesson"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다음 레슨"
+          }
+        }
+      }
+    },
+    "여기까지가 챕터 %lld입니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "That is the end of Chapter %lld."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "여기까지가 챕터 %lld입니다."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
