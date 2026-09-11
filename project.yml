@@ -48,3 +48,10 @@ targets:
         MARKETING_VERSION: "1.0"
         CURRENT_PROJECT_VERSION: "1"
         TARGETED_DEVICE_FAMILY: "1"
+        # TARGETED_DEVICE_FAMILY만으로는 iPhone 전용이 되지 않는다.
+        # iPhone 앱은 기본적으로 Apple Silicon Mac과 Vision Pro 스토어에 함께 올라가고,
+        # 그 축은 아래 세 값이 따로 막는다. 레이아웃을 손본 적이 없는 기기라 내려받을 수 없게 한다
+        SUPPORTED_PLATFORMS: "iphoneos iphonesimulator"
+        SUPPORTS_MACCATALYST: "NO"
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: "NO"
+        SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: "NO"
