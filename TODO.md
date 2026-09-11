@@ -8,6 +8,7 @@
 - **1.0 출시 전 항목 네 개가 모두 닫혔다.** 저장소 안에 남은 작업이 없다
 - **바로 다음** — App Store Connect 입력과 아카이브 빌드 업로드·제출. **전부 앱 밖이고 사용자가 직접 한다.** 입력할 내용은 [docs/app-store-connect.md](./docs/app-store-connect.md)에 준비돼 있다
 - **제출 전에 볼 것** — 같은 문서의 "제출 전 확인할 것"에 App Privacy(Data Not Collected)와 심사 메모가 아직 열려 있다. 실기기로 한 바퀴 도는 것도 계획에 없다([HANDOFF.md](./HANDOFF.md) 참고)
+- **등록하다 막히면** — 아래 "제출 직전 정리" 절을 먼저 읽는다. 2026-09-11에 스크린샷 크기·홈 화면 이름·지원 기기에서 이 문서의 서술이 실제 등록 화면과 어긋난 사례가 세 건 나왔다. **등록 화면이 정본이다**
 - **Task 27 병합 완료** — 2026-09-10 검증·병합(`ebd60c0`)·푸시·브랜치 삭제까지 끝났다
 - **Task 25 병합 완료** — 2026-09-10 검증·병합(`57a8bad`)·푸시·브랜치 삭제까지 끝났다
 - **사용자 잔여 작업 없음** — Notion 두 페이지 본문 붙여넣기와 공유 권한 낮추기가 2026-09-10 끝났다. **Task 23이 완전히 닫혔다** (Task 23 절 참고)
@@ -576,6 +577,38 @@ int **start = &nodeA;
 - App Privacy에서 **Data Not Collected**
 - 심사 메모 — "챕터 2 이후는 준비 중 표시이며 의도된 상태"
 - 스크린샷 업로드(한국어 한 벌)와 아카이브 빌드 업로드·제출
+
+## 제출 직전 정리 (2026-09-11, Task 번호 없음)
+Task 28 병합 뒤 사용자가 Xcode를 열면서 드러난 항목들이다. 브랜치를 파지 않고 `develop`에 바로 쌓았다 — 코드가 아니라 빌드 설정과 등록 자산이고, 저장소 안의 Task가 전부 닫힌 뒤였다.
+
+### 홈 화면 이름에 띄어쓰기가 없었다 (`4afa15b`)
+`CFBundleName`이 `$(PRODUCT_NAME)`이라 홈 화면에 `PointerQuest`로 떴다. 확정된 이름은 `Pointer Quest`다.
+
+- **Xcode가 넣은 `INFOPLIST_KEY_CFBundleDisplayName`은 이 타깃에서 아무 일도 하지 않는다.** 그 값은 Xcode가 Info.plist를 **생성할 때만** 주입되는데 이 타깃은 실제 파일을 쓴다(`GENERATE_INFOPLIST_FILE = NO`). 빌드 산출물의 Info.plist를 열어 `CFBundleDisplayName`이 없는 것을 보고 알았다
+- `project.yml`의 `info.properties`에 키를 넣어 해결했고, 산출물에서 `Pointer Quest`가 나오는 것까지 확인했다
+
+### iPhone 전용이 아니었다 (`afca7d7`)
+**`TARGETED_DEVICE_FAMILY = 1`만으로는 iPhone 전용이 되지 않는다.** iPhone 앱은 기본적으로 Apple Silicon Mac과 Vision Pro 스토어에 함께 올라간다. Task 21이 닫았다고 본 축이 열려 있었다.
+
+- `SUPPORTS_MACCATALYST`·`SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD`·`SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD`를 `NO`로, `SUPPORTED_PLATFORMS`를 iPhone 둘로 고정했다
+- 쓰임이 없어진 `INFOPLIST_KEY_CFBundleDisplayName`도 함께 뺐다
+
+### `project.yml`이 `pbxproj`와 어긋나 있었다 (`84f4f22`)
+**두 설정이 `pbxproj`에만 있고 `project.yml`에는 없었다.** 재생성하면 사라지는 상태였고, 저장소 사본에서 xcodegen을 돌려 확인했다.
+
+- **`SWIFT_EMIT_LOC_STRINGS = YES`** — 이 값이 빠지면 소스가 로컬라이즈 키를 방출하지 않아 `.stringsdata`가 빈다. **Task 15·16·27·28에서 매번 해 온 방출 키 대조가 통째로 무의미해지는 자리였다**
+- **`DEVELOPMENT_TEAM = 6S73VSPTS8`** — 프로젝트 기본값은 `GMHUACJXLZ`인데 타깃에서 덮어써 왔다. 서명에 쓰이는 값은 타깃 쪽이다
+- 저장소 `pbxproj`를 기준으로 삼아 맞췄고, 타깃 빌드 설정이 Debug·Release 모두 생성 결과와 일치하는 것을 대조했다
+
+### 공유 스킴을 넣었다 (`deefc14`)
+새로 받은 사본에서도 `xcodebuild -scheme PointerQuest`가 바로 돌게 했다. **xcodegen은 스킴을 만들지 않으므로 재생성해도 덮이지 않는다.**
+
+### 6.5인치 스크린샷이 따로 필요했다 (`f888a37`)
+**"6.9인치 한 벌이면 더 작은 크기는 Apple이 축소해 쓴다"가 실제 등록에서 틀렸다.** App Store Connect가 `1242 x 2688` 또는 `1284 x 2778`을 요구해 업로드가 막혔고, 둘 다 6.5인치 값이다.
+
+- 6.5인치 상한인 `1284 x 2778`로 한 벌 더 만들어 `docs/screenshots/ko-6.5/`에 넣었다
+- **늘리거나 줄이지 않았다.** 아트보드 루트 치수만 바꿔 다시 렌더해 글자가 원래 크기 그대로다. 세로가 90px 줄어 아래 여백만 좁아진다
+- 다시 만드는 방법은 [docs/app-store-connect.md](./docs/app-store-connect.md)에 적었다
 
 ## Task 28 — `feature/chain-depth-notation`
 레슨 3에서 설명 없이 `int ***`가 나오는 문제. Task 27에서 만들어져 2026-09-10 등록하고 같은 날 착수했다.
