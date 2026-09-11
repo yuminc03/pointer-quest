@@ -550,9 +550,12 @@ int **start = &nodeA;
 ### 스크린샷 파일 배치
 | 경로 | 내용 |
 |---|---|
-| `docs/screenshots/ko/` | **App Store Connect에 올리는 최종본 5장.** `1320 x 2868`, 알파 없음 |
+| `docs/screenshots/ko/` | **6.9인치 최종본 5장.** `1320 x 2868`, 알파 없음 |
+| `docs/screenshots/ko-6.5/` | **6.5인치 최종본 5장.** `1284 x 2778`, 알파 없음. 2026-09-11 추가 |
 | `docs/screenshots/raw/` | 사용자가 전달한 시뮬레이터 원본 5장. 알파를 제거해 두었다 |
-| `docs/screenshots/frame/` | 목업 소스. 아트보드 5개(`*.dc.html`)와 `canvas.json` |
+| `docs/screenshots/frame/` | 목업 소스. 아트보드 5개(`*.dc.html`)와 `canvas.json`. **아트보드는 6.9인치 치수이고, 6.5인치 벌은 치수만 바꿔 렌더한 것이라 따로 두지 않는다** |
+
+**두 벌을 다 올린다.** 6.9인치 한 벌이면 충분하다고 적어 두었던 것이 실제 등록에서 틀렸다. 위 "제출 직전 정리" 절 참고.
 
 ### 최종본을 다시 만드는 방법
 문구나 색을 고치면 `docs/screenshots/frame/`의 아트보드를 고친 뒤 다시 뽑는다. 아트보드 하나가 스크린샷 한 장이고 크기가 이미 `1320 x 2868`이라, 헤드리스 크롬 창을 같은 크기로 열어 찍으면 규격이 그대로 나온다.
@@ -599,6 +602,9 @@ Task 28 병합 뒤 사용자가 Xcode를 열면서 드러난 항목들이다. �
 - **`SWIFT_EMIT_LOC_STRINGS = YES`** — 이 값이 빠지면 소스가 로컬라이즈 키를 방출하지 않아 `.stringsdata`가 빈다. **Task 15·16·27·28에서 매번 해 온 방출 키 대조가 통째로 무의미해지는 자리였다**
 - **`DEVELOPMENT_TEAM = 6S73VSPTS8`** — 프로젝트 기본값은 `GMHUACJXLZ`인데 타깃에서 덮어써 왔다. 서명에 쓰이는 값은 타깃 쪽이다
 - 저장소 `pbxproj`를 기준으로 삼아 맞췄고, 타깃 빌드 설정이 Debug·Release 모두 생성 결과와 일치하는 것을 대조했다
+
+### Claude Code 권한을 넓혔다 (`41fd708`)
+작업 디렉터리 이동과 저장소 경로 접근이 매번 확인을 요구해 `.claude/settings.json`의 허용 목록에 넣었다. **Task 28과 무관해 브랜치를 파지 않고 `develop`에 따로 쌓았다.** 저장소 공유 설정이라 `settings.local.json`(개인 설정)이 아니라 이쪽이 맞다.
 
 ### 공유 스킴을 넣었다 (`deefc14`)
 새로 받은 사본에서도 `xcodebuild -scheme PointerQuest`가 바로 돌게 했다. **xcodegen은 스킴을 만들지 않으므로 재생성해도 덮이지 않는다.**

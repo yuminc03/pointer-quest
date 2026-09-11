@@ -922,6 +922,9 @@ Xcode가 넣은 값을 `project.yml`에 옮기다가, **전부터 어긋나 있�
 ### 공유 스킴 (`deefc14`)
 새로 받은 사본에서도 `xcodebuild -scheme PointerQuest`가 돌게 넣었다. xcodegen은 스킴을 만들지 않아 재생성해도 덮이지 않는다.
 
+### Claude Code 권한 (`41fd708`)
+작업 디렉터리 이동과 저장소 경로 접근이 매번 확인을 요구해 `.claude/settings.json`의 허용 목록에 넣었다. Task 28 작업 중에 나왔지만 **무관한 변경이라 feature 브랜치에 섞지 않고 `develop`에 따로 쌓았다.**
+
 ## 다음 작업
 저장소 안에 남은 작업이 없다. 아래는 전부 앱 밖이고 사용자가 직접 한다.
 
