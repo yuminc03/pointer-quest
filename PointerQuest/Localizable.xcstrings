@@ -14,6 +14,22 @@
         }
       }
     },
+    "%@\n\n// 잘했어요! 레슨 완료! 🎉" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@\n\n// Well done! Lesson Complete! 🎉"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@\n\n// 잘했어요! 레슨 완료! 🎉"
+          }
+        }
+      }
+    },
     "-" : {
       "localizations" : {
         "ko" : {
