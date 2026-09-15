@@ -1,25 +1,54 @@
-# 인수인계 (2026-09-15)
-새 대화에서 작업을 이어받을 때 **이 문서를 먼저 읽는다.** 여기 적힌 것은 2026-09-15 시점의 스냅샷이고, 항목별 상세는 [TODO.md](./TODO.md) · [PLAN.md](./PLAN.md) · [PROGRESS.md](./PROGRESS.md)가 정본이다. 이 문서와 어긋나면 그쪽을 따른다.
+# 인수인계 (2026-09-15 작업 종료 시점)
+새 대화에서 작업을 이어받을 때 **이 문서를 먼저 읽는다.** 여기 적힌 것은 2026-09-15 작업을 마친 시점의 스냅샷이고, 항목별 상세는 [TODO.md](./TODO.md) · [PLAN.md](./PLAN.md) · [PROGRESS.md](./PROGRESS.md)가 정본이다. 이 문서와 어긋나면 그쪽을 따른다.
 
 ## 한 줄 요약
-**1.0.0이 심사를 통과해 App Store에 출시됐다** (2026-09-15 사용자 보고). 1.0 출시 전 항목 네 개와 Task 1~28이 전부 닫혔다. 다음은 **1.1.0 범위를 정하는 것**이다.
+**1.0.0이 App Store에 출시됐고(2026-09-15), 1.1.0을 진행 중이다.** 1.1.0의 Task 6개 중 **29·30·31·33 네 개가 병합됐고**, 남은 것은 **Task 34 코드 패널 드래그 → Task 32 용어집** 순서다. 새 대화에서는 **Task 34부터 착수**한다.
 
 ## 지금 상태
 | 항목 | 값 |
 |---|---|
-| 현재 브랜치 | `develop` |
-| 로컬 feature 브랜치 | 없다 |
-| `master` | 병합 커밋 `af733cd`. 태그 `1.0.0`이 붙어 원격에 올라가 있다 |
-| `develop` | 출시 후 `master`까지 fast-forward해 `af733cd`와 같다. 트리가 이미 같아 병합 커밋이 필요 없었다 |
-| 버전 표기 | 1.1.0부터 `MAJOR.MINOR.PATCH` 세 자리. `MARKETING_VERSION`과 태그를 같은 값으로 맞춘다. 현재 값은 아직 `1.0` / 빌드 `1` |
+| 현재 브랜치 | `develop` (`origin/develop`과 일치) |
+| 로컬 feature 브랜치 | 없다. Task 33을 병합하고 지웠다 |
+| `develop` 최신 병합 | `d31a5ae` (Task 33). 그 위에 이 인수인계 문서 커밋이 올라간다 |
+| `master` | 병합 커밋 `af733cd`. 태그 `1.0.0`이 붙어 원격에 있다. 1.1.0 작업은 아직 `master`에 가지 않았다 |
+| 버전 값 | 아직 `MARKETING_VERSION 1.0` / 빌드 `1`. **`release/1.1.0`을 팔 때 `1.1.0` / `2`로 올린다** |
+| 버전 표기 | 1.1.0부터 `MAJOR.MINOR.PATCH` 세 자리. `MARKETING_VERSION`과 태그를 같은 값으로 맞춘다 |
 | 원격 feature 브랜치 | 만들지 않는다 (기존 관례) |
 
-## 바로 이어서 할 것
-### 1. 1.1.0을 진행한다
-**범위는 2026-09-15에 확정했다** — 작은 결함 정리(Task 29 에러 테두리, Task 30 도달 불가 분기, Task 31 칸 글자 크기 상한) + B-5 용어집(Task 32). 결정과 체크리스트는 [TODO.md](./TODO.md)의 "1.1.0" 절이 정본이다. 순서는 29 → 30 → 31 → 32다.
+### 1.1.0 진행표
+| Task | 브랜치 | 내용 | 상태 |
+|---|---|---|---|
+| 29 | `feature/error-border-keeps-type` | 에러일 때도 테두리가 종류 색 유지 | 병합 `1421188` |
+| 30 | `feature/remove-unreachable-drop-branch` | `handleDrop` 도달 불가 분기 제거 | 병합 `c0dd046` |
+| 31 | `feature/slot-dynamic-type-cap` | 칸 글자 크기 상한 `xLarge` | 병합 `fad352f` |
+| 33 | `feature/completion-code-log` | 완료 시 완성 코드 + 축하 주석 | 병합 `d31a5ae` |
+| **34** | `feature/code-panel-drawer` | 코드 패널 스와이프 펼침/접힘 | **다음 착수** |
+| 32 | `feature/glossary` | B-5 용어집 | 34 다음 |
 
-- 버전 값은 `release/1.1.0` 브랜치를 팔 때 올린다. `project.yml`·`project.pbxproj`(Debug·Release)·`Info.plist` 세 곳이다 — [docs/app-store-connect.md](./docs/app-store-connect.md)의 "버전 표기 규칙"
+## 바로 이어서 할 것
+### 1. Task 34 코드 패널 드래그를 착수한다
+결정과 체크리스트는 [TODO.md](./TODO.md)의 Task 34 절이 정본이다. 착수 전 결정은 2026-09-15에 모두 끝났다.
+
+- **직접 만든 드래그 패널** — 지금 자리(`MemoryGridView`의 `safeAreaInset(edge: .bottom)`)에 핸들을 붙인다. 시스템 시트(`presentationDetents`)는 최소 iOS 16.0에서 시트를 띄운 채 그리드를 조작할 수 없고 개념 카드 시트와 충돌해 뺐다
+- **접힌 상태 최대 3줄, 기본은 접힘.** 3줄을 넘으면 더 있다는 표시. **펼친 상태는 화면 절반까지**, 넘치면 패널 안에서 스크롤. 핸들 탭으로도 전환
+- **착수 전에 볼 파일** — [CodeFeedbackView.swift](./PointerQuest/DesignSystem/Component/CodeFeedbackView.swift)(패널 본체, 높이 제한 없음), [MemoryGridView.swift](./PointerQuest/Scene/Quest/MemoryGridView.swift)(패널을 붙이는 곳)
+- **주의** — 그리드가 `.draggable`/`.dropDestination`과 더블 탭을 쓴다. 패널 제스처는 패널 영역 안에서만 받고, 패널 내부 스크롤과 드래그가 겹치는 지점을 확인한다. `CodeFeedbackView`는 `#Preview`에만 쓰는 키 `int *p = &a;`를 방출한다(기존, 무해)
+- **Task 33 결과가 이 패널 위에 보인다.** 레슨 3 완료 코드는 여섯 줄이라 접힌 3줄을 넘는 첫 사례다 — 검증 항목으로 쓴다
+
+### 2. 그다음 Task 32 용어집
+- 설정 화면 행 → 목록 → 상세. **설명 2~3문장 + C 코드 예시**(`CCodeHighlighter` 재사용), 도식 없음
+- 용어는 챕터 1 화면에 나오는 8개 — 변수, 메모리 주소, 포인터, 주소 연산자(`&`), 역참조(`*`), 이중 포인터, 초기화되지 않은 포인터, 연결 리스트
+- 연결 리스트 항목은 Task 28과 같은 선 — "실제 C는 구조체로 묶는다, 나중에 다룬다"까지만
+- 새 파일을 만들면 `project.pbxproj`에 손으로 등록한다(재생성 금지, 아래 "주의할 것")
+
+### 3. 1.1.0 마무리
+- 34·32가 병합되면 `develop`에서 `release/1.1.0`을 판다. 버전 값은 `project.yml`·`project.pbxproj`(Debug·Release)·`Info.plist` 세 곳 — [docs/app-store-connect.md](./docs/app-store-connect.md)의 "버전 표기 규칙"
+- App Store Connect "새로운 기능" 문구를 새로 써야 한다 (1.1.0 변경: 에러 테두리, 큰 글자 대응, 완료 코드, 코드 패널, 용어집)
+- `release/1.1.0` → `master` 병합 + 태그 `1.1.0` → `develop`에 역병합
+
+### 사용자에게 남은 것 (앱 밖)
 - **실기기 점검을 한 번도 하지 않았다.** 출시 버전을 실기기에 받아 한 바퀴 도는 것이 안전하다. Task 13에서 앱별 언어 설정이 시뮬레이터에서 재현되지 않는 것을 겪었다
+- 지원 페이지 FAQ의 질문·답변 문단 붙음은 Notion에서만 고칠 수 있다
 - 긴급 수정이 필요하면 `master`에서 `hotfix/1.0.1`을 판다
 
 ### 2. Task 28은 끝났다 — 결과만 알아 두면 된다
@@ -71,6 +100,32 @@ Notion 두 페이지는 2026-09-10 끝났고 계정 없이 다시 조회해 확�
 - ~~**`handleDrop`의 `int *%@ = %@;` 분기는 도달할 수 없어 보인다**~~ — Task 27에서 기록만 남겼다가 **1.1.0 Task 30에서 제거했다**
 - ~~**`VISUAL_LANGUAGE.md` §7의 남은 이탈 1건**~~ — 에러일 때 테두리가 `Red`로 덮여 그 칸이 값인지 포인터인지 사라진다. **1.1.0 Task 29로 승격해 고쳤다**
 - **저장소 최상위에 남아 있던 임시 파일은 정리됐다** (2026-09-10). 사용자가 놓은 `screenshot/`과 참고 디자인 `sample.png`를 사용자 요청으로 지웠다. 스크린샷 원본은 지우기 전에 `docs/screenshots/raw/`로 옮겨 담았다
+
+## 2026-09-15에 한 것
+### 1.0.0 출시 반영과 1.1.0 범위 확정
+- 사용자가 심사 통과·출시를 알렸다. 문서 5개에 반영하고 `develop`을 `master`까지 fast-forward했다(트리가 같아 병합 커밋 없음)
+- **버전 표기를 `1.1.0` 세 자리로 정했다.** 규칙은 [docs/app-store-connect.md](./docs/app-store-connect.md)의 "버전 표기 규칙"
+- 1.1.0 범위 — 작은 결함 정리(29·30·31) + B-5 용어집(32). 진행 중 사용자 요청으로 코드 패널 개선 두 건(33·34)을 더했다
+- **iPad 지원은 예정에서 뺐다.** 사용자가 나중에 다시 판단한다
+
+### Task 29 에러 테두리 (병합 `1421188`)
+- `MemorySlotView` 테두리 조건식에서 `isError → Red`를 뺐다. 에러는 배경 30%와 흔들림이 전달한다
+- `VISUAL_LANGUAGE.md` §7에 남은 마지막 이탈이 닫혔다
+
+### Task 30 도달 불가 분기 제거 (병합 `c0dd046`)
+- `handleDrop`이 원본·대상 인덱스를 첫 `guard`에서 함께 찾는다. 대상을 못 찾는 `int *p = 0x...;` 분기와 카탈로그 키를 지웠다
+- 전에는 대상을 찾기 전에 원본을 먼저 포인터로 바꾸는 순서였다
+
+### Task 31 칸 글자 크기 상한 (병합 `fad352f`)
+- **계산으로 예상한 `xxLarge`가 틀렸다.** 실측하니 포인터 내용 `→ 0x702C`가 `XL`부터 먼저 잘렸다 — 줄이는 규칙 자체가 없었다
+- 포인터 `Text`에 `lineLimit(1)` + `minimumScaleFactor(0.6)`을 더하고 칸 전체에 `.dynamicTypeSize(...DynamicTypeSize.xLarge)`를 걸었다
+- 줄이는 규칙을 값·포인터 `HStack` 전체에 걸었다가 **기본 크기에서 `999`가 작아져** 포인터 `Text`로 옮겼다
+
+### Task 33 완료 코드 + 축하 주석 (병합 `d31a5ae`)
+- `finishLevel`이 코드 패널을 축하 한 줄로 덮어쓰던 것을, 완성 코드 아래에 `// 잘했어요! 레슨 완료! 🎉`를 붙이도록 바꿨다
+- `handleTap`의 코드 생성을 `pointerCode(at:targetIndex:)`·`valueCode(at:)`로 떼어 탭과 완료가 같은 함수를 쓴다. **리팩터링 전후 방출 키 98개가 완전히 같아** 문구 변화가 없음을 확인했다
+- `completedCode()`가 성공 조건별로 고른다 — 레슨 1·2는 대상을 가리키는 포인터, 레슨 3은 `start`, 레슨 0은 확인한 세 선언
+- `codeLog`가 `LocalizedStringResource`라 리소스끼리 이을 수 없어, 완성 코드를 `String(localized:)`로 먼저 해석해 `"\(code)\n\n// 잘했어요! …"`에 끼웠다. 신규 키 1건
 
 ## 2026-09-11에 한 것
 ### 제출 직전 정리 (커밋 5개, Task 번호 없음)
@@ -176,6 +231,11 @@ Notion 두 페이지는 2026-09-10 끝났고 계정 없이 다시 조회해 확�
 
 ## 작업할 때 주의할 것
 - **버전은 `1.1.0`처럼 세 자리로 쓴다** (2026-09-15 확정). `MARKETING_VERSION`과 git 태그를 같은 값으로 맞추고, 값이 있는 세 파일을 함께 바꾼다
+- **작업 흐름** — Task마다 `develop`에서 feature 브랜치 → 코드·문서 커밋 제안 → 사용자가 시뮬레이터 확인 후 "커밋" 승인 → 커밋·`--no-ff` 병합·병합 후 빌드·푸시·브랜치 삭제 → `docs: Task N 병합 완료 반영`을 `develop`에 커밋. **사용자가 확인 체크리스트 뒤에 "commit it"이라고 하면 확인을 마친 것이다** — 다시 묻지 않는다
+- **리팩터링은 방출 키 스냅샷으로 검증한다** (Task 33). 수정 전 빌드 산출물 `Objects-normal/arm64/*.stringsdata`의 키 집합을 JSON으로 저장하고, 수정 후 빌드와 비교해 추가·삭제 0건이면 문구가 한 글자도 바뀌지 않은 것이다
+- **같은 파일의 변경을 두 커밋으로 나눌 때는 패치를 저장한다** (Task 33). 대화형 `git add -p`를 쓸 수 없으므로, 첫 단계가 끝난 시점에 `git diff -- <파일> > 스크래치/step1.patch`로 저장하고 커밋할 때 `git apply --cached step1.patch`로 첫 커밋만 인덱스에 올린다. 저장 직후 `git apply --cached --check`로 확인해 둔다
+- **탭 없이 볼 수 없는 뷰는 임시 화면으로 실측한다** (Task 31). `MyApp`의 루트를 측정용 뷰로 잠시 바꿔 `environment(\.dynamicTypeSize)` 등을 크기별로 나란히 그리고 `simctl io screenshot`으로 찍은 뒤 `git checkout`으로 되돌린다. **커밋에 넣지 않는다.** 계산값보다 실측이 맞았다
+- **가장 좁은 그리드 칸은 103.7pt다** — iPhone SE 375pt에서 좌우 패딩 16×2와 열 간격 16×2를 빼고 3열. 칸 안 글자 영역은 여기서 패딩 12×2를 뺀 79.7pt
 - **커밋은 가장 작은 논리 단위로 쪼개고 커밋마다 빌드를 확인한다.** 사용자가 커밋을 확인할 때까지 다음 작업으로 넘어가지 않는다
 - **병합한 직후에 `docs: Task N 병합 완료 반영` 커밋을 `develop`에 바로 쌓는다.** 이것을 미루면 문서가 실제 상태와 어긋난다 — Task 21·22·26에서 실제로 어긋났다
 - **`project.pbxproj`는 재생성하지 않는다.** xcodegen이 파일 참조 UUID를 새로 뽑아 파일 전체가 바뀐다. 값만 손으로 맞추고, 저장소 사본에서 xcodegen을 돌려 대조한다. Task 26에서는 xcodegen이 4개 블록 중 2개에만 넣어서 배치까지 맞췄다
