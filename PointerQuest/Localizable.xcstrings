@@ -264,16 +264,6 @@
         }
       }
     },
-    "int *%@ = %@;" : {
-      "localizations" : {
-        "ko" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "int *%1$@ = %2$@;"
-          }
-        }
-      }
-    },
     "int %@ = %lld;\nint *%@ = &%@;\n// %@ 자신도 메모리(%@)에 저장된 값(주소)입니다." : {
       "localizations" : {
         "en" : {
