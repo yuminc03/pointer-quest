@@ -147,7 +147,7 @@ SwiftUI 코드를 사용자 코딩 스타일에 맞게 정리. 백로그 항목�
 ### Task 14에서 발견한 이탈 (수정은 별도 Task)
 백로그 C의 Non-goal("규칙에 어긋나는 곳을 목록으로만 남긴다")에 따라 수정하지 않고 기록만 한다. 상세는 `VISUAL_LANGUAGE.md` §7 참고.
 
-- [ ] `MemoryItem.swift:74` — 에러 시 테두리가 `Red`로 덮여 값/포인터 구분이 사라짐. 축 분리를 어기는 유일한 지점
+- [x] `MemoryItem.swift:74` — 에러 시 테두리가 `Red`로 덮여 값/포인터 구분이 사라짐. 축 분리를 어기는 유일한 지점 → Task 29에서 해소 (Task 16 분리 이후 위치는 `MemorySlotView`)
 - [ ] `MainView.swift:5-7` — 챕터 그라데이션이 상태 색(`Green`/`Red`)을 장식으로 재사용
 - [ ] `LessonRow.swift:40` — 완료 체크마크가 자산이 아닌 시스템 `.green` 하드코딩
 - [ ] 색 자산 10개 중 9개가 다크 모드 대응 없음 (light appearance만 정의). 상태 배경 30%의 다크 대비 미확인
@@ -706,8 +706,8 @@ start = &nodeA; // start는 nodeA의 주소만 담습니다
 ### Task 29 — `feature/error-border-keeps-type`
 에러일 때 테두리가 `Red`로 덮여 값인지 포인터인지 사라지는 문제. `VISUAL_LANGUAGE.md` §7에 남은 마지막 이탈이다.
 
-- [ ] `MemorySlotView`의 테두리 조건식에서 `isError → Red` 분기 제거. 에러는 배경 30%와 흔들림이 전달한다
-- [ ] `VISUAL_LANGUAGE.md` §7을 해소됨으로 옮김
+- [x] `MemorySlotView`의 테두리 조건식에서 `isError → Red` 분기 제거. 에러는 배경 30%와 흔들림이 전달한다. 빌드 성공 확인
+- [x] `VISUAL_LANGUAGE.md` §7을 해소됨으로 옮김
 - [ ] 사용자 검증 — 값 칸 더블 탭(초록 테두리 유지 + 빨강 배경·흔들림), 미초기화 포인터 더블 탭(파랑 테두리 유지)
 
 ### Task 30 — `feature/remove-unreachable-drop-branch`
