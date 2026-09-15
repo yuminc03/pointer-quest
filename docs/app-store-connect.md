@@ -2,6 +2,8 @@
 
 1.0 제출에 필요한 항목을 한곳에 모은다. Task 24(스크린샷·메타데이터)에서 이 문서를 보고 그대로 입력한다. 문구는 한국어·영어 둘 다 등록한다.
 
+**1.0.0은 심사를 통과해 App Store에 출시됐다** (2026-09-15 사용자 보고로 확인). 다음 버전을 올릴 때는 아래 "버전 표기 규칙"을 따른다.
+
 ## 등록할 주소 (2026-09-09 확정)
 사용자가 Notion 페이지를 만들어 아래 두 주소로 확정했다. 원문 대조는 [privacy-policy.md](./privacy-policy.md)·[support.md](./support.md)를 쓴다.
 
@@ -27,7 +29,7 @@
 | Price | 무료 |
 | Availability | 전체 국가 |
 
-## 버전 정보 (1.0)
+## 버전 정보 (1.0.0 출시)
 | 항목 | 값 |
 |---|---|
 | Version | `1.0` (`MARKETING_VERSION`) |
@@ -35,6 +37,13 @@
 | 최소 iOS | 16.0 |
 | 지원 기기 | iPhone 전용 (Task 21에서 축소) |
 | 지원 언어 | 한국어(기본), 영어 |
+
+### 버전 표기 규칙 (2026-09-15 확정)
+- **1.1.0부터 `MAJOR.MINOR.PATCH` 세 자리로 표기한다.** `MARKETING_VERSION`과 git 태그를 같은 값으로 맞춘다
+- 1.0은 앱 버전이 `1.0`, 태그가 `1.0.0`으로 표기가 달랐다. 이미 출시된 값이라 소급해 고치지 않는다
+- 기능 추가는 MINOR(`1.1.0`), 출시 후 긴급 수정은 PATCH(`1.0.1`)를 올린다. 각각 Git Flow의 `release/`·`hotfix/` 브랜치에 대응한다
+- 버전 값은 `project.yml`·`project.pbxproj`(Debug·Release)·`Info.plist` 세 곳에 함께 있다. 하나만 바꾸면 어긋난다
+- 빌드 번호(`CURRENT_PROJECT_VERSION`)는 업로드할 때마다 올린다. 같은 버전 안에서 번호가 겹치면 업로드가 거부된다
 
 ## 한국어 메타데이터
 
@@ -243,12 +252,14 @@ xcrun simctl launch <기기> com.lonalia.PointerQuest -AppleLanguages "(en)"
 - **온보딩 시트를 미리 닫는다** — 앱 컨테이너의 `com.lonalia.PointerQuest.plist`에 `isOnboardingWatched`를 `true`로 넣는다. 넣지 않으면 첫 실행마다 환영 시트가 덮는다
 
 ## 제출 전 확인할 것
-- [ ] `Privacy Policy URL` — 위 표의 `notion.site` 주소로 등록
-- [ ] `Support URL` — 위 표의 `notion.site` 주소로 등록
+1.0.0이 심사를 통과해 출시되면서 모두 닫혔다 (2026-09-15). 다음 버전을 제출할 때도 같은 목록으로 다시 확인한다.
+
+- [x] `Privacy Policy URL` — 위 표의 `notion.site` 주소로 등록
+- [x] `Support URL` — 위 표의 `notion.site` 주소로 등록
 - [x] 앱 안 방침 링크(`SettingView`)를 같은 주소로 교체
-- [ ] App Privacy — **"Data Not Collected"** 선택. 네트워크 코드가 0건이고 저장은 `UserDefaults` 두 키뿐이라 수집 항목이 없다
+- [x] App Privacy — **"Data Not Collected"** 선택. 네트워크 코드가 0건이고 저장은 `UserDefaults` 두 키뿐이라 수집 항목이 없다
 - [x] 수출 규정 — `ITSAppUsesNonExemptEncryption`을 `false`로 `Info.plist`에 넣었다 (커밋 `2190518`). 빌드 산출물의 `Info.plist`에 값이 들어간 것까지 확인했다
-- [ ] 심사 메모(App Review Information) — 계정이 없으므로 로그인 정보 불필요. "챕터 2 이후는 준비 중 표시이며 의도된 상태"라고 적어 두면 오해를 막는다
+- [x] 심사 메모(App Review Information) — 계정이 없으므로 로그인 정보 불필요. "챕터 2 이후는 준비 중 표시이며 의도된 상태"라고 적어 두면 오해를 막는다
 
 ## Notion 쪽 마무리 (2026-09-10 완료)
 2026-09-09 실측에서 열려 있던 항목 2건을 사용자가 Notion에서 닫았고, 2026-09-10 같은 방식으로 다시 실측해 확인했다.
