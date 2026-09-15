@@ -35,93 +35,11 @@ final class MemoryGridVM: ObservableObject {
     let selfIndex = slots.firstIndex(where: { $0.address == slot.address })
 
     // 1. 포인터인 경우 (어딘가를 가리키고 있음)
-    if let targetAddress = slot.pointingTo,
+    if let selfIndex,
+       let targetAddress = slot.pointingTo,
        let targetIndex = slots.firstIndex(where: { $0.address == targetAddress })
     {
-
-      let targetSlot = slots[targetIndex]
-
-      // Case A: 가리킨 곳에 값이 있는 경우 (일반 포인터)
-      if let targetValue = targetSlot.value {
-        let targetName = resolveVariableName(for: targetIndex, fallback: "target")
-        let selfName = selfIndex.map { resolveVariableName(for: $0, fallback: makePointerName()) } ?? "p"
-        codeLog = """
-        int \(targetName) = \(targetValue); // \(targetAddress)의 값
-        int *\(selfName) = &\(targetName); // 이 슬롯(\(slot.address))이 \(targetName)을 가리킴
-        // \(selfName) 자신도 메모리(\(slot.address))에 저장된 값(주소)입니다.
-        """
-      }
-      // Case B: 가리킨 곳도 포인터인 경우 (이중 포인터)
-      else if targetSlot.type == .pointer {
-        // ptr1이 가리키는 최종 대상 찾기
-        if let ultimateAddr = targetSlot.pointingTo,
-           let ultimateIndex = slots.firstIndex(where: { $0.address == ultimateAddr }),
-           let ultimateValue = slots[ultimateIndex].value {
-          let ultimateName = resolveVariableName(for: ultimateIndex, fallback: "value")
-          let targetName = resolveVariableName(for: targetIndex, fallback: "ptr1")
-          let selfName = selfIndex.map { resolveVariableName(for: $0, fallback: "ptr2") } ?? "ptr2"
-          codeLog = """
-          int \(ultimateName) = \(ultimateValue); // \(ultimateAddr)의 값
-          int *\(targetName) = &\(ultimateName); // \(targetName)이 \(ultimateName)를 가리킴
-          int **\(selfName) = &\(targetName); // 이중 포인터 (이 슬롯이 \(targetName)을 가리킴)
-          """
-        } else {
-          // 최종 대상에 아직 값이 없는 경우. 체인이 세 칸 이상이거나(레슨 3의 start) 대상이
-          // 아무 곳도 가리키지 않을 때 여기로 온다.
-          //
-          // **별 개수를 `int *`로 고정하면 안 된다.** 포인터를 가리키는 포인터가 값을 가리키는
-          // 것처럼 보인다. 주소 리터럴을 그대로 넣는 것도 안 된다 — `int *p = 0x702C;`는
-          // 형변환 없이 컴파일되지 않는다. 둘 다 실제 체인 깊이와 이름으로 대신한다
-          let targetName = resolveVariableName(for: targetIndex, fallback: "ptr1")
-          let selfName = selfIndex.map { resolveVariableName(for: $0, fallback: "ptr2") } ?? "ptr2"
-          let targetStars = pointerStars(for: targetIndex)
-          let selfStars = selfIndex.map { pointerStars(for: $0) } ?? "**"
-
-          // 세 칸 이상을 건너뛰는 자리에서는 타입을 적지 않고 연결만 적는다.
-          //
-          // `int ***`는 문법상 옳지만 이 앱이 어디서도 설명하지 않은 표기다. 실제 C에서
-          // 이 표기를 볼 일이 없는 것은 **연결 리스트가 칸을 구조체로 묶어 `*`가 늘어나지
-          // 않게 만들기 때문**이고, 구조체는 챕터 4의 주제라 지금 꺼낼 수 없다.
-          //
-          // 그렇다고 별 개수를 낮추면 타입이 틀려져 Task 27에서 고친 문제로 돌아간다.
-          // 대신 **선언을 빼고 연결만 남긴 뒤, 별이 몇 개 붙는지를 주석으로 설명한다** —
-          // 레슨 2가 가르친 "`*`가 하나 늘어날 때마다 한 번 더 따라간다"와 이어진다
-          if selfStars.count >= 3, let selfIndex {
-            let path = chainNames(from: selfIndex).joined(separator: " -> ")
-            codeLog = """
-            // \(path)
-            \(selfName) = &\(targetName); // \(selfName)는 \(targetName)의 주소만 담습니다
-            // 끝까지 따라가려면 여기서 \(selfStars.count)번을 거칩니다. 거치는 횟수만큼 타입에 *가 붙습니다.
-            // 실제 C는 칸을 구조체로 묶어 *가 늘어나지 않게 만듭니다. 그건 나중에 다룹니다.
-            """
-          } else if let ultimateAddr = targetSlot.pointingTo,
-             let ultimateIndex = slots.firstIndex(where: { $0.address == ultimateAddr }) {
-            let ultimateName = resolveVariableName(
-              for: ultimateIndex,
-              fallback: slots[ultimateIndex].type == .pointer ? makePointerName() : "target"
-            )
-            codeLog = """
-            int \(targetStars)\(targetName) = &\(ultimateName); // \(targetName)이 \(ultimateName)을 가리킴
-            int \(selfStars)\(selfName) = &\(targetName); // 이 슬롯이 \(targetName)을 가리킴
-            """
-          } else {
-            codeLog = """
-            int \(targetStars)\(targetName) = NULL; // \(targetAddress)는 아직 아무 곳도 가리키지 않습니다
-            int \(selfStars)\(selfName) = &\(targetName); // 이 슬롯이 \(targetName)을 가리킴
-            """
-          }
-        }
-      }
-      // Case C: 가리킨 곳이 비어있는 경우
-      else {
-        let targetName = resolveVariableName(for: targetIndex, fallback: "unknown")
-        let selfName = selfIndex.map { resolveVariableName(for: $0, fallback: makePointerName()) } ?? "p"
-        codeLog = """
-        int \(targetName); // \(targetAddress)의 변수가 초기화되지 않음
-        int *\(selfName) = &\(targetName);
-        // 경고: '\(selfName)'를 역참조하면 쓰레기 값이 반환됩니다.
-        """
-      }
+      codeLog = pointerCode(at: selfIndex, targetIndex: targetIndex)
 
       // 시각적 효과: 가리키는 대상 깜빡임
       highlightSlot(for: targetIndex)
@@ -129,12 +47,11 @@ final class MemoryGridVM: ObservableObject {
     }
 
     // 2. 값을 가진 변수인 경우
-    if let value = slot.value {
+    if let selfIndex, slot.value != nil {
       // 관찰형 레슨(레슨 0)에서는 이 탭 자체가 "상자를 열어 확인하는" 행동이므로 코드 로그도 그쪽에서 채운다
-      if let selfIndex, recordInspection(of: selfIndex) { return }
+      if recordInspection(of: selfIndex) { return }
 
-      let name = selfIndex.map { resolveVariableName(for: $0, fallback: "val") } ?? "val"
-      codeLog = "int \(name) = \(value); // \(slot.address)의 값"
+      codeLog = valueCode(at: selfIndex)
     }
     // 3. 빈 슬롯인 경우
     else {
@@ -248,6 +165,110 @@ final class MemoryGridVM: ObservableObject {
   func showHint() {
     guard let hintCode = currentLesson.blueprint.hintCode else { return }
     codeLog = hintCode
+  }
+
+  /// 포인터 칸을 탭했을 때 코드 패널에 보여줄 코드를 만든다. 강조 같은 시각 효과는 담지 않는다.
+  ///
+  /// 탭(`handleTap`)과 레슨 완료가 같은 함수를 쓴다. 두 곳에서 따로 문구를 만들면
+  /// 같은 연결이 상황에 따라 다른 C로 찍힌다 — Task 27에서 고친 것과 같은 부류의 문제다
+  /// - Parameters:
+  ///   - index: 탭한 포인터 칸의 인덱스
+  ///   - targetIndex: 그 포인터가 가리키는 칸의 인덱스
+  private func pointerCode(at index: Int, targetIndex: Int) -> LocalizedStringResource {
+    let selfAddress = slots[index].address
+    let targetSlot = slots[targetIndex]
+    let targetAddress = targetSlot.address
+
+    // Case A: 가리킨 곳에 값이 있는 경우 (일반 포인터)
+    if let targetValue = targetSlot.value {
+      let targetName = resolveVariableName(for: targetIndex, fallback: "target")
+      let selfName = resolveVariableName(for: index, fallback: makePointerName())
+      return """
+      int \(targetName) = \(targetValue); // \(targetAddress)의 값
+      int *\(selfName) = &\(targetName); // 이 슬롯(\(selfAddress))이 \(targetName)을 가리킴
+      // \(selfName) 자신도 메모리(\(selfAddress))에 저장된 값(주소)입니다.
+      """
+    }
+
+    // Case B: 가리킨 곳도 포인터인 경우 (이중 포인터)
+    if targetSlot.type == .pointer {
+      // ptr1이 가리키는 최종 대상 찾기
+      if let ultimateAddr = targetSlot.pointingTo,
+         let ultimateIndex = slots.firstIndex(where: { $0.address == ultimateAddr }),
+         let ultimateValue = slots[ultimateIndex].value {
+        let ultimateName = resolveVariableName(for: ultimateIndex, fallback: "value")
+        let targetName = resolveVariableName(for: targetIndex, fallback: "ptr1")
+        let selfName = resolveVariableName(for: index, fallback: "ptr2")
+        return """
+        int \(ultimateName) = \(ultimateValue); // \(ultimateAddr)의 값
+        int *\(targetName) = &\(ultimateName); // \(targetName)이 \(ultimateName)를 가리킴
+        int **\(selfName) = &\(targetName); // 이중 포인터 (이 슬롯이 \(targetName)을 가리킴)
+        """
+      }
+
+      // 최종 대상에 아직 값이 없는 경우. 체인이 세 칸 이상이거나(레슨 3의 start) 대상이
+      // 아무 곳도 가리키지 않을 때 여기로 온다.
+      //
+      // **별 개수를 `int *`로 고정하면 안 된다.** 포인터를 가리키는 포인터가 값을 가리키는
+      // 것처럼 보인다. 주소 리터럴을 그대로 넣는 것도 안 된다 — `int *p = 0x702C;`는
+      // 형변환 없이 컴파일되지 않는다. 둘 다 실제 체인 깊이와 이름으로 대신한다
+      let targetName = resolveVariableName(for: targetIndex, fallback: "ptr1")
+      let selfName = resolveVariableName(for: index, fallback: "ptr2")
+      let targetStars = pointerStars(for: targetIndex)
+      let selfStars = pointerStars(for: index)
+
+      // 세 칸 이상을 건너뛰는 자리에서는 타입을 적지 않고 연결만 적는다.
+      //
+      // `int ***`는 문법상 옳지만 이 앱이 어디서도 설명하지 않은 표기다. 실제 C에서
+      // 이 표기를 볼 일이 없는 것은 **연결 리스트가 칸을 구조체로 묶어 `*`가 늘어나지
+      // 않게 만들기 때문**이고, 구조체는 챕터 4의 주제라 지금 꺼낼 수 없다.
+      //
+      // 그렇다고 별 개수를 낮추면 타입이 틀려져 Task 27에서 고친 문제로 돌아간다.
+      // 대신 **선언을 빼고 연결만 남긴 뒤, 별이 몇 개 붙는지를 주석으로 설명한다** —
+      // 레슨 2가 가르친 "`*`가 하나 늘어날 때마다 한 번 더 따라간다"와 이어진다
+      if selfStars.count >= 3 {
+        let path = chainNames(from: index).joined(separator: " -> ")
+        return """
+        // \(path)
+        \(selfName) = &\(targetName); // \(selfName)는 \(targetName)의 주소만 담습니다
+        // 끝까지 따라가려면 여기서 \(selfStars.count)번을 거칩니다. 거치는 횟수만큼 타입에 *가 붙습니다.
+        // 실제 C는 칸을 구조체로 묶어 *가 늘어나지 않게 만듭니다. 그건 나중에 다룹니다.
+        """
+      }
+
+      if let ultimateAddr = targetSlot.pointingTo,
+         let ultimateIndex = slots.firstIndex(where: { $0.address == ultimateAddr }) {
+        let ultimateName = resolveVariableName(
+          for: ultimateIndex,
+          fallback: slots[ultimateIndex].type == .pointer ? makePointerName() : "target"
+        )
+        return """
+        int \(targetStars)\(targetName) = &\(ultimateName); // \(targetName)이 \(ultimateName)을 가리킴
+        int \(selfStars)\(selfName) = &\(targetName); // 이 슬롯이 \(targetName)을 가리킴
+        """
+      }
+
+      return """
+      int \(targetStars)\(targetName) = NULL; // \(targetAddress)는 아직 아무 곳도 가리키지 않습니다
+      int \(selfStars)\(selfName) = &\(targetName); // 이 슬롯이 \(targetName)을 가리킴
+      """
+    }
+
+    // Case C: 가리킨 곳이 비어있는 경우
+    let targetName = resolveVariableName(for: targetIndex, fallback: "unknown")
+    let selfName = resolveVariableName(for: index, fallback: makePointerName())
+    return """
+    int \(targetName); // \(targetAddress)의 변수가 초기화되지 않음
+    int *\(selfName) = &\(targetName);
+    // 경고: '\(selfName)'를 역참조하면 쓰레기 값이 반환됩니다.
+    """
+  }
+
+  /// 값 칸을 C 선언 한 줄로 표현한다 (ex: `int age = 20; // 0x7004의 값`)
+  /// 탭과 레슨 0 완료가 같은 문구를 쓰도록 한 곳에서 만든다
+  private func valueCode(at index: Int) -> LocalizedStringResource {
+    let name = resolveVariableName(for: index, fallback: "val")
+    return "int \(name) = \(slots[index].value ?? 0); // \(slots[index].address)의 값"
   }
   
   /// 슬롯에 표시할 변수명을 정하고 `codeLog`에서도 함께 쓸 수 있도록 반환한다.
