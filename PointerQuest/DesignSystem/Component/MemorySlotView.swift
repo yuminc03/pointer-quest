@@ -73,12 +73,13 @@ struct MemorySlotView: View {
           .accessibilityLabel(Text("참조됨"))
       }
     }
+    // 테두리는 종류(값/포인터/빈칸)만 나타낸다. 에러는 배경 30%와 흔들림이 전달하므로
+    // 여기서 빨강으로 덮으면 에러인 동안 그 칸이 값인지 포인터인지 알 수 없게 된다 (`VISUAL_LANGUAGE.md` §1)
     .overlay(
       RoundedRectangle(cornerRadius: 15)
         .stroke(
-          slot.isError ? Color(.red) :
-            (slot.type == .pointer ? Color(.main) :
-            (slot.type == .value ? Color(.green) : .clear)),
+          slot.type == .pointer ? Color(.main) :
+            (slot.type == .value ? Color(.green) : .clear),
           lineWidth: 2
         )
     )
