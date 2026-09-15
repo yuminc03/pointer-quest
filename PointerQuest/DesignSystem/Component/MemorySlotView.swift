@@ -36,10 +36,14 @@ struct MemorySlotView: View {
               .bold()
             )
         } else if let target = slot.pointingTo {
+          // 주소 라벨과 같은 이유로 잘리지 않고 글자 크기를 줄여 맞춘다.
+          // 값 숫자에는 걸지 않는다 — 폭이 충분해 기본 크기에서 숫자가 불필요하게 작아진다
           Text("→ \(target)")
             .font(.system(.caption, design: .monospaced))
             .foregroundStyle(Color(.main))
             .fontWeight(.bold)
+            .lineLimit(1)
+            .minimumScaleFactor(0.6)
         } else {
           Text("-")
             .foregroundStyle(.secondary.opacity(0.3))
@@ -88,6 +92,10 @@ struct MemorySlotView: View {
       .spring(response: 0.3, dampingFraction: 0.2, blendDuration: 0),
       value: slot.isError
     )
+    // 칸은 높이 100 고정 도식이라 글자만 커지면 주소·변수명·포인터 내용이 잘린다.
+    // 가장 좁은 3열 칸(iPhone SE, 103.7pt)에서 실측해 잘리지 않는 상한인 xLarge로 묶는다.
+    // 코드 패널·헤더·개념 카드 문장은 이 뷰 밖이라 계속 커진다
+    .dynamicTypeSize(...DynamicTypeSize.xLarge)
   }
 }
 
