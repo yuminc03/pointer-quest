@@ -476,7 +476,44 @@ final class MemoryGridVM: ObservableObject {
   
   private func finishLevel() {
     isSuccess = true
-    codeLog = "// 잘했어요! 레슨 완료! 🎉"
+    // 완성된 코드를 지우지 않고 그 아래에 축하 주석을 붙인다.
+    // `LocalizedStringResource`끼리는 이어 붙일 수 없어, 완성 코드를 먼저 현재 언어의 문자열로 해석해 끼워 넣는다
+    if let completedCode = completedCode() {
+      codeLog = "\(completedCode)\n\n// 잘했어요! 레슨 완료! 🎉"
+    } else {
+      codeLog = "// 잘했어요! 레슨 완료! 🎉"
+    }
     LessonProgressStore.shared.markCompleted(currentLesson.id)
+  }
+
+  /// 레슨을 완료한 순간 코드 패널에 남길 완성 코드. 칸을 다시 탭하지 않아도 무엇을 만들었는지 보이게 한다
+  /// - 연결 레슨: 목표를 이룬 포인터 칸을 탭했을 때와 같은 코드 (`pointerCode`)
+  /// - 관찰 레슨(레슨 0): 확인한 상자들의 선언 (`valueCode`)
+  private func completedCode() -> String? {
+    switch currentLesson.blueprint.successCondition {
+    case .anyPointerPointsTo(let index):
+      // 대상을 가리키는 포인터가 여럿이면(빈칸을 끌어와 여러 번 연결한 경우) 앞쪽 칸을 쓴다
+      let targetAddress = slots[index].address
+      guard let pointerIndex = slots.firstIndex(where: {
+        $0.type == .pointer && $0.pointingTo == targetAddress
+      })
+      else { return nil }
+
+      return String(localized: pointerCode(at: pointerIndex, targetIndex: index))
+
+    case .chain(let indices):
+      // 체인의 첫 칸에서 출발해야 경로 전체가 보인다 (레슨 3의 start)
+      guard indices.count >= 2 else { return nil }
+
+      return String(localized: pointerCode(at: indices[0], targetIndex: indices[1]))
+
+    case .inspectedAll(let indices):
+      return indices
+        .map { String(localized: valueCode(at: $0)) }
+        .joined(separator: "\n")
+
+    case .sandbox:
+      return nil
+    }
   }
 }
