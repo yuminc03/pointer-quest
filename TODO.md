@@ -8,7 +8,8 @@
 - **현재 위치** — `develop`을 `master`까지 fast-forward해 두 브랜치가 `af733cd`로 같다. 로컬 feature 브랜치는 없다
 - **버전 표기** — 1.1.0부터 `MAJOR.MINOR.PATCH` 세 자리로 쓰고 `MARKETING_VERSION`과 git 태그를 같은 값으로 맞춘다. 상세는 [docs/app-store-connect.md](./docs/app-store-connect.md)의 "버전 표기 규칙"
 - **1.1.0 범위 확정** (2026-09-15) — 작은 결함 정리(Task 29~31) + B-5 용어집(Task 32). 아래 "1.1.0" 절 참고
-- **바로 다음** — Task 29 `feature/error-border-keeps-type` 착수. 네 Task가 모두 병합되면 `release/1.1.0`에서 버전을 올린다
+- **Task 29 병합 완료** — 2026-09-15 검증·병합(`1421188`)·푸시·브랜치 삭제까지 끝났다
+- **바로 다음** — Task 30 `feature/remove-unreachable-drop-branch` 착수. 네 Task가 모두 병합되면 `release/1.1.0`에서 버전을 올린다
 - **등록하다 막히면** — 아래 "제출 직전 정리" 절을 먼저 읽는다. 2026-09-11에 스크린샷 크기·홈 화면 이름·지원 기기에서 이 문서의 서술이 실제 등록 화면과 어긋난 사례가 세 건 나왔다. **등록 화면이 정본이다**
 
 ### 결정 사항 (2026-09-09 확정)
@@ -708,7 +709,8 @@ start = &nodeA; // start는 nodeA의 주소만 담습니다
 
 - [x] `MemorySlotView`의 테두리 조건식에서 `isError → Red` 분기 제거. 에러는 배경 30%와 흔들림이 전달한다. 빌드 성공 확인
 - [x] `VISUAL_LANGUAGE.md` §7을 해소됨으로 옮김
-- [ ] 사용자 검증 — 값 칸 더블 탭(초록 테두리 유지 + 빨강 배경·흔들림), 미초기화 포인터 더블 탭(파랑 테두리 유지)
+- [x] 사용자 검증 — 값 칸 더블 탭(초록 테두리 유지 + 빨강 배경·흔들림), 미초기화 포인터 더블 탭(파랑 테두리 유지) (2026-09-15 확인)
+- [x] `develop` 병합 — 커밋 2개(코드 1 + 문서 1)를 `--no-ff`로 병합(병합 커밋 `1421188`), 병합 직후 빌드 성공 재확인, `origin/develop` 푸시, 로컬 브랜치 삭제 완료
 
 ### Task 30 — `feature/remove-unreachable-drop-branch`
 `MemoryGridVM.handleDrop`의 `int *%@ = %@;` 분기 제거. Task 27에서 기록만 남긴 항목이다.

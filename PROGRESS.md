@@ -8,7 +8,8 @@
 - **출시 후 `develop`을 `master`까지 fast-forward했다.** 두 브랜치의 트리가 이미 같아 병합 커밋 없이 맞췄다
 - **버전은 1.1.0부터 `MAJOR.MINOR.PATCH` 세 자리로 표기한다** — [docs/app-store-connect.md](./docs/app-store-connect.md)의 "버전 표기 규칙"
 - **1.1.0 범위를 확정했다** (2026-09-15) — 작은 결함 정리 Task 29~31 + B-5 용어집 Task 32. 상세는 `TODO.md`의 "1.1.0" 절
-- 다음은 Task 29 착수다
+- **Task 29 에러 테두리 병합 완료** (병합 커밋 `1421188`) — 테두리는 항상 종류를 나타내고 에러는 배경 30%와 흔들림만 쓴다. `VISUAL_LANGUAGE.md` §7의 마지막 이탈이 닫혔다
+- 다음은 Task 30 착수다
 - Task별 상세 내역은 이 문서의 각 "Task N 진행 상황/완료" 섹션 참고
 
 ## Task 1~2 완료 및 초기 검증
