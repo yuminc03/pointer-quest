@@ -148,55 +148,47 @@ final class MemoryGridVM: ObservableObject {
   ///   - sourceAddress: 드래그를 시작한 슬롯(포인터가 될 슬롯)의 주소
   ///   - destinationAddress: 드롭된 위치의 슬롯(가리킴을 당할 대상)의 주소
   func handleDrop(sourceAddress: String, destinationAddress: String) {
-    // 1. 드래그한 슬롯(Source)의 인덱스를 찾기
-    guard let sourceIndex = slots.firstIndex(
-      where: { $0.address == sourceAddress }
-    ) else {
-      return
-    }
-    
+    // 1. 드래그한 슬롯(Source)과 드롭된 슬롯(Target)의 인덱스를 찾기
+    // 호출부(`MemoryItem`)는 드롭된 슬롯 자신의 주소를 넘기므로 대상은 항상 찾아진다.
+    // 슬롯을 바꾸기 전에 둘 다 확인해, 대상을 못 찾았을 때 원본만 포인터로 바뀌는 일이 없게 한다
+    guard let sourceIndex = slots.firstIndex(where: { $0.address == sourceAddress }),
+          let targetIndex = slots.firstIndex(where: { $0.address == destinationAddress })
+    else { return }
+
     // 2. 드래그한 슬롯을 pointer 타입으로 변경하고, 대상의 주소를 저장
     // C 언어의 `source = &destination;`과 같은 논리
     slots[sourceIndex].type = .pointer
     slots[sourceIndex].value = nil // 기존 값이 남아있으면 UI에서 포인터 주소가 가려짐
     slots[sourceIndex].pointingTo = destinationAddress
-    
-    // 타겟 슬롯 인덱스 찾기
-    if let targetIndex = slots.firstIndex(
-      where: { $0.address == destinationAddress }
-    ) {
-      // 타겟이 비어있다면 값 초기화 (Auto-Initialization)
-      if slots[targetIndex].type == .empty {
-        let randomValue = Int.random(in: 1...99)
-        slots[targetIndex].type = .value
-        slots[targetIndex].value = randomValue
-        
-        // 초기화된 사실을 로그에 자연스럽게 표현
-        let targetName = resolveVariableName(for: targetIndex, fallback: "target")
-        let pName = resolveVariableName(for: sourceIndex, fallback: makePointerName())
-        codeLog = "int \(targetName) = \(randomValue);\nint *\(pName) = &\(targetName);\n// \(pName) 자신도 메모리(\(sourceAddress))에 저장된 값(주소)입니다."
 
-        // 시각적 혼란을 줄이기 위해 타겟에도 하이라이트 효과
-        highlightSlot(for: targetIndex)
-      } else if slots[targetIndex].isReferenced,
-                let existingPointerAddress = slots.first(where: {
-                  $0.pointingTo == destinationAddress && $0.address != sourceAddress
-                })?.address {
-        // 직접 연결 자체는 허용하되(실제 C에서도 가능한 연산), 이중 포인터 연습을 유도하는 안내로 대체
-        codeLog = "// 직접 연결도 가능하지만, 지금은 이중 포인터를 연습해봐요 — 이미 있는 포인터(\(existingPointerAddress))를 가리켜보세요."
-      } else {
-        // 목적지가 이미 이름을 가진 슬롯일 수 있으므로(레슨이 선언했거나 이전 상호작용에서 부여됨)
-        // 주소 리터럴 대신 &변수명으로 표현해 "가리킨다 = 주소를 담는다" 개념을 코드로도 드러낸다
-        let pName = resolveVariableName(for: sourceIndex, fallback: makePointerName())
-        let destName = resolveVariableName(
-          for: targetIndex,
-          fallback: slots[targetIndex].value != nil ? "target" : makePointerName()
-        )
-        codeLog = "int *\(pName) = &\(destName);"
-      }
-    } else {
+    // 타겟이 비어있다면 값 초기화 (Auto-Initialization)
+    if slots[targetIndex].type == .empty {
+      let randomValue = Int.random(in: 1...99)
+      slots[targetIndex].type = .value
+      slots[targetIndex].value = randomValue
+
+      // 초기화된 사실을 로그에 자연스럽게 표현
+      let targetName = resolveVariableName(for: targetIndex, fallback: "target")
       let pName = resolveVariableName(for: sourceIndex, fallback: makePointerName())
-      codeLog = "int *\(pName) = \(destinationAddress);"
+      codeLog = "int \(targetName) = \(randomValue);\nint *\(pName) = &\(targetName);\n// \(pName) 자신도 메모리(\(sourceAddress))에 저장된 값(주소)입니다."
+
+      // 시각적 혼란을 줄이기 위해 타겟에도 하이라이트 효과
+      highlightSlot(for: targetIndex)
+    } else if slots[targetIndex].isReferenced,
+              let existingPointerAddress = slots.first(where: {
+                $0.pointingTo == destinationAddress && $0.address != sourceAddress
+              })?.address {
+      // 직접 연결 자체는 허용하되(실제 C에서도 가능한 연산), 이중 포인터 연습을 유도하는 안내로 대체
+      codeLog = "// 직접 연결도 가능하지만, 지금은 이중 포인터를 연습해봐요 — 이미 있는 포인터(\(existingPointerAddress))를 가리켜보세요."
+    } else {
+      // 목적지가 이미 이름을 가진 슬롯일 수 있으므로(레슨이 선언했거나 이전 상호작용에서 부여됨)
+      // 주소 리터럴 대신 &변수명으로 표현해 "가리킨다 = 주소를 담는다" 개념을 코드로도 드러낸다
+      let pName = resolveVariableName(for: sourceIndex, fallback: makePointerName())
+      let destName = resolveVariableName(
+        for: targetIndex,
+        fallback: slots[targetIndex].value != nil ? "target" : makePointerName()
+      )
+      codeLog = "int *\(pName) = &\(destName);"
     }
     
     // 3. 시각적 피드백: 포인터 슬롯 강조
