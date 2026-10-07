@@ -243,7 +243,7 @@ sequenceDiagram
   else B가 이미 참조됨(레슨 2)
     VM->>VM: "이미 있는 포인터를 가리켜 보세요" 안내
   else 그 외
-    VM->>VM: int *pA = &B; 생성
+    VM->>VM: int *pA = &B#59; 생성
   end
   VM->>VM: highlightSlot(A) (1초 후 해제)
   VM->>VM: checkSuccess()
